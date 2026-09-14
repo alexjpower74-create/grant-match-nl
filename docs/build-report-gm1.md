@@ -538,9 +538,18 @@ read better. Their `text_sha256` wouldn't change.
 - **A hard-coded 287 in the step 2 test.** The real count is 286: gm2 removed CanExport's `llp-only` item after my
   round 3 scan. The test now counts with `quotesOf` and asserts every quote was checked.
 
+## Round 5 — DECISIONS #25: contact labels without unquoted facts · DONE
+Merged main. In all six CBDC records the four office labels drop "(one of 15 CBDCs in the province)" and keep office and
+town only: "CBDC Central, Grand Falls-Windsor", "CBDC Gander Area, Gander", "CBDC Emerald, Baie Verte", "Emerald’s
+satellite office, Springdale" (its quote says "Emerald’s Satellite office" and never "CBDC"). A script checked that every word of each label appears in that contact’s own quote before
+writing, and the research notes now cite #25 instead of the "15 Corporations" sentence. The app's line above several
+contacts ("The program's pages list these offices. Call the one nearest you.") carries the point K3 was after.
+`check:data` green, core tests green, no other program file changed; one commit (records and this note).
+This also answers my round 3 K3 question and round 4's "Left undone" item about it.
+
 ## Left undone, and what I need
-- **Lead:** the three readings above (how edges are marked, `after` stopping before a `\n`, `block` passed in by the
-  caller), and the K3 label wording from round 3.
+- **Lead:** the three round 4 readings (how edges are marked, `after` stopping before a `\n`, `block` passed in by the
+  caller). `data/build/` isn't in `.gitignore` (lead's file); please add it.
 - **gm2:** optionally re-quote the run-on quotes above.
 - **NLOWE:** nlowe.org is unreachable from this machine (connection refused on 443). Someone on another network should
   check it before researching the NLOWE loan (ownership `women`).
