@@ -9,3 +9,4 @@ playwright-report/
 data/scans/
 scripts/.state/
 core/tests/.tmp/
+data/build/
