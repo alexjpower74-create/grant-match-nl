@@ -174,7 +174,7 @@ build test now planting into a real program.
   JobsNL **Doesn't fit** (purpose: equipment/software, not hiring).
 - SAMPLE Daycare: all three **Might fit**, with JobsNL's purpose met (hire).
 - APCO Software Tools (lead's profile, DECISIONS #14): Business Growth and Business Investment **Might fit**, with
-  structure "Not sure" and revenue "Prefer not to say" shown as *Unknown, you didn't answer this*. JobsNL
+  structure "Not sure" and revenue "Prefer not to say" shown as *Unknown: you didn't answer this or weren't sure*. JobsNL
   **Doesn't fit** (purpose).
 
 ### Remaining phase 2 list, waiting on the review
@@ -241,7 +241,7 @@ Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real pro
 ## Lead review answers applied (DECISIONS #18) · DONE
 - **`unclear` on structure and industry rules**, in core. `schema.js` accepts optional `unclear` ids (known, non-empty,
   not also in `in`/`not_in`). `match.js` returns `unknown`, reason `unclear`, why "The page's wording doesn't settle
-  this for <label>.", and the fit why line "Unknown, the page's wording doesn't settle it for your answer: …".
+  this for <label>.", and the fit why line (worded per DECISIONS #19) "Unknown: the page's wording doesn't settle it for your answer. …".
   RULES.md has a section with a worked example. Tests: structure and industry unclear, "an unclear answer is never
   Looks like a fit", and schema cases. **Control (k):** unclear treated as met → that test red; restored.
 - JobsNL structure: in [corporation, sole_proprietor], unclear [cooperative, nonprofit]. Business Growth: unclear
@@ -250,7 +250,7 @@ Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real pro
   page)".
 - Q1 intake unknown kept; Q3 no divisions inferred; Q4, Q5, Q7 as researched; page_gone reading confirmed.
 
-## Phase 2 — programs 4–15 (in progress)
+## Phase 2 — programs 4–15 · DONE (19 real NL programs; NLOWE blocked, takeCHARGE rejected on its terms)
 
 ### Committed programs (one commit each; `check:data` green after every one)
 | Slug | Sources | Type | Intake | Criteria (met-able / self_check) | Notes |
@@ -265,6 +265,12 @@ Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real pro
 | nl-canada-nl-job-grant | `--main` | Unknown (not stated), max $15,000 | **closed** ("suspended… not being accepted") | 3 / 5 | The lower part of the page still says "Continuous intake"; the suspension notice wins. |
 | nl-employment-enhancement-program | `--main` | wage subsidy, 75% up to $15/h | unknown | 4 / 4 | Industry in [11, 31-33] plus self_check value-added secondary processing; purpose hire or training. |
 | nl-summer-employment-program-for-students | `--main` | wage subsidy, max $4,032 per FTE (private sector) | open, deadline 2026-02-19 → **closed by core** | 3 / 3 | Fetched at its final URL (the old one redirects on the same host). |
+| nl-cbdc-general-business-loan | `--main`, `--office-central`, `--office-gander-area`, `--office-emerald` | loan, up to $150,000 | unknown | 1 / 4 | Location (rural Atlantic Canada → province); rural, viability, employment and "your local CBDC offers it" are self_check. |
+| nl-cbdc-first-time-entrepreneur-loan | same four | loan, up to $150,000 | unknown | 2 / 3 | Structure in [sole_proprietor, corporation, partnership], unclear [not_registered]. "New, first time entrepreneur" is self_check, not a years rule (buying an existing business also qualifies). |
+| nl-cbdc-innovation-loan | same four | loan, up to $150,000 | unknown | 2 / 4 | Purpose any [equipment, digital, research], plus self_check "clearly new technology". |
+| nl-cbdc-newcomer-loan-program | same four | loan, up to $20,000 | unknown | 1 / 4 | For non-permanent residents; the profile's "newcomer" differs, so self_check (API §4). The page's "Non-permanent residents or citizens of Canada" is ambiguous and quoted as is. Extra contact: Metro Business Opportunities, for St. John's and Mount Pearl. |
+| nl-cbdc-social-enterprise-loan | same four | loan, up to $150,000 | unknown | 2 / 4 | Structure in [nonprofit, cooperative]. |
+| nl-cbdc-youth-loan-program | same four | loan, up to $150,000 (quoted from the CBDC Central office page; the loan page states no maximum) | unknown | 2 / 3 | Age 18–34 differs from the profile's 18–39, so self_check; structure as First Time Entrepreneur. |
 
 Updated earlier programs: nl-jobsnl-wage-subsidy, nl-business-growth-program, nl-business-investment-program
 (above).
@@ -280,9 +286,9 @@ Updated earlier programs: nl-jobsnl-wage-subsidy, nl-business-growth-program, nl
   permission.
 - **RDÉE TNL, now Horizon TNL (horizontnl.ca):** advice and help preparing applications; it "can orient you to a
   start-up loan of up to $75,000, offered in partnership with Futurpreneur Canada". It is not a funder itself, so not
-  added. Futurpreneur is gm2's `ca-futurpreneur-startup`.
+  added. Futurpreneur isn't used either (its terms forbid copying; DECISIONS #19).
 - **NLOWE (nlowe.org): BLOCKED.** The host resolves (35.208.104.81) but refuses connections on port 443 from this
-  machine (three tries, 06:03–06:15Z). Nothing fetched; no NLOWE record. Search results say NLOWE is a loan fund partner
+  machine (three tries: 06:02, 06:03 and 06:13Z). Nothing fetched; no NLOWE record. Search results say NLOWE is a loan fund partner
   for the WEOC National Loan Program, but that can't be used without reading the official page.
 
 ### Things I got wrong, and fixed
@@ -307,6 +313,73 @@ B. **Location from a list of place names.** CBDC office pages name the places th
    local CBDC offers this" is a check-this-yourself item. Would `unclear` on location (for example, a division's
    "Somewhere else" entry) be wanted?
 
-## Waiting on
-- Nothing blocking except NLOWE (unreachable). gm2's later cross-review will come through the lead.
-- Nothing outside gm1's slice was edited.
+### CBDCs (item 12)
+- **Terms:** cbdc.ca's Terms of Use (Atlantic Association of CBDCs) cover content users post, liability and spam.
+  Nothing restricts reading or quoting the site's own information, so cbdc.ca is used. robots.txt allows everything,
+  with Crawl-delay 10, obeyed on every request after the fix below.
+- **Model:** one record per CBDC loan program: General Business, First Time Entrepreneur, Innovation, Newcomer,
+  Social Enterprise, Youth. Each is quoted from its own cbdc.ca loan page. All three Central-NL office pages list all
+  six loans.
+- **Offices:**
+  - CBDC Central (Grand Falls-Windsor, the brief's "Central Newfoundland"), CBDC Gander Area, and CBDC Emerald
+    (Baie Verte, with a Springdale satellite office) are contacts on every loan record. Each office page is saved as
+    a source of each record (same bytes, no extra requests) and quoted with its address and phone.
+  - CBDC Cabot serves the northeast Avalon (Division 1), so it's out of scope.
+  - Other NL CBDCs (Humber, Long Range, Nortip, Gateway, Labrador, Eastern, Trinity-Conception, Burin, Avalon West,
+    South Coast, Coastal Business) were not added as contacts.
+- **Location:** only the Gander Area page names the places it serves, and it names places, not census divisions. No
+  location rule beyond the province was made from it (contract question B), and `census_divisions` is null for
+  every office.
+- **Not added:** cbdc.ca's other loans (Small Loan, Start-up Income Support, Future Entrepreneur, Impact, Immigrant
+  pilot) aren't listed on the Central-NL office pages.
+
+### Engine changes during phase 2
+| # | Change | Break → test that went red |
+|---|---|---|
+| k | `unclear` on structure and industry rules (DECISIONS #18) | unclear treated as met → "an unclear answer is never Looks like a fit" |
+| l | A robots.txt `Crawl-delay` before any `User-agent` line applies to every agent (cbdc.ca) | ignore it → "robotsAllows and robotsCrawlDelay" |
+| m | `runChecks` fetches a URL shared by several sources once per run. Each CBDC office page is a source of six records, so without this the weekly check would fetch the same three cbdc.ca pages 18 times at 10 s each | no de-dup → "a URL shared by several sources is fetched once per run" |
+| n | Quote context is the surrounding sentence (API §1, DECISIONS #20). My reading where the spec is silent: a quote that ends with a boundary character gets `after: ""`. | fall back to the raw window when no boundary is near → "contextFor gives the rest of the sentence, never menu text" ("a menu has no boundary, so no before") |
+| — | Fit why lines read "Unknown: …", with "you didn't answer this or weren't sure" (DECISIONS #19, Q12–13); RULES.md copy to match | covered by the unclear test's exact string |
+
+API §9's "robots.txt 4xx = no rules, 5xx = skip the host" and §6's counts note were already how core behaves.
+
+### Real dry scan (all 19 programs, after the de-dup)
+`npm run scan -- --dry`, 2026-09-14T06:20:54Z → 06:22:47Z (114 s):
+```
+Checked 38 source pages: 38 fetched fine, 0 not.
+Quotes missing: none.
+Page text changed since it was saved: none.
+Raw pages: data/scans/2026-09-14T06-20-54-121Z · result: data/scans/latest.json
+Dry run: nothing sent to the Worker.
+```
+38 sources, but only 22 unique URLs fetched (www.gov.nl.ca 13, cbdc.ca 9). Every source reported all its quotes found,
+e.g. nl-business-growth-program--main 17/17 and nl-cbdc-innovation-loan--main 9/9.
+
+### Dry evaluation, all 19 real programs (now 2026-09-14T12:00Z)
+- **SAMPLE Auto Service:** 1 Looks like a fit, 9 Might fit, 7 Doesn't fit, 2 closed. The one Looks like a fit is the
+  **Green Transition Fund**: incorporated, in NL, continuous intake. Its green focus is only a check-this-yourself
+  item, so an equipment-and-software business shows Looks like a fit. That is contract question A in practice.
+- **SAMPLE Daycare:** 0 Looks like a fit, 11 Might fit, 6 Doesn't fit, 2 closed.
+- **APCO Software Tools:** 0 Looks like a fit, 11 Might fit, 6 Doesn't fit, 2 closed. The unanswered structure and
+  revenue show as Unknown, never met. The CBDC Innovation Loan is Might fit with purpose (software) met.
+- **Why so few Looks like a fit:** 17 of the 19 pages don't say when applications are taken. Only the Green
+  Transition Fund states continuous intake. The Job Grant is suspended, and the student summer program's deadline
+  has passed, so both are closed.
+
+### Phase 2 commits
+Programs, one commit each: 2f33a65, 7e1e1ac, 6e1db8d (first three) · 97b8227, 466c837, 47af709 (DECISIONS #18
+updates) · ae061b2, 25f9399, d29a86c, 71211de, 32fb573, 3684794, 5955995, 2cc52a0, 515558e, 74baa60 · d668b2f,
+ac44e56, b53b327, 7e4fae1, 2697f03, d55aa0f (CBDC).
+Engine: 73d5531 (unclear), 2a54ea1 (Crawl-delay), 8809eb7 (URL de-dup), d4598c9 (sentence context, "Unknown:" wording).
+Merges of main: 11bca50,  (DECISIONS #18), dd4f9d4.
+
+## Left undone, and what I need
+- **NLOWE:** nlowe.org is unreachable from this machine (connection refused on 443). Someone on another network should
+  check it before researching the NLOWE loan (ownership `women`).
+- **takeCHARGE:** rejected on its terms. It needs written permission from Newfoundland Power / NL Hydro, which is
+  Alexander's call.
+- **Contract questions A and B** (above): `unclear` on purpose, and location from place-name lists.
+- **Records to watch:** the Summer Employment Program for Students will need a new record when the page announces the
+  2027 intake. The Job Grant stays closed until its suspension notice changes (the weekly check flags a change).
+- gm2's cross-review of the NL programs will come through the lead. Nothing outside gm1's slice was edited.
