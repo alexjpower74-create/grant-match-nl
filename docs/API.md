@@ -277,16 +277,22 @@ tests only). D1 binding `DB` holds check runs only. **No profile is ever stored 
 | `GET /api/programs` | `{ programs: [ProgramResult with no profile] }` sorted by name |
 | `GET /api/programs/:slug?<profile>` | 200 `{ profile: … \| null, result: ProgramResult }` (evaluated when the profile is valid, unevaluated when absent; 400 if present but invalid) · 404 |
 | `GET /api/checks?limit=20` | `{ runs: [{ id, trigger, started_at, finished_at, sources_total, sources_ok, quotes_missing, sources: [...] }] }` newest first |
-| `POST /api/admin/checks` | Bearer `ADMIN_TOKEN`; body ChecksResult → `{ stored: run_id }` · 401 · 400 |
-| `POST /api/admin/scan` | Bearer; runs `runChecks` now (trigger `manual`) and stores it → the stored run |
+| `POST /api/admin/checks` | Bearer `ADMIN_TOKEN`; body ChecksResult → `{ stored: run_id }` · 401 · 400 · 413 over 1 MB |
+| `POST /api/admin/scan` | Bearer; runs `runChecks` now, inside the request (trigger `manual`), and stores it → the stored run. Synchronous is fine locally; a deploy would want `ctx.waitUntil` + 202. |
 | `scheduled()` | cron `15 10 * * 1` (Mondays 07:45 NDT): `runChecks` (trigger `cron`), store |
+
+Clock: `?now=` is silently ignored unless `ALLOW_NOW=1`; with `ALLOW_NOW=1` an unparseable `now` is a 400.
+Source status: the Worker folds the newest 50 stored runs with `sourceStatusFrom` (one run a week ≈ a year).
 
 ## 12. App (gm2 owns `app/`)
 
 `<meta name="api-base" content="http://127.0.0.1:7402">`, `?api=<origin>` overrides. `?mock=1` → `app/api.mock.js`,
 which imports `/core/*.js` and runs the **real core** in the browser on `/data/build/sample.json` (`&data=real` →
 `programs.json`); `app/serve.mjs` serves `app/` at `/`, `core/` at `/core/`, `data/build/` at `/data/build/`,
-GET/HEAD only, nothing else. `?now=<ISO>` is carried to the API/mock. Profile params, `mock`, `api`, `now`, `data`
+GET/HEAD only, nothing else (it also refuses `app/serve.mjs`, `app/tests/…` and Playwright files: they are not the
+site). `?now=<ISO>` is carried to the API/mock. Results headline: "N programs could fit" with N = `counts.looks +
+counts.might`. Printout: only Looks like a fit and Might fit programs (Looks like a fit first), up to 6, then "and N
+more on the results page" when there are more. Profile params, `mock`, `api`, `now`, `data`
 are carried across every internal link.
 
 Pages: `index.html` profile form → `results.html?<profile>` → `program.html?slug=<slug>&<profile>` →

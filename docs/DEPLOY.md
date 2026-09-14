@@ -32,3 +32,5 @@ when Alexander says "deploy". Read `DECISIONS.md` #12 (quoting official pages on
   `npm run check:data` passes. The cron doesn't rewrite programs; it flags a page whose quotes disappeared
   ("The page has changed since we checked it") and stops that program showing "Looks like a fit".
 - Anything verified more than 60 days ago is flagged on screen. Plan a re-research pass every two months.
+- `POST /api/admin/scan` runs the whole live check inside the request (about one second per page, ten on hosts that ask
+  for it). Fine locally; before deploying, move it to `ctx.waitUntil` and answer 202.

@@ -84,3 +84,10 @@ Springdale / Grand Falls-Windsor and the company was named on 2026-09-10; he bui
 `name=APCO Software Tools&community=grand-falls-windsor&industry=54&structure=unsure&employees=1&years=lt1&revenue=unsaid&purposes=digital&cost=unsure`
 (owners not answered). Grand Falls-Windsor, the structure and the purpose are the lead's reading, not his answers.
 Change them in the URL.
+
+## 15. Answers to gm2's contract questions (03:05)
+All eight readings accepted and written into docs/API.md §11–12: the printout lists only Looks like a fit and Might
+fit (up to 6, then "and N more"); the results headline counts Looks + Might; admin bodies over 1 MB get 413; `?now=` is
+ignored unless `ALLOW_NOW=1` (then a bad value is 400); the Worker folds the newest 50 check runs; the admin scan runs
+inside the request (locally fine; a deploy wants `waitUntil` + 202, noted in DEPLOY.md); Playwright `selectOption`
+counts as real input for native selects, which can't be tapped headless; `serve.mjs` refuses its own test files.
