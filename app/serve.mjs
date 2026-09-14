@@ -49,9 +49,7 @@ export function resolveRequest(rawPath) {
   const rel = path.slice(mount.prefix.length)
   if (!rel || rel.endsWith('/')) return null // no directory listing
   // The app's own tests and server script are not part of the site.
-  // TEMPORARY exception until core is on main: the ?mock=fixture JSON.
-  const fixture = /^tests\/fixtures\/[a-z0-9-]+\.json$/.test(rel)
-  if (mount.root === here && ((rel.startsWith('tests/') && !fixture) || rel === 'serve.mjs' || rel.startsWith('playwright'))) return null
+  if (mount.root === here && (rel.startsWith('tests/') || rel === 'serve.mjs' || rel.startsWith('playwright'))) return null
   const file = resolve(mount.root, rel)
   if (!file.startsWith(mount.root + sep)) return null
   return file

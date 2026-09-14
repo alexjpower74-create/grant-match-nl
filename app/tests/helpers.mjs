@@ -16,6 +16,8 @@ export const PROFILES = {
   daycare: 'name=SAMPLE Daycare&community=gander&industry=62&structure=sole_proprietor&employees=4&years=1to2&revenue=100k_300k&owners=women&purposes=hire,training&cost=10k_25k',
   // SAMPLE Auto Service with owners and cost left unanswered, so not_answered shows up.
   autoUnanswered: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&purposes=equipment,digital',
+  // SAMPLE Auto Service in the $2M–$10M revenue band, which sits on both sides of a SAMPLE loan's $5,000,000 limit.
+  autoStraddle: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=2m_10m&owners=none&purposes=equipment,digital&cost=25k_50k',
 }
 
 export const qs = (profile, extra = {}) => {

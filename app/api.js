@@ -52,10 +52,7 @@ function httpApi(params) {
 let cached
 export async function api(params = new URLSearchParams(location.search)) {
   if (cached) return cached
-  if (params.get('mock') === 'fixture') {
-    const { createFixtureApi } = await import('./api.fixture.js')
-    cached = await createFixtureApi()
-  } else if (params.get('mock') === '1') {
+  if (params.get('mock') === '1') {
     const { createMockApi } = await import('./api.mock.js')
     cached = await createMockApi(params)
   } else {

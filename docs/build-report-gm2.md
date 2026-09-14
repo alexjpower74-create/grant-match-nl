@@ -17,6 +17,37 @@ Each is the reading I built on; the lead decides.
    picker can't be tapped in a headless browser. Everything else is tap/click/type/keyboard.
 8. **`serve.mjs`** also refuses `/serve.mjs`, `/tests/…` and `/playwright…` under `app/`: they are not the site.
 
+Items 1–8: **ACCEPTED** by the lead (DECISIONS #15, API §11–12).
+
+### Cross-review of core as a consumer (merge `b3c92af`, core from `1d0fc50`)
+Shapes, field names, labels and sort in `match.js`, `profile.js` and `checks.js` match API §2, §5, §6 and §9 as the
+Worker and app use them: the Worker deep-equals core's output for both profiles, and the app renders it unchanged.
+Where core and the contract (or the app's copy) disagree:
+9. **`sourceStatusFrom` is still the old §9.** It has no `page_gone`, and every check sets `missing_quotes` from its
+   own `missing` list, even when `ok` is false. So a timeout or robots refusal (`missing: []`) clears the count, and a
+   5xx or 404 (runChecks fills `missing` with every quote) raises it. The lead says gm1 does this later. The app
+   already uses the new copy ("changed or gone").
+10. **Fit `why` repeats the old needs-review sentence.** `match.js` pushes "The page has changed since we checked it.
+    Check the official page."; §12 now says "changed or gone". The detail page lists every `why` line and also shows
+    the §12 flag, so both sentences appear on one screen.
+11. **Stale `why` uses different words from the stale copy.** Core: "Last verified 78 days ago, more than 60 days.
+    Check the official page."; §12 copy (the app's flag): "Last verified <date>, more than 60 days ago. Check the
+    official page." Same screen, two wordings. Either pin core's sentence in §5 or say the app hides stale/review
+    `why` lines. I left the app showing both.
+12. **Unknown wording in `why` uses a comma, the reason copy a colon.** Core: "Unknown, your answer is close to the
+    page's limit: …"; §12 reason copy: "Unknown: your answer is close to the page's limit". A small thing, but both
+    sit on the detail page.
+13. **Business structure "Not sure" gets reason `not_answered`.** So the owner who picked "Not sure" reads "Unknown:
+    you didn't answer this". §2 only says "(→ unknown)". Suggest the copy "Unknown: you weren't sure" or a reason
+    of its own; core's `why` already says "You weren't sure how the business is set up."
+14. **`counts.unknown` includes `self_check` items** (`counts.self_check` is a subset). The §6 example (`unknown: 2,
+    self_check: 1`) reads that way, so the results card's "N unknown" includes check-it-yourself items. Please pin it
+    in §6.
+15. **robots.txt 4xx/5xx are not in the contract.** `runChecks` treats a robots.txt 4xx as "no rules, allowed"
+    and a 5xx or network error as "don't fetch this host" (error recorded). Both sensible; worth one line in §9.
+16. **An unknown `rule.kind` evaluates to Unknown with reason `self_check`**, silently. `validateProgram` should
+    already reject it at build time, so this only matters if a bundle skips the build; no change asked.
+
 ## Phase 1 — status
 - WIP committed (`5e9c263`, `4cf4b5b`): Worker (`wrangler.toml`, migration, `src/index.js`, `tests/run.mjs`,
   `tests/fixture-server.mjs`, `tests/api.test.mjs`, `tests/real.test.mjs`), app (5 pages, `app.css`, `print.css`,

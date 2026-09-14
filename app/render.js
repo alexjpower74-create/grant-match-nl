@@ -101,7 +101,7 @@ export function staleText(v) {
   return `Last verified ${formatDate(v.last_verified)}, more than 60 days ago. Check the official page.`
 }
 
-export const NEEDS_REVIEW_TEXT = 'The page has changed since we checked it. Check the official page.'
+export const NEEDS_REVIEW_TEXT = 'The page has changed or gone since we checked it. Check the official page.'
 
 export function verificationFlags(v) {
   if (!v) return ''

@@ -1,24 +1,25 @@
 import { test, expect } from '@playwright/test'
 import { PROFILES, qs, coreMatch } from './helpers.mjs'
 
-const TARGETS = 'button, a.btn, a.card, .chip, label.check, select, .tool'
+const TARGETS = 'button, a.btn, a.card, .chip, label.check, select, .tool, a.wordmark, .site-nav a'
 
 function pages() {
   const r = coreMatch(PROFILES.auto)
   return [
-    ['form', `/index.html?mock=1`],
-    ['results', `/results.html?${qs(PROFILES.auto)}`],
-    ['detail', `/program.html?${qs(PROFILES.auto, { slug: r.open[0].slug })}`],
-    ['print', `/print.html?${qs(PROFILES.auto)}`],
-    ['about', `/about.html?mock=1`],
+    // [name, url, a selector that exists only once the page's data has rendered]
+    ['form', `/index.html?mock=1`, '.chip'],
+    ['results', `/results.html?${qs(PROFILES.auto)}`, '#open-list a.card'],
+    ['detail', `/program.html?${qs(PROFILES.auto, { slug: r.open[0].slug })}`, '#official-link'],
+    ['print', `/print.html?${qs(PROFILES.auto)}`, '.program'],
+    ['about', `/about.html?mock=1`, 'tr[data-source]'],
   ]
 }
 
 test('every button, card, chip, checkbox label and select is hit at its centre and at least 44 px tall at 390', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.endsWith('-390'), 'phone width only')
-  for (const [name, url] of pages()) {
+  for (const [name, url, ready] of pages()) {
     await page.goto(url)
-    await page.locator('#site-footer p, .foot').first().waitFor()
+    await page.locator(ready).first().waitFor()
     const targets = page.locator(TARGETS)
     const n = await targets.count()
     expect(n, `${name} has targets`).toBeGreaterThan(0)
@@ -40,9 +41,9 @@ test('every button, card, chip, checkbox label and select is hit at its centre a
 
 test('no horizontal scroll at 390', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.endsWith('-390'), 'phone width only')
-  for (const [name, url] of pages()) {
+  for (const [name, url, ready] of pages()) {
     await page.goto(url)
-    await page.locator('#site-footer p, .foot').first().waitFor()
+    await page.locator(ready).first().waitFor()
     const { scroll, client } = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }))
     expect(scroll, `${name} scrollWidth`).toBeLessThanOrEqual(client)
   }

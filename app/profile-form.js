@@ -179,11 +179,26 @@ function setupCommunity(communities) {
       close()
     }
   })
-  // pointerdown keeps focus in the input so the tap isn't lost to blur.
-  list.addEventListener('pointerdown', (e) => e.preventDefault())
+  // Cancelling pointerdown keeps focus in the input, so the list stays open. WebKit then sends no click after a
+  // touch (checked with real taps), so an option is picked on pointerup: same option as the pointerdown, and the
+  // finger barely moved (a drag scrolls the list instead). click stays for assistive tech that only sends click.
+  let press = null
+  const optionAt = (e) => e.target.closest?.('.combo-option')
+  list.addEventListener('pointerdown', (e) => {
+    e.preventDefault()
+    const li = optionAt(e)
+    press = li ? { li, x: e.clientX, y: e.clientY } : null
+  })
+  list.addEventListener('pointercancel', () => (press = null))
+  list.addEventListener('pointerup', (e) => {
+    const li = optionAt(e)
+    const moved = press ? Math.hypot(e.clientX - press.x, e.clientY - press.y) : Infinity
+    if (li && press && press.li === li && moved < 10) choose(matches[Number(li.dataset.index)])
+    press = null
+  })
   list.addEventListener('click', (e) => {
-    const li = e.target.closest('.combo-option')
-    if (li) choose(matches[Number(li.dataset.index)])
+    const li = optionAt(e)
+    if (li && !list.hidden) choose(matches[Number(li.dataset.index)])
   })
   input.addEventListener('blur', () => {
     setTimeout(() => {

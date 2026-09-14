@@ -175,6 +175,9 @@ h3 { font-size: 1.15rem; margin: 0 0 6px; }
 .input::placeholder { color: #64748b; }
 
 /* community type-to-search */
+/* Each .glass card is its own stacking context (backdrop-filter), so an open list would sit under the next card:
+   lift the whole question while focus is inside it. */
+.q:focus-within { position: relative; z-index: 20; }
 .combo { position: relative; }
 .combo-list {
   position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 5;

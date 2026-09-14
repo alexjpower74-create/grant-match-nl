@@ -36,7 +36,7 @@ test('each rendered <mark> equals its API quote exactly and sits inside its cont
 
 test('Unknown reason copy per reason', async ({ page }) => {
   const seen = new Set()
-  for (const profile of [PROFILES.auto, PROFILES.daycare, PROFILES.autoUnanswered]) {
+  for (const profile of [PROFILES.auto, PROFILES.daycare, PROFILES.autoUnanswered, PROFILES.autoStraddle]) {
     const want = coreMatch(profile)
     for (const r of [...want.open, ...want.closed]) {
       const unknown = r.criteria.filter((c) => c.status === 'unknown' && !seen.has(c.unknown_reason))
@@ -89,6 +89,7 @@ test('"Call this office" shows only on a program with a contact', async ({ page 
 test('criteria sit in the three groups the way core evaluated them', async ({ page }) => {
   const r = coreMatch(PROFILES.auto).open[0]
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
+  await expect(page.locator('h1')).toHaveText(r.name)
   for (const [group, status] of [['matches', 'met'], ['doesnt-match', 'missed'], ['unknown', 'unknown']]) {
     const ids = r.criteria.filter((c) => c.status === status).map((c) => c.id)
     const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))

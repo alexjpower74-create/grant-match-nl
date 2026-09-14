@@ -22,6 +22,7 @@ test('print page lists open programs Looks like a fit first, with URL text and n
   const want = coreMatch(PROFILES.auto)
   await page.goto(`/print.html?${qs(PROFILES.auto)}`)
   const picks = want.open.filter((r) => r.fit.label !== "Doesn't fit").slice(0, 6)
+  await expect(page.locator('.program')).toHaveCount(picks.length)
   const slugs = await page.locator('.program').evaluateAll((els) => els.map((e) => e.dataset.slug))
   expect(slugs).toEqual(picks.map((r) => r.slug))
   for (const r of picks) await expect(page.locator(`.program[data-slug="${r.slug}"] .url`)).toContainText(r.url)
