@@ -1,0 +1,152 @@
+{
+  "slug": "nl-sample-growth-grant",
+  "sample": true,
+  "name": "SAMPLE Growth Grant",
+  "provider": "SAMPLE Department of Business",
+  "level": "provincial",
+  "url": "https://sample.invalid/funding/growth-grant/",
+  "summary": {
+    "quote": "The SAMPLE Growth Grant is a non-repayable contribution that helps small businesses in Newfoundland and Labrador buy equipment or adopt new software.",
+    "source": "nl-sample-growth-grant--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-growth-grant--main",
+      "url": "https://sample.invalid/funding/growth-grant/",
+      "title": "SAMPLE Growth Grant | SAMPLE Department of Business",
+      "publisher": "SAMPLE Department of Business",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "4cbb1c6f7fc494f4f44c09bcee70c9ce6fcc256e6ae5388d255db0b2cbb40d89",
+      "text_sha256": "be95d9c15896b98843158047a320d820f9bf5e739eec30c07f2a0a8d46cd6eb3",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    },
+    {
+      "id": "nl-sample-growth-grant--contact",
+      "url": "https://sample.invalid/contact/",
+      "title": "Regional offices | SAMPLE Department of Business",
+      "publisher": "SAMPLE Department of Business",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "7973c420ae267f2ae284c422c1b0ddacc24b7bb5eca2f2c3bbc27a43b876c9c8",
+      "text_sha256": "664ac1025b02f0e55a7941d92083e3412d74505c34255199c72a627c311b1285",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The SAMPLE Growth Grant is a non-repayable contribution",
+      "source": "nl-sample-growth-grant--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "Applications are accepted on an ongoing basis, with no deadline.",
+    "source": "nl-sample-growth-grant--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 50000,
+    "text": "Up to $50,000 per project",
+    "quote": "Up to $50,000 per project, covering up to 50 per cent of eligible costs.",
+    "source": "nl-sample-growth-grant--main"
+  },
+  "cost_share": {
+    "percent": 50,
+    "text": "Up to 50% of eligible costs",
+    "quote": "Up to $50,000 per project, covering up to 50 per cent of eligible costs.",
+    "source": "nl-sample-growth-grant--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business operates in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Businesses operating in Newfoundland and Labrador",
+      "source": "nl-sample-growth-grant--main"
+    },
+    {
+      "id": "structure",
+      "text": "Sole proprietors, partnerships or corporations",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "sole_proprietor",
+          "partnership",
+          "corporation"
+        ]
+      },
+      "quote": "Sole proprietors, partnerships or corporations",
+      "source": "nl-sample-growth-grant--main"
+    },
+    {
+      "id": "employees",
+      "text": "Fewer than 100 employees",
+      "rule": {
+        "kind": "employees",
+        "lt": 100
+      },
+      "quote": "Businesses with fewer than 100 employees",
+      "source": "nl-sample-growth-grant--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The project buys equipment or adopts software or digital tools",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "equipment",
+          "digital"
+        ]
+      },
+      "quote": "Projects to buy equipment or adopt software or digital tools",
+      "source": "nl-sample-growth-grant--main"
+    },
+    {
+      "id": "project-cost",
+      "text": "The project costs at least $10,000",
+      "rule": {
+        "kind": "project_cost",
+        "gte": 10000
+      },
+      "quote": "Projects costing at least $10,000",
+      "source": "nl-sample-growth-grant--main"
+    },
+    {
+      "id": "business-plan",
+      "text": "A business plan that shows the project is viable",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Applicants must have a business plan that shows the project is viable",
+      "source": "nl-sample-growth-grant--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "SAMPLE Central Regional Office",
+      "phone": "709-555-0101",
+      "email": null,
+      "census_divisions": [
+        6,
+        7,
+        8
+      ],
+      "quote": "SAMPLE Central Regional Office Census Divisions 6, 7 and 8 709-555-0101",
+      "source": "nl-sample-growth-grant--contact"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: Looks like a fit for SAMPLE Auto Service; Doesn't fit SAMPLE Daycare (purpose)."
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "slug": "nl-sample-women-entrepreneur-loan",
+  "sample": true,
+  "name": "SAMPLE Women Entrepreneur Loan",
+  "provider": "SAMPLE Women Entrepreneurs Association",
+  "level": "nonprofit",
+  "url": "https://sample.invalid/members/women-entrepreneur-loan/",
+  "summary": {
+    "quote": "The SAMPLE Women Entrepreneur Loan is a loan open to businesses owned by women in Newfoundland and Labrador.",
+    "source": "nl-sample-women-entrepreneur-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-women-entrepreneur-loan--main",
+      "url": "https://sample.invalid/members/women-entrepreneur-loan/",
+      "title": "SAMPLE Women Entrepreneur Loan",
+      "publisher": "SAMPLE Women Entrepreneurs Association",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "96aa9c59d1a92618740c78069fb61b88310a065e151056b9f765e830ab5d6a63",
+      "text_sha256": "a23fed37a528c50ed11d91f527638bed0036c94c32e030c0d614a678a8ba4f2c",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "The SAMPLE Women Entrepreneur Loan is a loan open to businesses owned by women",
+      "source": "nl-sample-women-entrepreneur-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "Applications are accepted on an ongoing basis.",
+    "source": "nl-sample-women-entrepreneur-loan--main",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "open to businesses owned by women in Newfoundland and Labrador",
+      "source": "nl-sample-women-entrepreneur-loan--main"
+    },
+    {
+      "id": "ownership",
+      "text": "The business is owned by women",
+      "rule": {
+        "kind": "ownership",
+        "any": [
+          "women"
+        ]
+      },
+      "quote": "a loan open to businesses owned by women",
+      "source": "nl-sample-women-entrepreneur-loan--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "SAMPLE loans officer",
+      "phone": "709-555-0199",
+      "email": "loans@sample.invalid",
+      "census_divisions": null,
+      "quote": "Call our loans officer at 709‑555‑0199 or email loans@sample.invalid.",
+      "source": "nl-sample-women-entrepreneur-loan--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: women-owned ownership rule; contact with phone and email (page uses non-breaking hyphens)."
+  }
+}

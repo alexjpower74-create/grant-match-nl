@@ -84,3 +84,18 @@ Springdale / Grand Falls-Windsor and the company was named on 2026-09-10; he bui
 `name=APCO Software Tools&community=grand-falls-windsor&industry=54&structure=unsure&employees=1&years=lt1&revenue=unsaid&purposes=digital&cost=unsure`
 (owners not answered). Grand Falls-Windsor, the structure and the purpose are the lead's reading, not his answers.
 Change them in the URL.
+
+## 15. Answers to gm2's contract questions (03:05)
+All eight readings accepted and written into docs/API.md §11–12: the printout lists only Looks like a fit and Might
+fit (up to 6, then "and N more"); the results headline counts Looks + Might; admin bodies over 1 MB get 413; `?now=` is
+ignored unless `ALLOW_NOW=1` (then a bad value is 400); the Worker folds the newest 50 check runs; the admin scan runs
+inside the request (locally fine; a deploy wants `waitUntil` + 202, noted in DEPLOY.md); Playwright `selectOption`
+counts as real input for native selects, which can't be tapped headless; `serve.mjs` refuses its own test files.
+
+## 16. A page that disappears, or a check that fails (03:20)
+Reviewing gm1's engine: a failed live check (timeout, 5xx, robots refusal) used to reset a source's missing-quote
+count to 0, silently clearing "the page has changed"; and a page that now answers 404/410 flagged nothing. Contract
+§9 now: only a check that read the page updates the missing count, and 404/410 sets `page_gone`, which also makes the
+program "needs review" (so it can't show Looks like a fit). Lead's own negative control on the build gate at 1d0fc50:
+one character changed in a SAMPLE criterion quote → `build-data --check` exit 1 naming the file, path and where the
+quote stops matching; restored → exit 0.

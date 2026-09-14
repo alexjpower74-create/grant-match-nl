@@ -1,0 +1,71 @@
+{
+  "slug": "nl-sample-startup-support",
+  "sample": true,
+  "name": "SAMPLE Start-up Support",
+  "provider": "SAMPLE Department of Business",
+  "level": "provincial",
+  "url": "https://sample.invalid/start/startup-support/",
+  "summary": {
+    "quote": "SAMPLE Start-up Support is a repayable contribution for new businesses.",
+    "source": "nl-sample-startup-support--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-startup-support--main",
+      "url": "https://sample.invalid/start/startup-support/",
+      "title": "SAMPLE Start-up Support",
+      "publisher": "SAMPLE Department of Business",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "b115fed95f89b1ab15525a48324da6624498b6830ac6ad73eb4671d4e04804cd",
+      "text_sha256": "3c69f8ceb3813ffc4908b844eec044896d09848859b7a0838484cfe606dd7beb",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "repayable",
+      "applies_to": null,
+      "quote": "SAMPLE Start-up Support is a repayable contribution for new businesses.",
+      "source": "nl-sample-startup-support--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "There is no deadline.",
+    "source": "nl-sample-startup-support--main",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is based in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Businesses must be based in Newfoundland and Labrador.",
+      "source": "nl-sample-startup-support--main"
+    },
+    {
+      "id": "years-operating",
+      "text": "Operating for 24 months or less",
+      "rule": {
+        "kind": "years_operating",
+        "lte": 24,
+        "unit": "months"
+      },
+      "quote": "Businesses that have been operating for 24 months or less can apply.",
+      "source": "nl-sample-startup-support--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: years_operating lte 24 months."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "slug": "ca-sample-small-lender-loan",
+  "sample": true,
+  "name": "SAMPLE Small Lender Loan",
+  "provider": "SAMPLE National Lender",
+  "level": "crown",
+  "url": "https://sample.invalid/loans/small-lender/",
+  "summary": {
+    "quote": "A loan for small businesses across Canada, including Newfoundland and Labrador.",
+    "source": "ca-sample-small-lender-loan--main"
+  },
+  "sources": [
+    {
+      "id": "ca-sample-small-lender-loan--main",
+      "url": "https://sample.invalid/loans/small-lender/",
+      "title": "SAMPLE Small Lender Loan – SAMPLE National Lender",
+      "publisher": "SAMPLE National Lender",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "ddfbe732c66ad6568291e7142f4e0233c20acec3ba011f7dd61ff6eb8a83ba5c",
+      "text_sha256": "7bc13399e36ccc3ccf9f75b0105ad644d4d2448d345c94fc48c95becd599acde",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "A loan for small businesses across Canada, including Newfoundland and Labrador.",
+      "source": "ca-sample-small-lender-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "There is no deadline to apply.",
+    "source": "ca-sample-small-lender-loan--main",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Canada, including Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "A loan for small businesses across Canada, including Newfoundland and Labrador.",
+      "source": "ca-sample-small-lender-loan--main"
+    },
+    {
+      "id": "revenue",
+      "text": "Yearly sales of up to $5,000,000",
+      "rule": {
+        "kind": "revenue",
+        "lte": 5000000
+      },
+      "quote": "It is for businesses with yearly sales of up to $5,000,000.",
+      "source": "ca-sample-small-lender-loan--main"
+    },
+    {
+      "id": "industry",
+      "text": "Not a retail, accommodation or food services business",
+      "rule": {
+        "kind": "industry",
+        "not_in": [
+          "44-45",
+          "72"
+        ]
+      },
+      "quote": "Retail trade and Accommodation and food services businesses are not eligible.",
+      "source": "ca-sample-small-lender-loan--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with your current lender",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "You must be in good standing with your current lender.",
+      "source": "ca-sample-small-lender-loan--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: revenue lte 5000000 straddles the 2m_10m band; industry not_in rule."
+  }
+}

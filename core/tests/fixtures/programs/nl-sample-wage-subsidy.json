@@ -1,0 +1,96 @@
+{
+  "slug": "nl-sample-wage-subsidy",
+  "sample": true,
+  "name": "SAMPLE Wage Subsidy",
+  "provider": "SAMPLE Department of Jobs",
+  "level": "provincial",
+  "url": "https://sample.invalid/jobs/wage-subsidy/",
+  "summary": {
+    "quote": "The SAMPLE Wage Subsidy is a wage subsidy that helps employers hire new workers and pay their wages.",
+    "source": "nl-sample-wage-subsidy--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-wage-subsidy--main",
+      "url": "https://sample.invalid/jobs/wage-subsidy/",
+      "title": "SAMPLE Wage Subsidy",
+      "publisher": "SAMPLE Department of Jobs",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "a0be7a0780ba46672c18be8cc2c0b25db56ecd3e32497837f36588a89deb4e30",
+      "text_sha256": "0b50747dc0372d38779b912813652781c445b8ea95373f7f0e009e9fc6412a5b",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "wage_subsidy",
+      "applies_to": null,
+      "quote": "The SAMPLE Wage Subsidy is a wage subsidy",
+      "source": "nl-sample-wage-subsidy--main"
+    }
+  ],
+  "intake": {
+    "status": "open",
+    "quote": "Applications are open now and close October 15, 2026.",
+    "source": "nl-sample-wage-subsidy--main",
+    "deadline": {
+      "date": "2026-10-15",
+      "quote": "Applications are open now and close October 15, 2026.",
+      "source": "nl-sample-wage-subsidy--main"
+    }
+  },
+  "max_amount": {
+    "amount": 15000,
+    "text": "Up to $15,000 per new hire",
+    "quote": "The program pays up to 60% of wages, to a maximum of $15,000 per new hire.",
+    "source": "nl-sample-wage-subsidy--main"
+  },
+  "cost_share": {
+    "percent": 60,
+    "text": "Up to 60% of wages",
+    "quote": "The program pays up to 60% of wages, to a maximum of $15,000 per new hire.",
+    "source": "nl-sample-wage-subsidy--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The employer is located in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Employers must be located in Newfoundland and Labrador.",
+      "source": "nl-sample-wage-subsidy--main"
+    },
+    {
+      "id": "employees",
+      "text": "50 employees or fewer",
+      "rule": {
+        "kind": "employees",
+        "lte": 50
+      },
+      "quote": "Employers with 50 employees or fewer can apply.",
+      "source": "nl-sample-wage-subsidy--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for hiring and paying wages",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "hire"
+        ]
+      },
+      "quote": "helps employers hire new workers and pay their wages",
+      "source": "nl-sample-wage-subsidy--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: open with a deadline of 2026-10-15; no contact on the page."
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "slug": "nl-sample-equipment-loan",
+  "sample": true,
+  "name": "SAMPLE Equipment Loan",
+  "provider": "SAMPLE Business Loans Office",
+  "level": "crown",
+  "url": "https://sample.invalid/loans/equipment/",
+  "summary": {
+    "quote": "The SAMPLE Equipment Loan is a loan for businesses in Newfoundland and Labrador.",
+    "source": "nl-sample-equipment-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-equipment-loan--main",
+      "url": "https://sample.invalid/loans/equipment/",
+      "title": "SAMPLE Equipment Loan",
+      "publisher": "SAMPLE Business Loans Office",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "8a046215d68b462e927ba743c1d5c60ee95062b84824d0b573eeec68bbfb8051",
+      "text_sha256": "e7124775b50da4ff3db0700be63985423d0d14fc26fbc90ae060912b01b44ff2",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "The SAMPLE Equipment Loan is a loan for businesses in Newfoundland and Labrador.",
+      "source": "nl-sample-equipment-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "Applications are accepted year-round.",
+    "source": "nl-sample-equipment-loan--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 250000,
+    "text": "Loans of up to $250,000",
+    "quote": "Loans of up to $250,000 are available.",
+    "source": "nl-sample-equipment-loan--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "The SAMPLE Equipment Loan is a loan for businesses in Newfoundland and Labrador.",
+      "source": "nl-sample-equipment-loan--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money buys equipment",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "equipment"
+        ]
+      },
+      "quote": "Loans can be used to buy equipment for the business.",
+      "source": "nl-sample-equipment-loan--main"
+    },
+    {
+      "id": "revenue",
+      "text": "Annual revenue under $10 million",
+      "rule": {
+        "kind": "revenue",
+        "lt": 10000000
+      },
+      "quote": "Businesses with annual revenue of less than $10 million are eligible.",
+      "source": "nl-sample-equipment-loan--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: revenue lt 10000000 is met for the 500k_1m band."
+  }
+}

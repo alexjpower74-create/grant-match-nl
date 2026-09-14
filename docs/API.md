@@ -60,7 +60,7 @@ meaning). Numbers in bands are **intervals** used by the matcher (§5).
 | Project cost | `cost` | no | `lt10k` Under $10,000 (0,10000) · `10k_25k` [10000,25000) · `25k_50k` [25000,50000) · `50k_100k` [50000,100000) · `100k_250k` [100000,250000) · `250k_1m` [250000,1000000) · `1m_plus` [1000000,∞) · `unsure` Not sure (→ unknown). Absent = unknown. |
 
 `parseProfile(input, { communities, industries }) → { profile, errors }` — `input` is a `URLSearchParams` or a plain
-object of strings. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
+object of strings; `communities`/`industries` may be the arrays or the whole reference files. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
 Unknown ids are errors. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
 name }, structure, employees, years, revenue, owners: null | [] | ['women', …], purposes: [...], cost }`.
 `profileToQuery(profile) → string` round-trips (`parseProfile(profileToQuery(p))` equals `p`).
@@ -226,7 +226,8 @@ Funding type labels: Non-repayable, Repayable, Loan, Tax credit, Wage subsidy.
 
 `buildBundle({ programs, pageTexts, communities, industries }) → { bundle, problems }` in `core/bundle.js`.
 `bundle = { data_set: "real" | "sample", built_from: "<newest source fetched_at>", programs: [ProgramRecord with every
-quote expanded to Quote], communities, industries }`. No wall-clock values, so the same inputs give the same bytes.
+quote expanded to Quote], communities, industries }`, where `communities` and `industries` are the **whole reference files** as
+loaded (`bundle.communities.communities`, `bundle.communities.source`; same for industries). No wall-clock values, so the same inputs give the same bytes.
 - `node scripts/build-data.mjs` → verifies, writes `data/build/programs.json` (real, from `data/`) and
   `data/build/sample.json` (from `core/tests/fixtures/programs/` + `core/tests/fixtures/sources/`, with the real
   reference lists). Exit 1 and write nothing if there is any problem.
@@ -249,9 +250,13 @@ quote expanded to Quote], communities, industries }`. No wall-clock values, so t
                 "fetched_at": "ISO", "sha256": "…", "text_sha256": "…", "changed": false,   // text_sha256 differs from the saved snapshot
                 "quotes_total": 9, "quotes_found": 9, "missing": [{ "path": "criteria[2].quote", "quote": "…" }] }] }
 ```
-`sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes } }` folds stored
-runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok` and
-`missing` empty.
+`sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes, page_gone } }`
+folds stored runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok`
+and `missing` empty; `missing_quotes` = the missing count of the newest check that actually read the page (`ok`),
+so a timeout, a 5xx or a robots refusal **keeps** the previous count instead of clearing it; `page_gone` = the newest
+check answered HTTP 404 or 410. In `evaluateProgram`, `needs_review` = any source with `missing_quotes > 0` **or**
+`page_gone`; the app's needs-review copy then reads "The page has changed or gone since we checked it. Check the
+official page."
 
 ## 10. Core modules (gm1 owns; Worker, scripts and the app's mock import them)
 
@@ -277,16 +282,22 @@ tests only). D1 binding `DB` holds check runs only. **No profile is ever stored 
 | `GET /api/programs` | `{ programs: [ProgramResult with no profile] }` sorted by name |
 | `GET /api/programs/:slug?<profile>` | 200 `{ profile: … \| null, result: ProgramResult }` (evaluated when the profile is valid, unevaluated when absent; 400 if present but invalid) · 404 |
 | `GET /api/checks?limit=20` | `{ runs: [{ id, trigger, started_at, finished_at, sources_total, sources_ok, quotes_missing, sources: [...] }] }` newest first |
-| `POST /api/admin/checks` | Bearer `ADMIN_TOKEN`; body ChecksResult → `{ stored: run_id }` · 401 · 400 |
-| `POST /api/admin/scan` | Bearer; runs `runChecks` now (trigger `manual`) and stores it → the stored run |
+| `POST /api/admin/checks` | Bearer `ADMIN_TOKEN`; body ChecksResult → `{ stored: run_id }` · 401 · 400 · 413 over 1 MB |
+| `POST /api/admin/scan` | Bearer; runs `runChecks` now, inside the request (trigger `manual`), and stores it → the stored run. Synchronous is fine locally; a deploy would want `ctx.waitUntil` + 202. |
 | `scheduled()` | cron `15 10 * * 1` (Mondays 07:45 NDT): `runChecks` (trigger `cron`), store |
+
+Clock: `?now=` is silently ignored unless `ALLOW_NOW=1`; with `ALLOW_NOW=1` an unparseable `now` is a 400.
+Source status: the Worker folds the newest 50 stored runs with `sourceStatusFrom` (one run a week ≈ a year).
 
 ## 12. App (gm2 owns `app/`)
 
 `<meta name="api-base" content="http://127.0.0.1:7402">`, `?api=<origin>` overrides. `?mock=1` → `app/api.mock.js`,
 which imports `/core/*.js` and runs the **real core** in the browser on `/data/build/sample.json` (`&data=real` →
 `programs.json`); `app/serve.mjs` serves `app/` at `/`, `core/` at `/core/`, `data/build/` at `/data/build/`,
-GET/HEAD only, nothing else. `?now=<ISO>` is carried to the API/mock. Profile params, `mock`, `api`, `now`, `data`
+GET/HEAD only, nothing else (it also refuses `app/serve.mjs`, `app/tests/…` and Playwright files: they are not the
+site). `?now=<ISO>` is carried to the API/mock. Results headline: "N programs could fit" with N = `counts.looks +
+counts.might`. Printout: only Looks like a fit and Might fit programs (Looks like a fit first), up to 6, then "and N
+more on the results page" when there are more. Profile params, `mock`, `api`, `now`, `data`
 are carried across every internal link.
 
 Pages: `index.html` profile form → `results.html?<profile>` → `program.html?slug=<slug>&<profile>` →
@@ -300,6 +311,6 @@ Copy that must stay true:
   `band_straddles` "Unknown: your answer is close to the page's limit" · a program fact the pages don't state
   "Unknown: the page doesn't say".
 - Stale: "Last verified <date>, more than 60 days ago. Check the official page." · needs review: "The page has
-  changed since we checked it. Check the official page."
+  changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
