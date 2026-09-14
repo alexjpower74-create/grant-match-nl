@@ -372,7 +372,7 @@ Programs, one commit each: 2f33a65, 7e1e1ac, 6e1db8d (first three) · 97b8227, 4
 updates) · ae061b2, 25f9399, d29a86c, 71211de, 32fb573, 3684794, 5955995, 2cc52a0, 515558e, 74baa60 · d668b2f,
 ac44e56, b53b327, 7e4fae1, 2697f03, d55aa0f (CBDC).
 Engine: 73d5531 (unclear), 2a54ea1 (Crawl-delay), 8809eb7 (URL de-dup), d4598c9 (sentence context, "Unknown:" wording).
-Merges of main: 11bca50,  (DECISIONS #18), dd4f9d4.
+Merges of main: 11bca50, a fast-forward to 226777b (DECISIONS #18; main already held every gm1 commit, so no merge commit), dd4f9d4.
 
 ## Left undone, and what I need
 - **NLOWE:** nlowe.org is unreachable from this machine (connection refused on 443). Someone on another network should
