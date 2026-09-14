@@ -70,6 +70,34 @@ test('an unclear answer is never Looks like a fit', async () => {
   assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, self_check: 1 });
 });
 
+test('normally:true on bounds: inside is met, outside is unknown (unclear), a straddle stays band_straddles', () => {
+  const why = 'The page says this limit applies normally, so ask the office.';
+  const employees = { kind: 'employees', lt: 100, normally: true };
+  assert.equal(status(employees, AUTO()), 'met');
+  assert.deepEqual(ev(employees, profileFrom(AUTO_QUERY, { employees: '120' })), { status: 'unknown', unknown_reason: 'unclear', why });
+  assert.equal(status({ kind: 'employees', lt: 100 }, profileFrom(AUTO_QUERY, { employees: '120' })), 'missed', 'without normally it misses');
+
+  const revenue = { kind: 'revenue', lt: 10000000, normally: true };
+  assert.equal(status(revenue, AUTO()), 'met');
+  assert.deepEqual(ev(revenue, profileFrom(AUTO_QUERY, { revenue: '10m_100m' })), { status: 'unknown', unknown_reason: 'unclear', why });
+  assert.equal(status({ kind: 'revenue', lte: 5000000, normally: true }, profileFrom(AUTO_QUERY, { revenue: '2m_10m' })), 'unknown:band_straddles');
+  assert.equal(status({ kind: 'revenue', lt: 10000000, normally: true }, profileFrom(AUTO_QUERY, { revenue: 'unsaid' })), 'unknown:not_answered');
+
+  assert.equal(status({ kind: 'years_operating', lte: 24, unit: 'months', normally: true }, AUTO()), 'unknown:unclear');
+  assert.equal(status({ kind: 'project_cost', gte: 10000, normally: true }, profileFrom(AUTO_QUERY, { cost: 'lt10k' })), 'unknown:unclear');
+});
+
+test('a program whose only miss is a "normally" limit is Might fit, not Doesn\'t fit', async () => {
+  const loan = clone((await sampleBundlePrograms()).find((p) => p.slug === 'nl-sample-equipment-loan'));
+  const big = profileFrom(AUTO_QUERY, { revenue: '10m_100m' });
+  assert.equal(evaluateProgram(loan, big, { now: NOW }).fit.label, 'Doesn\'t fit', 'hard limit: missed');
+  loan.criteria.find((c) => c.id === 'revenue').rule.normally = true;
+  const r = evaluateProgram(loan, big, { now: NOW });
+  assert.equal(r.criteria.find((c) => c.id === 'revenue').unknown_reason, 'unclear');
+  assert.equal(r.fit.label, 'Might fit');
+  assert.equal(evaluateProgram(loan, AUTO(), { now: NOW }).fit.label, 'Looks like a fit', 'inside the limit still met');
+});
+
 test('employees: an exact number against the page’s bounds', () => {
   assert.equal(status({ kind: 'employees', lte: 50 }, AUTO()), 'met');
   assert.equal(status({ kind: 'employees', lte: 6 }, AUTO()), 'met');

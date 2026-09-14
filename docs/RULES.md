@@ -73,6 +73,15 @@ The page's own number and wording become bounds: *at least* (≥), *more than* (
 *fewer than* / *under* / *less than* (<). A rule can have a lower and an upper bound. The number in a rule must be
 written in its quote, or the build fails.
 
+### "Normally" limits
+Some pages soften a limit: "Eligible applicants must normally: … have fewer than 100 employees and less than $10
+million in sales." Such a rule carries `normally`. An answer inside the limit is **Met**, as usual. An answer outside
+it is **Unknown: the page's wording doesn't settle it for your answer**, with "The page says this limit applies
+normally, so ask the office.", never Missed. A band on both sides of the limit stays *close to the page's limit*.
+
+> Business Investment Program, "must normally … have fewer than 100 employees". 6 people: **Met**. 120 people:
+> **Unknown**. Without "normally" on the page, 120 people would be **Missed** and the program Doesn't fit.
+
 ## Interval logic: how a band is compared with a limit
 
 Most answers are bands, not exact numbers. Revenue "$500,000 to $1 million" means any value from $500,000 up to (but

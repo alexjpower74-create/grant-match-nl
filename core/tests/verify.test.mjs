@@ -111,6 +111,8 @@ test('schema: SAMPLE naming, enums, unique criterion ids, rule shapes', () => {
     [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: ['llc'] }; }, 'criteria[1].rule.unclear[0]:'],
     [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: [] }; }, 'criteria[1].rule.unclear:'],
     [(r) => { r.criteria[2].rule = { kind: 'employees', lt: 100, unclear: ['x'] }; }, 'criteria[2].rule.unclear:'],
+    [(r) => { r.criteria[2].rule = { kind: 'employees', lt: 100, normally: false }; }, 'criteria[2].rule.normally:'],
+    [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], normally: true }; }, 'criteria[1].rule.normally:'],
     [(r) => { r.criteria[3].rule = { kind: 'purpose', any: ['digital'], unclear: ['hire'] }; }, 'criteria[3].rule.unclear:'],
     [(r) => { r.criteria[5].rule = { kind: 'self_check', note: 'x' }; }, 'criteria[5].rule.note:'],
     [(r) => { r.criteria[0].quote = ' short'; }, 'criteria[0].quote:'],
