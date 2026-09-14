@@ -470,9 +470,78 @@ Dry run: nothing sent to the Worker.
 - **A post-scan ugrep filter broke.** It used a backreference ugrep rejects, so its "none" line proves nothing. The
   scan's own totals (287/287, "Quotes missing: none", "53 fetched fine") are the evidence.
 
+## Round 4 — DECISIONS #24: block-bounded context · DONE
+Merged main (`2a172df`, including gm2's CanExport re-hash). Baseline before any change: `check:data` exit 0 ("every
+quote verified (27 real programs, 10 SAMPLE)"), core tests 66/66, and a SHA-256 of all 37 program files (27 real,
+10 SAMPLE). Every step's gate: the full core suite green, `check:data` output identical to the baseline, and all 37
+program files byte-identical. No quote, `sha256` or `text_sha256` changed at any step.
+
+| Step | Commit | What | Tests | Control (break → red, restored byte for byte) |
+|---|---|---|---|---|
+| 1 | `b548eff` | `blockText(html)`: the `pageText` steps, except the API §1 block tags become one `\n`. `pageText` itself is untouched. | 68/68. Invariant `blockText(html).replace(/\n/g, ' ') === pageText(html)` over **all 65 saved pages**: the 54 HTML pages in `data/sources` (the census source is a zip) plus the 11 SAMPLE pages. | (w) `<br>` inserts no edge → both blockText tests red; the page-wide invariant failed on `ca-acoa-business-development-program--contacts.html` |
+| 2 | `f3c95fb` | `contextFor` stops at any `\n` as well as sentence boundaries. It finds the quote by page-text index, so quotes that span block edges still work, and never outputs `\n`. | 70/70: SAMPLE office list and breadcrumb (old leak shown on page text); Business Growth offices (no other office's number in any context); CanExport's closed intake (no breadcrumb); all 286 real quotes, counted with `quotesOf`, free of `\n` | (u) context allowed across block edges → both groups red (CanExport's breadcrumb came back) |
+| 3 | `5672b6c` | `buildBundle` takes context from each page's `block` text (`data-load.mjs` and the test helpers pass `block: blockText(html)`), and every contact gets `{ before: "", after: "" }` | 73/73: a SAMPLE contact cut mid-sentence gets no context while the same words as a criterion do; SAMPLE contexts bounded by blocks; the real bundle built with `--out` has empty context on every contact, no `\n` anywhere, and no breadcrumb before CanExport's intake | (v) contacts keep ordinary context → the SAMPLE test red, and the real-bundle test red at `ca-nrc-irap`'s contact |
+
+**Readings where the spec is silent (lead decides):**
+- **How block edges are marked.** A block tag first becomes a private-use marker character that isn't in the page. If
+  the page's own entities produce that character, another one is picked. So a newline in the HTML source is never a
+  block edge, and indexes line up exactly with `pageText`.
+- **"Stops at any `\n`":** `after` runs up to the edge without including it (for example `" phone"`), just as
+  `before` starts right after an edge. A sentence boundary right before an edge still counts.
+- **Where `block` comes from.** Core has no file system, so `buildBundle` gets `block` from the caller in each page
+  entry, next to `text` (API §8 `pageTexts`). Without it, context falls back to page text.
+
+### Contexts from the rebuilt bundle (`npm run build:data` on `5672b6c`)
+`""` means empty. Contacts are empty by rule (API §1). The criteria below are empty because each quote fills its own
+block.
+
+| Item | before | quote | after |
+|---|---|---|---|
+| Business Growth contact: Economic development (email) | "" | “For more information please contact economicdevelopment@gov.nl.ca” | "" |
+| Business Growth contact: Central regional office | "" | “Central: 709.256.1480” | "" |
+| Business Growth contact: Western regional office | "" | “Western: 709.637.2628” | "" |
+| Business Growth contact: Eastern regional office | "" | “Eastern: 709.466.4170” | "" |
+| Business Growth contact: Avalon regional office | "" | “Avalon: 1 833 404 2283” | "" |
+| Business Growth contact: Labrador regional office | "" | “Labrador: 709.896.2400” | "" |
+| CanExport SMEs intake (closed) | "" | “Applications are not being accepted at this time The application intake period ended at 12:00 p.m. (ET) on August 31, 2026.” | "" |
+| CanExport SMEs criterion `location` | "" | “To be eligible, your small or medium-sized enterprise must: be established in Canada be for-profit” | "" |
+| CanExport SMEs criterion `cra-business-number` | "" | “have an active Canada Revenue Agency (CRA) business number” | "" |
+| CBDC General Business Loan contact: CBDC Central, Grand Falls-Windsor (one of 15 CBDCs in the province) | "" | “CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496” | "" |
+| CBDC General Business Loan contact: CBDC Gander Area, Gander (one of 15 CBDCs in the province) | "" | “CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738” | "" |
+| CBDC General Business Loan contact: CBDC Emerald, Baie Verte (one of 15 CBDCs in the province) | "" | “CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312” | "" |
+| JobsNL criterion `participant-resides` | "" | “Must reside in Newfoundland and Labrador.” | "" |
+| JobsNL criterion `participant-unemployed` | "" | “Must be unemployed or underemployed (working less than 20 hours per week or in a field unrelated to their training).” | "" |
+| JobsNL criterion `participant-citizen` | "" | “Must be a Canadian citizen or permanent resident in Newfoundland and Labrador.” | "" |
+| JobsNL criterion `participant-no-benefits` | "" | “Must not be receiving federal or provincial pensions, Workplace NL benefits, or other benefits.” | "" |
+
+Before this change, on page text (read at the start of the round):
+- CanExport's intake `before` was "Canada.ca Trade Commissioner Service Our solutions Funding and financing for
+  international business CanExport SMEs ".
+- Business Growth Central's context was `before` "709.637.2628 ", `after` " Eastern:".
+
+**Across the whole rebuilt bundle:** 27 programs, 286 quotes, **249 with empty context**, none with a newline.
+Most quotes on these pages are a whole list item or paragraph, so gm2's long pages at 390 (R5) should be much
+shorter.
+
+**For gm2 (data, not engine):** some quotes join several blocks into one run, because that's how they read in page
+text:
+- CanExport's `location` ("…must: be established in Canada be for-profit");
+- CanExport's intake ("…at this time The application intake period…");
+- the CBDC office contact quotes ("…Contact Tel: …").
+
+That's unchanged by #24 and still verified, but on screen these read as run-ons. Shorter quotes, one block each, would
+read better. Their `text_sha256` wouldn't change.
+
+### Slips this round (all caught by the gate; nothing committed on a red run)
+- **Two wrong expectations in my new step 1 tests.** `<td>…</td><x-card>` does collapse to one `\n`; there are 65
+  saved pages, not 66. The code was right both times.
+- **A hard-coded 287 in the step 2 test.** The real count is 286: gm2 removed CanExport's `llp-only` item after my
+  round 3 scan. The test now counts with `quotesOf` and asserts every quote was checked.
+
 ## Left undone, and what I need
-- **gm2:** re-hash `ca-canexport-smes.json` (`node scripts/hash-source.mjs --update data/programs/ca-canexport-smes.json`
-  on gm1's core). Then the 3 real-data build tests and `check:data` go green, and plain `npm run scan -- --dry` runs.
+- **Lead:** the three readings above (how edges are marked, `after` stopping before a `\n`, `block` passed in by the
+  caller), and the K3 label wording from round 3.
+- **gm2:** optionally re-quote the run-on quotes above.
 - **NLOWE:** nlowe.org is unreachable from this machine (connection refused on 443). Someone on another network should
   check it before researching the NLOWE loan (ownership `women`).
 - **takeCHARGE:** rejected on its terms. It needs written permission from Newfoundland Power / NL Hydro, which is
