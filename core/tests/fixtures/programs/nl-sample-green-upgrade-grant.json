@@ -1,0 +1,101 @@
+{
+  "slug": "nl-sample-green-upgrade-grant",
+  "sample": true,
+  "name": "SAMPLE Green Upgrade Grant",
+  "provider": "SAMPLE Department of Energy",
+  "level": "provincial",
+  "url": "https://sample.invalid/grants/green-upgrade/",
+  "summary": {
+    "quote": "The SAMPLE Green Upgrade Grant is a non-repayable grant for energy efficiency upgrades in Newfoundland and Labrador.",
+    "source": "nl-sample-green-upgrade-grant--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-green-upgrade-grant--main",
+      "url": "https://sample.invalid/grants/green-upgrade/",
+      "title": "SAMPLE Green Upgrade Grant",
+      "publisher": "SAMPLE Department of Energy",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "17d05a7f433ce93a645d6d1f1ca46e77b413006775ee8dc14930fba1578d9db5",
+      "text_sha256": "9f0879ffd70f919e01469abde1bbf7481933ec7576bf8a79ba2317e18d46d81f",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The SAMPLE Green Upgrade Grant is a non-repayable grant for energy efficiency upgrades in Newfoundland and Labrador.",
+      "source": "nl-sample-green-upgrade-grant--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "Applications are accepted year-round.",
+    "source": "nl-sample-green-upgrade-grant--main",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The upgrade is in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "energy efficiency upgrades in Newfoundland and Labrador",
+      "source": "nl-sample-green-upgrade-grant--main"
+    },
+    {
+      "id": "structure",
+      "text": "An incorporated business or a sole proprietorship",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "corporation",
+          "sole_proprietor"
+        ],
+        "unclear": [
+          "cooperative",
+          "nonprofit"
+        ]
+      },
+      "quote": "It’s open to incorporated businesses or sole proprietorships.",
+      "source": "nl-sample-green-upgrade-grant--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for energy efficiency upgrades (equipment may qualify when it reduces energy use)",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "energy"
+        ],
+        "unclear": [
+          "equipment"
+        ]
+      },
+      "quote": "for energy efficiency upgrades",
+      "source": "nl-sample-green-upgrade-grant--main"
+    },
+    {
+      "id": "equipment-reduces-energy",
+      "text": "Equipment you buy reduces energy use",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Equipment purchases may qualify when they reduce energy use.",
+      "source": "nl-sample-green-upgrade-grant--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture (DECISIONS #22): purpose any [energy] with unclear [equipment], so SAMPLE Auto Service (equipment, software) gets Unknown with reason unclear and Might fit; structure unclear for co-operatives and non-profits. The nav link carries a data attribute with '>' inside quotes (API §1)."
+  }
+}
