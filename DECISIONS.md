@@ -99,3 +99,14 @@ count to 0, silently clearing "the page has changed"; and a page that now answer
 program "needs review" (so it can't show Looks like a fit). Lead's own negative control on the build gate at 1d0fc50:
 one character changed in a SAMPLE criterion quote → `build-data --check` exit 1 naming the file, path and where the
 quote stops matching; restored → exit 0.
+
+## 17. Answers to gm1's contract questions (03:25)
+Accepted as built: verifyProgram takes page texts or `{ text, sha256, text_sha256 }` from the caller (core has no file
+system); bundle reference lists are whole files; `counts.unknown` includes "check this yourself" items; community
+`type` is `subdivision`/`other` (the 2021 population table has no type column, and the file that does is too big to
+keep as evidence); interval shape; St. John's dates (a deadline passes the day after its date); the stricter schema
+(unknown keys are errors, source status must be 200, no deadline on continuous/unknown intake); profile edge cases.
+Changed: a live check of a page answering 404/410 lists every quote missing and marks the page gone; any other
+non-2xx or network failure says nothing about the page and changes no flags (API §9). gm1 wanted every non-200 to
+count as missing, which would flag programs for review on a passing server error. `.gitignore` gains gm1's two
+scratch folders.
