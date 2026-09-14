@@ -4,6 +4,35 @@ Lead: Onyx (Opus 5, xhigh). Slices: gm1 engine + NL programs, gm2 Worker + app +
 programs (Opus 5, medium), each in its own worktree on its own ports. Every number here comes from a QA worktree
 pinned to a sha (`rig qa`), never from a shared tree. Per-slice detail: `docs/build-report-gm1.md`, `-gm2.md`.
 
+## Round 2 — Onyx's review (lead only, no slices)
+
+Onyx reviewed the real APCO Software Tools results and asked for five changes (DECISIONS #29): sort as stated (fit, then
+funding type, then matches), intake timing out of the fit label and onto its own line, Unknown split into "the page
+doesn't say" and "we didn't ask you", a "Not enough to go on" tier for 0 matches, and each card's strongest quoted match.
+
+**Real APCO Software Tools profile, same 27 programs, same live data:** before, 0 Looks like a fit, 14 Might fit, 8 Doesn't
+fit, 5 closed; after, 1 Looks like a fit (CBDC Innovation Loan), 12 Might fit, 1 Not enough to go on (Innovation and
+Business Development Fund), 8 Doesn't fit, 5 closed. The Might fit list now opens with the non-repayable programs
+(Green Transition Fund, Business Growth Program), then repayable (ACOA), then loans.
+
+**A judgement call, reversed on evidence:** the lead first put location-only programs in "Not enough to go on" too. On the
+real APCO profile that made 12 of 22 open programs "Not enough to go on", mostly because the profile left structure and
+revenue unanswered, so it went back to Onyx's rule: 0 matches.
+
+**Negative controls, round 2** (`scratchpad/r2-controls.py`: break a committed file, run the targeted test, restore byte
+for byte, confirm git-clean, re-run green; a run with no tests counts as a failure):
+
+| # | Break | Result |
+|---|---|---|
+| N1 | Sort by more matches before funding type (Onyx's control) | red: "funding type outranks matches: a loan with more matches sits below a non-repayable program" |
+| N2 | Intake timing counted in the fit label again | red: "when a program takes applications never changes its label" |
+| N3 | A program with 0 matches allowed to be Might fit | red: "Not enough to go on: 0 matches is never Might fit" |
+| N4 | Core's Unknown split with `unclear` counted as we-didn't-ask-you | red: "Unknown splits into what the page doesn't say and what we didn't ask you" |
+| N5 | `top_match` allowed to pick location | red: "top_match: the strongest short quoted match beyond location" |
+| N6 | Card quote shows the criterion text instead of the quote | red: "each card shows its strongest quoted match, exactly as core picked it" |
+| N7 | App's Unknown groups swapped | **first VOID**: the test compared counts, and the SAMPLE program has one of each kind, so a swap kept both counts at 1. Test fixed to compare criterion ids per group (0e09a1a); then red |
+| N8 | Intake line without "call the office to confirm" | red: "a card says what the page leaves unsaid" |
+
 ## Final QA
 
 Pinned QA worktree at **`952c679`** (main after the last merge), QA ports 7406–7409, run by the lead's `final-qa.sh`:

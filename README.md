@@ -87,13 +87,20 @@ program when its page changes or disappears, and anything verified more than 60 
 ## How matching works
 
 Rules only, no model. Each criterion is a structured rule plus the quote it came from, evaluated against the profile
-as met, missed or Unknown (the page's wording can't settle it, the answer's band sits on both sides of a limit, you
-didn't answer, or it's something to check yourself). **Doesn't fit** = something is missed or the program is closed.
-**Looks like a fit** = everything your answers can check matches, at least one thing beyond location, the page says
-it's taking applications, and the page is fresh and unchanged. **Might fit** = everything else. Sorted by fit, then
-programs with a real match before location-only ones, then money you don't pay back first. Most provincial pages don't
-say when applications are taken, so most real results are Might fit: that's the pages, not a bug. Worked examples:
-`docs/RULES.md`; every judgement call: `DECISIONS.md`.
+as met, missed or Unknown. Unknown is never counted as met, and it comes in two kinds: **the page doesn't say** (its
+wording can't settle your answer) and **we didn't ask you** (a check-it-yourself item, a question you skipped or weren't
+sure about, a band on both sides of a limit), so an owner can see which ones they can answer.
+
+- **Looks like a fit:** everything your answers can check matches, at least one match beyond location, and the page is
+  fresh and unchanged.
+- **Might fit:** something matched and nothing rules you out, but an Unknown remains (or only your location matched).
+- **Not enough to go on:** nothing matched at all.
+- **Doesn't fit:** something is missed, or the program is closed.
+
+When a program takes applications is not a condition: it's its own line ("When it takes applications: the page doesn't
+say — call the office to confirm") and never changes the label; only closed does. Sorted by fit, then money you don't pay
+back first (non-repayable, repayable, wage subsidy and tax credit, loan), then the most matches. Each card shows its
+strongest quoted match. Worked examples: `docs/RULES.md`; every judgement call: `DECISIONS.md` (round 2 is #29).
 
 ## Tests
 
