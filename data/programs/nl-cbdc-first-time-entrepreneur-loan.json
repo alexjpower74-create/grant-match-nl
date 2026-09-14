@@ -1,0 +1,181 @@
+{
+  "slug": "nl-cbdc-first-time-entrepreneur-loan",
+  "sample": false,
+  "name": "CBDC First Time Entrepreneur Loan",
+  "provider": "Community Business Development Corporations (CBDCs), Newfoundland and Labrador offices",
+  "level": "nonprofit",
+  "url": "https://cbdc.ca/loan-programs/first-time-entrepreneur-loan/",
+  "summary": {
+    "quote": "If you are a new entrepreneur with a Startup Business and live in a rural community in Atlantic Canada, you may be eligible for a First Time Entrepreneur Loan from your local CBDC (Community Business Development Corporation).",
+    "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-cbdc-first-time-entrepreneur-loan--main",
+      "url": "https://cbdc.ca/loan-programs/first-time-entrepreneur-loan/",
+      "title": "Loans & Financing for New Entrepreneurs in NB, NL, NS & PEI - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:07:56.482Z",
+      "http_status": 200,
+      "sha256": "aaa6d035c7d92c09847800137890d8acef7c007d987c8a3a3bff17be034285cc",
+      "text_sha256": "585e89200b7501939d0a10ae14f63c9b1049fc0979be9c76d8d8929bbd2d39ac",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-first-time-entrepreneur-loan--office-central",
+      "url": "https://cbdc.ca/locations/cbdc-central-newfoundland/",
+      "title": "CBDC Central - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:11:33.779Z",
+      "http_status": 200,
+      "sha256": "e89ce7943d9a4e1f0b87e688cf1e784bafa648b82fe19cf81c13e831bec02816",
+      "text_sha256": "857fb363508c397d50f133fa76ba1666a57d0dee44c97f4d26c519702694b076",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-first-time-entrepreneur-loan--office-gander-area",
+      "url": "https://cbdc.ca/locations/cbdc-gander-area/",
+      "title": "Help & Financing for Small Business & Startups, Gander Region, NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:01:27.631Z",
+      "http_status": 200,
+      "sha256": "e3cdb047963f4b37c6d04f07e213dc3b22d6bb6f11b8b330d4ffdc72da22298d",
+      "text_sha256": "1664a503c022b9c7b9b1b93cd040da0fa9ed335f04acace5a41ba1839e7d96d7",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-first-time-entrepreneur-loan--office-emerald",
+      "url": "https://cbdc.ca/locations/cbdc-emerald/",
+      "title": "Help & Financing for Small Business & Startups, Baie Verte, N. Central NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:12:01.490Z",
+      "http_status": 200,
+      "sha256": "f9782f1a55eee1bf93c5c2876e3202bb224c9348be99f97bfc8555901346facf",
+      "text_sha256": "6baf88d92aeebb008379a6fd42da30f63583a3b90d72773fca0fd0855c3e13c9",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "First Time Entrepreneur Loans are repayable, but have competitive interest rates and repayment terms.",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 150000,
+    "text": "Up to $150,000 (more in some cases)",
+    "quote": "The CBDC First Time Entrepreneur Loan offers up to $150,000* to qualified borrowers in Atlantic Canada.",
+    "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "Living in a rural area of Atlantic Canada (which includes Newfoundland and Labrador)",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "You must be a new, first time entrepreneur living in a rural area of Atlantic Canada;",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    },
+    {
+      "id": "structure",
+      "text": "A sole proprietor, limited company or partnership, controlled by the new entrepreneur",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "sole_proprietor",
+          "corporation",
+          "partnership"
+        ],
+        "unclear": [
+          "not_registered"
+        ]
+      },
+      "quote": "It’s available to sole proprietors, limited companies and partnerships (when majority control is resides with the new entrepreneur).",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    },
+    {
+      "id": "first-time",
+      "text": "You are a new, first-time entrepreneur living in a rural area",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "You must be a new, first time entrepreneur living in a rural area of Atlantic Canada;",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    },
+    {
+      "id": "use",
+      "text": "The loan is for starting a business or buying an existing one",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Loan may be used for a business start-up, or to help buy an existing business;",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    },
+    {
+      "id": "local-cbdc",
+      "text": "Your local CBDC offers this loan (programs vary by region)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Programs and services delivered by CBDCs may vary by region.",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "phone": "(709) 489-4496",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--office-central"
+    },
+    {
+      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "phone": "(709) 651-4738",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--office-gander-area"
+    },
+    {
+      "label": "CBDC Emerald (Baie Verte)",
+      "phone": "(709) 532-8312",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--office-emerald"
+    },
+    {
+      "label": "CBDC Emerald satellite office (Springdale)",
+      "phone": "(709) 673-5702",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Emerald’s Satellite office Address 83 Little Bay Road Springdale NL A0J 1T0 Contact Tel: (709) 673-5702",
+      "source": "nl-cbdc-first-time-entrepreneur-loan--office-emerald"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Structure: sole proprietors, limited companies (corporation) and partnerships; a business not registered yet may become one of those, so unclear; co-operatives and non-profits miss. \"New, first time entrepreneur\" is not the same as years operating (someone buying an existing business can qualify), so it is check-this-yourself, not a years rule. Purpose is not a rule because buying an existing business is also allowed. The page says CBDCs can exceed $150,000 in certain circumstances. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+  }
+}
