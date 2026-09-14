@@ -1,0 +1,2339 @@
+{
+  "source": {
+    "url": "https://www150.statcan.gc.ca/n1/tbl/csv/98100002-eng.zip",
+    "title": "Population and dwelling counts: Canada and census subdivisions (municipalities)",
+    "publisher": "Statistics Canada",
+    "fetched_at": "2026-09-14T05:25:43.180Z",
+    "file": "data/sources/ref-census-2021-population-csd.zip"
+  },
+  "communities": [
+    {
+      "id": "admirals-beach",
+      "name": "Admirals Beach",
+      "type": "subdivision",
+      "csd_code": "1001186",
+      "census_division": 1,
+      "population_2021": 97
+    },
+    {
+      "id": "anchor-point",
+      "name": "Anchor Point",
+      "type": "subdivision",
+      "csd_code": "1009023",
+      "census_division": 9,
+      "population_2021": 305
+    },
+    {
+      "id": "appleton",
+      "name": "Appleton",
+      "type": "subdivision",
+      "csd_code": "1006011",
+      "census_division": 6,
+      "population_2021": 620
+    },
+    {
+      "id": "aquaforte",
+      "name": "Aquaforte",
+      "type": "subdivision",
+      "csd_code": "1001144",
+      "census_division": 1,
+      "population_2021": 74
+    },
+    {
+      "id": "arnolds-cove",
+      "name": "Arnold's Cove",
+      "type": "subdivision",
+      "csd_code": "1001270",
+      "census_division": 1,
+      "population_2021": 964
+    },
+    {
+      "id": "avondale",
+      "name": "Avondale",
+      "type": "subdivision",
+      "csd_code": "1001464",
+      "census_division": 1,
+      "population_2021": 584
+    },
+    {
+      "id": "badger",
+      "name": "Badger",
+      "type": "subdivision",
+      "csd_code": "1006026",
+      "census_division": 6,
+      "population_2021": 682
+    },
+    {
+      "id": "baie-verte",
+      "name": "Baie Verte",
+      "type": "subdivision",
+      "csd_code": "1008079",
+      "census_division": 8,
+      "population_2021": 1311
+    },
+    {
+      "id": "baine-harbour",
+      "name": "Baine Harbour",
+      "type": "subdivision",
+      "csd_code": "1002040",
+      "census_division": 2,
+      "population_2021": 126
+    },
+    {
+      "id": "bauline",
+      "name": "Bauline",
+      "type": "subdivision",
+      "csd_code": "1001512",
+      "census_division": 1,
+      "population_2021": 412
+    },
+    {
+      "id": "bay-bulls",
+      "name": "Bay Bulls",
+      "type": "subdivision",
+      "csd_code": "1001557",
+      "census_division": 1,
+      "population_2021": 1566
+    },
+    {
+      "id": "bay-de-verde",
+      "name": "Bay de Verde",
+      "type": "subdivision",
+      "csd_code": "1001347",
+      "census_division": 1,
+      "population_2021": 347
+    },
+    {
+      "id": "bay-largent",
+      "name": "Bay L'Argent",
+      "type": "subdivision",
+      "csd_code": "1002027",
+      "census_division": 2,
+      "population_2021": 234
+    },
+    {
+      "id": "bay-roberts",
+      "name": "Bay Roberts",
+      "type": "subdivision",
+      "csd_code": "1001409",
+      "census_division": 1,
+      "population_2021": 5974
+    },
+    {
+      "id": "baytona",
+      "name": "Baytona",
+      "type": "subdivision",
+      "csd_code": "1008040",
+      "census_division": 8,
+      "population_2021": 251
+    },
+    {
+      "id": "beachside",
+      "name": "Beachside",
+      "type": "subdivision",
+      "csd_code": "1008066",
+      "census_division": 8,
+      "population_2021": 97
+    },
+    {
+      "id": "bellburns",
+      "name": "Bellburns",
+      "type": "subdivision",
+      "csd_code": "1009042",
+      "census_division": 9,
+      "population_2021": 52
+    },
+    {
+      "id": "belleoram",
+      "name": "Belleoram",
+      "type": "subdivision",
+      "csd_code": "1003004",
+      "census_division": 3,
+      "population_2021": 348
+    },
+    {
+      "id": "birchy-bay",
+      "name": "Birchy Bay",
+      "type": "subdivision",
+      "csd_code": "1008038",
+      "census_division": 8,
+      "population_2021": 511
+    },
+    {
+      "id": "bird-cove",
+      "name": "Bird Cove",
+      "type": "subdivision",
+      "csd_code": "1009026",
+      "census_division": 9,
+      "population_2021": 175
+    },
+    {
+      "id": "bishops-cove",
+      "name": "Bishop's Cove",
+      "type": "subdivision",
+      "csd_code": "1001394",
+      "census_division": 1,
+      "population_2021": 252
+    },
+    {
+      "id": "bishops-falls",
+      "name": "Bishop's Falls",
+      "type": "subdivision",
+      "csd_code": "1006019",
+      "census_division": 6,
+      "population_2021": 3082
+    },
+    {
+      "id": "bonavista",
+      "name": "Bonavista",
+      "type": "subdivision",
+      "csd_code": "1007023",
+      "census_division": 7,
+      "population_2021": 3190
+    },
+    {
+      "id": "botwood",
+      "name": "Botwood",
+      "type": "subdivision",
+      "csd_code": "1006022",
+      "census_division": 6,
+      "population_2021": 2778
+    },
+    {
+      "id": "branch",
+      "name": "Branch",
+      "type": "subdivision",
+      "csd_code": "1001219",
+      "census_division": 1,
+      "population_2021": 177
+    },
+    {
+      "id": "brents-cove",
+      "name": "Brent's Cove",
+      "type": "subdivision",
+      "csd_code": "1008077",
+      "census_division": 8,
+      "population_2021": 119
+    },
+    {
+      "id": "brighton",
+      "name": "Brighton",
+      "type": "subdivision",
+      "csd_code": "1008055",
+      "census_division": 8,
+      "population_2021": 163
+    },
+    {
+      "id": "brigus",
+      "name": "Brigus",
+      "type": "subdivision",
+      "csd_code": "1001446",
+      "census_division": 1,
+      "population_2021": 699
+    },
+    {
+      "id": "bryants-cove",
+      "name": "Bryant's Cove",
+      "type": "subdivision",
+      "csd_code": "1001375",
+      "census_division": 1,
+      "population_2021": 343
+    },
+    {
+      "id": "buchans",
+      "name": "Buchans",
+      "type": "subdivision",
+      "csd_code": "1006031",
+      "census_division": 6,
+      "population_2021": 590
+    },
+    {
+      "id": "burgeo",
+      "name": "Burgeo",
+      "type": "subdivision",
+      "csd_code": "1003028",
+      "census_division": 3,
+      "population_2021": 1176
+    },
+    {
+      "id": "burin",
+      "name": "Burin",
+      "type": "subdivision",
+      "csd_code": "1002005",
+      "census_division": 2,
+      "population_2021": 2237
+    },
+    {
+      "id": "burlington",
+      "name": "Burlington",
+      "type": "subdivision",
+      "csd_code": "1008071",
+      "census_division": 8,
+      "population_2021": 304
+    },
+    {
+      "id": "burnt-islands",
+      "name": "Burnt Islands",
+      "type": "subdivision",
+      "csd_code": "1003033",
+      "census_division": 3,
+      "population_2021": 540
+    },
+    {
+      "id": "campbellton",
+      "name": "Campbellton",
+      "type": "subdivision",
+      "csd_code": "1008037",
+      "census_division": 8,
+      "population_2021": 459
+    },
+    {
+      "id": "cape-broyle",
+      "name": "Cape Broyle",
+      "type": "subdivision",
+      "csd_code": "1001126",
+      "census_division": 1,
+      "population_2021": 499
+    },
+    {
+      "id": "cape-st-george",
+      "name": "Cape St. George",
+      "type": "subdivision",
+      "csd_code": "1004033",
+      "census_division": 4,
+      "population_2021": 809
+    },
+    {
+      "id": "carbonear",
+      "name": "Carbonear",
+      "type": "subdivision",
+      "csd_code": "1001370",
+      "census_division": 1,
+      "population_2021": 4696
+    },
+    {
+      "id": "carmanville",
+      "name": "Carmanville",
+      "type": "subdivision",
+      "csd_code": "1008011",
+      "census_division": 8,
+      "population_2021": 784
+    },
+    {
+      "id": "cartwright-labrador",
+      "name": "Cartwright, Labrador",
+      "type": "subdivision",
+      "csd_code": "1010012",
+      "census_division": 10,
+      "population_2021": 439
+    },
+    {
+      "id": "centreville-wareham-trinity",
+      "name": "Centreville-Wareham-Trinity",
+      "type": "subdivision",
+      "csd_code": "1007050",
+      "census_division": 7,
+      "population_2021": 1116
+    },
+    {
+      "id": "chance-cove",
+      "name": "Chance Cove",
+      "type": "subdivision",
+      "csd_code": "1001281",
+      "census_division": 1,
+      "population_2021": 213
+    },
+    {
+      "id": "change-islands",
+      "name": "Change Islands",
+      "type": "subdivision",
+      "csd_code": "1008024",
+      "census_division": 8,
+      "population_2021": 184
+    },
+    {
+      "id": "channel-port-aux-basques",
+      "name": "Channel-Port aux Basques",
+      "type": "subdivision",
+      "csd_code": "1003034",
+      "census_division": 3,
+      "population_2021": 3547
+    },
+    {
+      "id": "chapel-arm",
+      "name": "Chapel Arm",
+      "type": "subdivision",
+      "csd_code": "1001289",
+      "census_division": 1,
+      "population_2021": 446
+    },
+    {
+      "id": "charlottetown-labrador",
+      "name": "Charlottetown (Labrador)",
+      "type": "subdivision",
+      "csd_code": "1010013",
+      "census_division": 10,
+      "population_2021": 292
+    },
+    {
+      "id": "clarenville",
+      "name": "Clarenville",
+      "type": "subdivision",
+      "csd_code": "1007013",
+      "census_division": 7,
+      "population_2021": 6704
+    },
+    {
+      "id": "clarkes-beach",
+      "name": "Clarke's Beach",
+      "type": "subdivision",
+      "csd_code": "1001429",
+      "census_division": 1,
+      "population_2021": 1400
+    },
+    {
+      "id": "coachmans-cove",
+      "name": "Coachman's Cove",
+      "type": "subdivision",
+      "csd_code": "1008092",
+      "census_division": 8,
+      "population_2021": 111
+    },
+    {
+      "id": "colinet",
+      "name": "Colinet",
+      "type": "subdivision",
+      "csd_code": "1001207",
+      "census_division": 1,
+      "population_2021": 103
+    },
+    {
+      "id": "colliers",
+      "name": "Colliers",
+      "type": "subdivision",
+      "csd_code": "1001456",
+      "census_division": 1,
+      "population_2021": 613
+    },
+    {
+      "id": "come-by-chance",
+      "name": "Come By Chance",
+      "type": "subdivision",
+      "csd_code": "1001274",
+      "census_division": 1,
+      "population_2021": 208
+    },
+    {
+      "id": "comfort-cove-newstead",
+      "name": "Comfort Cove-Newstead",
+      "type": "subdivision",
+      "csd_code": "1008039",
+      "census_division": 8,
+      "population_2021": 345
+    },
+    {
+      "id": "conception-bay-south",
+      "name": "Conception Bay South",
+      "type": "subdivision",
+      "csd_code": "1001485",
+      "census_division": 1,
+      "population_2021": 27168
+    },
+    {
+      "id": "conception-harbour",
+      "name": "Conception Harbour",
+      "type": "subdivision",
+      "csd_code": "1001461",
+      "census_division": 1,
+      "population_2021": 624
+    },
+    {
+      "id": "conche",
+      "name": "Conche",
+      "type": "subdivision",
+      "csd_code": "1009008",
+      "census_division": 9,
+      "population_2021": 149
+    },
+    {
+      "id": "cooks-harbour",
+      "name": "Cook's Harbour",
+      "type": "subdivision",
+      "csd_code": "1009034",
+      "census_division": 9,
+      "population_2021": 118
+    },
+    {
+      "id": "cormack",
+      "name": "Cormack",
+      "type": "subdivision",
+      "csd_code": "1005014",
+      "census_division": 5,
+      "population_2021": 492
+    },
+    {
+      "id": "corner-brook",
+      "name": "Corner Brook",
+      "type": "subdivision",
+      "csd_code": "1005018",
+      "census_division": 5,
+      "population_2021": 19333
+    },
+    {
+      "id": "cottlesville",
+      "name": "Cottlesville",
+      "type": "subdivision",
+      "csd_code": "1008032",
+      "census_division": 8,
+      "population_2021": 244
+    },
+    {
+      "id": "cow-head",
+      "name": "Cow Head",
+      "type": "subdivision",
+      "csd_code": "1009016",
+      "census_division": 9,
+      "population_2021": 398
+    },
+    {
+      "id": "coxs-cove",
+      "name": "Cox's Cove",
+      "type": "subdivision",
+      "csd_code": "1005023",
+      "census_division": 5,
+      "population_2021": 664
+    },
+    {
+      "id": "crow-head",
+      "name": "Crow Head",
+      "type": "subdivision",
+      "csd_code": "1008029",
+      "census_division": 8,
+      "population_2021": 156
+    },
+    {
+      "id": "cupids",
+      "name": "Cupids",
+      "type": "subdivision",
+      "csd_code": "1001437",
+      "census_division": 1,
+      "population_2021": 699
+    },
+    {
+      "id": "daniels-harbour",
+      "name": "Daniel's Harbour",
+      "type": "subdivision",
+      "csd_code": "1009015",
+      "census_division": 9,
+      "population_2021": 220
+    },
+    {
+      "id": "deer-lake",
+      "name": "Deer Lake",
+      "type": "subdivision",
+      "csd_code": "1005004",
+      "census_division": 5,
+      "population_2021": 4864
+    },
+    {
+      "id": "dover",
+      "name": "Dover",
+      "type": "subdivision",
+      "csd_code": "1007057",
+      "census_division": 7,
+      "population_2021": 579
+    },
+    {
+      "id": "duntara",
+      "name": "Duntara",
+      "type": "subdivision",
+      "csd_code": "1007026",
+      "census_division": 7,
+      "population_2021": 36
+    },
+    {
+      "id": "eastport",
+      "name": "Eastport",
+      "type": "subdivision",
+      "csd_code": "1007042",
+      "census_division": 7,
+      "population_2021": 527
+    },
+    {
+      "id": "elliston",
+      "name": "Elliston",
+      "type": "subdivision",
+      "csd_code": "1007020",
+      "census_division": 7,
+      "population_2021": 315
+    },
+    {
+      "id": "embree",
+      "name": "Embree",
+      "type": "subdivision",
+      "csd_code": "1008043",
+      "census_division": 8,
+      "population_2021": 679
+    },
+    {
+      "id": "englee",
+      "name": "Englee",
+      "type": "subdivision",
+      "csd_code": "1009004",
+      "census_division": 9,
+      "population_2021": 489
+    },
+    {
+      "id": "english-harbour-east",
+      "name": "English Harbour East",
+      "type": "subdivision",
+      "csd_code": "1002039",
+      "census_division": 2,
+      "population_2021": 117
+    },
+    {
+      "id": "fermeuse",
+      "name": "Fermeuse",
+      "type": "subdivision",
+      "csd_code": "1001136",
+      "census_division": 1,
+      "population_2021": 266
+    },
+    {
+      "id": "ferryland",
+      "name": "Ferryland",
+      "type": "subdivision",
+      "csd_code": "1001149",
+      "census_division": 1,
+      "population_2021": 371
+    },
+    {
+      "id": "flatrock",
+      "name": "Flatrock",
+      "type": "subdivision",
+      "csd_code": "1001507",
+      "census_division": 1,
+      "population_2021": 1722
+    },
+    {
+      "id": "fleur-de-lys",
+      "name": "Fleur de Lys",
+      "type": "subdivision",
+      "csd_code": "1008075",
+      "census_division": 8,
+      "population_2021": 207
+    },
+    {
+      "id": "flowers-cove",
+      "name": "Flower's Cove",
+      "type": "subdivision",
+      "csd_code": "1009024",
+      "census_division": 9,
+      "population_2021": 272
+    },
+    {
+      "id": "fogo-island",
+      "name": "Fogo Island",
+      "type": "subdivision",
+      "csd_code": "1008099",
+      "census_division": 8,
+      "population_2021": 2117
+    },
+    {
+      "id": "forteau",
+      "name": "Forteau",
+      "type": "subdivision",
+      "csd_code": "1010005",
+      "census_division": 10,
+      "population_2021": 377
+    },
+    {
+      "id": "fortune",
+      "name": "Fortune",
+      "type": "subdivision",
+      "csd_code": "1002018",
+      "census_division": 2,
+      "population_2021": 1285
+    },
+    {
+      "id": "fox-cove-mortier",
+      "name": "Fox Cove-Mortier",
+      "type": "subdivision",
+      "csd_code": "1002025",
+      "census_division": 2,
+      "population_2021": 252
+    },
+    {
+      "id": "fox-harbour",
+      "name": "Fox Harbour",
+      "type": "subdivision",
+      "csd_code": "1001254",
+      "census_division": 1,
+      "population_2021": 226
+    },
+    {
+      "id": "frenchmans-cove",
+      "name": "Frenchman's Cove",
+      "type": "subdivision",
+      "csd_code": "1002017",
+      "census_division": 2,
+      "population_2021": 159
+    },
+    {
+      "id": "gallants",
+      "name": "Gallants",
+      "type": "subdivision",
+      "csd_code": "1004017",
+      "census_division": 4,
+      "population_2021": 50
+    },
+    {
+      "id": "gambo",
+      "name": "Gambo",
+      "type": "subdivision",
+      "csd_code": "1007047",
+      "census_division": 7,
+      "population_2021": 1816
+    },
+    {
+      "id": "gander",
+      "name": "Gander",
+      "type": "subdivision",
+      "csd_code": "1006009",
+      "census_division": 6,
+      "population_2021": 11880
+    },
+    {
+      "id": "garnish",
+      "name": "Garnish",
+      "type": "subdivision",
+      "csd_code": "1002021",
+      "census_division": 2,
+      "population_2021": 542
+    },
+    {
+      "id": "gaskiers-point-la-haye",
+      "name": "Gaskiers-Point La Haye",
+      "type": "subdivision",
+      "csd_code": "1001174",
+      "census_division": 1,
+      "population_2021": 189
+    },
+    {
+      "id": "gaultois",
+      "name": "Gaultois",
+      "type": "subdivision",
+      "csd_code": "1003012",
+      "census_division": 3,
+      "population_2021": 100
+    },
+    {
+      "id": "gillams",
+      "name": "Gillams",
+      "type": "subdivision",
+      "csd_code": "1005015",
+      "census_division": 5,
+      "population_2021": 506
+    },
+    {
+      "id": "glenburnie-birchy-head-shoal-brook",
+      "name": "Glenburnie-Birchy Head-Shoal Brook",
+      "type": "subdivision",
+      "csd_code": "1009030",
+      "census_division": 9,
+      "population_2021": 241
+    },
+    {
+      "id": "glenwood",
+      "name": "Glenwood",
+      "type": "subdivision",
+      "csd_code": "1006012",
+      "census_division": 6,
+      "population_2021": 739
+    },
+    {
+      "id": "glovertown",
+      "name": "Glovertown",
+      "type": "subdivision",
+      "csd_code": "1007044",
+      "census_division": 7,
+      "population_2021": 1948
+    },
+    {
+      "id": "goose-cove-east",
+      "name": "Goose Cove East",
+      "type": "subdivision",
+      "csd_code": "1009039",
+      "census_division": 9,
+      "population_2021": 172
+    },
+    {
+      "id": "grand-bank",
+      "name": "Grand Bank",
+      "type": "subdivision",
+      "csd_code": "1002019",
+      "census_division": 2,
+      "population_2021": 2152
+    },
+    {
+      "id": "grand-falls-windsor",
+      "name": "Grand Falls-Windsor",
+      "type": "subdivision",
+      "csd_code": "1006017",
+      "census_division": 6,
+      "population_2021": 13853
+    },
+    {
+      "id": "grand-le-pierre",
+      "name": "Grand Le Pierre",
+      "type": "subdivision",
+      "csd_code": "1002030",
+      "census_division": 2,
+      "population_2021": 176
+    },
+    {
+      "id": "greenspond",
+      "name": "Greenspond",
+      "type": "subdivision",
+      "csd_code": "1007054",
+      "census_division": 7,
+      "population_2021": 257
+    },
+    {
+      "id": "hampden",
+      "name": "Hampden",
+      "type": "subdivision",
+      "csd_code": "1005008",
+      "census_division": 5,
+      "population_2021": 439
+    },
+    {
+      "id": "hants-harbour",
+      "name": "Hant's Harbour",
+      "type": "subdivision",
+      "csd_code": "1001335",
+      "census_division": 1,
+      "population_2021": 318
+    },
+    {
+      "id": "happy-adventure",
+      "name": "Happy Adventure",
+      "type": "subdivision",
+      "csd_code": "1007041",
+      "census_division": 7,
+      "population_2021": 118
+    },
+    {
+      "id": "happy-valley-goose-bay",
+      "name": "Happy Valley-Goose Bay",
+      "type": "subdivision",
+      "csd_code": "1010025",
+      "census_division": 10,
+      "population_2021": 8040
+    },
+    {
+      "id": "harbour-breton",
+      "name": "Harbour Breton",
+      "type": "subdivision",
+      "csd_code": "1003008",
+      "census_division": 3,
+      "population_2021": 1477
+    },
+    {
+      "id": "harbour-grace",
+      "name": "Harbour Grace",
+      "type": "subdivision",
+      "csd_code": "1001379",
+      "census_division": 1,
+      "population_2021": 2796
+    },
+    {
+      "id": "harbour-main-chapels-cove-lakeview",
+      "name": "Harbour Main-Chapel's Cove-Lakeview",
+      "type": "subdivision",
+      "csd_code": "1001469",
+      "census_division": 1,
+      "population_2021": 1065
+    },
+    {
+      "id": "hare-bay",
+      "name": "Hare Bay",
+      "type": "subdivision",
+      "csd_code": "1007049",
+      "census_division": 7,
+      "population_2021": 925
+    },
+    {
+      "id": "hawkes-bay",
+      "name": "Hawke's Bay",
+      "type": "subdivision",
+      "csd_code": "1009018",
+      "census_division": 9,
+      "population_2021": 297
+    },
+    {
+      "id": "hearts-content",
+      "name": "Heart's Content",
+      "type": "subdivision",
+      "csd_code": "1001325",
+      "census_division": 1,
+      "population_2021": 330
+    },
+    {
+      "id": "hearts-delight-islington",
+      "name": "Heart's Delight-Islington",
+      "type": "subdivision",
+      "csd_code": "1001312",
+      "census_division": 1,
+      "population_2021": 646
+    },
+    {
+      "id": "hearts-desire",
+      "name": "Heart's Desire",
+      "type": "subdivision",
+      "csd_code": "1001316",
+      "census_division": 1,
+      "population_2021": 184
+    },
+    {
+      "id": "hermitage-sandyville",
+      "name": "Hermitage-Sandyville",
+      "type": "subdivision",
+      "csd_code": "1003011",
+      "census_division": 3,
+      "population_2021": 404
+    },
+    {
+      "id": "holyrood",
+      "name": "Holyrood",
+      "type": "subdivision",
+      "csd_code": "1001472",
+      "census_division": 1,
+      "population_2021": 2471
+    },
+    {
+      "id": "hopedale",
+      "name": "Hopedale",
+      "type": "subdivision",
+      "csd_code": "1011030",
+      "census_division": 11,
+      "population_2021": 596
+    },
+    {
+      "id": "howley",
+      "name": "Howley",
+      "type": "subdivision",
+      "csd_code": "1005006",
+      "census_division": 5,
+      "population_2021": 179
+    },
+    {
+      "id": "hughes-brook",
+      "name": "Hughes Brook",
+      "type": "subdivision",
+      "csd_code": "1005028",
+      "census_division": 5,
+      "population_2021": 236
+    },
+    {
+      "id": "humber-arm-south",
+      "name": "Humber Arm South",
+      "type": "subdivision",
+      "csd_code": "1005020",
+      "census_division": 5,
+      "population_2021": 1537
+    },
+    {
+      "id": "indian-bay",
+      "name": "Indian Bay",
+      "type": "subdivision",
+      "csd_code": "1007067",
+      "census_division": 7,
+      "population_2021": 172
+    },
+    {
+      "id": "irishtown-summerside",
+      "name": "Irishtown-Summerside",
+      "type": "subdivision",
+      "csd_code": "1005030",
+      "census_division": 5,
+      "population_2021": 1260
+    },
+    {
+      "id": "isle-aux-morts",
+      "name": "Isle aux Morts",
+      "type": "subdivision",
+      "csd_code": "1003032",
+      "census_division": 3,
+      "population_2021": 559
+    },
+    {
+      "id": "jacksons-arm",
+      "name": "Jackson's Arm",
+      "type": "subdivision",
+      "csd_code": "1005005",
+      "census_division": 5,
+      "population_2021": 277
+    },
+    {
+      "id": "keels",
+      "name": "Keels",
+      "type": "subdivision",
+      "csd_code": "1007025",
+      "census_division": 7,
+      "population_2021": 46
+    },
+    {
+      "id": "kings-cove",
+      "name": "King's Cove",
+      "type": "subdivision",
+      "csd_code": "1007027",
+      "census_division": 7,
+      "population_2021": 75
+    },
+    {
+      "id": "kings-point",
+      "name": "King's Point",
+      "type": "subdivision",
+      "csd_code": "1008069",
+      "census_division": 8,
+      "population_2021": 653
+    },
+    {
+      "id": "kippens",
+      "name": "Kippens",
+      "type": "subdivision",
+      "csd_code": "1004020",
+      "census_division": 4,
+      "population_2021": 1842
+    },
+    {
+      "id": "lanse-au-loup",
+      "name": "L'Anse au Loup",
+      "type": "subdivision",
+      "csd_code": "1010002",
+      "census_division": 10,
+      "population_2021": 692
+    },
+    {
+      "id": "lanse-au-clair",
+      "name": "L'Anse-au-Clair",
+      "type": "subdivision",
+      "csd_code": "1010004",
+      "census_division": 10,
+      "population_2021": 219
+    },
+    {
+      "id": "labrador-city",
+      "name": "Labrador City",
+      "type": "subdivision",
+      "csd_code": "1010032",
+      "census_division": 10,
+      "population_2021": 7412
+    },
+    {
+      "id": "lamaline",
+      "name": "Lamaline",
+      "type": "subdivision",
+      "csd_code": "1002012",
+      "census_division": 2,
+      "population_2021": 218
+    },
+    {
+      "id": "lark-harbour",
+      "name": "Lark Harbour",
+      "type": "subdivision",
+      "csd_code": "1005024",
+      "census_division": 5,
+      "population_2021": 508
+    },
+    {
+      "id": "lascie",
+      "name": "LaScie",
+      "type": "subdivision",
+      "csd_code": "1008076",
+      "census_division": 8,
+      "population_2021": 820
+    },
+    {
+      "id": "lawn",
+      "name": "Lawn",
+      "type": "subdivision",
+      "csd_code": "1002011",
+      "census_division": 2,
+      "population_2021": 583
+    },
+    {
+      "id": "leading-tickles",
+      "name": "Leading Tickles",
+      "type": "subdivision",
+      "csd_code": "1008048",
+      "census_division": 8,
+      "population_2021": 296
+    },
+    {
+      "id": "lewins-cove",
+      "name": "Lewin's Cove",
+      "type": "subdivision",
+      "csd_code": "1002002",
+      "census_division": 2,
+      "population_2021": 546
+    },
+    {
+      "id": "lewisporte",
+      "name": "Lewisporte",
+      "type": "subdivision",
+      "csd_code": "1008044",
+      "census_division": 8,
+      "population_2021": 3288
+    },
+    {
+      "id": "little-bay",
+      "name": "Little Bay",
+      "type": "subdivision",
+      "csd_code": "1008063",
+      "census_division": 8,
+      "population_2021": 100
+    },
+    {
+      "id": "little-bay-east",
+      "name": "Little Bay East",
+      "type": "subdivision",
+      "csd_code": "1002055",
+      "census_division": 2,
+      "population_2021": 84
+    },
+    {
+      "id": "little-bay-islands",
+      "name": "Little Bay Islands",
+      "type": "subdivision",
+      "csd_code": "1008064",
+      "census_division": 8,
+      "population_2021": 0
+    },
+    {
+      "id": "little-burnt-bay",
+      "name": "Little Burnt Bay",
+      "type": "subdivision",
+      "csd_code": "1008045",
+      "census_division": 8,
+      "population_2021": 238
+    },
+    {
+      "id": "logy-bay-middle-cove-outer-cove",
+      "name": "Logy Bay-Middle Cove-Outer Cove",
+      "type": "subdivision",
+      "csd_code": "1001511",
+      "census_division": 1,
+      "population_2021": 2364
+    },
+    {
+      "id": "long-harbour-mount-arlington-heights",
+      "name": "Long Harbour-Mount Arlington Heights",
+      "type": "subdivision",
+      "csd_code": "1001263",
+      "census_division": 1,
+      "population_2021": 185
+    },
+    {
+      "id": "lords-cove",
+      "name": "Lord's Cove",
+      "type": "subdivision",
+      "csd_code": "1002013",
+      "census_division": 2,
+      "population_2021": 155
+    },
+    {
+      "id": "lourdes",
+      "name": "Lourdes",
+      "type": "subdivision",
+      "csd_code": "1004037",
+      "census_division": 4,
+      "population_2021": 502
+    },
+    {
+      "id": "lumsden",
+      "name": "Lumsden",
+      "type": "subdivision",
+      "csd_code": "1008004",
+      "census_division": 8,
+      "population_2021": 535
+    },
+    {
+      "id": "lushes-bight-beaumont-beaumont-north",
+      "name": "Lushes Bight-Beaumont-Beaumont North",
+      "type": "subdivision",
+      "csd_code": "1008056",
+      "census_division": 8,
+      "population_2021": 169
+    },
+    {
+      "id": "main-brook",
+      "name": "Main Brook",
+      "type": "subdivision",
+      "csd_code": "1009028",
+      "census_division": 9,
+      "population_2021": 246
+    },
+    {
+      "id": "makkovik",
+      "name": "Makkovik",
+      "type": "subdivision",
+      "csd_code": "1011020",
+      "census_division": 11,
+      "population_2021": 365
+    },
+    {
+      "id": "marys-harbour",
+      "name": "Mary's Harbour",
+      "type": "subdivision",
+      "csd_code": "1010011",
+      "census_division": 10,
+      "population_2021": 312
+    },
+    {
+      "id": "marystown",
+      "name": "Marystown",
+      "type": "subdivision",
+      "csd_code": "1002024",
+      "census_division": 2,
+      "population_2021": 5204
+    },
+    {
+      "id": "massey-drive",
+      "name": "Massey Drive",
+      "type": "subdivision",
+      "csd_code": "1005017",
+      "census_division": 5,
+      "population_2021": 1606
+    },
+    {
+      "id": "mcivers",
+      "name": "McIvers",
+      "type": "subdivision",
+      "csd_code": "1005022",
+      "census_division": 5,
+      "population_2021": 575
+    },
+    {
+      "id": "meadows",
+      "name": "Meadows",
+      "type": "subdivision",
+      "csd_code": "1005025",
+      "census_division": 5,
+      "population_2021": 404
+    },
+    {
+      "id": "middle-arm",
+      "name": "Middle Arm",
+      "type": "subdivision",
+      "csd_code": "1008072",
+      "census_division": 8,
+      "population_2021": 443
+    },
+    {
+      "id": "miles-cove",
+      "name": "Miles Cove",
+      "type": "subdivision",
+      "csd_code": "1008098",
+      "census_division": 8,
+      "population_2021": 97
+    },
+    {
+      "id": "millertown",
+      "name": "Millertown",
+      "type": "subdivision",
+      "csd_code": "1006028",
+      "census_division": 6,
+      "population_2021": 87
+    },
+    {
+      "id": "milltown-head-of-bay-despoir",
+      "name": "Milltown-Head of Bay d'Espoir",
+      "type": "subdivision",
+      "csd_code": "1003018",
+      "census_division": 3,
+      "population_2021": 669
+    },
+    {
+      "id": "mings-bight",
+      "name": "Ming's Bight",
+      "type": "subdivision",
+      "csd_code": "1008095",
+      "census_division": 8,
+      "population_2021": 298
+    },
+    {
+      "id": "morrisville",
+      "name": "Morrisville",
+      "type": "subdivision",
+      "csd_code": "1003020",
+      "census_division": 3,
+      "population_2021": 93
+    },
+    {
+      "id": "mount-carmel-mitchells-brook-st-catherines",
+      "name": "Mount Carmel-Mitchells Brook-St. Catherine's",
+      "type": "subdivision",
+      "csd_code": "1001197",
+      "census_division": 1,
+      "population_2021": 382
+    },
+    {
+      "id": "mount-moriah",
+      "name": "Mount Moriah",
+      "type": "subdivision",
+      "csd_code": "1005033",
+      "census_division": 5,
+      "population_2021": 700
+    },
+    {
+      "id": "mount-pearl",
+      "name": "Mount Pearl",
+      "type": "subdivision",
+      "csd_code": "1001542",
+      "census_division": 1,
+      "population_2021": 22477
+    },
+    {
+      "id": "musgrave-harbour",
+      "name": "Musgrave Harbour",
+      "type": "subdivision",
+      "csd_code": "1008006",
+      "census_division": 8,
+      "population_2021": 946
+    },
+    {
+      "id": "musgravetown",
+      "name": "Musgravetown",
+      "type": "subdivision",
+      "csd_code": "1007032",
+      "census_division": 7,
+      "population_2021": 561
+    },
+    {
+      "id": "nain",
+      "name": "Nain",
+      "type": "subdivision",
+      "csd_code": "1011035",
+      "census_division": 11,
+      "population_2021": 847
+    },
+    {
+      "id": "natuashish-2",
+      "name": "Natuashish 2",
+      "type": "subdivision",
+      "csd_code": "1010801",
+      "census_division": 10,
+      "population_2021": 856
+    },
+    {
+      "id": "new-perlican",
+      "name": "New Perlican",
+      "type": "subdivision",
+      "csd_code": "1001328",
+      "census_division": 1,
+      "population_2021": 200
+    },
+    {
+      "id": "new-wes-valley",
+      "name": "New-Wes-Valley",
+      "type": "subdivision",
+      "csd_code": "1007060",
+      "census_division": 7,
+      "population_2021": 2044
+    },
+    {
+      "id": "nippers-harbour",
+      "name": "Nippers Harbour",
+      "type": "subdivision",
+      "csd_code": "1008070",
+      "census_division": 8,
+      "population_2021": 74
+    },
+    {
+      "id": "normans-cove-long-cove",
+      "name": "Norman's Cove-Long Cove",
+      "type": "subdivision",
+      "csd_code": "1001285",
+      "census_division": 1,
+      "population_2021": 647
+    },
+    {
+      "id": "norris-arm",
+      "name": "Norris Arm",
+      "type": "subdivision",
+      "csd_code": "1006003",
+      "census_division": 6,
+      "population_2021": 708
+    },
+    {
+      "id": "norris-point",
+      "name": "Norris Point",
+      "type": "subdivision",
+      "csd_code": "1009012",
+      "census_division": 9,
+      "population_2021": 602
+    },
+    {
+      "id": "north-river",
+      "name": "North River",
+      "type": "subdivision",
+      "csd_code": "1001426",
+      "census_division": 1,
+      "population_2021": 579
+    },
+    {
+      "id": "north-west-river",
+      "name": "North West River",
+      "type": "subdivision",
+      "csd_code": "1010022",
+      "census_division": 10,
+      "population_2021": 560
+    },
+    {
+      "id": "northern-arm",
+      "name": "Northern Arm",
+      "type": "subdivision",
+      "csd_code": "1006015",
+      "census_division": 6,
+      "population_2021": 371
+    },
+    {
+      "id": "old-perlican",
+      "name": "Old Perlican",
+      "type": "subdivision",
+      "csd_code": "1001343",
+      "census_division": 1,
+      "population_2021": 608
+    },
+    {
+      "id": "pacquet",
+      "name": "Pacquet",
+      "type": "subdivision",
+      "csd_code": "1008078",
+      "census_division": 8,
+      "population_2021": 145
+    },
+    {
+      "id": "paradise",
+      "name": "Paradise",
+      "type": "subdivision",
+      "csd_code": "1001517",
+      "census_division": 1,
+      "population_2021": 22957
+    },
+    {
+      "id": "parkers-cove",
+      "name": "Parkers Cove",
+      "type": "subdivision",
+      "csd_code": "1002034",
+      "census_division": 2,
+      "population_2021": 233
+    },
+    {
+      "id": "parsons-pond",
+      "name": "Parson's Pond",
+      "type": "subdivision",
+      "csd_code": "1009017",
+      "census_division": 9,
+      "population_2021": 368
+    },
+    {
+      "id": "pasadena",
+      "name": "Pasadena",
+      "type": "subdivision",
+      "csd_code": "1005012",
+      "census_division": 5,
+      "population_2021": 3524
+    },
+    {
+      "id": "peterview",
+      "name": "Peterview",
+      "type": "subdivision",
+      "csd_code": "1006021",
+      "census_division": 6,
+      "population_2021": 723
+    },
+    {
+      "id": "petty-harbour-maddox-cove",
+      "name": "Petty Harbour-Maddox Cove",
+      "type": "subdivision",
+      "csd_code": "1001551",
+      "census_division": 1,
+      "population_2021": 947
+    },
+    {
+      "id": "pilleys-island",
+      "name": "Pilley's Island",
+      "type": "subdivision",
+      "csd_code": "1008053",
+      "census_division": 8,
+      "population_2021": 286
+    },
+    {
+      "id": "pinware",
+      "name": "Pinware",
+      "type": "subdivision",
+      "csd_code": "1010007",
+      "census_division": 10,
+      "population_2021": 64
+    },
+    {
+      "id": "placentia",
+      "name": "Placentia",
+      "type": "subdivision",
+      "csd_code": "1001240",
+      "census_division": 1,
+      "population_2021": 3289
+    },
+    {
+      "id": "point-au-gaul",
+      "name": "Point au Gaul",
+      "type": "subdivision",
+      "csd_code": "1002015",
+      "census_division": 2,
+      "population_2021": 67
+    },
+    {
+      "id": "point-lance",
+      "name": "Point Lance",
+      "type": "subdivision",
+      "csd_code": "1001225",
+      "census_division": 1,
+      "population_2021": 87
+    },
+    {
+      "id": "point-leamington",
+      "name": "Point Leamington",
+      "type": "subdivision",
+      "csd_code": "1008049",
+      "census_division": 8,
+      "population_2021": 574
+    },
+    {
+      "id": "point-may",
+      "name": "Point May",
+      "type": "subdivision",
+      "csd_code": "1002014",
+      "census_division": 2,
+      "population_2021": 254
+    },
+    {
+      "id": "point-of-bay",
+      "name": "Point of Bay",
+      "type": "subdivision",
+      "csd_code": "1008047",
+      "census_division": 8,
+      "population_2021": 137
+    },
+    {
+      "id": "pools-cove",
+      "name": "Pool's Cove",
+      "type": "subdivision",
+      "csd_code": "1003005",
+      "census_division": 3,
+      "population_2021": 143
+    },
+    {
+      "id": "port-anson",
+      "name": "Port Anson",
+      "type": "subdivision",
+      "csd_code": "1008062",
+      "census_division": 8,
+      "population_2021": 42
+    },
+    {
+      "id": "port-au-choix",
+      "name": "Port au Choix",
+      "type": "subdivision",
+      "csd_code": "1009022",
+      "census_division": 9,
+      "population_2021": 742
+    },
+    {
+      "id": "port-au-port-east",
+      "name": "Port au Port East",
+      "type": "subdivision",
+      "csd_code": "1004021",
+      "census_division": 4,
+      "population_2021": 413
+    },
+    {
+      "id": "port-au-port-west-aguathuna-felix-cove",
+      "name": "Port au Port West-Aguathuna-Felix Cove",
+      "type": "subdivision",
+      "csd_code": "1004042",
+      "census_division": 4,
+      "population_2021": 384
+    },
+    {
+      "id": "port-blandford",
+      "name": "Port Blandford",
+      "type": "subdivision",
+      "csd_code": "1007036",
+      "census_division": 7,
+      "population_2021": 513
+    },
+    {
+      "id": "port-hope-simpson",
+      "name": "Port Hope Simpson",
+      "type": "subdivision",
+      "csd_code": "1010009",
+      "census_division": 10,
+      "population_2021": 403
+    },
+    {
+      "id": "port-kirwan",
+      "name": "Port Kirwan",
+      "type": "subdivision",
+      "csd_code": "1001140",
+      "census_division": 1,
+      "population_2021": 49
+    },
+    {
+      "id": "port-rexton",
+      "name": "Port Rexton",
+      "type": "subdivision",
+      "csd_code": "1007016",
+      "census_division": 7,
+      "population_2021": 361
+    },
+    {
+      "id": "port-saunders",
+      "name": "Port Saunders",
+      "type": "subdivision",
+      "csd_code": "1009019",
+      "census_division": 9,
+      "population_2021": 678
+    },
+    {
+      "id": "portugal-cove-south",
+      "name": "Portugal Cove South",
+      "type": "subdivision",
+      "csd_code": "1001105",
+      "census_division": 1,
+      "population_2021": 86
+    },
+    {
+      "id": "portugal-cove-st-philips",
+      "name": "Portugal Cove-St. Philip's",
+      "type": "subdivision",
+      "csd_code": "1001504",
+      "census_division": 1,
+      "population_2021": 8415
+    },
+    {
+      "id": "postville",
+      "name": "Postville",
+      "type": "subdivision",
+      "csd_code": "1011015",
+      "census_division": 11,
+      "population_2021": 188
+    },
+    {
+      "id": "pouch-cove",
+      "name": "Pouch Cove",
+      "type": "subdivision",
+      "csd_code": "1001505",
+      "census_division": 1,
+      "population_2021": 2063
+    },
+    {
+      "id": "raleigh",
+      "name": "Raleigh",
+      "type": "subdivision",
+      "csd_code": "1009035",
+      "census_division": 9,
+      "population_2021": 150
+    },
+    {
+      "id": "ramea",
+      "name": "Ramea",
+      "type": "subdivision",
+      "csd_code": "1003026",
+      "census_division": 3,
+      "population_2021": 388
+    },
+    {
+      "id": "red-bay",
+      "name": "Red Bay",
+      "type": "subdivision",
+      "csd_code": "1010003",
+      "census_division": 10,
+      "population_2021": 142
+    },
+    {
+      "id": "red-harbour",
+      "name": "Red Harbour",
+      "type": "subdivision",
+      "csd_code": "1002037",
+      "census_division": 2,
+      "population_2021": 177
+    },
+    {
+      "id": "reidville",
+      "name": "Reidville",
+      "type": "subdivision",
+      "csd_code": "1005009",
+      "census_division": 5,
+      "population_2021": 550
+    },
+    {
+      "id": "rencontre-east",
+      "name": "Rencontre East",
+      "type": "subdivision",
+      "csd_code": "1003002",
+      "census_division": 3,
+      "population_2021": 115
+    },
+    {
+      "id": "renews-cappahayden",
+      "name": "Renews-Cappahayden",
+      "type": "subdivision",
+      "csd_code": "1001131",
+      "census_division": 1,
+      "population_2021": 280
+    },
+    {
+      "id": "rigolet",
+      "name": "Rigolet",
+      "type": "subdivision",
+      "csd_code": "1011010",
+      "census_division": 11,
+      "population_2021": 327
+    },
+    {
+      "id": "river-of-ponds",
+      "name": "River of Ponds",
+      "type": "subdivision",
+      "csd_code": "1009048",
+      "census_division": 9,
+      "population_2021": 173
+    },
+    {
+      "id": "riverhead",
+      "name": "Riverhead",
+      "type": "subdivision",
+      "csd_code": "1001181",
+      "census_division": 1,
+      "population_2021": 165
+    },
+    {
+      "id": "roberts-arm",
+      "name": "Robert's Arm",
+      "type": "subdivision",
+      "csd_code": "1008060",
+      "census_division": 8,
+      "population_2021": 722
+    },
+    {
+      "id": "rocky-harbour",
+      "name": "Rocky Harbour",
+      "type": "subdivision",
+      "csd_code": "1009013",
+      "census_division": 9,
+      "population_2021": 937
+    },
+    {
+      "id": "roddickton-bide-arm",
+      "name": "Roddickton-Bide Arm",
+      "type": "subdivision",
+      "csd_code": "1009007",
+      "census_division": 9,
+      "population_2021": 928
+    },
+    {
+      "id": "rose-blanche-harbour-le-cou",
+      "name": "Rose Blanche-Harbour le Cou",
+      "type": "subdivision",
+      "csd_code": "1003045",
+      "census_division": 3,
+      "population_2021": 344
+    },
+    {
+      "id": "rushoon",
+      "name": "Rushoon",
+      "type": "subdivision",
+      "csd_code": "1002033",
+      "census_division": 2,
+      "population_2021": 229
+    },
+    {
+      "id": "sallys-cove",
+      "name": "Sally's Cove",
+      "type": "subdivision",
+      "csd_code": "1009037",
+      "census_division": 9,
+      "population_2021": 15
+    },
+    {
+      "id": "salmon-cove",
+      "name": "Salmon Cove",
+      "type": "subdivision",
+      "csd_code": "1001361",
+      "census_division": 1,
+      "population_2021": 764
+    },
+    {
+      "id": "salvage",
+      "name": "Salvage",
+      "type": "subdivision",
+      "csd_code": "1007046",
+      "census_division": 7,
+      "population_2021": 108
+    },
+    {
+      "id": "samiajij-miawpukek",
+      "name": "Samiajij Miawpukek",
+      "type": "subdivision",
+      "csd_code": "1003801",
+      "census_division": 3,
+      "population_2021": 953
+    },
+    {
+      "id": "sandringham",
+      "name": "Sandringham",
+      "type": "subdivision",
+      "csd_code": "1007043",
+      "census_division": 7,
+      "population_2021": 205
+    },
+    {
+      "id": "sandy-cove",
+      "name": "Sandy Cove",
+      "type": "subdivision",
+      "csd_code": "1007039",
+      "census_division": 7,
+      "population_2021": 120
+    },
+    {
+      "id": "seal-cove-fortune-bay",
+      "name": "Seal Cove (Fortune Bay)",
+      "type": "subdivision",
+      "csd_code": "1003010",
+      "census_division": 3,
+      "population_2021": 100
+    },
+    {
+      "id": "seal-cove-white-bay",
+      "name": "Seal Cove (White Bay)",
+      "type": "subdivision",
+      "csd_code": "1008091",
+      "census_division": 8,
+      "population_2021": 281
+    },
+    {
+      "id": "sheshatshiu-3",
+      "name": "Sheshatshiu 3",
+      "type": "subdivision",
+      "csd_code": "1010802",
+      "census_division": 10,
+      "population_2021": 1225
+    },
+    {
+      "id": "small-point-adams-cove-blackhead-broad-cove",
+      "name": "Small Point-Adam's Cove-Blackhead-Broad Cove",
+      "type": "subdivision",
+      "csd_code": "1001352",
+      "census_division": 1,
+      "population_2021": 414
+    },
+    {
+      "id": "somewhere-else-in-division-no-1",
+      "name": "Somewhere else in Division No. 1",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 1,
+      "population_2021": 14081
+    },
+    {
+      "id": "somewhere-else-in-division-no-10",
+      "name": "Somewhere else in Division No. 10",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 10,
+      "population_2021": 1052
+    },
+    {
+      "id": "somewhere-else-in-division-no-11",
+      "name": "Somewhere else in Division No. 11",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 11,
+      "population_2021": 0
+    },
+    {
+      "id": "somewhere-else-in-division-no-2",
+      "name": "Somewhere else in Division No. 2",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 2,
+      "population_2021": 1970
+    },
+    {
+      "id": "somewhere-else-in-division-no-3",
+      "name": "Somewhere else in Division No. 3",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 3,
+      "population_2021": 1229
+    },
+    {
+      "id": "somewhere-else-in-division-no-4",
+      "name": "Somewhere else in Division No. 4",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 4,
+      "population_2021": 5940
+    },
+    {
+      "id": "somewhere-else-in-division-no-5",
+      "name": "Somewhere else in Division No. 5",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 5,
+      "population_2021": 1954
+    },
+    {
+      "id": "somewhere-else-in-division-no-6",
+      "name": "Somewhere else in Division No. 6",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 6,
+      "population_2021": 1226
+    },
+    {
+      "id": "somewhere-else-in-division-no-7",
+      "name": "Somewhere else in Division No. 7",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 7,
+      "population_2021": 9080
+    },
+    {
+      "id": "somewhere-else-in-division-no-8",
+      "name": "Somewhere else in Division No. 8",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 8,
+      "population_2021": 8162
+    },
+    {
+      "id": "somewhere-else-in-division-no-9",
+      "name": "Somewhere else in Division No. 9",
+      "type": "other",
+      "csd_code": null,
+      "census_division": 9,
+      "population_2021": 3269
+    },
+    {
+      "id": "south-brook",
+      "name": "South Brook",
+      "type": "subdivision",
+      "csd_code": "1008059",
+      "census_division": 8,
+      "population_2021": 420
+    },
+    {
+      "id": "south-river",
+      "name": "South River",
+      "type": "subdivision",
+      "csd_code": "1001434",
+      "census_division": 1,
+      "population_2021": 674
+    },
+    {
+      "id": "southern-harbour",
+      "name": "Southern Harbour",
+      "type": "subdivision",
+      "csd_code": "1001267",
+      "census_division": 1,
+      "population_2021": 313
+    },
+    {
+      "id": "spaniards-bay",
+      "name": "Spaniard's Bay",
+      "type": "subdivision",
+      "csd_code": "1001396",
+      "census_division": 1,
+      "population_2021": 2630
+    },
+    {
+      "id": "springdale",
+      "name": "Springdale",
+      "type": "subdivision",
+      "csd_code": "1008061",
+      "census_division": 8,
+      "population_2021": 2965
+    },
+    {
+      "id": "st-albans",
+      "name": "St. Alban's",
+      "type": "subdivision",
+      "csd_code": "1003019",
+      "census_division": 3,
+      "population_2021": 1189
+    },
+    {
+      "id": "st-anthony",
+      "name": "St. Anthony",
+      "type": "subdivision",
+      "csd_code": "1009029",
+      "census_division": 9,
+      "population_2021": 2180
+    },
+    {
+      "id": "st-bernards-jacques-fontaine",
+      "name": "St. Bernard's-Jacques Fontaine",
+      "type": "subdivision",
+      "csd_code": "1002041",
+      "census_division": 2,
+      "population_2021": 433
+    },
+    {
+      "id": "st-brendans",
+      "name": "St. Brendan's",
+      "type": "subdivision",
+      "csd_code": "1007048",
+      "census_division": 7,
+      "population_2021": 125
+    },
+    {
+      "id": "st-brides",
+      "name": "St. Bride's",
+      "type": "subdivision",
+      "csd_code": "1001228",
+      "census_division": 1,
+      "population_2021": 318
+    },
+    {
+      "id": "st-georges",
+      "name": "St. George's",
+      "type": "subdivision",
+      "csd_code": "1004013",
+      "census_division": 4,
+      "population_2021": 1139
+    },
+    {
+      "id": "st-jacques-coombs-cove",
+      "name": "St. Jacques-Coomb's Cove",
+      "type": "subdivision",
+      "csd_code": "1003003",
+      "census_division": 3,
+      "population_2021": 546
+    },
+    {
+      "id": "st-johns",
+      "name": "St. John's",
+      "type": "subdivision",
+      "csd_code": "1001519",
+      "census_division": 1,
+      "population_2021": 110525
+    },
+    {
+      "id": "st-josephs",
+      "name": "St. Joseph's",
+      "type": "subdivision",
+      "csd_code": "1001192",
+      "census_division": 1,
+      "population_2021": 86
+    },
+    {
+      "id": "st-lawrence",
+      "name": "St. Lawrence",
+      "type": "subdivision",
+      "csd_code": "1002008",
+      "census_division": 2,
+      "population_2021": 1115
+    },
+    {
+      "id": "st-lewis",
+      "name": "St. Lewis",
+      "type": "subdivision",
+      "csd_code": "1010010",
+      "census_division": 10,
+      "population_2021": 181
+    },
+    {
+      "id": "st-lunaire-griquet",
+      "name": "St. Lunaire-Griquet",
+      "type": "subdivision",
+      "csd_code": "1009032",
+      "census_division": 9,
+      "population_2021": 603
+    },
+    {
+      "id": "st-marys",
+      "name": "St. Mary's",
+      "type": "subdivision",
+      "csd_code": "1001178",
+      "census_division": 1,
+      "population_2021": 313
+    },
+    {
+      "id": "st-pauls",
+      "name": "St. Pauls",
+      "type": "subdivision",
+      "csd_code": "1009020",
+      "census_division": 9,
+      "population_2021": 202
+    },
+    {
+      "id": "st-shotts",
+      "name": "St. Shott's",
+      "type": "subdivision",
+      "csd_code": "1001120",
+      "census_division": 1,
+      "population_2021": 55
+    },
+    {
+      "id": "st-vincents-st-stephens-peters-river",
+      "name": "St. Vincent's-St. Stephen's-Peter's River",
+      "type": "subdivision",
+      "csd_code": "1001169",
+      "census_division": 1,
+      "population_2021": 263
+    },
+    {
+      "id": "steady-brook",
+      "name": "Steady Brook",
+      "type": "subdivision",
+      "csd_code": "1005011",
+      "census_division": 5,
+      "population_2021": 416
+    },
+    {
+      "id": "stephenville",
+      "name": "Stephenville",
+      "type": "subdivision",
+      "csd_code": "1004019",
+      "census_division": 4,
+      "population_2021": 6540
+    },
+    {
+      "id": "stephenville-crossing",
+      "name": "Stephenville Crossing",
+      "type": "subdivision",
+      "csd_code": "1004018",
+      "census_division": 4,
+      "population_2021": 1634
+    },
+    {
+      "id": "summerford",
+      "name": "Summerford",
+      "type": "subdivision",
+      "csd_code": "1008033",
+      "census_division": 8,
+      "population_2021": 805
+    },
+    {
+      "id": "sunnyside",
+      "name": "Sunnyside",
+      "type": "subdivision",
+      "csd_code": "1001277",
+      "census_division": 1,
+      "population_2021": 407
+    },
+    {
+      "id": "terra-nova",
+      "name": "Terra Nova",
+      "type": "subdivision",
+      "csd_code": "1007040",
+      "census_division": 7,
+      "population_2021": 99
+    },
+    {
+      "id": "terrenceville",
+      "name": "Terrenceville",
+      "type": "subdivision",
+      "csd_code": "1002036",
+      "census_division": 2,
+      "population_2021": 446
+    },
+    {
+      "id": "tilt-cove",
+      "name": "Tilt Cove",
+      "type": "subdivision",
+      "csd_code": "1008073",
+      "census_division": 8,
+      "population_2021": 5
+    },
+    {
+      "id": "torbay",
+      "name": "Torbay",
+      "type": "subdivision",
+      "csd_code": "1001509",
+      "census_division": 1,
+      "population_2021": 7852
+    },
+    {
+      "id": "traytown",
+      "name": "Traytown",
+      "type": "subdivision",
+      "csd_code": "1007037",
+      "census_division": 7,
+      "population_2021": 279
+    },
+    {
+      "id": "trepassey",
+      "name": "Trepassey",
+      "type": "subdivision",
+      "csd_code": "1001113",
+      "census_division": 1,
+      "population_2021": 405
+    },
+    {
+      "id": "trinity-trinity-bay",
+      "name": "Trinity (Trinity Bay)",
+      "type": "subdivision",
+      "csd_code": "1007015",
+      "census_division": 7,
+      "population_2021": 76
+    },
+    {
+      "id": "trinity-bay-north",
+      "name": "Trinity Bay North",
+      "type": "subdivision",
+      "csd_code": "1007022",
+      "census_division": 7,
+      "population_2021": 1649
+    },
+    {
+      "id": "triton",
+      "name": "Triton",
+      "type": "subdivision",
+      "csd_code": "1008054",
+      "census_division": 8,
+      "population_2021": 896
+    },
+    {
+      "id": "trout-river",
+      "name": "Trout River",
+      "type": "subdivision",
+      "csd_code": "1009010",
+      "census_division": 9,
+      "population_2021": 508
+    },
+    {
+      "id": "twillingate",
+      "name": "Twillingate",
+      "type": "subdivision",
+      "csd_code": "1008035",
+      "census_division": 8,
+      "population_2021": 2121
+    },
+    {
+      "id": "upper-island-cove",
+      "name": "Upper Island Cove",
+      "type": "subdivision",
+      "csd_code": "1001385",
+      "census_division": 1,
+      "population_2021": 1401
+    },
+    {
+      "id": "victoria",
+      "name": "Victoria",
+      "type": "subdivision",
+      "csd_code": "1001365",
+      "census_division": 1,
+      "population_2021": 1658
+    },
+    {
+      "id": "wabana",
+      "name": "Wabana",
+      "type": "subdivision",
+      "csd_code": "1001494",
+      "census_division": 1,
+      "population_2021": 1815
+    },
+    {
+      "id": "wabush",
+      "name": "Wabush",
+      "type": "subdivision",
+      "csd_code": "1010034",
+      "census_division": 10,
+      "population_2021": 1964
+    },
+    {
+      "id": "west-st-modeste",
+      "name": "West St. Modeste",
+      "type": "subdivision",
+      "csd_code": "1010006",
+      "census_division": 10,
+      "population_2021": 102
+    },
+    {
+      "id": "westport",
+      "name": "Westport",
+      "type": "subdivision",
+      "csd_code": "1008093",
+      "census_division": 8,
+      "population_2021": 185
+    },
+    {
+      "id": "whitbourne",
+      "name": "Whitbourne",
+      "type": "subdivision",
+      "csd_code": "1001298",
+      "census_division": 1,
+      "population_2021": 955
+    },
+    {
+      "id": "whiteway",
+      "name": "Whiteway",
+      "type": "subdivision",
+      "csd_code": "1001308",
+      "census_division": 1,
+      "population_2021": 351
+    },
+    {
+      "id": "winterland",
+      "name": "Winterland",
+      "type": "subdivision",
+      "csd_code": "1002023",
+      "census_division": 2,
+      "population_2021": 398
+    },
+    {
+      "id": "winterton",
+      "name": "Winterton",
+      "type": "subdivision",
+      "csd_code": "1001332",
+      "census_division": 1,
+      "population_2021": 436
+    },
+    {
+      "id": "witless-bay",
+      "name": "Witless Bay",
+      "type": "subdivision",
+      "csd_code": "1001559",
+      "census_division": 1,
+      "population_2021": 1640
+    },
+    {
+      "id": "woodstock",
+      "name": "Woodstock",
+      "type": "subdivision",
+      "csd_code": "1008096",
+      "census_division": 8,
+      "population_2021": 195
+    },
+    {
+      "id": "woody-point-bonne-bay",
+      "name": "Woody Point, Bonne Bay",
+      "type": "subdivision",
+      "csd_code": "1009011",
+      "census_division": 9,
+      "population_2021": 244
+    },
+    {
+      "id": "york-harbour",
+      "name": "York Harbour",
+      "type": "subdivision",
+      "csd_code": "1005035",
+      "census_division": 5,
+      "population_2021": 372
+    }
+  ]
+}
