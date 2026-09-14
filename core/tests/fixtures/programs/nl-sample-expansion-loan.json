@@ -1,0 +1,85 @@
+{
+  "slug": "nl-sample-expansion-loan",
+  "sample": true,
+  "name": "SAMPLE Expansion Loan",
+  "provider": "SAMPLE Business Loans Office",
+  "level": "crown",
+  "url": "https://sample.invalid/loans/expansion/",
+  "summary": {
+    "quote": "The SAMPLE Expansion Loan is a loan to help established businesses in Newfoundland and Labrador grow.",
+    "source": "nl-sample-expansion-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-expansion-loan--main",
+      "url": "https://sample.invalid/loans/expansion/",
+      "title": "SAMPLE Expansion Loan",
+      "publisher": "SAMPLE Business Loans Office",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "db058756da811757909b3249f55d607733d255ca243652d241c1da6a99fceaf0",
+      "text_sha256": "f37806133843e6d2628646917c214e57f155297079f2bcd354a9902a04352c1c",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "The SAMPLE Expansion Loan is a loan to help established businesses in Newfoundland and Labrador grow.",
+      "source": "nl-sample-expansion-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "There is no deadline to apply.",
+    "source": "nl-sample-expansion-loan--main",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "An established business in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "established businesses in Newfoundland and Labrador",
+      "source": "nl-sample-expansion-loan--main"
+    },
+    {
+      "id": "years-operating",
+      "text": "Normally in business for at least 3 years",
+      "rule": {
+        "kind": "years_operating",
+        "gte": 3,
+        "unit": "years",
+        "normally": true
+      },
+      "quote": "Eligible applicants must normally have been in business for at least 3 years.",
+      "source": "nl-sample-expansion-loan--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for equipment or new hires",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "equipment",
+          "hire"
+        ]
+      },
+      "quote": "The loan can pay for equipment or new hires.",
+      "source": "nl-sample-expansion-loan--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture (DECISIONS #21): years_operating gte 3 years with normally: true, so SAMPLE Daycare (1 to 2 years) gets Unknown with reason unclear and Might fit instead of Doesn't fit; SAMPLE Auto Service (more than 10 years) is met and Looks like a fit."
+  }
+}

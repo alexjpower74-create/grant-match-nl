@@ -102,7 +102,7 @@ test('every request carries our User-Agent; robots.txt disallow is respected; â‰
 
   for (const g of gaps()) assert.ok(g >= 1000, `requested gap ${g} ms`);
   assert.equal(result.trigger, 'node');
-  assert.equal(result.sources.length, 9);
+  assert.equal(result.sources.length, 11);
 });
 
 test('Crawl-delay is obeyed when it is longer than 1 s', async () => {

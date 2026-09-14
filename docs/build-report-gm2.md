@@ -113,6 +113,34 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 7 — unclear rendered for real, check-yourself items without their why: DONE
+1. **Merged `rig/gm1` at `c551391`** (merge `20b3032`). It brings the SAMPLE fixtures that use `unclear` and `normally` (`28c8866`), the
+   evidence sort tier (`6f0d5fc`) and gm1's K3 office labels. `build:data`: 27 real programs, 10 SAMPLE (new: SAMPLE Green Upgrade
+   Grant with structure `unclear: [cooperative, nonprofit]` and purpose `any: [energy], unclear: [equipment]`; SAMPLE Expansion Loan
+   with `years_operating gte 3 years, normally: true`). Probed with core: SAMPLE Auto Service gets `unclear` on the Green Upgrade
+   Grant's purpose; SAMPLE Daycare gets it on the Expansion Loan's years rule; a co-op or non-profit answer gets it on the
+   structure rule.
+   **Reason test (`5cacd6b`):** the round-2 gap branch and its annotation are gone. The test now requires every reason in the copy
+   table, `self_check`, `not_answered`, `band_straddles` **and `unclear`**, to be seen on a rendered program page with its exact
+   copy. Passes on chromium and webkit at 390 and 1280.
+   **Negative control (j):** `unclear` copy changed to "Unknown: unclear" → **red** ("Expected: Unknown: the page's wording doesn't
+   settle it for your answer, Received: Unknown: unclear"). Restored with `git checkout` → passes.
+2. **Check-yourself items show the reason copy only (DECISIONS #24 R4, API §12).** `program.js` no longer renders a criterion's
+   `why` when `unknown_reason` is `self_check`; every other criterion keeps its `why`. **Test:** "a check-yourself criterion shows
+   its reason copy only, not its why line". It uses the SAMPLE Auto Service program with the most check-yourself items and at
+   least one other criterion with a `why`: each check-yourself item has "Unknown: check this yourself", no `.criterion-why` and not
+   its `why` text; every other criterion with a `why` still shows it exactly, so the test can't pass by hiding all of them.
+   Passes on all four projects.
+   **Negative control (k):** `why` rendered again for check-yourself items → **red** ("business-plan: no why line, Expected: 0,
+   Received: 1"). Restored from a byte copy (the file carried the uncommitted change) → passes.
+3. **Suites on the merged tree:**
+   - Worker, SAMPLE: **15 passed, 0 failed, 1 skipped**.
+   - Worker, `GM_REAL=1`: **1 passed, 0 failed** on 27 programs, 153 criteria, 53 sources.
+   - Playwright: **192 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped by design.
+
+Waiting: gm1's `blockText` context change (API §1, contact quotes without context). After it lands, the lead asks for one more
+real-data look at the Business Growth contacts and CanExport's closed quote.
+
 ## Round 6 — re-hash after gm1's attribute-safe pageText: DONE
 1. **Merged `rig/gm1` at its tip `c1c1d5b`** (merge `b344865`). That is newer than the `637bb44` / `380dee7` / `dd09fb3` named in the
    brief and contains them, plus gm1's purpose `unclear`.

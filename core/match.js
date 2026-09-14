@@ -394,7 +394,11 @@ export function matchPrograms(programs, profile, opts = {}) {
   const closed = results.filter((r) => r.intake.status === 'closed');
   const typeRank = (r) => (r.best_type === null ? 5 : TYPE_RANK[r.best_type]);
   const fitRank = (r) => (r.fit ? r.fit.rank : 0);
+  // Evidence tier (API §5, DECISIONS #23): 0 when at least one met criterion is a checkable kind other than location,
+  // so a program only your location can be checked against sorts after real matches with the same label.
+  const evidence = (r) => (r.criteria.some((c) => c.status === 'met' && c.kind !== 'location' && c.kind !== 'self_check') ? 0 : 1);
   open.sort((a, b) => fitRank(a) - fitRank(b)
+    || evidence(a) - evidence(b)
     || typeRank(a) - typeRank(b)
     || a.counts.missed - b.counts.missed
     || a.counts.unknown - b.counts.unknown

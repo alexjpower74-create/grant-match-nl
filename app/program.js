@@ -26,7 +26,7 @@ function criterion(c, src) {
     <div class="criterion-head">${c.status ? icon : ''}
       <div>
         <p class="criterion-text">${esc(c.text)}</p>
-        ${c.why ? `<p class="criterion-why">${esc(c.why)}</p>` : ''}
+        ${c.why && c.unknown_reason !== 'self_check' ? `<p class="criterion-why">${esc(c.why)}</p>` : ''}
         ${reason}
       </div>
     </div>

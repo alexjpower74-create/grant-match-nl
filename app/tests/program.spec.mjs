@@ -35,7 +35,7 @@ test('each rendered <mark> equals its API quote exactly and sits inside its cont
   }
 })
 
-test('Unknown reason copy per reason', async ({ page }, testInfo) => {
+test('Unknown reason copy per reason', async ({ page }) => {
   const seen = new Set()
   // The straddle and unanswered profiles, plus answers a set rule's `unclear` list would name (API §4).
   const unclearTries = ['cooperative', 'nonprofit', 'not_registered'].map((v) => {
@@ -56,17 +56,8 @@ test('Unknown reason copy per reason', async ({ page }, testInfo) => {
       }
     }
   }
-  // Every reason core produces today is rendered with its copy.
-  for (const r of ['self_check', 'not_answered', 'band_straddles']) expect(seen.has(r), `${r} was rendered`).toBe(true)
-  // `unclear` (API §4–5): checked on a rendered page as soon as core and the SAMPLE set produce it. Until then the
-  // copy itself is checked, and the gap is visible in the report.
-  if (!seen.has('unclear')) {
-    testInfo.annotations.push({ type: 'gap', description: 'core/SAMPLE data do not produce unknown_reason "unclear" yet' })
-    const { UNKNOWN_REASON } = await import('../render.js')
-    expect(UNKNOWN_REASON.unclear).toBe(REASON_COPY.unclear)
-    await page.goto('/about.html?mock=1')
-    await expect(page.getByText(REASON_COPY.unclear, { exact: true })).toBeVisible()
-  }
+  // Every reason, `unclear` included (SAMPLE Green Upgrade Grant and Expansion Loan), is rendered with its exact copy.
+  expect([...seen].sort()).toEqual(Object.keys(REASON_COPY).sort())
 
   // A program fact the pages don't state.
   const silent = bundle.programs.map((p) => coreProgram(p.slug, PROFILES.auto)).find((r) => r.unknown_facts.length)
@@ -132,4 +123,26 @@ test('with a profile the stale wording comes from fit.why only; with no profile 
   await expect(page.locator('#fit-why')).toHaveCount(0)
   await expect(page.locator('[data-flag="stale"]')).toHaveCount(1)
   await expect(page.locator('[data-flag="stale"]')).toContainText('more than 60 days ago. Check the official page.')
+})
+
+test('a check-yourself criterion shows its reason copy only, not its why line (API §12, DECISIONS #24)', async ({ page }) => {
+  // The SAMPLE Auto Service program with the most check-yourself items, and at least one other criterion with a why.
+  const want = coreMatch(PROFILES.auto)
+  const all = [...want.open, ...want.closed]
+  const r = all
+    .filter((x) => x.criteria.some((c) => c.unknown_reason === 'self_check') && x.criteria.some((c) => c.why && c.unknown_reason !== 'self_check'))
+    .sort((a, b) => b.counts.self_check - a.counts.self_check)[0]
+  expect(r, 'a SAMPLE program with both kinds of criteria').toBeTruthy()
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
+  await expect(page.locator('h1')).toHaveText(r.name)
+  for (const c of r.criteria) {
+    const item = page.locator(`[data-criterion="${c.id}"]`)
+    if (c.unknown_reason === 'self_check') {
+      await expect(item.locator('.reason')).toHaveText('Unknown: check this yourself')
+      await expect(item.locator('.criterion-why'), `${c.id}: no why line`).toHaveCount(0)
+      await expect(item).not.toContainText(c.why)
+    } else if (c.why) {
+      await expect(item.locator('.criterion-why'), `${c.id}: why still shown`).toHaveText(c.why)
+    }
+  }
 })

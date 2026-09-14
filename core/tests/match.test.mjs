@@ -183,6 +183,8 @@ const EXPECTED = {
     'ca-sample-digital-adoption-grant': 'Doesn\'t fit',
     'nl-sample-women-entrepreneur-loan': 'Doesn\'t fit',
     'nl-sample-startup-support': 'Doesn\'t fit',
+    'nl-sample-green-upgrade-grant': 'Might fit', // purpose equipment is unclear
+    'nl-sample-expansion-loan': 'Looks like a fit', // more than 10 years meets "normally at least 3 years"
   },
   'SAMPLE Daycare': {
     'nl-sample-growth-grant': 'Doesn\'t fit',
@@ -193,12 +195,14 @@ const EXPECTED = {
     'ca-sample-digital-adoption-grant': 'Doesn\'t fit',
     'nl-sample-women-entrepreneur-loan': 'Looks like a fit',
     'nl-sample-startup-support': 'Looks like a fit',
+    'nl-sample-green-upgrade-grant': 'Doesn\'t fit', // hiring and training aren't energy or equipment
+    'nl-sample-expansion-loan': 'Might fit', // 1 to 2 years is outside "normally at least 3 years": unknown, not missed
   },
 };
 
 test('fit labels for every SAMPLE program and both test profiles', async () => {
   const programs = await sampleBundlePrograms();
-  assert.equal(programs.length, 8);
+  assert.equal(programs.length, 10);
   for (const [name, query] of [['SAMPLE Auto Service', AUTO_QUERY], ['SAMPLE Daycare', DAYCARE_QUERY]]) {
     const profile = profileFrom(query);
     for (const p of programs) {
@@ -207,6 +211,24 @@ test('fit labels for every SAMPLE program and both test profiles', async () => {
       assert.ok(r.fit.why.length > 0);
     }
   }
+});
+
+test('SAMPLE fixtures give unknown_reason "unclear" for a real reason with both test profiles', async () => {
+  const programs = await sampleBundlePrograms();
+  const green = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-green-upgrade-grant'), AUTO(), { now: NOW });
+  const purpose = green.criteria.find((c) => c.id === 'purpose');
+  assert.equal(purpose.status, 'unknown');
+  assert.equal(purpose.unknown_reason, 'unclear');
+  assert.equal(purpose.why, 'The page\'s wording doesn\'t settle this for Equipment.');
+  assert.equal(green.fit.label, 'Might fit');
+
+  const loan = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-expansion-loan'), DAYCARE(), { now: NOW });
+  const years = loan.criteria.find((c) => c.id === 'years-operating');
+  assert.equal(years.status, 'unknown');
+  assert.equal(years.unknown_reason, 'unclear');
+  assert.equal(years.why, 'The page says this limit applies normally, so ask the office.');
+  assert.equal(loan.fit.label, 'Might fit');
+  assert.ok(loan.fit.why.includes('Unknown: the page\'s wording doesn\'t settle it for your answer. Normally in business for at least 3 years.'));
 });
 
 test('a straddling revenue band makes the lender loan Might fit, never Looks like a fit', async () => {
@@ -315,15 +337,34 @@ test('sort order: fit, then non-repayable before loan, then fewer missed and unk
   const { open, closed, counts } = matchPrograms(await sampleBundlePrograms(), AUTO(), { now: NOW });
   assert.deepEqual(open.map((r) => r.slug), [
     'nl-sample-growth-grant', // Looks, non-repayable
-    'nl-sample-equipment-loan', // Looks, loan, 0 unknown
+    'nl-sample-equipment-loan', // Looks, loan, 0 unknown, name "Equipment"
+    'nl-sample-expansion-loan', // Looks, loan, 0 unknown, name "Expansion"
     'ca-sample-small-lender-loan', // Looks, loan, 1 unknown (self_check)
-    'nl-sample-community-fund', // Might
-    'nl-sample-wage-subsidy', // Doesn't, wage subsidy
+    'nl-sample-green-upgrade-grant', // Might, structure met beyond location (evidence), non-repayable
+    'nl-sample-community-fund', // Might, only location can be checked
+    'nl-sample-wage-subsidy', // Doesn't, employees met (evidence), wage subsidy
     'nl-sample-startup-support', // Doesn't, repayable
     'nl-sample-women-entrepreneur-loan', // Doesn't, loan
   ]);
   assert.deepEqual(closed.map((r) => r.slug), ['ca-sample-digital-adoption-grant']);
-  assert.deepEqual(counts, { looks: 3, might: 1, doesnt: 3, closed: 1 });
+  assert.deepEqual(counts, { looks: 4, might: 2, doesnt: 3, closed: 1 });
+});
+
+test('evidence tier: a location-only program sorts after a checked match with the same label, before funding type', async () => {
+  const programs = await sampleBundlePrograms();
+  const community = programs.find((p) => p.slug === 'nl-sample-community-fund'); // non-repayable; only location is checkable
+  const lender = clone(programs.find((p) => p.slug === 'ca-sample-small-lender-loan')); // a loan; revenue and industry are checkable
+  lender.intake = { status: 'unknown', quote: null, source: null, deadline: null };
+
+  const { open } = matchPrograms([community, lender], AUTO(), { now: NOW });
+  assert.deepEqual(open.map((r) => [r.slug, r.fit.label]), [
+    ['ca-sample-small-lender-loan', 'Might fit'],
+    ['nl-sample-community-fund', 'Might fit'],
+  ], 'same label: the checked loan outranks the location-only non-repayable program');
+
+  // With no profile nothing is met, so the tier doesn't reorder and funding type decides.
+  const bare = matchPrograms([lender, community], null, { now: NOW });
+  assert.deepEqual(bare.open.map((r) => r.slug), ['nl-sample-community-fund', 'ca-sample-small-lender-loan']);
 });
 
 test('ProgramResult shape: quotes carry source_url and context; no profile → nulls and zeros', async () => {
