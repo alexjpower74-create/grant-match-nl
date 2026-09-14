@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="api-base" content="http://127.0.0.1:7402">
+  <title>Grant Match NL — find funding that could fit your business</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to the questions</a>
+  <header id="site-header" class="site-header"></header>
+  <main id="main" class="wrap">
+    <h1>Find public funding that could fit your business</h1>
+    <p class="lede">Answer these questions on one screen. We show the programs whose own pages match your answers, and quote each page word for word.</p>
+    <div id="form-status"></div>
+    <form id="profile-form" class="form" novalidate hidden>
+      <div class="form-grid" id="questions"></div>
+      <div class="actions">
+        <button type="submit" class="btn btn-primary" id="submit">Show programs that could fit</button>
+      </div>
+    </form>
+  </main>
+  <footer id="site-footer" class="site-footer"></footer>
+  <script type="module" src="profile-form.js"></script>
+</body>
+</html>
