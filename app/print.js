@@ -52,7 +52,7 @@ async function main() {
       <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || "Type: the page doesn't say")} · ${esc(amountText(r))} · ${esc(intakeText(r.intake))}</p>
       <p class="url">${esc(r.url)}${r.contacts.find((c) => c.phone) ? ` · Phone ${esc(r.contacts.find((c) => c.phone).phone)}` : ''}</p>
     </li>`).join('')}</ol>` : '<p class="empty">No open programs could fit these answers right now.</p>'}
-    ${more > 0 ? `<p class="meta">${more} more could fit. See them all on Grant Match NL.</p>` : ''}
+    ${more > 0 ? `<p class="meta">and ${more} more on the results page</p>` : ''}
     <p class="foot">${esc(FOOTER_LINE)} Check each official page before you apply.</p>`
   document.title = `Funding programs that could fit ${p.name || 'your business'}`
 }
