@@ -1,0 +1,181 @@
+{
+  "slug": "nl-cbdc-newcomer-loan-program",
+  "sample": false,
+  "name": "CBDC Newcomer Loan Program",
+  "provider": "Community Business Development Corporations (CBDCs), Newfoundland and Labrador offices",
+  "level": "nonprofit",
+  "url": "https://cbdc.ca/loan-programs/newcomer-loan-program/",
+  "summary": {
+    "quote": "Designed for non-permanent residents in Newfoundland & Labrador, this program provides business loans and guidance to help newcomers succeed as entrepreneurs.",
+    "source": "nl-cbdc-newcomer-loan-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-cbdc-newcomer-loan-program--main",
+      "url": "https://cbdc.ca/loan-programs/newcomer-loan-program/",
+      "title": "Newcomer Loan Program - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:08:59.278Z",
+      "http_status": 200,
+      "sha256": "ebea68712e21bd27a7ae5c2fc1651621739f705029ec6eab367bbee0d44e0f1a",
+      "text_sha256": "2fdf81e2d5b2197695af09bc20b17a6509ee403f3ace29aee9f57386fd6838ba",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-newcomer-loan-program--office-central",
+      "url": "https://cbdc.ca/locations/cbdc-central-newfoundland/",
+      "title": "CBDC Central - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:11:33.779Z",
+      "http_status": 200,
+      "sha256": "e89ce7943d9a4e1f0b87e688cf1e784bafa648b82fe19cf81c13e831bec02816",
+      "text_sha256": "857fb363508c397d50f133fa76ba1666a57d0dee44c97f4d26c519702694b076",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-newcomer-loan-program--office-gander-area",
+      "url": "https://cbdc.ca/locations/cbdc-gander-area/",
+      "title": "Help & Financing for Small Business & Startups, Gander Region, NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:01:27.631Z",
+      "http_status": 200,
+      "sha256": "e3cdb047963f4b37c6d04f07e213dc3b22d6bb6f11b8b330d4ffdc72da22298d",
+      "text_sha256": "1664a503c022b9c7b9b1b93cd040da0fa9ed335f04acace5a41ba1839e7d96d7",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-newcomer-loan-program--office-emerald",
+      "url": "https://cbdc.ca/locations/cbdc-emerald/",
+      "title": "Help & Financing for Small Business & Startups, Baie Verte, N. Central NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:12:01.490Z",
+      "http_status": 200,
+      "sha256": "f9782f1a55eee1bf93c5c2876e3202bb224c9348be99f97bfc8555901346facf",
+      "text_sha256": "6baf88d92aeebb008379a6fd42da30f63583a3b90d72773fca0fd0855c3e13c9",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "The program offers repayable loans of up to $20,000 for newcomers to start a new business or purchase an existing business in Newfoundland and Labrador.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 20000,
+    "text": "Up to $20,000",
+    "quote": "The program offers repayable loans of up to $20,000 for newcomers to start a new business or purchase an existing business in Newfoundland and Labrador.",
+    "source": "nl-cbdc-newcomer-loan-program--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "Living in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Living in Newfoundland & Labrador.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    },
+    {
+      "id": "residency",
+      "text": "A newcomer who can't get other support because of residency status (the page says non-permanent residents)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The Newcomer Loan Program is designed to provide financing to newcomers who are ineligible to receive support because of their residency status.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    },
+    {
+      "id": "residency-rule",
+      "text": "Your residency status at the time of application fits the page's rule",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Non-permanent residents or citizens of Canada at the time of application.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    },
+    {
+      "id": "age",
+      "text": "19 or older",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "19 and older.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    },
+    {
+      "id": "local-cbdc",
+      "text": "Your local CBDC offers this loan (programs vary by region)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Programs and services delivered by CBDCs may vary by region.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "phone": "(709) 489-4496",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496",
+      "source": "nl-cbdc-newcomer-loan-program--office-central"
+    },
+    {
+      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "phone": "(709) 651-4738",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738",
+      "source": "nl-cbdc-newcomer-loan-program--office-gander-area"
+    },
+    {
+      "label": "CBDC Emerald (Baie Verte)",
+      "phone": "(709) 532-8312",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312",
+      "source": "nl-cbdc-newcomer-loan-program--office-emerald"
+    },
+    {
+      "label": "CBDC Emerald satellite office (Springdale)",
+      "phone": "(709) 673-5702",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Emerald’s Satellite office Address 83 Little Bay Road Springdale NL A0J 1T0 Contact Tel: (709) 673-5702",
+      "source": "nl-cbdc-newcomer-loan-program--office-emerald"
+    },
+    {
+      "label": "Metro Business Opportunities (for St. John’s or Mount Pearl)",
+      "phone": "1-709-738-1626",
+      "email": null,
+      "census_divisions": null,
+      "quote": "For individuals located in St. John’s or Mount Pearl, please contact Metro Business Opportunities at 1-709-738-1626.",
+      "source": "nl-cbdc-newcomer-loan-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "For non-permanent residents; our profile's \"newcomer\" answer means arrived in the last five years, which is a different definition, so ownership is not a rule (API §4) and residency is check-this-yourself. The page's criterion reads \"Non-permanent residents or citizens of Canada at the time of application\", which is ambiguous as written; it is quoted as is, with the program description as a second check-this-yourself item. \"19 and older\" is about the applicant, not the business. Financial support is from the Government of Newfoundland and Labrador. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+  }
+}
