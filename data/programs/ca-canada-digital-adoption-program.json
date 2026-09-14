@@ -1,0 +1,77 @@
+{
+  "slug": "ca-canada-digital-adoption-program",
+  "sample": false,
+  "name": "Canada Digital Adoption Program (CDAP)",
+  "provider": "Innovation, Science and Economic Development Canada",
+  "level": "federal",
+  "url": "https://search.open.canada.ca/qpnotes/record/ic,MSB-2024-QP-00014",
+  "summary": {
+    "quote": "a $4-billion investment to help small and medium-sized enterprises (SMEs) become more efficient, go digital, take advantage of e-commerce and become more competitive.",
+    "source": "ca-canada-digital-adoption-program--qp-note"
+  },
+  "sources": [
+    {
+      "id": "ca-canada-digital-adoption-program--qp-note",
+      "url": "https://search.open.canada.ca/qpnotes/record/ic,MSB-2024-QP-00014",
+      "title": "Question Period Notes",
+      "publisher": "Innovation, Science and Economic Development Canada (Open Government Portal)",
+      "fetched_at": "2026-09-14T06:09:03.158Z",
+      "http_status": 200,
+      "sha256": "979c28c73699d3bb77b6ba059352e5fd37ca7e705b8b3ae6a4e8ed363d60155c",
+      "text_sha256": "99fd77774a8dbea379d4180638543374cd3652d6cb01a83e6cd541f4739b0014",
+      "robots": "allowed (no robots.txt)",
+      "terms_note": "Open Government Portal information is under the Open Government Licence – Canada: it may be copied and published, including for commercial purposes, with attribution.",
+      "terms_url": "https://open.canada.ca/en/open-government-licence-canada"
+    },
+    {
+      "id": "ca-canada-digital-adoption-program--pia",
+      "url": "https://ised-isde.canada.ca/site/atip-services/en/references/privacy-impact-assessment-canada-digital-adoption-program-evergreen-update-may-2024",
+      "title": "Privacy Impact Assessment – Canada Digital Adoption Program: Evergreen Update – May 2024",
+      "publisher": "Innovation, Science and Economic Development Canada",
+      "fetched_at": "2026-09-14T06:08:59.698Z",
+      "http_status": 200,
+      "sha256": "83a0ad27fd2a023c15f8f9672759f324c0aa8ca895f5f6fa3bc0db75760e6cf9",
+      "text_sha256": "ba75058337d96740ccb5ce1c7d6b999ad51c71e5d2d555b4fc3f994f7d9dbbfa",
+      "robots": "allowed",
+      "terms_note": "ISED content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission from ISED.",
+      "terms_url": "https://ised-isde.canada.ca/site/ised/en/terms-and-conditions"
+    }
+  ],
+  "funding_types": [],
+  "intake": {
+    "status": "closed",
+    "quote": "The Canada Digital Adoption Program's (CDAP) Boost Your Business Technology grant is fully subscribed and is not accepting new applications at this time.",
+    "source": "ca-canada-digital-adoption-program--qp-note",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "purpose",
+      "text": "The money is to go digital or take up e-commerce",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "digital"
+        ]
+      },
+      "quote": "help small and medium-sized enterprises (SMEs) become more efficient, go digital, take advantage of e-commerce and become more competitive",
+      "source": "ca-canada-digital-adoption-program--qp-note"
+    },
+    {
+      "id": "program-life",
+      "text": "The program was planned to run four years, to 2024-25, with no stated extension",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The CDAP is presently intended to operate for four years (2021-22 through 2024-2025).",
+      "source": "ca-canada-digital-adoption-program--pia"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm2",
+    "notes": "Closed, never open (PLAN, DECISIONS #19). ISED's own CDAP site no longer exists: https://ised-isde.canada.ca/site/canada-digital-adoption-program/en and its /boost-your-business-technology-grant and /how-find-digital-advisor pages all redirect to the ISED home page (https://ised-isde.canada.ca/site/ised/), and the old https://www.ic.gc.ca/eic/site/152.nsf/eng/home answers 404 (checked 2026-09-14). The closed quote is from ISED's Question Period note MSB-2024-QP-00014 on the Open Government Portal (date received Jun 20, 2024): the Boost Your Business Technology grant \"is fully subscribed and is not accepting new applications at this time\". The same note says the Grow Your Business Online grant \"remains open\" at that date; no current Government of Canada page says it is still open, and ISED's privacy impact assessment (second source) says the program \"is presently intended to operate for four years (2021-22 through 2024-2025)\" with \"no stated commitment to extend the program beyond its originally planned, four-year life\". I found no Government of Canada page that says the whole program ended in so many words. BDC's CDAP page states the closure but BDC's terms forbid our use. Type: the note calls both streams \"grants\" but does not say non-repayable (and the BDC loan side is a 0% loan), so funding_types is empty. The four-year life is kept as a check-this-yourself item so the second source is quoted where a reader sees it."
+  }
+}
