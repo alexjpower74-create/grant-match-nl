@@ -48,10 +48,30 @@
   "criteria": [
     {
       "id": "industry",
-      "text": "In forestry, aquaculture, agriculture or fishing, or processing their products (value-added secondary processing)",
+      "text": "An employer in forestry, aquaculture, agriculture or fishing doing value-added secondary processing (no sector answer settles that on its own)",
       "rule": {
         "kind": "industry",
-        "in": [
+        "not_in": [
+          "21",
+          "22",
+          "23",
+          "41",
+          "44-45",
+          "48-49",
+          "51",
+          "52",
+          "53",
+          "54",
+          "55",
+          "56",
+          "61",
+          "62",
+          "71",
+          "72",
+          "81",
+          "91"
+        ],
+        "unclear": [
           "11",
           "31-33"
         ]
@@ -148,6 +168,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Found on JGRD's 'Wage Subsidy Programs' list for employers. Industry: forestry, aquaculture, agriculture and fishing are NAICS sector 11; value-added secondary processing of their products is manufacturing (31-33). So the rule is in 11 or 31-33, and 'value-added secondary processing' is also a check-this-yourself item, since a farm that doesn't process, or a manufacturer outside those sectors, would still show met. Purpose: jobs (hire) and a training allowance (training). The training allowance ('Up to $3,000 for the individual hired') is not a program maximum, so max_amount is null; cost_share is the 75% wage rate. Structure: 'Must be incorporated or a sole proprietor' gives corporation and sole_proprietor, with co-operatives and non-profits unclear. Intake: not stated. The Program Guidelines were not fetched."
+    "notes": "Found on JGRD's 'Wage Subsidy Programs' list for employers. Industry: forestry, aquaculture, agriculture and fishing are NAICS sector 11; value-added secondary processing of their products is manufacturing (31-33). Neither sector answer settles it (a farm that doesn't process, or a manufacturer outside those sectors), so the rule leaves out every other sector and makes 11 and 31-33 unclear (gm2 K2, DECISIONS #23); 'value-added secondary processing' is also a check-this-yourself item. Purpose: jobs (hire) and a training allowance (training). The training allowance ('Up to $3,000 for the individual hired') is not a program maximum, so max_amount is null; cost_share is the 75% wage rate. Structure: 'Must be incorporated or a sole proprietor' gives corporation and sole_proprietor, with co-operatives and non-profits unclear. Intake: not stated. The Program Guidelines were not fetched."
   }
 }
