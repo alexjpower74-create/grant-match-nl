@@ -29,6 +29,8 @@ Exactly these steps, in order:
    `template`, `svg` (case-insensitive).
 2. Remove these inline tags **without** adding a space (the text inside stays): `a abbr b bdi bdo cite code data
    dfn em font i kbd mark q s samp small span strong sub sup time u var wbr`. Every other tag becomes one space.
+   A tag ends at the first `>` that is **outside** a quoted attribute value (`"…"` or `'…'`): pages put `>` and
+   whole escaped HTML inside `data-*` attributes (gm2 Q17, CanExport), and that must never become page text.
 3. Decode entities: numeric (`&#8217;` `&#x2019;`) and the named set `amp lt gt quot apos nbsp ndash mdash lsquo
    rsquo ldquo rdquo sbquo bdquo hellip laquo raquo copy reg trade bull middot deg times cent pound euro frac12
    frac14 frac34 shy eacute Eacute egrave Egrave agrave Agrave acirc ecirc icirc ocirc ucirc ccedil Ccedil euml
@@ -139,6 +141,10 @@ path and the reason):
 | `ownership` | `{ any: [owner ids] }` | owners |
 | `purpose` | `{ any: [purpose ids] }` | purposes |
 | `self_check` | `{}` — the page states it but no profile answer can settle it ("have a business plan", "be in good standing") | — |
+
+**`normally: true`** on a bounds rule, when the page softens the limit ("Eligible applicants must normally: … have
+fewer than 100 employees"): an answer inside the bounds is `met`; an answer outside is `unknown` with reason `unclear`
+(why "The page says this limit applies normally, so ask the office.") instead of `missed`.
 
 **Bounds** use the page's own number and wording: `gte` (at least), `gt` (more than), `lte` (up to / or fewer / or
 less), `lt` (fewer than / less than / under). At least one; `gte`/`gt` and `lte`/`lt` may combine. "Between $300,000

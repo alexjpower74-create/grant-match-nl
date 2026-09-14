@@ -154,3 +154,17 @@ context was a 160-character window and the saved page text includes navigation. 
 menus, so every provincial quote would have opened with a list of links. Contract §1 now cuts context at sentence
 boundaries and leaves it empty when there is none nearby. gm1 changes `contextFor` when it next stops; the app needs
 no change (it renders `before` + `<mark>quote</mark>` + `after`).
+
+## 21. Two engine rules from gm2's reviews (04:00)
+- **Attributes are not page text** (gm2 Q17). `pageText` ended a tag at the first `>`, even inside a quoted attribute;
+  CanExport's page stores escaped HTML in `data-cmp-data-layer`, so JSON fragments and duplicate sentences became page
+  text and garbled 6 quote contexts. Every quote still verified, but an owner would read junk around them. §1 now ends a
+  tag at the first `>` outside quotes. It changes `text_sha256` for any saved page with `>` in an attribute: gm1 fixes
+  core and re-hashes `nl-*`, gm2 re-hashes `ca-*`, and the lead merges both before QA so main's build never sees a mix.
+- **"Must normally" limits** (gm2 I2). The Business Investment Program says applicants "must normally" have fewer than
+  100 employees and less than $10 million in sales. A 120-person business being told Doesn't fit claims more than the
+  page. New `normally: true` on bounds rules: outside the limit is Unknown (reason `unclear`), inside is met.
+- Also from gm2's cross-review of gm1's first three, for gm1: Business Investment's strategic-sector item mentions the
+  export-potential alternative the page gives; its department footer phone is labelled as the department switchboard
+  (or dropped, now the regional offices are there); JobsNL's participant rules become one quoted check-it-yourself item
+  each, because the combined item claimed more than its quote.
