@@ -1,0 +1,173 @@
+{
+  "slug": "nl-cbdc-general-business-loan",
+  "sample": false,
+  "name": "CBDC General Business Loan",
+  "provider": "Community Business Development Corporations (CBDCs), Newfoundland and Labrador offices",
+  "level": "nonprofit",
+  "url": "https://cbdc.ca/loan-programs/general-business-loan/",
+  "summary": {
+    "quote": "That’s why we’ve created the CBDC General Business Loan, which is our most flexible business loan product.",
+    "source": "nl-cbdc-general-business-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-cbdc-general-business-loan--main",
+      "url": "https://cbdc.ca/loan-programs/general-business-loan/",
+      "title": "Loans & Financing for Small Businesses in NB, NL, NS and PEI - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:07:28.493Z",
+      "http_status": 200,
+      "sha256": "96587b0ca7116bf3ad73dcb819152f04a18f168163db09e27fa6159abc3a3a10",
+      "text_sha256": "c42b6f5850a52e5ffc6d875d9cb8e366c3ed9b51965487dc4f213668f23695b5",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-general-business-loan--office-central",
+      "url": "https://cbdc.ca/locations/cbdc-central-newfoundland/",
+      "title": "CBDC Central - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:11:33.779Z",
+      "http_status": 200,
+      "sha256": "e89ce7943d9a4e1f0b87e688cf1e784bafa648b82fe19cf81c13e831bec02816",
+      "text_sha256": "857fb363508c397d50f133fa76ba1666a57d0dee44c97f4d26c519702694b076",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-general-business-loan--office-gander-area",
+      "url": "https://cbdc.ca/locations/cbdc-gander-area/",
+      "title": "Help & Financing for Small Business & Startups, Gander Region, NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:01:27.631Z",
+      "http_status": 200,
+      "sha256": "e3cdb047963f4b37c6d04f07e213dc3b22d6bb6f11b8b330d4ffdc72da22298d",
+      "text_sha256": "1664a503c022b9c7b9b1b93cd040da0fa9ed335f04acace5a41ba1839e7d96d7",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-general-business-loan--office-emerald",
+      "url": "https://cbdc.ca/locations/cbdc-emerald/",
+      "title": "Help & Financing for Small Business & Startups, Baie Verte, N. Central NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:12:01.490Z",
+      "http_status": 200,
+      "sha256": "f9782f1a55eee1bf93c5c2876e3202bb224c9348be99f97bfc8555901346facf",
+      "text_sha256": "6baf88d92aeebb008379a6fd42da30f63583a3b90d72773fca0fd0855c3e13c9",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "All loans are repayable and offer competitive repayment terms and interest rates.",
+      "source": "nl-cbdc-general-business-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 150000,
+    "text": "Up to $150,000 (more in some cases)",
+    "quote": "Loans up to $150,000* may be available to eligible applicants.",
+    "source": "nl-cbdc-general-business-loan--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "A business in rural Atlantic Canada (which includes Newfoundland and Labrador)",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Entrepreneurs or businesses purchasing a new or existing company in rural Atlantic Canada;",
+      "source": "nl-cbdc-general-business-loan--main"
+    },
+    {
+      "id": "rural",
+      "text": "The business is in a rural area",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Entrepreneurs or businesses purchasing a new or existing company in rural Atlantic Canada;",
+      "source": "nl-cbdc-general-business-loan--main"
+    },
+    {
+      "id": "viability",
+      "text": "The business has a legitimate chance of economic viability",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Potential borrowers must show a legitimate chance of economic viability.",
+      "source": "nl-cbdc-general-business-loan--main"
+    },
+    {
+      "id": "employment",
+      "text": "Creates or keeps jobs without hurting existing businesses in the area",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Employment creation and/or maintenance without negatively impacting existing area businesses is also a necessity.",
+      "source": "nl-cbdc-general-business-loan--main"
+    },
+    {
+      "id": "local-cbdc",
+      "text": "Your local CBDC offers this loan (programs vary by region)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Programs and services delivered by CBDCs may vary by region.",
+      "source": "nl-cbdc-general-business-loan--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "phone": "(709) 489-4496",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496",
+      "source": "nl-cbdc-general-business-loan--office-central"
+    },
+    {
+      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "phone": "(709) 651-4738",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738",
+      "source": "nl-cbdc-general-business-loan--office-gander-area"
+    },
+    {
+      "label": "CBDC Emerald (Baie Verte)",
+      "phone": "(709) 532-8312",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312",
+      "source": "nl-cbdc-general-business-loan--office-emerald"
+    },
+    {
+      "label": "CBDC Emerald satellite office (Springdale)",
+      "phone": "(709) 673-5702",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Emerald’s Satellite office Address 83 Little Bay Road Springdale NL A0J 1T0 Contact Tel: (709) 673-5702",
+      "source": "nl-cbdc-general-business-loan--office-emerald"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Uses on the page: buying, starting or expanding a business, working capital, land and buildings, equipment and more; they don't map to a purpose rule without leaving some out, so no purpose rule. \"Rural\" can't be settled from a community answer (the Newcomer page sends St. John's and Mount Pearl to Metro Business Opportunities, but no list of rural places is given), so it is check-this-yourself. The page says CBDCs can exceed $150,000 in certain circumstances. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+  }
+}
