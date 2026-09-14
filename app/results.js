@@ -1,6 +1,6 @@
 import { api } from './api.js'
 import {
-  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, amountText, countsText,
+  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, amountText, countsText, TYPE_UNKNOWN_TEXT,
   verificationFlags, quoteBlock, sourcesIndex, hasSample, sampleBanner, errorNotice, ICONS, PROFILE_KEYS,
 } from './render.js'
 
@@ -18,6 +18,7 @@ function card(r) {
       <h3 class="card-name">${esc(r.name)}</h3>
       <p class="card-provider">${esc(r.provider)}</p>
       <div class="card-facts">
+        ${r.funding_types.length ? '' : `<span data-type-unknown>${esc(TYPE_UNKNOWN_TEXT)}</span>`}
         <span>${esc(amountText(r))}</span>
         <span>${esc(intakeText(r.intake))}</span>
         <span class="card-counts">${esc(countsText(r.counts))}</span>

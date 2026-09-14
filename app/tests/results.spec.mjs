@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { readFileSync } from 'node:fs'
 import { PROFILES, STALE_NOW, qs, coreMatch, press } from './helpers.mjs'
 
 test('results order and labels equal what core returns for SAMPLE Auto Service', async ({ page }) => {
@@ -65,4 +66,30 @@ test('now=2026-12-01: stale message and no Looks like a fit', async ({ page }) =
   const v = want.open[0].verification
   const [y, m, d] = v.last_verified.split('-').map(Number)
   await expect(flags.first()).toHaveText(`Last verified ${date.format(Date.UTC(y, m - 1, d))}, more than 60 days ago. Check the official page.`)
+})
+
+test('a card says what the page leaves unsaid: intake and funding type have their subject', async ({ page }) => {
+  const want = coreMatch(PROFILES.auto)
+  const unknownIntake = want.open.find((r) => r.intake.status === 'unknown')
+  expect(unknownIntake, 'a SAMPLE program with unknown intake').toBeTruthy()
+  await page.goto(`/results.html?${qs(PROFILES.auto)}`)
+  const card = page.locator(`#open-list a.card[data-slug="${unknownIntake.slug}"]`)
+  await expect(card).toContainText("When it takes applications: the page doesn't say")
+  // The bare phrase never stands alone as a line.
+  const lines = await card.locator('.card-facts > span').allTextContents()
+  expect(lines.map((l) => l.trim())).not.toContain("The page doesn't say")
+  for (const r of want.open.filter((x) => x.funding_types.length)) {
+    await expect(page.locator(`#open-list a.card[data-slug="${r.slug}"] [data-type-unknown]`)).toHaveCount(0)
+  }
+})
+
+test('real data: a card for a program with no stated funding type says so', async ({ page }) => {
+  const real = JSON.parse(readFileSync(new URL('../../data/build/programs.json', import.meta.url), 'utf8'))
+  const untyped = real.programs.filter((p) => p.funding_types.length === 0 && p.intake.status !== 'closed')
+  test.skip(untyped.length === 0, 'no open real program without a funding type')
+  await page.goto(`/results.html?${qs(PROFILES.auto, { data: 'real' })}`)
+  await expect(page.locator('#summary-line')).toBeVisible()
+  for (const p of untyped) {
+    await expect(page.locator(`#open-list a.card[data-slug="${p.slug}"] [data-type-unknown]`)).toHaveText("Type of funding: the page doesn't say")
+  }
 })
