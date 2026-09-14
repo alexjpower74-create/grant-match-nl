@@ -142,7 +142,7 @@
   ],
   "contacts": [
     {
-      "label": "CBDC Central, Grand Falls-Windsor (one of 15 CBDCs in the province)",
+      "label": "CBDC Central, Grand Falls-Windsor",
       "phone": "(709) 489-4496",
       "email": null,
       "census_divisions": null,
@@ -150,7 +150,7 @@
       "source": "nl-cbdc-youth-loan-program--office-central"
     },
     {
-      "label": "CBDC Gander Area, Gander (one of 15 CBDCs in the province)",
+      "label": "CBDC Gander Area, Gander",
       "phone": "(709) 651-4738",
       "email": null,
       "census_divisions": null,
@@ -158,7 +158,7 @@
       "source": "nl-cbdc-youth-loan-program--office-gander-area"
     },
     {
-      "label": "CBDC Emerald, Baie Verte (one of 15 CBDCs in the province)",
+      "label": "CBDC Emerald, Baie Verte",
       "phone": "(709) 532-8312",
       "email": null,
       "census_divisions": null,
@@ -166,7 +166,7 @@
       "source": "nl-cbdc-youth-loan-program--office-emerald"
     },
     {
-      "label": "CBDC Emerald satellite office, Springdale (one of 15 CBDCs in the province)",
+      "label": "Emerald’s satellite office, Springdale",
       "phone": "(709) 673-5702",
       "email": null,
       "census_divisions": null,
@@ -176,6 +176,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Age: the page's 18 to 34 differs from our profile's \"young person (18 to 39)\", so it is check-this-yourself, not an ownership rule (API §4). The loan page states no maximum; the CBDC Central office page (a source of this record) says the Youth Loan \"offers up to $150,000\", which is quoted for max_amount. Structure as the First Time Entrepreneur Loan, with not-registered unclear. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts. Each office page says \"In rural Newfoundland and Labrador there are 15 Corporations dedicated to the development of small business and job creation\", so the labels give the office's town and \"one of 15 CBDCs in the province\" (gm2 K3, DECISIONS #23): an owner elsewhere should call their local CBDC."
+    "notes": "Age: the page's 18 to 34 differs from our profile's \"young person (18 to 39)\", so it is check-this-yourself, not an ownership rule (API §4). The loan page states no maximum; the CBDC Central office page (a source of this record) says the Youth Loan \"offers up to $150,000\", which is quoted for max_amount. Structure as the First Time Entrepreneur Loan, with not-registered unclear. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts. Office labels name the office and its town only, every word of which is in the contact's own quote (DECISIONS #25); the app's line above several contacts tells an owner to call the office nearest them."
   }
 }
