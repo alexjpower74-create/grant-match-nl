@@ -75,6 +75,30 @@ test('build-data writes both bundles when clean, and nothing when there is a pro
   assert.equal(fs.existsSync(failedOut), false, 'nothing written');
 });
 
+test('the real bundle: every contact has empty context, no context holds a newline, Business Growth offices stand alone', () => {
+  const out = path.join(SCRATCH, 'real-bundle');
+  const r = run('--out', out);
+  assert.equal(r.status, 0, r.stderr);
+  const bundle = JSON.parse(fs.readFileSync(path.join(out, 'programs.json'), 'utf8'));
+  let contacts = 0;
+  let quotes = 0;
+  for (const p of bundle.programs) {
+    for (const c of p.contacts) {
+      assert.deepEqual(c.context, { before: '', after: '' }, `${p.slug}: ${c.label}`);
+      contacts += 1;
+    }
+    for (const q of [p.summary, ...p.funding_types, p.intake, p.intake.deadline, p.max_amount, p.cost_share, ...p.criteria, ...p.contacts]) {
+      if (!q || typeof q.quote !== 'string') continue;
+      assert.ok(q.context, `${p.slug}: no context for ${q.quote.slice(0, 40)}`);
+      assert.ok(!q.context.before.includes('\n') && !q.context.after.includes('\n'), `${p.slug}: newline in context`);
+      quotes += 1;
+    }
+  }
+  assert.ok(contacts >= 30 && quotes > 250, `${contacts} contacts, ${quotes} quotes`);
+  const canexport = bundle.programs.find((p) => p.slug === 'ca-canexport-smes');
+  assert.ok(!/Trade Commissioner Service|Our solutions/.test(canexport.intake.context.before), JSON.stringify(canexport.intake.context));
+});
+
 test('a slug that does not match its file name, bad JSON, and a missing reference list are problems', () => {
   const dir = copyTree();
   const fixtures = path.join(dir, 'fixtures', 'programs');

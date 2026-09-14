@@ -54,6 +54,48 @@ export function pageText(html) {
   return s.replace(/\s+/g, ' ').trim();
 }
 
+const BLOCK_TAGS = new Set([
+  'p', 'li', 'ul', 'ol', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'section', 'article', 'aside',
+  'nav', 'header', 'footer', 'main', 'table', 'tr', 'td', 'th', 'br', 'hr', 'blockquote', 'pre', 'form', 'fieldset',
+  'figure', 'figcaption', 'address',
+]);
+const TAG_NAME_RE = /^<\/?([a-zA-Z][a-zA-Z0-9]*)/;
+
+/**
+ * Page text with block edges as "\n" (docs/API.md §1). Exactly the pageText steps, except that a block tag becomes
+ * a marker instead of a space; a whitespace run containing a marker collapses to "\n", any other run to one space.
+ * The marker is a private-use character absent from the page (and not produced by its entities), so source newlines
+ * never become block edges and blockText(html).replace(/\n/g, ' ') === pageText(html) with identical indexes.
+ */
+export function blockText(html) {
+  const src = String(html ?? '');
+  for (let cp = 0xe000; cp <= 0xf8ff; cp++) {
+    const mark = String.fromCodePoint(cp);
+    if (src.includes(mark)) continue;
+    let inserted = 0;
+    let s = src;
+    s = s.replace(/<!--[\s\S]*?-->/g, '');
+    s = s.replace(SELF_CLOSED_RE, '');
+    s = s.replace(ELEMENT_RE, '');
+    s = s.replace(UNCLOSED_ELEMENT_RE, '');
+    s = s.replace(INLINE_RE, '');
+    s = s.replace(OTHER_TAG_RE, (tag) => {
+      const name = tag.match(TAG_NAME_RE)?.[1];
+      if (name && BLOCK_TAGS.has(name.toLowerCase())) {
+        inserted += 1;
+        return mark;
+      }
+      return ' ';
+    });
+    s = decodeEntities(s);
+    if (s.split(mark).length - 1 !== inserted) continue; // an entity produced the marker: pick another
+    s = s.replace(/[   ]/g, ' ').replace(/[​﻿]/g, '');
+    s = s.replace(new RegExp(`[\\s${mark}]+`, 'g'), (run) => (run.includes(mark) ? '\n' : ' '));
+    return s.replace(/^[ \n]+|[ \n]+$/g, '');
+  }
+  throw new Error('blockText: no free marker character');
+}
+
 const MULTIPLIERS = { thousand: 1e3, million: 1e6, billion: 1e9 };
 const NUMBER_RE = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(?:\s*(thousand|million|billion)\b)?/gi;
 
@@ -82,25 +124,37 @@ const BOUNDARY_CHARS = '.?!;:';
  */
 export function contextFor(text, quote, n = 160) {
   if (!quote) return null;
-  const idx = text.indexOf(quote);
+  // Quotes are page text (block edges read as spaces), so find them there; blockText has identical indexes.
+  const flat = text.includes('\n') ? text.replace(/\n/g, ' ') : text;
+  const idx = flat.indexOf(quote);
   if (idx < 0) return null;
   const end = idx + quote.length;
 
+  // before: after the nearest block edge ("\n") or sentence boundary within n characters before the quote.
   let before = '';
   const beforeWindow = text.slice(Math.max(0, idx - n), idx);
-  for (let i = beforeWindow.length - 2; i >= 0; i--) {
-    if (BOUNDARY_CHARS.includes(beforeWindow[i]) && beforeWindow[i + 1] === ' ') {
+  for (let i = beforeWindow.length - 1; i >= 0; i--) {
+    if (beforeWindow[i] === '\n') {
+      before = beforeWindow.slice(i + 1);
+      break;
+    }
+    if (i <= beforeWindow.length - 2 && BOUNDARY_CHARS.includes(beforeWindow[i]) && beforeWindow[i + 1] === ' ') {
       before = beforeWindow.slice(i + 2);
       break;
     }
   }
 
+  // after: up to a block edge (not included), or up to and including the first boundary character.
   let after = '';
   if (!BOUNDARY_CHARS.includes(quote[quote.length - 1])) {
     const afterWindow = text.slice(end, end + n);
     for (let i = 0; i < afterWindow.length; i++) {
+      if (afterWindow[i] === '\n') {
+        after = afterWindow.slice(0, i);
+        break;
+      }
       const next = end + i + 1 < text.length ? text[end + i + 1] : ' ';
-      if (BOUNDARY_CHARS.includes(afterWindow[i]) && next === ' ') {
+      if (BOUNDARY_CHARS.includes(afterWindow[i]) && (next === ' ' || next === '\n')) {
         after = afterWindow.slice(0, i + 1);
         break;
       }

@@ -113,6 +113,78 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 9 (final) — block-bounded context, one-block CanExport quotes, last real-data look: DONE
+Every step gated on its exit code (a non-zero exit stopped the step).
+1. **Merged main at `44d19fc`** (merge `aa0556c`, exit 0; DECISIONS #26).
+2. **CanExport quotes inside one block each (`137d1c9`).** I used gm1's `blockText` from `rig/gm1` (read with `git show` into `.scratch/`,
+   not merged early) to print the saved pages' blocks. It found **four** CanExport quotes joining blocks, not two:
+   - intake: blocks 21 + 22, "Applications are not being accepted at this time" + "The application intake period ended…";
+   - location: blocks 77–79, "…must:" + "be established in Canada" + "be for-profit";
+   - structure: blocks 79 + 80, "be for-profit" + the incorporated/LLP/co-op line;
+   - contact: blocks 449 + 450, "For general program questions:" + "Please contact canexportsmes@…".
+
+   Now: intake quotes "Applications are not being accepted at this time". The August 31, 2026 end is the intake **deadline** with its
+   own one-block quote ("The application intake period ended at 12:00 p.m. (ET) on August 31, 2026."), which the schema allows on a
+   closed intake. Location quotes "be established in Canada". "be for-profit" is its own structure criterion (`not_in: [nonprofit]`),
+   so that fact keeps its quote, and structure (`not_in: [sole_proprietor, not_registered]`, `unclear: [partnership]`) quotes the one
+   line. The contact quotes "Please contact canexportsmes@international.gc.ca.".
+   **Gates:** `check:data` exit 0 ("every quote verified (27 real programs, 10 SAMPLE)"); `git diff` shows 0 `sha256`/`text_sha256`
+   lines; a re-scan finds 13 CanExport quotes, 0 not inside a single block.
+   **Found, not changed (programs outside this round's brief):** the same scan over all 60 `ca-*` quotes finds three more list quotes
+   whose lead-in and items are separate blocks: REGI `use-of-funds` (5 blocks, "You can use this funding to:" + four items), Canada
+   Summer Jobs `cost_share` (2, "…eligible to receive funding for:" + "up to 50%…"), NRC IRAP `structure` (4, "NRC IRAP does not
+   support:" + three items). Each would split the way CanExport did; the lead decides whether to do that.
+3. **Merged `rig/gm1` at `697aa25`** (merge `871c163`, exit 0), once `git log rig/gm1` showed the commit dropping "(one of 15 CBDCs in
+   the province)". I watched for it with a background `git log -p` loop, no prompts. `build:data` exit 0, `check:data` exit 0. On
+   the built bundle: 53 contact labels, 0 contain "15 CBDCs"; 288 real quotes, 251 with empty context; 0 contacts with context.
+4. **Last real-data look** on `?mock=1&data=real&now=2026-09-14T12:00:00Z`. All old `docs/shots/gm2-real-*.png` removed (including
+   round 5's Daycare results, not in this list) and replaced by 12 fresh shots:
+   `gm2-real-{results-apco,results-auto,detail-business-growth,detail-canexport,detail-cbdc-general-business-loan,print-apco}-{390,1280}.png`.
+   I looked at each.
+   - **Business Growth:** "The program's pages list these offices. Call the one nearest you." sits above six contacts. Each office's
+     quote is its own line only ("Central: 709.256.1480", "Western: 709.637.2628"), with no context. **R1 is fixed:** no office shows
+     another office's number next to its call button.
+   - **CanExport (closed):** "Closed. Not taking applications right now." with the one-block quote and no context, then "Deadline: Aug 31,
+     2026" with its own quote. **R2 is fixed:** no breadcrumb, no JSON, no run-on anywhere on the page. The for-profit and structure
+     items show separately; the revenue quote's context is the rest of its own list item ("(or during the last 12 months for monthly
+     and quarterly filers)").
+   - **CBDC General Business Loan:** labels "CBDC Central, Grand Falls-Windsor", "CBDC Gander Area, Gander", "CBDC Emerald, Baie Verte",
+     "Emerald’s satellite office, Springdale", under the multi-contact line. Office quotes stay long (address, "View on Google Maps",
+     phone), as DECISIONS #26 says, because they carry the town.
+   - **APCO printout:** one Letter page, six programs in core's new evidence-tier order (CBDC Innovation Loan first), every phone whole
+     on its line, "and 8 more on the results page".
+   - **R5, page length:** Business Growth at 390 is **7,677 CSS px (screenshot 780×15,354 at 2x)**, against round 5's 780×16,348
+     (about 8,174 CSS px): **about 6% shorter**, not the big cut DECISIONS #24 hoped for. The shots show why. The remaining length is
+     the quotes themselves, not context: the ~400-character eligibility paragraph is quoted in full by two criteria (structure and
+     commercial viability), the 200-character amount sentence is quoted twice (amount and cost share), and there are six contact
+     blocks. Shortening further means shorter quotes in gm1's data (one block or sentence per fact, as done for CanExport) or a
+     collapsed quote in the app. The lead decides.
+5. **Suites on the merged tree** (exit codes checked):
+   - Worker, SAMPLE: **exit 0, 15 passed, 0 failed, 1 skipped**.
+   - Worker, `GM_REAL=1`: **exit 0, 1 passed, 0 failed** on 27 programs, 154 criteria, 53 sources.
+   - Playwright: **exit 0, 200 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped by design.
+
+## Round 8 — one line above more than one contact: DONE
+Merged main at `ebb66a2` (merge `a6b3441`; API §12 and DECISIONS #25: contact labels carry office and town only, and a neutral line
+above multiple contacts). `build:data`: 27 real programs, 10 SAMPLE.
+- **Change:** when a program has more than one contact, the "Talk to someone" section shows one muted line above them:
+  "The program's pages list these offices. Call the one nearest you." (`[data-contacts-note]`). A single contact, or none, gets no
+  line.
+- **Where it shows on real data today:** Business Growth (6 contacts), Business Investment (7), the six CBDC loans (4, Newcomer 5)
+  and both ACOA programs (2). The other 11 real programs with contacts have one.
+- **Test:** "more than one contact gets the 'call the one nearest you' line; one contact or none does not". No SAMPLE program has
+  two contacts (SAMPLE Growth Grant and Women Entrepreneur Loan have one each), so the many-contact case is the real Business
+  Growth Program via `data=real`: exactly one line, exact copy, in the contacts section and before the contacts. Then SAMPLE
+  Growth Grant (one contact) and a SAMPLE program with no contacts: no line, and the text isn't on the page. Passes on chromium and
+  webkit at 390 and 1280.
+- **Negative control (l):** line shown for `contacts.length >= 1` → **red** ("nl-sample-growth-grant (1 contact), Expected: 0, Received:
+  1"). Restored from a byte copy (the change was uncommitted) → passes; no backups left.
+- **Playwright on the merged tree: 200 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped
+  by design. Worker code and data rules are unchanged since round 7 (15/0/1 SAMPLE, 1/0 real).
+
+Waiting: gm1's block-edge quote context (API §1) and the office labels without "15 CBDCs". Then the last real-data look (Business
+Growth contacts, CanExport's closed quote, one CBDC loan) with fresh `gm2-real` screenshots.
+
 ## Round 7 — unclear rendered for real, check-yourself items without their why: DONE
 1. **Merged `rig/gm1` at `c551391`** (merge `20b3032`). It brings the SAMPLE fixtures that use `unclear` and `normally` (`28c8866`), the
    evidence sort tier (`6f0d5fc`) and gm1's K3 office labels. `build:data`: 27 real programs, 10 SAMPLE (new: SAMPLE Green Upgrade

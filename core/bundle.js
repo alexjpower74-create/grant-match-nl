@@ -8,6 +8,13 @@ function entryText(entry) {
   return entry && typeof entry.text === 'string' ? entry.text : null;
 }
 
+/** The text context is taken from: blockText when the caller gave it (block edges stop context), else page text. */
+function entryBlock(entry) {
+  return entry && typeof entry === 'object' && typeof entry.block === 'string' ? entry.block : entryText(entry);
+}
+
+const NO_CONTEXT = Object.freeze({ before: '', after: '' });
+
 /** Add source_url and context beside every { quote, source } in a copy of the record. */
 function expandQuotes(record, texts) {
   const urls = Object.fromEntries(record.sources.map((s) => [s.id, s.url]));
@@ -16,6 +23,8 @@ function expandQuotes(record, texts) {
     const text = texts[obj.source];
     return { ...obj, source_url: urls[obj.source] ?? null, context: text ? contextFor(text, obj.quote) : null };
   };
+  // Contact quotes get no context (API §1): a phone list's neighbours are other offices' numbers.
+  const expandContact = (obj) => ({ ...expand(obj), context: { ...NO_CONTEXT } });
   return {
     ...record,
     summary: expand(record.summary),
@@ -27,7 +36,7 @@ function expandQuotes(record, texts) {
     max_amount: expand(record.max_amount),
     cost_share: expand(record.cost_share),
     criteria: record.criteria.map(expand),
-    contacts: record.contacts.map(expand),
+    contacts: record.contacts.map(expandContact),
   };
 }
 
@@ -55,7 +64,7 @@ export function buildBundle({ programs, pageTexts, communities, industries, data
   }
   if (problems.length) return { bundle: null, problems };
 
-  const texts = Object.fromEntries(Object.entries(pageTexts).map(([id, e]) => [id, entryText(e)]));
+  const texts = Object.fromEntries(Object.entries(pageTexts).map(([id, e]) => [id, entryBlock(e)]));
   let builtFrom = null;
   for (const p of sorted) for (const s of p.sources) if (builtFrom === null || s.fetched_at > builtFrom) builtFrom = s.fetched_at;
 
