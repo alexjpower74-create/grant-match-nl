@@ -351,6 +351,8 @@ Copy that must stay true:
   changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
+- When a program has more than one contact, one line above them: "The program's pages list these offices. Call the one
+  nearest you." Contact labels name the office and its town only; they carry no fact that isn't in the contact's quote.
 - A criterion whose `unknown_reason` is `self_check` shows the reason copy only, not its `why` (they say the same thing).
 - Fit `why` lines are shown as core writes them. On the program page, when a profile is given the stale / needs-review
   sentences come from `fit.why`, so the separate verification flag shows only when there is no profile (no double
