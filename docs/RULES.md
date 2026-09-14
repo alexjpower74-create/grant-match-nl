@@ -41,7 +41,7 @@ Unknown (you didn't answer).
 
 ### unclear (on structure and industry rules)
 Sometimes the page's wording settles some answers but not others. Those answers go on the rule's `unclear` list
-and come out as **Unknown, the page's wording doesn't settle it for your answer**. Never a guessed met or missed.
+and come out as **Unknown: the page's wording doesn't settle it for your answer**. Never a guessed met or missed.
 An answer can't be both on the list and in the rule's own set.
 
 > Page: "Private or not-for-profit sector employers that are incorporated or sole proprietorships." Rule: in
@@ -54,7 +54,7 @@ The page is for businesses owned by women, Indigenous people, a young person, a 
 question blank is Unknown. "None of these" means no to every group, so it misses an ownership rule.
 
 > Page: "a loan open to businesses owned by women". You ticked Women. **Met.** You ticked None of these:
-> **Missed.** You skipped the question: **Unknown, you didn't answer this.**
+> **Missed.** You skipped the question: **Unknown: you didn't answer this or weren't sure.**
 
 Only when the page's definition matches ours. A page that says "youth aged 18 to 29" doesn't match our "18 to 39",
 so that condition is *check this yourself*.
@@ -66,7 +66,7 @@ What the money is for. Met when any of your purposes is one the page covers.
 
 ### self_check
 Everything real on the page that no profile answer can settle: a business plan, good standing, commercial
-viability, "a clear benefit to the local community". Always **Unknown, check this yourself**.
+viability, "a clear benefit to the local community". Always **Unknown: check this yourself**.
 
 ### Number rules: employees, years operating, revenue, project cost
 The page's own number and wording become bounds: *at least* (≥), *more than* (>), *up to* / *or fewer* (≤),
@@ -80,7 +80,7 @@ not including) $1,000,000. We treat each band as a range of possible values and 
 
 - **Met** if *every* value in your band satisfies the page's limit;
 - **Missed** if *no* value does;
-- **Unknown, close to the page's limit** otherwise (some values do, some don't).
+- **Unknown: your answer is close to the page's limit** otherwise (some values do, some don't).
 
 People working is an exact number, so it's always met or missed.
 

@@ -69,30 +69,39 @@ export function numbersIn(text) {
   return out;
 }
 
-/** Up to n characters either side of the first occurrence of quote, cut back to a word boundary. */
+const BOUNDARY_CHARS = '.?!;:';
+
+/**
+ * The rest of the sentence around the first occurrence of quote (docs/API.md §1), never menu text.
+ * before = text after the last boundary (". " "? " "! " "; " ": ") within n characters before the quote, else "".
+ * after = text up to and including the first boundary character within n characters after the quote, else "".
+ * A quote that already ends with a boundary character gets after = "" (it ends its own sentence).
+ */
 export function contextFor(text, quote, n = 160) {
   if (!quote) return null;
   const idx = text.indexOf(quote);
   if (idx < 0) return null;
   const end = idx + quote.length;
 
-  let before = text.slice(Math.max(0, idx - n), idx);
-  if (idx - n > 0) {
-    // Drop the partial first word unless the cut already landed on a boundary.
-    if (!/\s/.test(text[idx - n - 1])) {
-      const sp = before.search(/\s/);
-      before = sp >= 0 ? before.slice(sp + 1) : '';
+  let before = '';
+  const beforeWindow = text.slice(Math.max(0, idx - n), idx);
+  for (let i = beforeWindow.length - 2; i >= 0; i--) {
+    if (BOUNDARY_CHARS.includes(beforeWindow[i]) && beforeWindow[i + 1] === ' ') {
+      before = beforeWindow.slice(i + 2);
+      break;
     }
-    before = '…' + before.replace(/^\s+/, '');
   }
 
-  let after = text.slice(end, end + n);
-  if (end + n < text.length) {
-    if (!/\s/.test(text[end + n])) {
-      const sp = after.search(/\s[^\s]*$/);
-      after = sp >= 0 ? after.slice(0, sp) : '';
+  let after = '';
+  if (!BOUNDARY_CHARS.includes(quote[quote.length - 1])) {
+    const afterWindow = text.slice(end, end + n);
+    for (let i = 0; i < afterWindow.length; i++) {
+      const next = end + i + 1 < text.length ? text[end + i + 1] : ' ';
+      if (BOUNDARY_CHARS.includes(afterWindow[i]) && next === ' ') {
+        after = afterWindow.slice(0, i + 1);
+        break;
+      }
     }
-    after = after.replace(/\s+$/, '') + '…';
   }
   return { before, after };
 }
