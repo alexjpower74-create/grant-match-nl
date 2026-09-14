@@ -35,7 +35,7 @@ test('each rendered <mark> equals its API quote exactly and sits inside its cont
   }
 })
 
-test('Unknown reason copy per reason', async ({ page }, testInfo) => {
+test('Unknown reason copy per reason', async ({ page }) => {
   const seen = new Set()
   // The straddle and unanswered profiles, plus answers a set rule's `unclear` list would name (API §4).
   const unclearTries = ['cooperative', 'nonprofit', 'not_registered'].map((v) => {
@@ -56,17 +56,8 @@ test('Unknown reason copy per reason', async ({ page }, testInfo) => {
       }
     }
   }
-  // Every reason core produces today is rendered with its copy.
-  for (const r of ['self_check', 'not_answered', 'band_straddles']) expect(seen.has(r), `${r} was rendered`).toBe(true)
-  // `unclear` (API §4–5): checked on a rendered page as soon as core and the SAMPLE set produce it. Until then the
-  // copy itself is checked, and the gap is visible in the report.
-  if (!seen.has('unclear')) {
-    testInfo.annotations.push({ type: 'gap', description: 'core/SAMPLE data do not produce unknown_reason "unclear" yet' })
-    const { UNKNOWN_REASON } = await import('../render.js')
-    expect(UNKNOWN_REASON.unclear).toBe(REASON_COPY.unclear)
-    await page.goto('/about.html?mock=1')
-    await expect(page.getByText(REASON_COPY.unclear, { exact: true })).toBeVisible()
-  }
+  // Every reason, `unclear` included (SAMPLE Green Upgrade Grant and Expansion Loan), is rendered with its exact copy.
+  expect([...seen].sort()).toEqual(Object.keys(REASON_COPY).sort())
 
   // A program fact the pages don't state.
   const silent = bundle.programs.map((p) => coreProgram(p.slug, PROFILES.auto)).find((r) => r.unknown_facts.length)
