@@ -69,23 +69,17 @@
     },
     {
       "id": "structure",
-      "text": "A for-profit incorporated company, limited liability partnership (LLP) or co-operative (not a sole proprietorship or non-profit)",
+      "text": "A for-profit incorporated company, limited liability partnership (LLP) or co-operative (not a sole proprietorship or non-profit); a partnership counts only if it is an LLP",
       "rule": {
         "kind": "structure",
         "not_in": [
           "sole_proprietor",
           "nonprofit",
           "not_registered"
+        ],
+        "unclear": [
+          "partnership"
         ]
-      },
-      "quote": "be for-profit be an incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada",
-      "source": "ca-canexport-smes--guide"
-    },
-    {
-      "id": "llp-only",
-      "text": "If the business is a partnership, it must be a limited liability partnership (LLP)",
-      "rule": {
-        "kind": "self_check"
       },
       "quote": "be for-profit be an incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada",
       "source": "ca-canexport-smes--guide"
@@ -146,6 +140,6 @@
   ],
   "research": {
     "by": "gm2",
-    "notes": "Closed right now: the program page says \"Applications are not being accepted at this time\" and that the intake ended August 31, 2026 (DECISIONS #19); the weekly live check flags the page when it changes. Rules are from the 2026-27 applicant's guide, section 1.1 (3 to 500 full-time employees, $300,000 to $100 million revenue: the 2026-27 minimums the brief asked to check). Structure: the guide accepts \"an incorporated legal entity, limited liability partnership (LLP), or cooperative\" and lists sole proprietorships and limited partnerships as ineligible; a non-profit is not for-profit. The profile has one \"Partnership\" answer covering general, limited and LLP, so partnership is not excluded by the rule and the LLP condition is a check-yourself item (this should become `unclear: [partnership]` once core supports it). Type: the page and guide say \"funding\" and the guide has a \"Grants vs. contributions\" section whose wording I did not settle, so funding_types is empty (Unknown). Page text note: the guide's HTML carries a JSON copy of each text block, so pageText has most sentences twice, once with literal \\r\\n and &nbsp;. Quotes here are chosen from sentences whose first occurrence is the clean copy, so their context reads normally. Contacts are email only; no phone is on either page."
+    "notes": "Closed right now: the program page says \"Applications are not being accepted at this time\" and that the intake ended August 31, 2026 (DECISIONS #19); the weekly live check flags the page when it changes. Rules are from the 2026-27 applicant's guide, section 1.1 (3 to 500 full-time employees, $300,000 to $100 million revenue: the 2026-27 minimums the brief asked to check). Structure: the guide accepts \"an incorporated legal entity, limited liability partnership (LLP), or cooperative\" and lists sole proprietorships and limited partnerships as ineligible; a non-profit is not for-profit. The profile has one \"Partnership\" answer covering general, limited and LLP partnerships; only an LLP qualifies and limited partnerships are named as ineligible, so partnership is `unclear` (Unknown: the page's wording doesn't settle it for your answer) rather than met or missed. Type: the page and guide say \"funding\" and the guide has a \"Grants vs. contributions\" section whose wording I did not settle, so funding_types is empty (Unknown). Page text note: the guide's HTML carries a JSON copy of each text block, so pageText has most sentences twice, once with literal \\r\\n and &nbsp;. Quotes here are chosen from sentences whose first occurrence is the clean copy, so their context reads normally. Contacts are email only; no phone is on either page."
   }
 }
