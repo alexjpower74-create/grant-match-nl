@@ -1,0 +1,104 @@
+{
+  "slug": "nl-harvester-enterprise-loan-program",
+  "sample": false,
+  "name": "Harvester Enterprise Loan Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/harvester-enterprise-loan-program/",
+  "summary": {
+    "quote": "The Harvester Enterprise Loan Program (the “Program”) is an enhancement of the former Fisheries Loan Guarantee Program and will expand supports for independent fish harvesters positioning the sector for future success.",
+    "source": "nl-harvester-enterprise-loan-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-harvester-enterprise-loan-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/harvester-enterprise-loan-program/",
+      "title": "Harvester Enterprise Loan Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:17.261Z",
+      "http_status": 200,
+      "sha256": "fb4ad4f7560759d1dc6770646ba22ff5b55c7f9c0cd1ceb7db575588a1beb2c0",
+      "text_sha256": "afb8911f56400e363134e38ad55442d8a920790c1cdf963a521dc3ab414282fc",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": "Down payment loans",
+      "quote": "The support will be in the form of a secured loan of up to 15 per cent, to a maximum of $450,000, with a maximum term of 20 years, to support down payment requirements.",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 450000,
+    "text": "Down payment loans of up to 15% of costs, to a maximum of $450,000",
+    "quote": "The support will be in the form of a secured loan of up to 15 per cent, to a maximum of $450,000, with a maximum term of 20 years, to support down payment requirements.",
+    "source": "nl-harvester-enterprise-loan-program--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "A harvester in the province",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "is available to assist harvesters in the province in obtaining financing for:",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    },
+    {
+      "id": "industry",
+      "text": "In fishing (the Agriculture, forestry, fishing and hunting sector)",
+      "rule": {
+        "kind": "industry",
+        "in": [
+          "11"
+        ]
+      },
+      "quote": "will expand supports for independent fish harvesters positioning the sector for future success",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    },
+    {
+      "id": "fish-harvester",
+      "text": "You are an independent fish harvester",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "will expand supports for independent fish harvesters",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    },
+    {
+      "id": "eligible-uses",
+      "text": "The money is for a vessel, combining enterprises, licences or refinancing those, as the page lists",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "vessel related items such as construction, purchase and/or refit. combining of enterprises and license acquisitions.",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    },
+    {
+      "id": "financial-institution",
+      "text": "The main loan comes from an eligible financial institution",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "A government guarantee may be provided for loans through eligible financial institutions",
+      "source": "nl-harvester-enterprise-loan-program--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "The program has three parts: loan guarantees on loans from financial institutions, down payment loans (secured, up to 15% to a maximum of $450,000, 20-year term, no interest for the first five years), and interest rebates on guaranteed loans. Only the down payment loan is recorded as a funding type (loan); the guarantee isn't money from the program, and recording the rebates as non-repayable would sort a loan program above grants. Industry: fish harvesters are in NAICS sector 11, which also covers farming and forestry, so 'independent fish harvester' is a check-this-yourself item as well. Purpose: vessels and licences don't map mechanically to our purposes, so no purpose rule. Intake: not stated. No phone or email on the page. The fact sheet, applicant guide and application form were not read."
+  }
+}
