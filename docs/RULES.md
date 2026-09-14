@@ -156,7 +156,9 @@ Every label comes with a list of reasons it isn't better.
 
 ## Sort order
 
-Open programs: Looks like a fit, then Might fit, then Doesn't fit. Within a label, the best funding type first
+Open programs: Looks like a fit, then Might fit, then Doesn't fit. Within a label, programs with a real match beyond your location come first: at
+least one condition other than location is met. A program only your location can be checked against comes after them,
+even if it's non-repayable. After that, the best funding type first
 (non-repayable, wage subsidy, tax credit, repayable, loan, then not stated), then fewer missed, then fewer Unknown,
 then by name. Closed programs come last, by name.
 

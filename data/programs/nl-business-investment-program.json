@@ -66,31 +66,42 @@
     },
     {
       "id": "employees",
-      "text": "Fewer than 100 employees",
+      "text": "Normally fewer than 100 employees",
       "rule": {
         "kind": "employees",
-        "lt": 100
+        "lt": 100,
+        "normally": true
       },
       "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "revenue",
-      "text": "Less than $10 million in sales",
+      "text": "Normally less than $10 million in sales",
       "rule": {
         "kind": "revenue",
-        "lt": 10000000
+        "lt": 10000000,
+        "normally": true
       },
       "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "strategic-sector",
-      "text": "Operates in a strategic sector as defined by the Department of Jobs, Growth and Rural Development",
+      "text": "Operates in a strategic sector as defined by the Department of Jobs, Growth and Rural Development (the page also opens the fund to businesses with export potential: see the next item)",
       "rule": {
         "kind": "self_check"
       },
       "quote": "Operate in a strategic sector as defined by JGRD.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "export-potential",
+      "text": "Or: the business has export potential and needs help entering or expanding in external markets",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The fund is also available to businesses which have export potential and require assistance to enter or expand in external markets.",
       "source": "nl-business-investment-program--main"
     },
     {
@@ -140,7 +151,7 @@
       "source": "nl-business-investment-program--main"
     },
     {
-      "label": "Department of Jobs, Growth and Rural Development (St. John’s)",
+      "label": "Department switchboard, Jobs, Growth and Rural Development (St. John’s)",
       "phone": "1.709.729.2480",
       "email": null,
       "census_divisions": null,
@@ -190,6 +201,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Intake: not stated on the page, so unknown. The loan is 'repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%'; no maximum or cost share is stated. The eligibility list says applicants 'must normally' meet it; the page's 'fewer than 100 employees and less than $10 million in sales' gives employees lt 100 and revenue lt 10000000 ('sales' read as yearly revenue; reviewers, check that reading). 'Strategic sector as defined by JGRD' is not a list on the page, so it's a check-this-yourself item, not an industry rule. The summary also says 'The fund is also available to businesses which have export potential'; I did not turn that into a rule or an exception to the strategic-sector item. The page says 'Please consult with the JGRD office near you' but lists no regional numbers, so the department's regional office phones are quoted from the Business Growth Program page (same department, official page), saved as a second source and labelled as such (DECISIONS #18). The application form is a PDF and was not read."
+    "notes": "Intake: not stated on the page, so unknown. The loan is 'repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%'; no maximum or cost share is stated. The eligibility list says applicants 'must normally' meet it; the page's 'fewer than 100 employees and less than $10 million in sales' gives employees lt 100 and revenue lt 10000000 ('sales' read as yearly revenue), both with normally: true because the list opens 'Eligible applicants must normally' (DECISIONS #21): a business outside either limit is Unknown, not Doesn't fit. 'Strategic sector as defined by JGRD' is not a list on the page, so it's a check-this-yourself item, not an industry rule. The summary also says 'The fund is also available to businesses which have export potential'; that alternative is its own check-this-yourself item with that quote, and the strategic-sector item says so (gm2 I1). The department's footer phone is labelled as the switchboard (gm2 I3). The page says 'Please consult with the JGRD office near you' but lists no regional numbers, so the department's regional office phones are quoted from the Business Growth Program page (same department, official page), saved as a second source and labelled as such (DECISIONS #18). The application form is a PDF and was not read."
   }
 }

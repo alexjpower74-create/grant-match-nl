@@ -97,11 +97,11 @@
     },
     {
       "id": "residency",
-      "text": "A newcomer who can't get other support because of residency status (the page says non-permanent residents)",
+      "text": "A newcomer who is a non-permanent resident, living in Newfoundland and Labrador",
       "rule": {
         "kind": "self_check"
       },
-      "quote": "The Newcomer Loan Program is designed to provide financing to newcomers who are ineligible to receive support because of their residency status.",
+      "quote": "Designed for non-permanent residents in Newfoundland & Labrador, this program provides business loans and guidance to help newcomers succeed as entrepreneurs.",
       "source": "nl-cbdc-newcomer-loan-program--main"
     },
     {
@@ -134,7 +134,7 @@
   ],
   "contacts": [
     {
-      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "label": "CBDC Central, Grand Falls-Windsor (one of 15 CBDCs in the province)",
       "phone": "(709) 489-4496",
       "email": null,
       "census_divisions": null,
@@ -142,7 +142,7 @@
       "source": "nl-cbdc-newcomer-loan-program--office-central"
     },
     {
-      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "label": "CBDC Gander Area, Gander (one of 15 CBDCs in the province)",
       "phone": "(709) 651-4738",
       "email": null,
       "census_divisions": null,
@@ -150,7 +150,7 @@
       "source": "nl-cbdc-newcomer-loan-program--office-gander-area"
     },
     {
-      "label": "CBDC Emerald (Baie Verte)",
+      "label": "CBDC Emerald, Baie Verte (one of 15 CBDCs in the province)",
       "phone": "(709) 532-8312",
       "email": null,
       "census_divisions": null,
@@ -158,7 +158,7 @@
       "source": "nl-cbdc-newcomer-loan-program--office-emerald"
     },
     {
-      "label": "CBDC Emerald satellite office (Springdale)",
+      "label": "CBDC Emerald satellite office, Springdale (one of 15 CBDCs in the province)",
       "phone": "(709) 673-5702",
       "email": null,
       "census_divisions": null,
@@ -176,6 +176,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "For non-permanent residents; our profile's \"newcomer\" answer means arrived in the last five years, which is a different definition, so ownership is not a rule (API §4) and residency is check-this-yourself. The page's criterion reads \"Non-permanent residents or citizens of Canada at the time of application\", which is ambiguous as written; it is quoted as is, with the program description as a second check-this-yourself item. \"19 and older\" is about the applicant, not the business. Financial support is from the Government of Newfoundland and Labrador. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+    "notes": "For non-permanent residents; our profile's \"newcomer\" answer means arrived in the last five years, which is a different definition, so ownership is not a rule (API §4) and residency is check-this-yourself. The page's criterion reads \"Non-permanent residents or citizens of Canada at the time of application\", which is ambiguous as written; it is quoted as is, with the page's opening line ('Designed for non-permanent residents in Newfoundland & Labrador') as the residency item's quote (gm2 K5). The program description 'ineligible to receive support because of their residency status' stays in these notes. \"19 and older\" is about the applicant, not the business. Financial support is from the Government of Newfoundland and Labrador. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts. Each office page says \"In rural Newfoundland and Labrador there are 15 Corporations dedicated to the development of small business and job creation\", so the labels give the office's town and \"one of 15 CBDCs in the province\" (gm2 K3, DECISIONS #23): an owner elsewhere should call their local CBDC."
   }
 }

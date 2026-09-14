@@ -52,6 +52,15 @@
       "source": "nl-investment-attraction-fund--main"
     },
     {
+      "id": "large-scale-or-fdi",
+      "text": "A large-scale business or foreign direct investment coming into the province",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The Investment Attraction Fund (“Fund”) is designed to attract large-scale businesses and foreign direct investment (“FDI”) to the Province of Newfoundland and Labrador (“the province”).",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
       "id": "inward-investment",
       "text": "The project comes from investors outside the province (start-up or expansion)",
       "rule": {
@@ -127,6 +136,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Item 9 of the brief: included because a business can apply, but only as inward investment ('investors external to the province', large-scale businesses and foreign direct investment), which is a check-this-yourself item; a local small business will usually not qualify. Type: 'loans and advances', recorded as loan. Structure: 'a duly registered company or commit to taking the necessary steps to become a registered company' settles no structure answer (anyone may commit to incorporating), so no structure rule, only a check-this-yourself item. Location is the only rule a profile can check, so it can't be better than Might fit. Intake, maximum and cost share: not stated. No phone on the page."
+    "notes": "Item 9 of the brief: included because a business can apply, but only as a large-scale business or foreign direct investment (its own quoted check-this-yourself item, gm2 K4) and inward investment ('investors external to the province', large-scale businesses and foreign direct investment), which is a check-this-yourself item; a local small business will usually not qualify. Type: 'loans and advances', recorded as loan. Structure: 'a duly registered company or commit to taking the necessary steps to become a registered company' settles no structure answer (anyone may commit to incorporating), so no structure rule, only a check-this-yourself item. Location is the only rule a profile can check, so it can't be better than Might fit. Intake, maximum and cost share: not stated. No phone on the page."
   }
 }

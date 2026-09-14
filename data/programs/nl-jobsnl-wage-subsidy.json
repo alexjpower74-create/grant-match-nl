@@ -95,12 +95,39 @@
       "source": "nl-jobsnl-wage-subsidy--main"
     },
     {
-      "id": "participant",
-      "text": "The person hired is unemployed or underemployed (and meets the page's other rules for participants)",
+      "id": "participant-resides",
+      "text": "The person hired lives in Newfoundland and Labrador",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Must reside in Newfoundland and Labrador.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "participant-unemployed",
+      "text": "The person hired is unemployed or underemployed",
       "rule": {
         "kind": "self_check"
       },
       "quote": "Must be unemployed or underemployed (working less than 20 hours per week or in a field unrelated to their training).",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "participant-citizen",
+      "text": "The person hired is a Canadian citizen or permanent resident in Newfoundland and Labrador",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Must be a Canadian citizen or permanent resident in Newfoundland and Labrador.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "participant-no-benefits",
+      "text": "The person hired isn’t receiving federal or provincial pensions, Workplace NL benefits or other benefits",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Must not be receiving federal or provincial pensions, Workplace NL benefits, or other benefits.",
       "source": "nl-jobsnl-wage-subsidy--main"
     },
     {
@@ -134,6 +161,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Intake: the page never says when applications are taken, so unknown. The subsidy is per hour ('up to $12/hour') with no total maximum on the page, so max_amount is null; cost_share uses the highest rate on the page (80%, the third 14 weeks of JobsNL-42; JobsNL-28 is 60%) and the text says so. Structure: 'Private or not-for-profit sector employers that are incorporated or sole proprietorships' gives corporation and sole_proprietor; a co-operative or non-profit may or may not be incorporated, so those two are unclear (DECISIONS #18). 'Partnership' and 'Not registered yet' are missed. Purpose 'hire' comes from 'help create new positions'. The page also excludes government departments, crown agencies, municipalities and political parties; that doesn't map to our profile and wasn't added. The participant rules (live in NL, citizen or permanent resident, not receiving pensions or other benefits, and more) are summarised in one check-this-yourself item quoting the unemployed/underemployed rule. The Program Guidelines are linked from the page but were not fetched (PDF). The LaMPSS password help line (1-844-252-6777) is technical support, not a program contact, so it's left out."
+    "notes": "Intake: the page never says when applications are taken, so unknown. The subsidy is per hour ('up to $12/hour') with no total maximum on the page, so max_amount is null; cost_share uses the highest rate on the page (80%, the third 14 weeks of JobsNL-42; JobsNL-28 is 60%) and the text says so. Structure: 'Private or not-for-profit sector employers that are incorporated or sole proprietorships' gives corporation and sole_proprietor; a co-operative or non-profit may or may not be incorporated, so those two are unclear (DECISIONS #18). 'Partnership' and 'Not registered yet' are missed. Purpose 'hire' comes from 'help create new positions'. The page also excludes government departments, crown agencies, municipalities and political parties; that doesn't map to our profile and wasn't added. Each participant rule is its own check-this-yourself item with its own quote (gm2 J2): lives in NL, unemployed or underemployed, citizen or permanent resident, not receiving pensions or benefits. Two widening lines stay in these notes: temporary residents may qualify with a Post-graduate Work Permit or an Open Work Permit, and recent post-secondary graduates who haven't found work in their field. The Program Guidelines are linked from the page but were not fetched (PDF). The LaMPSS password help line (1-844-252-6777) is technical support, not a program contact, so it's left out."
   }
 }

@@ -78,6 +78,27 @@
       "source": "nl-green-transition-fund--main"
     },
     {
+      "id": "purpose",
+      "text": "The money greens the business’s operations: energy efficiency counts; other purposes depend on whether the project is green",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "energy"
+        ],
+        "unclear": [
+          "equipment",
+          "digital",
+          "research",
+          "export",
+          "hire",
+          "training",
+          "startup"
+        ]
+      },
+      "quote": "The Green Transition Fund targets the greening of commercial operations in traditional sectors and development of new opportunities related to the growth of a green economy.",
+      "source": "nl-green-transition-fund--main"
+    },
+    {
       "id": "green-focus",
       "text": "The project is about greening the business's operations or growing the green economy",
       "rule": {
@@ -117,6 +138,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Intake: 'accepting applications through a continual intake process' as of March 1, 2025, so continuous. Amount: the $75,000 minimum and $3 million maximum are for the funding request, not the project cost, so the minimum is a check-this-yourself item, not a project_cost rule. Cost share: businesses (commercial) up to 40%, non-commercial projects up to 50%; the record shows the business rate. Structure: commercial applicants must be 'registered incorporated businesses', so sole proprietors, partnerships and not-registered businesses miss; co-operatives and non-profits are unclear because the page also accepts non-commercial groups (industry associations, business development organizations and other support organizations) that our structure options don't separate. Purpose: the page is about greening operations and the green economy, which doesn't map cleanly to our purposes (it covers equipment, research, market development and specialized labour when they are green), so no purpose rule; the green focus is a check-this-yourself item. That means a corporation in NL with any purpose can show Looks like a fit, with the green focus listed to check. Contract question for the lead: an 'unclear' list on purpose rules would let this say more. The Application Guidelines and Program Fact Sheet were not read (linked documents)."
+    "notes": "Intake: 'accepting applications through a continual intake process' as of March 1, 2025, so continuous. Amount: the $75,000 minimum and $3 million maximum are for the funding request, not the project cost, so the minimum is a check-this-yourself item, not a project_cost rule. Cost share: businesses (commercial) up to 40%, non-commercial projects up to 50%; the record shows the business rate. Structure: commercial applicants must be 'registered incorporated businesses', so sole proprietors, partnerships and not-registered businesses miss; co-operatives and non-profits are unclear because the page also accepts non-commercial groups (industry associations, business development organizations and other support organizations) that our structure options don't separate. Purpose: the page is about greening operations and the green economy, which doesn't map cleanly to our purposes (it covers equipment, research, market development and specialized labour when they are green), so the purpose rule is any [energy] with every other purpose unclear (DECISIONS #22): energy efficiency is met; equipment, software, research, export, hiring, training and start-up are Unknown, because the eligible activities (green capital costs, R&D, market development, specialized labour, education and awareness) can involve each of them only when the project is green. The green focus is also a check-this-yourself item. The Application Guidelines and Program Fact Sheet were not read (linked documents)."
   }
 }
