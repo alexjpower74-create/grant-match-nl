@@ -183,6 +183,26 @@ test('404/410 count every quote missing and mark the page gone; other failures s
   assert.match(down.sources[0].error, /robots\.txt answered HTTP 503/);
 });
 
+test('a URL shared by several sources is fetched once per run, and every source gets the result', async () => {
+  resetSite('User-agent: *\nDisallow:\n');
+  const growth = samplePrograms().find((p) => p.slug === 'nl-sample-growth-grant');
+  const copy = JSON.parse(JSON.stringify(growth).replaceAll('nl-sample-growth-grant--', 'nl-sample-growth-copy--'));
+  copy.slug = 'nl-sample-growth-copy';
+  const raws = [];
+  const result = await runChecks(options({ programs: [growth, copy], onRaw: async (r) => { raws.push(r.source_id); } }));
+
+  assert.equal(requests.filter((r) => r.path === '/funding/growth-grant/').length, 1);
+  assert.equal(requests.filter((r) => r.path === '/contact/').length, 1);
+  assert.equal(result.sources.length, 4);
+  const a = result.sources.find((s) => s.source_id === 'nl-sample-growth-grant--main');
+  const b = result.sources.find((s) => s.source_id === 'nl-sample-growth-copy--main');
+  assert.equal(b.ok, true);
+  assert.equal(b.sha256, a.sha256);
+  assert.equal(b.quotes_found, a.quotes_found);
+  assert.deepEqual(b.missing, []);
+  assert.deepEqual(raws, ['nl-sample-growth-grant--main', 'nl-sample-growth-grant--contact', 'nl-sample-growth-copy--main', 'nl-sample-growth-copy--contact']);
+});
+
 test('sourceStatusFrom folds runs oldest first; a failed check keeps the missing count and page_gone', () => {
   const missingOne = [{ path: 'summary.quote', quote: 'x' }];
   const run = (fetched_at, ok, missing, http_status) => ({
