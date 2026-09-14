@@ -83,12 +83,16 @@ export function typePills(types) {
   return `<span class="pills">${pills.join('')}</span>`
 }
 
+// On its own line an unknown intake needs its subject: "The page doesn't say" alone doesn't say what.
 export function intakeText(intake) {
   if (!intake) return ''
+  if (intake.status === 'unknown') return "When it takes applications: the page doesn't say"
   let text = intake.label
   if (intake.status === 'open' && intake.deadline?.date) text += ` until ${formatDate(intake.deadline.date)}`
   return text
 }
+
+export const TYPE_UNKNOWN_TEXT = "Type of funding: the page doesn't say"
 
 export function amountText(result) {
   return result.max_amount ? result.max_amount.text : "Amount: the page doesn't say"

@@ -74,3 +74,18 @@ test('about lists the programs we left out, each with its terms link and reason'
   // None of them is quoted as a source anywhere.
   for (const p of bundle.programs) for (const s of p.sources) expect(s.url).not.toMatch(/bdc\.ca|futurpreneur\.ca|ulnooweg/)
 })
+
+test('real data: printout phone numbers never split across lines', async ({ page }, testInfo) => {
+  test.skip(!testInfo.project.name.startsWith('chromium'), 'print layout checked in chromium')
+  // APCO Software Tools (DECISIONS #14): its printout lists ACOA programs with long URLs and a phone.
+  const apco = 'name=APCO Software Tools&community=grand-falls-windsor&industry=54&structure=unsure&employees=1&years=lt1&revenue=unsaid&purposes=digital&cost=unsure'
+  for (const media of ['screen', 'print']) {
+    await page.emulateMedia({ media })
+    await page.goto(`/print.html?${qs(apco, { data: 'real' })}`)
+    await expect(page.locator('.program').first()).toBeVisible()
+    const phones = page.locator('[data-phone]')
+    expect(await phones.count(), 'the real printout has phones').toBeGreaterThan(0)
+    const lines = await phones.evaluateAll((els) => els.map((e) => ({ text: e.textContent, rects: e.getClientRects().length })))
+    for (const l of lines) expect(l.rects, `${media}: "${l.text}" is on one line`).toBe(1)
+  }
+})

@@ -113,6 +113,78 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 5 — real-data pass over the app: DONE
+Merged main at `1f6bc41` (gm1's sentence-bounded context and "Unknown:" wording, evidence tier in the sort, DECISIONS
+#23). `build:data`: 27 real programs, 8 SAMPLE. Run on `?mock=1&data=real&now=2026-09-14T12:00:00Z` for APCO Software Tools
+(DECISIONS #14), SAMPLE Auto Service and SAMPLE Daycare.
+
+### How I looked
+- **A measured audit (Playwright, chromium, observe only)** of every real program page at 390, with and without a profile
+  (54 pages), plus the three results pages and About. It checked: horizontal scroll; any element in `main` whose right edge
+  passes the viewport (outside the About table's scroll box); buttons, cards, chips, checkbox labels, selects and call
+  links under 44 px; page errors; each profile's printout as a Letter PDF.
+  **Result: clean.** No overflow, no small targets, no page errors, all three printouts one page with 6 programs and
+  "and 7/8 more on the results page". Real content doesn't break the layout; the problems are in what it *says*.
+- **Screenshots** (pwshot, chromium, 390 and 1280) of results for all three profiles, the Business Growth Program page
+  (six contacts), CanExport (closed, unclear partnership, long quotes), the CBDC General Business Loan (four offices), and
+  the APCO printout. I looked at each before fixing, and again after.
+
+### Broken by real content, fixed, with a test each
+- **The printout split a phone number across two lines.** "Phone 1-888-576-444 / 4" at 1280 and "Ph / one 1-888-576-4444"
+  at 390. The URL and phone shared one `<p class="url">` with `word-break: break-all`, and ACOA's URLs are long. Fix:
+  the URL and phone are separate spans; only the URL may break (`overflow-wrap: anywhere`, so it prefers hyphens), and the
+  phone is `white-space: nowrap`. **Test:** "real data: printout phone numbers never split across lines". For the real
+  APCO printout, screen and print media, every `[data-phone]` has exactly one client rect.
+- **Cards said "The page doesn't say" with no subject.** 22 of 27 real programs have intake unknown, so nearly every card
+  had a line that didn't say *what* the page doesn't say, under "Amount: the page doesn't say". Fix: `intakeText` returns
+  "When it takes applications: the page doesn't say" for unknown intake. The printout uses the same text. **Test:** "a card
+  says what the page leaves unsaid: intake and funding type have their subject". On SAMPLE's unknown-intake program the card
+  has the full sentence, and no card line is the bare phrase.
+- **Cards for programs with no stated funding type said nothing about type.** No pill, no line, for NRC IRAP, the
+  Innovation and Business Development Fund, the Job Grant, CanExport and CDAP. The printout already said so. Fix: those
+  cards get "Type of funding: the page doesn't say". **Test:** "real data: a card for a program with no stated funding
+  type says so", over every open real program with `funding_types: []` (read from `data/build/programs.json`, skipped if
+  there are none).
+
+**Suites:** Playwright **184 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280 (32 skipped by
+design). Worker: 15 pass, 1 skip (SAMPLE); real mode 1 pass on 27 programs (round 4, no Worker change since).
+
+**Negative controls** (restored from byte copies, since the files carried uncommitted fixes; targeted test re-run green; no
+backups left):
+- (g) unknown intake back to the bare phrase → **red**: "Expected substring … When it takes applications: the page
+  doesn't say".
+- (h) the type line removed → **red**: "element(s) not found" for `[data-type-unknown]`.
+- (i) the phone allowed to wrap (`nowrap` removed, `break-all` back on the line) → **red** at chromium-390:
+  `screen: "Phone 1-888-576-4444" is on one line, Expected: 1, Received: 2`.
+
+**Screenshots committed:** `docs/shots/gm2-real-{results-apco,results-auto,results-daycare,detail-business-growth,detail-canexport,detail-cbdc-general-business-loan,print-apco}-{390,1280}.png`,
+taken after the fixes and looked at.
+
+### Found in real content, not app bugs: for the lead and gm1
+- **R1 — contact quote context shows another office's phone number (most important).** On the Business Growth page each
+  regional office's quote context runs into its neighbours: under "Call this office: 709.256.1480" the context reads
+  "709.637.2628 Central: 709.256.1480 Eastern:", under Western "709.896.2400 Western: 709.637.2628 Central:". The page lists
+  offices with no sentence boundaries, so sentence-bounded `contextFor` keeps up to 160 characters of the list. An owner can
+  read the wrong number next to a call button. Same shape on the CBDC pages: every office's context is the Atlantic
+  Association of CBDCs' footer address ("459 Murray Street PO Box 40 Mulgrave, Nova Scotia…"), next to a Grand
+  Falls-Windsor or Baie Verte office. Suggest, for gm1 or the contract: contact quotes get no context (the label and quote
+  say it all), or `contextFor` also stops at a phone number or a line of the saved page's list.
+- **R2 — breadcrumb menu in front of a closed quote.** CanExport's closed card and intake quote begin "Canada.ca Trade
+  Commissioner Service Our solutions Funding and financing for international business CanExport SMEs", the page's
+  breadcrumb, which has no sentence boundary before the heading. That is the menu problem DECISIONS #20 set out to stop,
+  in a case the sentence rule doesn't catch.
+- **R3 — CanExport's JSON context is still there** ("\n"}}" id="text-33addbb30a" class="cmp-text">" before the summary, and
+  in the contact quote), as expected until gm1's attribute-safe `pageText` lands and the `ca-*` sources are re-hashed
+  (step 3).
+- **R4 — each check-yourself item says the same thing twice.** Core's `why` ("Check this yourself. Your answers can't settle
+  it.") sits directly above the reason copy "Unknown: check this yourself"; Business Growth shows it on five items. The
+  brief asks for each criterion's `why`, so I left both. Suggest the app hides `why` when `unknown_reason` is `self_check`
+  (the reason copy says it), or core drops that `why`. The lead decides.
+- **R5 — real pages are long at 390.** Business Growth's program page is about 16,000 px tall at 390, because several of its
+  check-yourself quotes are 300–400 characters and share one long eligibility paragraph, repeated in each block. Nothing
+  breaks. If it matters, a collapsed context ("show the sentence around it") is an app change I can make once the lead
+  wants it.
+
 ## Round 4 — real-data Worker run, CanExport unclear, cross-review of gm1's programs 4–13 and the CBDC loans
 Merged main at `2ec7790` (gm1's programs 4–13, the six CBDC loan programs, DECISIONS #20–22). The tree now has **27 real
 programs** (not 24): 3 original NL + 10 NL (4–13) + 6 CBDC + 8 federal. Main's `core/` does not have `normally` or
