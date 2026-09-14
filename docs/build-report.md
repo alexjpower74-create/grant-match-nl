@@ -20,6 +20,7 @@ pinned to a sha (`rig qa`), never from a shared tree. Per-slice detail: `docs/bu
 | 04:14 | `04e3e18` gm2 real-data pass (phone never splits on the printout, unknown lines name their subject, no-type cards say so) | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | 27 real · 59/0/0 · 15/0/1 · 1/1 · 92 pass / 0 fail / 16 skip |
 | 04:22 | `c1b9f83` gm1 attribute-safe `pageText`, `normally`, purpose `unclear` + gm2 CanExport re-hash | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | exit 0, 27 real · 64/0/0 · 15/0/1 · 1/1 · 92 pass / 0 fail / 16 skip. The tag fix changed text hashes of exactly two saved pages (CanExport main + guide); no quote stopped verifying; JSON junk in CanExport contexts 6 → 0 |
 | 04:30 | `119c393` data fixes from both cross-reviews, SAMPLE `unclear`/`normally` fixtures, sort tier, self_check copy | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | exit 0, 27 real + 10 SAMPLE · 66/0/0 · 15/0/1 · 1/1 · 96 pass / 0 fail / 16 skip. gm1's live dry scan on the same data (CanExport re-hashed in a throwaway copy): 53 sources, 36 unique URLs, 287/287 quotes found |
+| 04:34 | `44a54f0` gm1 `blockText`, block-bounded context, no context on contacts | `build-data --check` · core tests · data diff vs main | exit 0 (27 real, 10 SAMPLE) · 73/0/0 · no program or source file changed |
 
 Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1), `2c4b783` (gm1 at d4b8a42), `7825c3b` (gm2 at 8c92764), then gm1 at dd4f9d4.
 
