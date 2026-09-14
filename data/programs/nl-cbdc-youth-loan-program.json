@@ -1,0 +1,181 @@
+{
+  "slug": "nl-cbdc-youth-loan-program",
+  "sample": false,
+  "name": "CBDC Youth Loan Program",
+  "provider": "Community Business Development Corporations (CBDCs), Newfoundland and Labrador offices",
+  "level": "nonprofit",
+  "url": "https://cbdc.ca/loan-programs/youth-loan-program/",
+  "summary": {
+    "quote": "If you are between the ages of 18 and 34 and need financial assistance to create your business, we are here to help.",
+    "source": "nl-cbdc-youth-loan-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-cbdc-youth-loan-program--main",
+      "url": "https://cbdc.ca/loan-programs/youth-loan-program/",
+      "title": "Loans & Financing for Young Entrepreneurs in NB, NL, NS & PEI - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:09:58.883Z",
+      "http_status": 200,
+      "sha256": "86e6bcbaa3bda62eefc707d08ef65e3ccdc2a11b23a66bde0a3609f87dca5e64",
+      "text_sha256": "66fb1726b61aab41fe3fa21b4690ff1c54f1628aabfd5946329506de65bf890c",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-youth-loan-program--office-central",
+      "url": "https://cbdc.ca/locations/cbdc-central-newfoundland/",
+      "title": "CBDC Central - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:11:33.779Z",
+      "http_status": 200,
+      "sha256": "e89ce7943d9a4e1f0b87e688cf1e784bafa648b82fe19cf81c13e831bec02816",
+      "text_sha256": "857fb363508c397d50f133fa76ba1666a57d0dee44c97f4d26c519702694b076",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-youth-loan-program--office-gander-area",
+      "url": "https://cbdc.ca/locations/cbdc-gander-area/",
+      "title": "Help & Financing for Small Business & Startups, Gander Region, NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:01:27.631Z",
+      "http_status": 200,
+      "sha256": "e3cdb047963f4b37c6d04f07e213dc3b22d6bb6f11b8b330d4ffdc72da22298d",
+      "text_sha256": "1664a503c022b9c7b9b1b93cd040da0fa9ed335f04acace5a41ba1839e7d96d7",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-youth-loan-program--office-emerald",
+      "url": "https://cbdc.ca/locations/cbdc-emerald/",
+      "title": "Help & Financing for Small Business & Startups, Baie Verte, N. Central NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:12:01.490Z",
+      "http_status": 200,
+      "sha256": "f9782f1a55eee1bf93c5c2876e3202bb224c9348be99f97bfc8555901346facf",
+      "text_sha256": "6baf88d92aeebb008379a6fd42da30f63583a3b90d72773fca0fd0855c3e13c9",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "It’s available as a repayable loan with competitive interest rates and repayment terms.",
+      "source": "nl-cbdc-youth-loan-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 150000,
+    "text": "Up to $150,000 (as the CBDC office pages describe it)",
+    "quote": "The CBDC Youth Loan offers up to $150,000 in financing for rural Atlantic Canadian entrepreneurs aged 18–34",
+    "source": "nl-cbdc-youth-loan-program--office-central"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "A youth borrower in rural Atlantic Canada (which includes Newfoundland and Labrador)",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Available to Youth Borrowers in rural Atlantic Canada aged 18-34;",
+      "source": "nl-cbdc-youth-loan-program--main"
+    },
+    {
+      "id": "structure",
+      "text": "A sole proprietorship, limited company or partnership, controlled by the new entrepreneur",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "sole_proprietor",
+          "corporation",
+          "partnership"
+        ],
+        "unclear": [
+          "not_registered"
+        ]
+      },
+      "quote": "Eligible borrowers may be a sole proprietorship, a limited company or a partnership (majority of the care and control must reside with the new entrepreneur);",
+      "source": "nl-cbdc-youth-loan-program--main"
+    },
+    {
+      "id": "age",
+      "text": "The borrower is 18 to 34",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Available to Youth Borrowers in rural Atlantic Canada aged 18-34;",
+      "source": "nl-cbdc-youth-loan-program--main"
+    },
+    {
+      "id": "no-harm",
+      "text": "The business won't hurt existing businesses in the area",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The intended business operations must not have a negative impact on existing area businesses.",
+      "source": "nl-cbdc-youth-loan-program--main"
+    },
+    {
+      "id": "local-cbdc",
+      "text": "Your local CBDC offers this loan (programs vary by region)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Programs and services delivered by CBDCs may vary by region.",
+      "source": "nl-cbdc-youth-loan-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "phone": "(709) 489-4496",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496",
+      "source": "nl-cbdc-youth-loan-program--office-central"
+    },
+    {
+      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "phone": "(709) 651-4738",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738",
+      "source": "nl-cbdc-youth-loan-program--office-gander-area"
+    },
+    {
+      "label": "CBDC Emerald (Baie Verte)",
+      "phone": "(709) 532-8312",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312",
+      "source": "nl-cbdc-youth-loan-program--office-emerald"
+    },
+    {
+      "label": "CBDC Emerald satellite office (Springdale)",
+      "phone": "(709) 673-5702",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Emerald’s Satellite office Address 83 Little Bay Road Springdale NL A0J 1T0 Contact Tel: (709) 673-5702",
+      "source": "nl-cbdc-youth-loan-program--office-emerald"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Age: the page's 18 to 34 differs from our profile's \"young person (18 to 39)\", so it is check-this-yourself, not an ownership rule (API §4). The loan page states no maximum; the CBDC Central office page (a source of this record) says the Youth Loan \"offers up to $150,000\", which is quoted for max_amount. Structure as the First Time Entrepreneur Loan, with not-registered unclear. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+  }
+}
