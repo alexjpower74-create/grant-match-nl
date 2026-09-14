@@ -17,6 +17,7 @@ pinned to a sha (`rig qa`), never from a shared tree. Per-slice detail: `docs/bu
 | 03:58 | `b0bb1ad` gm1 sentence context, 'Unknown:' wording, URL de-dup | core tests · `build-data` | 59 / 0 / 0 · exit 0 (19 real on the branch) · gm1's live `scan --dry`: 38 sources, 22 URLs, every quote found |
 | 04:02 | `8593d85` gm2 real-data Worker mode, CanExport `unclear` | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | 27 real · 58/0/0 · 15 pass / 0 fail / 1 skip · **1 / 1 pass** (27 programs, 147 criteria, 53 sources) · 82 pass / 0 fail / 14 skip |
 | 04:08 | `8593d85` live | `live.spec.mjs` with `GM_API` → a real `wrangler dev --local` (DATA_SET=sample, migrated D1) on 7409, app on 7408 | 4 pass / 0 fail (chromium + webkit, 390 + 1280): the app rendered exactly the Worker's open and closed lists |
+| 04:14 | `04e3e18` gm2 real-data pass (phone never splits on the printout, unknown lines name their subject, no-type cards say so) | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | 27 real · 59/0/0 · 15/0/1 · 1/1 · 92 pass / 0 fail / 16 skip |
 
 Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1), `2c4b783` (gm1 at d4b8a42), `7825c3b` (gm2 at 8c92764), then gm1 at dd4f9d4.
 
