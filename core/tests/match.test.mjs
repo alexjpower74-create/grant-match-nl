@@ -42,6 +42,34 @@ test('structure: in, not_in, and "Not sure" is not answered', () => {
   assert.equal(status({ kind: 'structure', in: ['corporation'] }, profileFrom(AUTO_QUERY, { structure: 'unsure' })), 'unknown:not_answered');
 });
 
+test('unclear on structure and industry: unknown with reason unclear, never met or missed', () => {
+  const structure = { kind: 'structure', in: ['corporation', 'sole_proprietor'], unclear: ['cooperative', 'nonprofit'] };
+  assert.equal(status(structure, AUTO()), 'met');
+  assert.equal(status(structure, DAYCARE()), 'met');
+  assert.equal(status(structure, profileFrom(AUTO_QUERY, { structure: 'partnership' })), 'missed');
+  const coop = ev(structure, profileFrom(AUTO_QUERY, { structure: 'cooperative' }));
+  assert.deepEqual(coop, { status: 'unknown', unknown_reason: 'unclear', why: 'The page\'s wording doesn\'t settle this for Co-operative.' });
+  assert.equal(ev(structure, profileFrom(AUTO_QUERY, { structure: 'nonprofit' })).why, 'The page\'s wording doesn\'t settle this for Non-profit or charity.');
+  assert.equal(status({ kind: 'structure', not_in: ['partnership'], unclear: ['not_registered'] }, profileFrom(AUTO_QUERY, { structure: 'not_registered' })), 'unknown:unclear');
+  assert.equal(status(structure, profileFrom(AUTO_QUERY, { structure: 'unsure' })), 'unknown:not_answered');
+
+  const industry = { kind: 'industry', not_in: ['72'], unclear: ['44-45'] };
+  assert.equal(status(industry, AUTO()), 'met');
+  assert.equal(status(industry, profileFrom(AUTO_QUERY, { industry: '72' })), 'missed');
+  assert.equal(ev(industry, profileFrom(AUTO_QUERY, { industry: '44-45' })).why, 'The page\'s wording doesn\'t settle this for Retail trade.');
+  assert.equal(status({ kind: 'industry', in: ['54'], unclear: ['51'] }, profileFrom(AUTO_QUERY, { industry: '51' })), 'unknown:unclear');
+});
+
+test('an unclear answer is never Looks like a fit', async () => {
+  const growth = clone((await sampleBundlePrograms()).find((p) => p.slug === 'nl-sample-growth-grant'));
+  growth.criteria[1].rule = { kind: 'structure', in: ['sole_proprietor', 'partnership'], unclear: ['corporation'] };
+  const r = evaluateProgram(growth, AUTO(), { now: NOW });
+  assert.equal(r.criteria[1].unknown_reason, 'unclear');
+  assert.equal(r.fit.label, 'Might fit');
+  assert.ok(r.fit.why.includes('Unknown, the page\'s wording doesn\'t settle it for your answer: Sole proprietors, partnerships or corporations.'));
+  assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, self_check: 1 });
+});
+
 test('employees: an exact number against the page’s bounds', () => {
   assert.equal(status({ kind: 'employees', lte: 50 }, AUTO()), 'met');
   assert.equal(status({ kind: 'employees', lte: 6 }, AUTO()), 'met');

@@ -39,6 +39,16 @@ Unknown (you didn't answer).
 
 > Page: "Sole proprietors, partnerships or corporations". You said Incorporated company. **Met.**
 
+### unclear (on structure and industry rules)
+Sometimes the page's wording settles some answers but not others. Those answers go on the rule's `unclear` list
+and come out as **Unknown, the page's wording doesn't settle it for your answer**. Never a guessed met or missed.
+An answer can't be both on the list and in the rule's own set.
+
+> Page: "Private or not-for-profit sector employers that are incorporated or sole proprietorships." Rule: in
+> corporation, sole proprietor; unclear co-operative, non-profit (a co-op or non-profit may or may not be
+> incorporated). Incorporated company: **Met**. Partnership: **Missed**. Co-operative: **Unknown**, "The page's
+> wording doesn't settle this for Co-operative." Like any Unknown it stops Looks like a fit.
+
 ### ownership
 The page is for businesses owned by women, Indigenous people, a young person, a newcomer, or francophones. Leaving the
 question blank is Unknown. "None of these" means no to every group, so it misses an ownership rule.
