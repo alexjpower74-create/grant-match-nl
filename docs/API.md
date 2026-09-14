@@ -126,8 +126,8 @@ path and the reason):
 | `rule.kind` | Shape | Profile field |
 |---|---|---|
 | `location` | `{ province: "NL" }` or `{ census_divisions: [1…11] }` or `{ communities: [ids] }` | community |
-| `industry` | `{ in: [sector ids] }` or `{ not_in: [sector ids] }` | industry |
-| `structure` | `{ in: [structure ids] }` or `{ not_in: [...] }` | structure |
+| `industry` | `{ in: [sector ids] }` or `{ not_in: [sector ids] }`, optional `unclear: [ids]` | industry |
+| `structure` | `{ in: [structure ids] }` or `{ not_in: [...] }`, optional `unclear: [ids]` | structure |
 | `employees` | bounds | employees |
 | `years_operating` | bounds + `unit: "months" \| "years"` (years × 12 to compare) | years |
 | `revenue` | bounds | revenue |
@@ -145,10 +145,17 @@ and $100 million" → `{ gte: 300000, lte: 100000000 }` (inclusive unless the pa
 "commercially viable", "good standing" are **`self_check`**, never a guessed industry list. Age or newcomer
 definitions that differ from the profile's (§2) are `self_check` too.
 
+**`unclear`** (structure and industry only): answers the page's wording can't settle either way. "Private or
+not-for-profit employers that are incorporated or sole proprietorships" → `{ in: [corporation, sole_proprietor],
+unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be incorporated). An id may not be in both
+`unclear` and `in`/`not_in`. Prefer `unclear` over guessing in either direction.
+
 ## 5. Matching — `core/match.js`
 
 `evaluateCriterion(criterion, profile) → { status, unknown_reason, why }`
 - `self_check` → `unknown`, reason `self_check`.
+- A profile value listed in the rule's `unclear` → `unknown`, reason `unclear`, why "The page's wording doesn't settle
+  this for <label>."
 - Profile field not answered (`owners` absent, `revenue: unsaid`, `cost` absent/`unsure`) → `unknown`, reason `not_answered`.
 - Sets (`location`, `industry`, `structure`, `ownership`, `purpose`): `met` if the profile value is in (or, for `any`,
   overlaps) the rule's set; `not_in` inverts; otherwise `missed`. `location.province: "NL"` is met by every community.
@@ -199,7 +206,7 @@ definitions that differ from the profile's (§2) are `self_check` too.
   "contacts": [{ "label": "…", "phone": "…", "email": null, "census_divisions": [6], ...Quote }],
   "criteria": [{ "id": "…", "text": "…", "kind": "employees", "rule": {…},
                  "status": "met" | "missed" | "unknown" | null,          // null when no profile
-                 "unknown_reason": "not_answered" | "band_straddles" | "self_check" | null,
+                 "unknown_reason": "not_answered" | "band_straddles" | "unclear" | "self_check" | null,
                  "why": "…" | null, ...Quote }],
   "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile
   "fit": null | { "label": "Looks like a fit" | "Might fit" | "Doesn't fit", "rank": 0, "why": ["…"] },
@@ -313,7 +320,8 @@ Copy that must stay true:
 - Everywhere (footer): "Grant Match NL shows what each program's own page says. It never applies for you and can't
   promise you qualify."
 - Unknown reasons: `self_check` "Unknown: check this yourself" · `not_answered` "Unknown: you didn't answer this" ·
-  `band_straddles` "Unknown: your answer is close to the page's limit" · a program fact the pages don't state
+  `band_straddles` "Unknown: your answer is close to the page's limit" · `unclear` "Unknown: the page's
+  wording doesn't settle it for your answer" · a program fact the pages don't state
   "Unknown: the page doesn't say".
 - Stale: "Last verified <date>, more than 60 days ago. Check the official page." · needs review: "The page has
   changed or gone since we checked it. Check the official page."

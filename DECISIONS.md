@@ -110,3 +110,17 @@ Changed: a live check of a page answering 404/410 lists every quote missing and 
 non-2xx or network failure says nothing about the page and changes no flags (API §9). gm1 wanted every non-200 to
 count as missing, which would flag programs for review on a passing server error. `.gitignore` gains gm1's two
 scratch folders.
+
+## 18. Lead review of the first three NL programs (03:35)
+Business Growth Program, Business Investment Program, JobsNL Wage Subsidy, read against their saved pages.
+- **Intake unknown stays unknown**, and so none of the three can show Looks like a fit. None of the pages says when
+  applications are taken; "Looks like a fit" should mean the page says you can apply. The card still shows the
+  program as Might fit with "The page doesn't say whether it is taking applications."
+- **New `unclear` list on structure and industry rules** (API §4–5): JobsNL's "incorporated or sole proprietorships"
+  can't settle a co-op or non-profit, and Business Growth's list can't settle "Not registered yet" for a program that
+  helps businesses "start". Those answers are Unknown with their own reason instead of a guessed met or missed.
+- Agreed as researched: regional office phones with no census divisions (the page doesn't name them, nothing
+  inferred); "less than $10 million in sales" read as yearly revenue; JobsNL's 60–80% shown as text with 80 as the
+  top rate; the $750,000 Development and Commercialization ceiling left in notes, since "normally up to $200,000"
+  is the program's stated maximum. Business Investment may quote the Business Growth page for the department's
+  regional office phones (same department, official page).
