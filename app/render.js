@@ -11,7 +11,12 @@ export const UNKNOWN_REASON = {
   page_silent: "Unknown: the page doesn't say",
 }
 
-export const FIT_CLASS = { 'Looks like a fit': 'looks', 'Might fit': 'might', "Doesn't fit": 'doesnt' }
+// Round 2 (API §6, §12): which Unknowns the page leaves open, and which the owner can answer. Mirrors core's
+// UNKNOWN_GROUP; the app tests compare these groups with core's counts, so the two can't drift silently.
+export const UNKNOWN_GROUP = { unclear: 'page', self_check: 'ask', not_answered: 'ask', band_straddles: 'ask' }
+export const UNKNOWN_GROUP_TITLE = { page: "The page doesn't say", ask: "We didn't ask you" }
+
+export const FIT_CLASS = { 'Looks like a fit': 'looks', 'Might fit': 'might', 'Not enough to go on': 'notenough', "Doesn't fit": 'doesnt' }
 
 // Carried across every internal link (docs/API.md §12).
 export const CARRY = ['name', 'community', 'industry', 'structure', 'employees', 'years', 'revenue', 'owners', 'purposes', 'cost', 'mock', 'api', 'now', 'data']
@@ -60,13 +65,14 @@ export const ICONS = {
   external: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>',
   phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg>',
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  dash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6.5 12h11"/></svg>',
   print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>',
 }
 
 export function fitBadge(fit) {
   if (!fit) return ''
   const cls = FIT_CLASS[fit.label] || 'might'
-  const icon = cls === 'looks' ? ICONS.check : cls === 'doesnt' ? ICONS.cross : ICONS.question
+  const icon = cls === 'looks' ? ICONS.check : cls === 'doesnt' ? ICONS.cross : cls === 'notenough' ? ICONS.dash : ICONS.question
   return `<span class="badge badge-${cls}" data-fit="${esc(fit.label)}">${icon}${esc(fit.label)}</span>`
 }
 
@@ -83,10 +89,13 @@ export function typePills(types) {
   return `<span class="pills">${pills.join('')}</span>`
 }
 
-// On its own line an unknown intake needs its subject: "The page doesn't say" alone doesn't say what.
-export function intakeText(intake) {
+// On its own line an unknown intake needs its subject: "The page doesn't say" alone doesn't say what. Round 2: intake
+// timing is not part of the fit label, so the line also says what to do about it.
+export function intakeText(intake, contacts = []) {
   if (!intake) return ''
-  if (intake.status === 'unknown') return "When it takes applications: the page doesn't say"
+  if (intake.status === 'unknown') {
+    return `When it takes applications: the page doesn't say — ${contacts.length ? 'call the office to confirm' : 'check the official page to confirm'}`
+  }
   let text = intake.label
   if (intake.status === 'open' && intake.deadline?.date) text += ` until ${formatDate(intake.deadline.date)}`
   return text
@@ -98,8 +107,16 @@ export function amountText(result) {
   return result.max_amount ? result.max_amount.text : "Amount: the page doesn't say"
 }
 
+// Round 2: the Unknowns split into what the page doesn't say and what the form didn't ask the owner.
 export function countsText(counts) {
-  return `${counts.met} match · ${counts.missed} doesn't · ${counts.unknown} unknown`
+  return `${counts.met} match · ${counts.missed} doesn't · ${counts.unknown_page ?? 0} the page doesn't say · ${counts.unknown_ask ?? 0} we didn't ask you`
+}
+
+// Round 2: a card's single strongest quoted match (core's top_match), so the list says why without opening the program.
+export function topMatchLine(r) {
+  const m = r.top_match
+  if (!m) return ''
+  return `<p class="card-match" data-top-match="${esc(m.id)}">${ICONS.check}<span class="card-match-body"><span class="card-match-text">${esc(m.text)}</span><q class="card-match-quote">${esc(m.quote)}</q></span></p>`
 }
 
 export function staleText(v) {

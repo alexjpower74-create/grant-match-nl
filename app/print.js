@@ -36,9 +36,10 @@ async function main() {
     return
   }
   const p = data.profile
-  // "Could fit" means Looks like a fit or Might fit; open is already sorted with Looks like a fit first.
-  const picks = data.open.filter((r) => r.fit && r.fit.label !== "Doesn't fit").slice(0, MAX_PROGRAMS)
-  const more = data.open.filter((r) => r.fit && r.fit.label !== "Doesn't fit").length - picks.length
+  // "Could fit" means Looks like a fit or Might fit (not "Not enough to go on"); open is sorted with Looks like a fit first.
+  const couldFit = data.open.filter((r) => r.fit && (r.fit.label === 'Looks like a fit' || r.fit.label === 'Might fit'))
+  const picks = couldFit.slice(0, MAX_PROGRAMS)
+  const more = couldFit.length - picks.length
   const sample = picks.some((r) => r.sample)
 
   sheet.innerHTML = `
@@ -49,7 +50,7 @@ async function main() {
     ${picks.length ? `<ol class="programs">${picks.map((r) => `<li class="program" data-slug="${esc(r.slug)}">
       <h2>${esc(r.name)} <span class="fit">· ${esc(r.fit.label)}</span></h2>
       <p>${esc(r.provider)}</p>
-      <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || TYPE_UNKNOWN_TEXT)} · ${esc(amountText(r))} · ${esc(intakeText(r.intake))}</p>
+      <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || TYPE_UNKNOWN_TEXT)} · ${esc(amountText(r))} · ${esc(intakeText(r.intake, r.contacts))}</p>
       <p class="where"><span class="url">${esc(r.url)}</span>${r.contacts.find((c) => c.phone) ? ` · <span class="phone" data-phone>Phone ${esc(r.contacts.find((c) => c.phone).phone)}</span>` : ''}</p>
     </li>`).join('')}</ol>` : '<p class="empty">No open programs could fit these answers right now.</p>'}
     ${more > 0 ? `<p class="meta">and ${more} more on the results page</p>` : ''}

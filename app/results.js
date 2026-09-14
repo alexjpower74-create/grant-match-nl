@@ -1,6 +1,6 @@
 import { api } from './api.js'
 import {
-  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, amountText, countsText, TYPE_UNKNOWN_TEXT,
+  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, amountText, countsText, topMatchLine, TYPE_UNKNOWN_TEXT,
   verificationFlags, quoteBlock, sourcesIndex, hasSample, sampleBanner, errorNotice, ICONS, PROFILE_KEYS,
 } from './render.js'
 
@@ -17,10 +17,11 @@ function card(r) {
       <div class="card-top">${fitBadge(r.fit)}${typePills(r.funding_types)}</div>
       <h3 class="card-name">${esc(r.name)}</h3>
       <p class="card-provider">${esc(r.provider)}</p>
+      ${topMatchLine(r)}
       <div class="card-facts">
         ${r.funding_types.length ? '' : `<span data-type-unknown>${esc(TYPE_UNKNOWN_TEXT)}</span>`}
         <span>${esc(amountText(r))}</span>
-        <span>${esc(intakeText(r.intake))}</span>
+        <span data-intake-line>${esc(intakeText(r.intake, r.contacts))}</span>
         <span class="card-counts">${esc(countsText(r.counts))}</span>
       </div>
       ${verificationFlags(r.verification)}
@@ -70,10 +71,11 @@ async function main() {
     <p class="summary-counts" id="summary-counts">
       <span class="badge badge-looks">${counts.looks} Looks like a fit</span>
       <span class="badge badge-might">${counts.might} Might fit</span>
+      <span class="badge badge-notenough">${counts.not_enough} Not enough to go on</span>
       <span class="badge badge-doesnt">${counts.doesnt} Doesn't fit</span>
       <span class="badge badge-closed">${counts.closed} Closed</span>
     </p>
-    <p class="muted small">Sorted by fit, then programs that match more than your location, then money you don't pay back first. Unknown is never counted as a match.</p>
+    <p class="muted small" id="sort-line">Sorted by fit, then money you don't pay back first, then the most matches. Unknown is never counted as a match.</p>
     <div class="actions">
       <a class="btn" href="${esc(change)}" id="change-answers">${ICONS.back}Change answers</a>
       <a class="btn" href="${esc(link('print.html', {}, params))}" id="print-link">${ICONS.print}Print for the owner</a>

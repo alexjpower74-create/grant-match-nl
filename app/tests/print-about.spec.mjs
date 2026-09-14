@@ -8,7 +8,7 @@ for (const [label, profile] of [['SAMPLE Auto Service', PROFILES.auto], ['the fu
     test.skip(browserName !== 'chromium', 'page.pdf is chromium only')
     test.skip(testInfo.project.name !== 'chromium-1280', 'one PDF is enough')
     const want = coreMatch(profile)
-    const couldFit = want.open.filter((r) => r.fit.label !== "Doesn't fit")
+    const couldFit = want.open.filter((r) => ['Looks like a fit', 'Might fit'].includes(r.fit.label))
     const picks = couldFit.slice(0, 6)
     await page.goto(`/print.html?${qs(profile)}`)
     await expect(page.locator('h1')).toHaveText('Funding programs that could fit SAMPLE Auto Service')
@@ -28,7 +28,7 @@ for (const [label, profile] of [['SAMPLE Auto Service', PROFILES.auto], ['the fu
 test('print page lists open programs Looks like a fit first, with URL text and no navigation', async ({ page }) => {
   const want = coreMatch(PROFILES.auto)
   await page.goto(`/print.html?${qs(PROFILES.auto)}`)
-  const picks = want.open.filter((r) => r.fit.label !== "Doesn't fit").slice(0, 6)
+  const picks = want.open.filter((r) => ['Looks like a fit', 'Might fit'].includes(r.fit.label)).slice(0, 6)
   await expect(page.locator('.program')).toHaveCount(picks.length)
   const slugs = await page.locator('.program').evaluateAll((els) => els.map((e) => e.dataset.slug))
   expect(slugs).toEqual(picks.map((r) => r.slug))

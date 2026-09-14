@@ -22,6 +22,8 @@
   --doesnt-bg: rgba(244, 63, 94, 0.16);
   --closed: #94a3b8;
   --closed-bg: rgba(100, 116, 139, 0.2);
+  --notenough: #a5b4fc;
+  --notenough-bg: rgba(99, 102, 241, 0.16);
 
   --t-nonrep: #5eead4;
   --t-nonrep-bg: rgba(20, 184, 166, 0.16);
@@ -227,6 +229,7 @@ h3 { font-size: 1.15rem; margin: 0 0 6px; }
 .badge-might { color: var(--might); background: var(--might-bg); }
 .badge-doesnt { color: var(--doesnt); background: var(--doesnt-bg); }
 .badge-closed { color: var(--closed); background: var(--closed-bg); }
+.badge-notenough { color: var(--notenough); background: var(--notenough-bg); border-style: dashed; }
 
 .pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.92rem; font-weight: 600; }
@@ -252,6 +255,12 @@ h3 { font-size: 1.15rem; margin: 0 0 6px; }
 .card-provider { color: var(--muted); font-size: 1rem; margin: 2px 0 8px; }
 .card-facts { display: grid; gap: 4px; margin: 8px 0 0; color: var(--text-2); font-size: 1.02rem; }
 .card-counts { color: var(--text-2); font-weight: 600; }
+.card-match { display: flex; gap: 8px; align-items: flex-start; margin: 8px 0 4px; }
+.card-match svg { width: 18px; height: 18px; flex: none; margin-top: 4px; color: var(--looks); }
+.card-match-body { display: grid; gap: 2px; min-width: 0; }
+.card-match-text { font-weight: 650; color: var(--text); }
+.card-match-quote { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-2); font-size: 0.98rem; }
+.intake-line { color: var(--text-2); font-weight: 600; margin: 6px 0 12px; }
 .closed-section { margin-top: 36px; }
 .closed-section .card { opacity: 0.82; background: rgba(30, 41, 59, 0.35); box-shadow: none; }
 

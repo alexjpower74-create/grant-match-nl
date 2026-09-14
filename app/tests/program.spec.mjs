@@ -99,11 +99,19 @@ test('criteria sit in the three groups the way core evaluated them', async ({ pa
   const r = coreMatch(PROFILES.auto).open[0]
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
   await expect(page.locator('h1')).toHaveText(r.name)
-  for (const [group, status] of [['matches', 'met'], ['doesnt-match', 'missed'], ['unknown', 'unknown']]) {
+  for (const [group, status] of [['matches', 'met'], ['doesnt-match', 'missed']]) {
     const ids = r.criteria.filter((c) => c.status === status).map((c) => c.id)
     const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
     expect(shown, group).toEqual(ids)
   }
+  // Round 2: Unknown in two groups, the page's wording (unclear) and what we didn't ask you (everything else).
+  const unknown = r.criteria.filter((c) => c.status === 'unknown')
+  for (const [group, pick] of [['unknown-page', (c) => c.unknown_reason === 'unclear'], ['unknown-ask', (c) => c.unknown_reason !== 'unclear']]) {
+    const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
+    expect(shown, group).toEqual(unknown.filter(pick).map((c) => c.id))
+  }
+  expect(unknown.filter((c) => c.unknown_reason === 'unclear').length).toBe(r.counts.unknown_page)
+  expect(unknown.filter((c) => c.unknown_reason !== 'unclear').length).toBe(r.counts.unknown_ask)
   await expect(page.locator('#fit-why li')).toHaveCount(r.fit.why.length)
 })
 
@@ -177,4 +185,21 @@ test('more than one contact gets the "call the one nearest you" line; one contac
     await expect(page.getByText(LINE)).toHaveCount(0)
   }
   await expect(page.locator('#contacts-heading')).toHaveCount(0)
+})
+
+test('round 2: Unknown groups match core\'s split on a program with both kinds, and the intake line is its own line', async ({ page }) => {
+  const want = coreMatch(PROFILES.auto)
+  const r = want.open.find((x) => x.counts.unknown_page > 0 && x.counts.unknown_ask > 0)
+  expect(r, 'a SAMPLE Auto Service program with both kinds of Unknown').toBeTruthy()
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
+  await expect(page.locator('h1')).toHaveText(r.name)
+  await expect(page.locator('[data-group="unknown-page"] [data-criterion]')).toHaveCount(r.counts.unknown_page)
+  await expect(page.locator('[data-group="unknown-ask"] [data-criterion]')).toHaveCount(r.counts.unknown_ask)
+  await expect(page.locator('#unknown-page')).toContainText("The page doesn't say")
+  await expect(page.locator('#unknown-ask')).toContainText("We didn't ask you")
+  await expect(page.locator('#fit-why li', { hasText: /applications/i })).toHaveCount(0)
+  const silent = want.open.find((x) => x.intake.status === 'unknown')
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug: silent.slug })}`)
+  const confirm = silent.contacts.length ? 'call the office to confirm' : 'check the official page to confirm'
+  await expect(page.locator('#intake-line')).toHaveText(`When it takes applications: the page doesn't say — ${confirm}`)
 })
