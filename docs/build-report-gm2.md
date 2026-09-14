@@ -113,6 +113,30 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 4 — real-data Worker run, CanExport unclear, cross-review of gm1's programs 4–13 and the CBDC loans
+Merged main at `2ec7790` (gm1's programs 4–13, the six CBDC loan programs, DECISIONS #20–22). The tree now has **27 real
+programs** (not 24): 3 original NL + 10 NL (4–13) + 6 CBDC + 8 federal. Main's `core/` does not have `normally` or
+`unclear` on purpose rules yet (DECISIONS #21, #22 are contract only so far).
+
+### Step 2: real-data mode for the Worker suite: DONE
+- **Bug (found by the lead):** `worker/tests/run.mjs` always started wrangler with `DATA_SET:sample`, so `GM_REAL=1` ran
+  `real.test.mjs` against the SAMPLE bundle and failed on `'sample' !== 'real'`. My phase-1 report listed `real.test.mjs`
+  as written but never ran it in real mode, so it had never been shown to pass or fail. That's the gap this fixes.
+- **Now:** `GM_REAL=1 npm --prefix worker test` starts wrangler with `DATA_SET:real`, skips the SAMPLE fixture server and
+  runs only `tests/real.test.mjs`; the runner prints `worker tests: DATA_SET=real, files tests/real.test.mjs`.
+- **Numbers:** bundle `data_set: real`, **27 programs, 147 criteria, 53 sources**; stated-closed programs: CDAP, Canada Summer
+  Jobs, CanExport SMEs, Canada-NL Job Grant. `real.test.mjs`: **1 test, 1 pass, 0 fail** (every program's detail answers 200,
+  none is SAMPLE, every criterion has a quote of ≥ 12 characters, context and source_url, and CDAP's intake is closed with
+  its quote). SAMPLE mode unchanged: **15 pass, 0 fail, 1 skipped**.
+- **How it could fail:** the first run, against the tree before main's CBDC merge, passed on 21 programs; that run doesn't
+  count. The numbers above are from the full merged tree. The test's own red was the lead's: `'sample' !== 'real'`.
+
+### Step 3: CanExport partnership is `unclear`: DONE
+`ca-canexport-smes` structure rule is now `{ not_in: [sole_proprietor, nonprofit, not_registered], unclear: [partnership] }`,
+and the separate `llp-only` check-yourself item is gone (the criterion text says a partnership counts only if it is an LLP).
+A "Partnership" answer is now Unknown with the unclear copy, instead of met with a check-yourself item. `check:data`: every
+quote verified (27 real programs, 8 SAMPLE). The research notes say why.
+
 ## Phase 2 research: 8 federal programs, DONE
 Researched with gm1's tools (`fetch-source.mjs` per host with its own state file, one page at a time per host; `show-text.mjs`;
 `check:data` green before every commit: "every quote verified (11 real programs, 8 SAMPLE)"). 16 official pages saved.
