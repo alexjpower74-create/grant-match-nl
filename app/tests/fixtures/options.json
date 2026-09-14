@@ -1,0 +1,70 @@
+{
+  "communities": [
+    { "id": "gander", "name": "Gander", "type": "town", "csd_code": "1006017", "census_division": 6, "population_2021": 11880 },
+    { "id": "grand-falls-windsor", "name": "Grand Falls-Windsor", "type": "town", "csd_code": "1006019", "census_division": 6, "population_2021": 14171 },
+    { "id": "st-johns", "name": "St. John's", "type": "city", "csd_code": "1001519", "census_division": 1, "population_2021": 110525 }
+  ],
+  "industries": [
+    { "id": "11", "name": "Agriculture, forestry, fishing and hunting", "plain": "Farming, forestry and fishing" },
+    { "id": "21", "name": "Mining, quarrying, and oil and gas extraction", "plain": "Mining, oil and gas" },
+    { "id": "22", "name": "Utilities", "plain": "Utilities" },
+    { "id": "23", "name": "Construction", "plain": "Construction" },
+    { "id": "31-33", "name": "Manufacturing", "plain": "Manufacturing" },
+    { "id": "41", "name": "Wholesale trade", "plain": "Wholesale" },
+    { "id": "44-45", "name": "Retail trade", "plain": "Stores and retail" },
+    { "id": "48-49", "name": "Transportation and warehousing", "plain": "Transportation and warehousing" },
+    { "id": "51", "name": "Information and cultural industries", "plain": "Media, publishing and culture" },
+    { "id": "52", "name": "Finance and insurance", "plain": "Finance and insurance" },
+    { "id": "53", "name": "Real estate and rental and leasing", "plain": "Real estate and rentals" },
+    { "id": "54", "name": "Professional, scientific and technical services", "plain": "Professional and technical services" },
+    { "id": "55", "name": "Management of companies and enterprises", "plain": "Holding companies" },
+    { "id": "56", "name": "Administrative and support, waste management and remediation services", "plain": "Office support, cleaning and waste" },
+    { "id": "61", "name": "Educational services", "plain": "Education and training" },
+    { "id": "62", "name": "Health care and social assistance", "plain": "Health care and child care" },
+    { "id": "71", "name": "Arts, entertainment and recreation", "plain": "Arts, entertainment and recreation" },
+    { "id": "72", "name": "Accommodation and food services", "plain": "Hotels, restaurants and food" },
+    { "id": "81", "name": "Other services (except public administration)", "plain": "Repair, personal and other services" },
+    { "id": "91", "name": "Public administration", "plain": "Government" }
+  ],
+  "structures": [
+    { "id": "sole_proprietor", "label": "Sole proprietor" }, { "id": "partnership", "label": "Partnership" },
+    { "id": "corporation", "label": "Incorporated company" }, { "id": "cooperative", "label": "Co-operative" },
+    { "id": "nonprofit", "label": "Non-profit or charity" }, { "id": "not_registered", "label": "Not registered yet" },
+    { "id": "unsure", "label": "Not sure" }
+  ],
+  "years": [
+    { "id": "not_started", "label": "Not started yet" }, { "id": "lt1", "label": "Less than 1 year" },
+    { "id": "1to2", "label": "1 to 2 years" }, { "id": "2to3", "label": "2 to 3 years" }, { "id": "3to5", "label": "3 to 5 years" },
+    { "id": "5to10", "label": "5 to 10 years" }, { "id": "10plus", "label": "More than 10 years" }
+  ],
+  "revenue": [
+    { "id": "none", "label": "No revenue yet" }, { "id": "lt30k", "label": "Under $30,000" },
+    { "id": "30k_100k", "label": "$30,000 to $100,000" }, { "id": "100k_300k", "label": "$100,000 to $300,000" },
+    { "id": "300k_500k", "label": "$300,000 to $500,000" }, { "id": "500k_1m", "label": "$500,000 to $1 million" },
+    { "id": "1m_2m", "label": "$1 million to $2 million" }, { "id": "2m_10m", "label": "$2 million to $10 million" },
+    { "id": "10m_100m", "label": "$10 million to $100 million" }, { "id": "100m_plus", "label": "More than $100 million" },
+    { "id": "unsaid", "label": "Prefer not to say" }
+  ],
+  "cost": [
+    { "id": "lt10k", "label": "Under $10,000" }, { "id": "10k_25k", "label": "$10,000 to $25,000" },
+    { "id": "25k_50k", "label": "$25,000 to $50,000" }, { "id": "50k_100k", "label": "$50,000 to $100,000" },
+    { "id": "100k_250k", "label": "$100,000 to $250,000" }, { "id": "250k_1m", "label": "$250,000 to $1 million" },
+    { "id": "1m_plus", "label": "More than $1 million" }, { "id": "unsure", "label": "Not sure" }
+  ],
+  "owners": [
+    { "id": "women", "label": "Women" }, { "id": "indigenous", "label": "Indigenous people" },
+    { "id": "youth", "label": "A young person (18 to 39)" },
+    { "id": "newcomer", "label": "A newcomer to Canada (arrived in the last 5 years)" },
+    { "id": "francophone", "label": "Francophone" }
+  ],
+  "purposes": [
+    { "id": "hire", "label": "Hire or pay wages" }, { "id": "equipment", "label": "Equipment" },
+    { "id": "digital", "label": "Software or digital" }, { "id": "export", "label": "Export or new markets" },
+    { "id": "training", "label": "Training" }, { "id": "research", "label": "Research or innovation" },
+    { "id": "energy", "label": "Energy efficiency" }, { "id": "startup", "label": "Starting the business" }
+  ],
+  "sources": {
+    "communities": { "url": "https://sample.invalid/communities", "title": "SAMPLE fixture list", "publisher": "SAMPLE", "fetched_at": "2026-09-01T12:00:00.000Z", "file": null },
+    "industries": { "url": "https://sample.invalid/industries", "title": "SAMPLE fixture list", "publisher": "SAMPLE", "fetched_at": "2026-09-01T12:00:00.000Z", "file": null }
+  }
+}
