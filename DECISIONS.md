@@ -211,3 +211,11 @@ no change (it renders `before` + `<mark>quote</mark>` + `after`).
   get no context at all.
 - **R4:** a check-it-yourself item shows its reason copy only, not the identical `why` line (API §12).
 - **R5 (long pages at 390):** left as is; block-bounded context should shorten them a lot. Revisit after the change.
+
+## 25. Contact labels carry no unquoted facts (04:25)
+gm1 labelled the CBDC offices "CBDC Central, Grand Falls-Windsor (one of 15 CBDCs in the province)" (K3), and flagged
+that the "15" sits elsewhere on the office page, not in the contact's quote. Every fact on screen needs its quote, so
+labels keep the office and town only. The point K3 was after, that Gander isn't everyone's office, is made by the app's
+own neutral line above multiple contacts: "The program's pages list these offices. Call the one nearest you." (API §12).
+gm1's round 3 also confirmed the data end to end: a live dry scan on a copy with CanExport re-hashed read 53 sources
+(36 unique URLs) and found 287 of 287 quotes.
