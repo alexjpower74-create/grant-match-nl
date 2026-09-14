@@ -40,12 +40,19 @@ Exactly these steps, in order:
 Curly quotes, dashes, case and punctuation are kept. `numbersIn(text) → number[]` (same file): every number
 written in the text — `$1,500,000` → 1500000, `50 per cent`/`50%` → 50, `24 months` → 24, `2.5` → 2.5, and
 `$1.5 million` → both 1.5 and 1500000 (`thousand`, `million`, `billion` multiply the number before them). Only
-comma thousands separators. `contextFor(text, quote, n = 160) → { before, after } | null`: the rest of the **sentence** around the first
-occurrence, never menu text. `before` = the text after the last sentence boundary (`. ` `? ` `! ` `; ` `: `) that
+comma thousands separators. `blockText(html) → string` (same file): exactly `pageText` except that block edges become `\n`: the tags `p li ul ol
+dl dt dd h1 h2 h3 h4 h5 h6 div section article aside nav header footer main table tr td th br hr blockquote pre form
+fieldset figure figcaption address` insert `\n` instead of a space, and a whitespace run that contains a `\n`
+collapses to one `\n` (otherwise one space); trim both. Invariant, tested over every saved source:
+`blockText(html).replace(/\n/g, ' ') === pageText(html)`, so indexes are identical and quotes/hashes never change.
+`contextFor(blockText, quote, n = 160) → { before, after } | null`: the rest of the **sentence** around the first
+occurrence, never menu text; it also stops at any `\n` (a block edge), and `\n` never appears in the output. `before` = the text after the last sentence boundary (`. ` `? ` `! ` `; ` `: `) that
 lies within `n` characters before the quote, or `""` if there is none (or the quote starts right after one);
 `after` = the text up to and including the first boundary character within `n` characters after the quote, or
 `""` if there is none. No `…` added. (Lead review 03:50: a nav menu has no sentence boundaries, so the old
-word-boundary window put "Home Funding Contact us …" in front of quotes.)
+word-boundary window put "Home Funding Contact us …" in front of quotes. gm2 R1–R2 04:10: office lists and breadcrumbs
+have no sentence boundaries either, hence the block edges.) **Contact quotes get no context** (`before` and `after`
+are `""`): a phone list's neighbours are other offices' numbers.
 
 ## 2. Profile — `core/profile.js`
 
@@ -344,6 +351,9 @@ Copy that must stay true:
   changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
+- When a program has more than one contact, one line above them: "The program's pages list these offices. Call the one
+  nearest you." Contact labels name the office and its town only; they carry no fact that isn't in the contact's quote.
+- A criterion whose `unknown_reason` is `self_check` shows the reason copy only, not its `why` (they say the same thing).
 - Fit `why` lines are shown as core writes them. On the program page, when a profile is given the stale / needs-review
   sentences come from `fit.why`, so the separate verification flag shows only when there is no profile (no double
   wording). Results cards show the short flag.
