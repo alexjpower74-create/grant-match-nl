@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test'
+import { readFileSync } from 'node:fs'
 import { bundle, PROFILES, STALE_NOW, qs, coreMatch, coreProgram, quotesOf } from './helpers.mjs'
 
 const REASON_COPY = {
@@ -145,4 +146,35 @@ test('a check-yourself criterion shows its reason copy only, not its why line (A
       await expect(item.locator('.criterion-why'), `${c.id}: why still shown`).toHaveText(c.why)
     }
   }
+})
+
+test('more than one contact gets the "call the one nearest you" line; one contact or none does not', async ({ page }) => {
+  const LINE = "The program's pages list these offices. Call the one nearest you."
+  // No SAMPLE program has two contacts, so the many-contact case is the real Business Growth Program (six).
+  const real = JSON.parse(readFileSync(new URL('../../data/build/programs.json', import.meta.url), 'utf8'))
+  const many = real.programs.find((p) => p.slug === 'nl-business-growth-program')
+  expect(many && many.contacts.length, 'Business Growth has several contacts').toBeGreaterThan(1)
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug: many.slug, data: 'real' })}`)
+  await expect(page.locator('h1')).toHaveText(many.name)
+  const note = page.locator('[data-contacts-note]')
+  await expect(note).toHaveCount(1)
+  await expect(note).toHaveText(LINE)
+  // Above the contacts, inside the contacts section.
+  const inOrder = await page.evaluate(() => {
+    const n = document.querySelector('[data-contacts-note]')
+    const first = document.querySelector('.contacts')
+    return !!n && !!first && n.closest('section') === first.closest('section') && !!(n.compareDocumentPosition(first) & Node.DOCUMENT_POSITION_FOLLOWING)
+  })
+  expect(inOrder, 'the line sits above the contacts').toBe(true)
+
+  const one = bundle.programs.find((p) => p.contacts.length === 1)
+  const none = bundle.programs.find((p) => p.contacts.length === 0)
+  expect(one && none, 'SAMPLE programs with one contact and with none').toBeTruthy()
+  for (const p of [one, none]) {
+    await page.goto(`/program.html?${qs(PROFILES.auto, { slug: p.slug })}`)
+    await expect(page.locator('h1')).toHaveText(p.name)
+    await expect(page.locator('[data-contacts-note]'), `${p.slug} (${p.contacts.length} contact)`).toHaveCount(0)
+    await expect(page.getByText(LINE)).toHaveCount(0)
+  }
+  await expect(page.locator('#contacts-heading')).toHaveCount(0)
 })

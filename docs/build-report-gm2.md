@@ -113,6 +113,27 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 8 — one line above more than one contact: DONE
+Merged main at `ebb66a2` (merge `a6b3441`; API §12 and DECISIONS #25: contact labels carry office and town only, and a neutral line
+above multiple contacts). `build:data`: 27 real programs, 10 SAMPLE.
+- **Change:** when a program has more than one contact, the "Talk to someone" section shows one muted line above them:
+  "The program's pages list these offices. Call the one nearest you." (`[data-contacts-note]`). A single contact, or none, gets no
+  line.
+- **Where it shows on real data today:** Business Growth (6 contacts), Business Investment (7), the six CBDC loans (4, Newcomer 5)
+  and both ACOA programs (2). The other 11 real programs with contacts have one.
+- **Test:** "more than one contact gets the 'call the one nearest you' line; one contact or none does not". No SAMPLE program has
+  two contacts (SAMPLE Growth Grant and Women Entrepreneur Loan have one each), so the many-contact case is the real Business
+  Growth Program via `data=real`: exactly one line, exact copy, in the contacts section and before the contacts. Then SAMPLE
+  Growth Grant (one contact) and a SAMPLE program with no contacts: no line, and the text isn't on the page. Passes on chromium and
+  webkit at 390 and 1280.
+- **Negative control (l):** line shown for `contacts.length >= 1` → **red** ("nl-sample-growth-grant (1 contact), Expected: 0, Received:
+  1"). Restored from a byte copy (the change was uncommitted) → passes; no backups left.
+- **Playwright on the merged tree: 200 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped
+  by design. Worker code and data rules are unchanged since round 7 (15/0/1 SAMPLE, 1/0 real).
+
+Waiting: gm1's block-edge quote context (API §1) and the office labels without "15 CBDCs". Then the last real-data look (Business
+Growth contacts, CanExport's closed quote, one CBDC loan) with fresh `gm2-real` screenshots.
+
 ## Round 7 — unclear rendered for real, check-yourself items without their why: DONE
 1. **Merged `rig/gm1` at `c551391`** (merge `20b3032`). It brings the SAMPLE fixtures that use `unclear` and `normally` (`28c8866`), the
    evidence sort tier (`6f0d5fc`) and gm1's K3 office labels. `build:data`: 27 real programs, 10 SAMPLE (new: SAMPLE Green Upgrade

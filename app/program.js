@@ -15,6 +15,9 @@ const FACT_NAMES = {
   intake: 'When it takes applications',
 }
 
+// API §12 / DECISIONS #25: one neutral line above more than one contact, so no office reads as everyone's office.
+const MANY_CONTACTS_TEXT = "The program's pages list these offices. Call the one nearest you."
+
 const pageSilent = `<p class="reason" data-reason="page_silent">${esc(UNKNOWN_REASON.page_silent)}</p>`
 
 function criterion(c, src) {
@@ -71,6 +74,7 @@ function contacts(r, src) {
   if (!r.contacts.length) return ''
   return `<section class="panel glass" aria-labelledby="contacts-heading">
     <h2 id="contacts-heading">Talk to someone</h2>
+    ${r.contacts.length > 1 ? `<p class="muted" data-contacts-note>${esc(MANY_CONTACTS_TEXT)}</p>` : ''}
     <div class="contacts">
       ${r.contacts.map((c) => `<div>
         <p class="fact-value">${esc(c.label)}</p>
