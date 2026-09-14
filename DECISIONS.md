@@ -168,3 +168,18 @@ no change (it renders `before` + `<mark>quote</mark>` + `after`).
   export-potential alternative the page gives; its department footer phone is labelled as the department switchboard
   (or dropped, now the regional offices are there); JobsNL's participant rules become one quoted check-it-yourself item
   each, because the combined item claimed more than its quote.
+
+## 22. gm1's programs 4–13, and what was left out (04:10)
+- **Answers:** A, `unclear` is allowed on purpose rules too (the Green Transition Fund's "greening" projects cut across
+  our purposes; `energy` met, the others Unknown rather than a guess). B, CBDC place-name lists don't become location
+  rules (about 40 names aren't census subdivisions and name matching misfires, e.g. Victoria Cove vs Victoria);
+  "your local CBDC offers this" is a check-it-yourself item.
+- **Left out:** takeCHARGE Business Efficiency Program, its Terms of Use allow "personal, non-commercial transitory
+  viewing only" and forbid copying (pages deleted, not committed; asking Newfoundland Power / NL Hydro is on
+  Alexander's list). NLOWE, nlowe.org refused connections on port 443 three times (06:03–06:15Z), so nothing was read;
+  women-owned coverage is a gap. Horizon TNL (formerly RDÉE TNL) advises and points to Futurpreneur's loan; it doesn't
+  fund. Regional Development Fund and Community Capacity Building Program are for non-profit organizations only.
+- **Programs whose own pages put them in `closed`:** Canada-NL Job Grant (intake "suspended", which beats the page's
+  older "Continuous intake" line) and the Summer Employment Program for Students (deadline 2026-02-19 passed).
+- **gm1's own slip, fixed:** cbdc.ca's `Crawl-delay: 10` sits before any `User-agent` line; the parser ignored it, so
+  three requests went about 1 s apart before the fix. The fix is in `core/checks.js`, so the Worker's cron obeys it too.

@@ -139,7 +139,7 @@ path and the reason):
 | `revenue` | bounds | revenue |
 | `project_cost` | bounds | cost |
 | `ownership` | `{ any: [owner ids] }` | owners |
-| `purpose` | `{ any: [purpose ids] }` | purposes |
+| `purpose` | `{ any: [purpose ids] }`, optional `unclear: [ids]` | purposes |
 | `self_check` | `{}` — the page states it but no profile answer can settle it ("have a business plan", "be in good standing") | — |
 
 **`normally: true`** on a bounds rule, when the page softens the limit ("Eligible applicants must normally: … have
@@ -155,7 +155,10 @@ and $100 million" → `{ gte: 300000, lte: 100000000 }` (inclusive unless the pa
 "commercially viable", "good standing" are **`self_check`**, never a guessed industry list. Age or newcomer
 definitions that differ from the profile's (§2) are `self_check` too.
 
-**`unclear`** (structure and industry only): answers the page's wording can't settle either way. "Private or
+**`unclear`** (structure, industry and purpose): for purpose, met if any picked purpose is in `any`; otherwise unknown
+(`unclear`) if any picked purpose is in `unclear`; otherwise missed. Place-name lists that are not census subdivisions
+(a CBDC's "Gander Glenwood Appleton Benton…") are **not** turned into location rules: "offered by your local CBDC"
+is a `self_check`, because name matching wrongly misses unincorporated places. answers the page's wording can't settle either way. "Private or
 not-for-profit employers that are incorporated or sole proprietorships" → `{ in: [corporation, sole_proprietor],
 unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be incorporated). An id may not be in both
 `unclear` and `in`/`not_in`. Prefer `unclear` over guessing in either direction.
