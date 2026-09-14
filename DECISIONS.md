@@ -124,3 +124,33 @@ Business Growth Program, Business Investment Program, JobsNL Wage Subsidy, read 
   top rate; the $750,000 Development and Commercialization ceiling left in notes, since "normally up to $200,000"
   is the program's stated maximum. Business Investment may quote the Business Growth page for the department's
   regional office phones (same department, official page).
+
+## 19. gm2's second round: copy, terms, closed programs (03:45)
+- Core/copy (gm2 Q9–16): Q9–10 already fixed by gm1 (page_gone, "changed or gone"). Q11 the program page shows fit
+  `why` lines as core writes them and shows the separate stale/review flag only when there is no profile. Q12 core's
+  "Unknown, …" becomes "Unknown: …" (gm1). Q13 the not-answered copy reads "you didn't answer this or weren't sure".
+  Q14 `counts.unknown` includes check-it-yourself items (pinned in §6). Q15 robots.txt 4xx = no rules, 5xx = skip
+  the host (pinned in §9). Q16 no change.
+- **Not used, by their terms:** BDC ("You must get our authorization in writing before using any content from our
+  website for: … Copy … Storage"), Futurpreneur ("You may not: … Copy, modify, distribute … Use any automated system
+  or software to extract data"), Ulnooweg Development Group (no terms page at all, "All rights reserved" footer, so no
+  licence to copy). The About page lists them with the reason. This costs the youth (Futurpreneur) and Indigenous
+  (Ulnooweg) programs; asking them for permission is on Alexander's list.
+- **Closed right now, included as closed with the quote:** CanExport SMEs ("Applications are not being accepted at
+  this time"), Canada Summer Jobs 2026 ("The application period was from November 4, 2025, to December 11, 2025").
+  The weekly live check flags the page when either changes.
+- **CDAP:** closed, quoting the Government of Canada Question Period note on search.open.canada.ca (Open Government
+  Licence) that the Boost Your Business Technology grant "is not accepting new applications", with ISED's privacy
+  assessment (four-year life to 2024-25) as a second source, and the ISED site's redirect to its home page in the
+  research notes. BDC's page can't be the source (terms above).
+- **DECISIONS #12 sharpened:** canada.ca, nrc.canada.ca and ised-isde.canada.ca allow non-commercial reproduction with
+  attribution; "commercial redistribution" needs written permission. Tonight's use is private research. Before a public
+  deploy on a commercial site Alexander decides: quote as review/research, ask the publishers, or prefer Open
+  Government Licence pages where they exist.
+
+## 20. Quote context is the sentence, not the menu (03:50)
+Looking at gm2's screens: a quote's grey context began "Home Funding Contact us SAMPLE Growth Grant…", because the
+context was a 160-character window and the saved page text includes navigation. Real gov.nl.ca pages carry long
+menus, so every provincial quote would have opened with a list of links. Contract §1 now cuts context at sentence
+boundaries and leaves it empty when there is none nearby. gm1 changes `contextFor` when it next stops; the app needs
+no change (it renders `before` + `<mark>quote</mark>` + `after`).

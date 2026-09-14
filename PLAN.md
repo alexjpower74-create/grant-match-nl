@@ -257,8 +257,8 @@ starting list checked by the lead, 02:45: every URL answered 200 to our User-Age
    and …/canexport-smes/applicants-guide-2026-27.html (2026-27 rules changed: check the revenue and employee minimums)
 5. `ca-canada-summer-jobs` — https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs/applicant-guide/who-can-apply.html
    and https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs.html (intake)
-6. `ca-futurpreneur-startup` — https://futurpreneur.ca/en/eligibility/ and https://futurpreneur.ca/en/offering/core-startup/ (Crawl-delay 10)
-7. `ca-bdc-small-business-loan` — https://www.bdc.ca/en/financing/small-business-loan
+6. ~~`ca-futurpreneur-startup`~~ NOT USED, terms forbid copying (DECISIONS #19) — https://futurpreneur.ca/en/eligibility/ and https://futurpreneur.ca/en/offering/core-startup/ (Crawl-delay 10)
+7. ~~`ca-bdc-small-business-loan`~~ NOT USED, terms forbid copying (DECISIONS #19) — https://www.bdc.ca/en/financing/small-business-loan
 8. `ca-canada-digital-adoption-program` — **closed; must show as closed with its source, never open.**
    https://www.bdc.ca/en/canada-digital-adoption-program says "The Canada Digital Adoption Program (CDAP) is no longer
    accepting new applications for the Boost Your Business Technology stream." ISED's own CDAP site
@@ -266,7 +266,7 @@ starting list checked by the lead, 02:45: every URL answered 200 to our User-Age
    `research.notes`. Look for an official Government of Canada page that states the whole program closed.
 9. `ca-canada-small-business-financing-program` — https://ised-isde.canada.ca/site/canada-small-business-financing-program/en
 10. `ca-sred-investment-tax-credit` — https://www.canada.ca/en/revenue-agency/services/scientific-research-experimental-development-tax-incentive-program/sred-claim/investment-tax-credit.html
-11. Ulnooweg Indigenous business financing (ulnooweg.ca / ulnoowegdevelopmentgroup.ca) — ownership `indigenous`; read its terms and robots first.
+11. ~~Ulnooweg Indigenous business financing~~ NOT USED, no published terms, all rights reserved (DECISIONS #19): (ulnooweg.ca / ulnoowegdevelopmentgroup.ca) — ownership `indigenous`; read its terms and robots first.
 After your first **three** programs are committed, stop and report; the lead has gm1 cross-review them.
 
 ## Cross-review (lead schedules it; every real defect crosses a slice boundary)
