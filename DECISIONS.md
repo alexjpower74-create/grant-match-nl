@@ -183,3 +183,19 @@ no change (it renders `before` + `<mark>quote</mark>` + `after`).
   older "Continuous intake" line) and the Summer Employment Program for Students (deadline 2026-02-19 passed).
 - **gm1's own slip, fixed:** cbdc.ca's `Crawl-delay: 10` sits before any `User-agent` line; the parser ignored it, so
   three requests went about 1 s apart before the fix. The fix is in `core/checks.js`, so the Worker's cron obeys it too.
+
+## 23. gm2's cross-review of NL programs 4–13 and the CBDC loans (04:05)
+- **Data fixes for gm1:** CBDC Innovation Loan purpose loses `research` (the page never says it) and gains `unclear:
+  [training]`; Employment Enhancement Program industry becomes `not_in` every other sector with `unclear: [11, 31-33]`
+  (the page wants forestry, aquaculture, agriculture and fishing employers doing value-added secondary processing, which
+  no sector answer settles); CBDC Newcomer's residency item quotes the "non-permanent residents" line it paraphrases;
+  Investment Attraction Fund's item quotes "large-scale businesses and foreign direct investment"; Green Transition Fund
+  gets its purpose rule once core allows `unclear` on purposes.
+- **CBDC contacts (K3):** kept, because they are on official CBDC pages, but labelled with their town and "one of 15 CBDCs
+  in the province", so an owner in Corner Brook doesn't read Gander as their office.
+- **Programs only your location can be checked against (K4):** within the same fit label they now sort after programs
+  with a real match beyond location, and only then by funding type (API §5). "Sort by fit, then non-repayable first"
+  still holds between programs with evidence; a location-only non-repayable program no longer outranks a checked loan.
+- Agreed as researched: the Job Grant's suspension beating its older "Continuous intake" line, Job Accelerator's
+  `unclear` on real estate and call centres, the harvester loan's industry mapping, the youth loan's 18–34 as
+  check-it-yourself.
