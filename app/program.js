@@ -142,7 +142,7 @@ async function main() {
         ${contacts(r, src)}
         <section class="panel glass" aria-labelledby="verified-heading">
           <h2 id="verified-heading">Last verified ${esc(formatDate(r.verification.last_verified))}</h2>
-          ${verificationFlags(r.verification)}
+          ${r.fit ? '' : verificationFlags(r.verification)}
           <ol class="sources">
             ${r.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a><br><span class="muted small">${esc(s.publisher)} · saved ${esc(formatDate(s.fetched_at))}</span></li>`).join('')}
           </ol>

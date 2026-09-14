@@ -113,6 +113,36 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 2 — app copy, flags, left-out programs: DONE
+Merged main at `d117d59` (gm1's first three NL programs, `page_gone`, `scan.mjs`; contract `6130db3`). `build:data`:
+3 real programs, 8 SAMPLE.
+- **Copy (API §12):** `not_answered` → "Unknown: you didn't answer this or weren't sure"; new `unclear` → "Unknown: the
+  page's wording doesn't settle it for your answer". Both are in `render.js` and on About's "What Unknown means" list.
+- **Program page flags (DECISIONS #19, Q11):** with a profile, stale/needs-review wording comes only from `fit.why` as
+  core writes it; the separate flag shows only when there is no profile. Results cards keep the short flag.
+- **About: "Programs we left out, and why"** (static): BDC loans (link to BDC's legal notice), Futurpreneur (link to
+  its terms and conditions), Ulnooweg Development Group (no terms page, so the link goes to its website and says so),
+  each with one plain reason, plus "Grant Match only uses pages it is allowed to quote."
+- **Tests:** reason copy now covers `unclear`; new "with a profile the stale wording comes from fit.why only; with no
+  profile the flag shows"; new "about lists the programs we left out, each with its terms link and reason" (also
+  asserts no bundle source is on bdc.ca, futurpreneur.ca or ulnooweg).
+- **Gap, stated plainly: nothing produces `unknown_reason: "unclear"` yet.** `core/match.js` and `core/schema.js` on
+  main have no `unclear`, and no SAMPLE or real rule uses it (JobsNL and Business Growth still list co-ops,
+  non-profits and "Not registered yet" as plain `in`/missed). The reason test tries structure answers a rule's
+  `unclear` list would name. It checks the rendered copy as soon as core produces it; until then it records a "gap"
+  annotation and checks the exact copy in `render.js` and on About. **Needs from gm1:** `unclear` in schema and
+  matcher, plus one SAMPLE program with an `unclear` list, so the page-level check stops being a copy check.
+- **Suites:** Worker 15 passed, 1 skipped. Playwright **164 passed, 0 failed**, every test run twice on chromium and
+  webkit at 390 and 1280; 28 skipped by design.
+- **Negative controls:**
+  - (e) the flag rendered even with a profile → **red**: `[data-flag]` expected 0, received 1. Restored → passes.
+  - (f) the BDC terms link removed from the left-out section → **red**: "element(s) not found" for the link with
+    href `https://www.bdc.ca/en/legal-notice`. Restored → passes. (The first break pattern didn't match the file,
+    because it has a plain apostrophe, not `&#39;`, and printed "BREAK FAILED". The fallback pattern made the break;
+    the diff shown before the run confirms the link was gone.)
+  Both edited files were restored from byte copies (they carried uncommitted round-2 edits); no backup files left.
+- Screenshots: `docs/shots/gm2-about-{390,1280}.png` retaken with the new section.
+
 ## Phase 2 groundwork (2026-09-14, reading only: no sources saved, no program JSON)
 Read by hand with our User-Agent, one host at a time, ≥ 1.5 s between requests (11 s on futurpreneur.ca, 61 s on
 the Ulnooweg sites). Copies used for reading sit in the untracked `.scratch/`; nothing is in `data/`.

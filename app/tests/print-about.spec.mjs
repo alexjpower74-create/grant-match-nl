@@ -51,3 +51,26 @@ test('about lists every SAMPLE source', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Grant Match never applies for you' })).toBeVisible()
   await expect(page.locator('#sample-banner')).toBeVisible()
 })
+
+test('about lists the programs we left out, each with its terms link and reason', async ({ page }) => {
+  await page.goto(`/about.html?mock=1`)
+  const section = page.locator('#left-out')
+  await expect(section.getByRole('heading', { name: 'Programs we left out, and why' })).toBeVisible()
+  await expect(section).toContainText('Grant Match only uses pages it is allowed to quote.')
+  const expected = [
+    ['bdc', 'BDC loans', 'https://www.bdc.ca/en/legal-notice'],
+    ['futurpreneur', 'Futurpreneur', 'https://futurpreneur.ca/en/terms-conditions/'],
+    ['ulnooweg', 'Ulnooweg Development Group', 'https://ulnoowegdevelopmentgroup.ca/'],
+  ]
+  await expect(section.locator('[data-left-out]')).toHaveCount(expected.length)
+  for (const [id, name, href] of expected) {
+    const item = section.locator(`[data-left-out="${id}"]`)
+    await expect(item).toContainText(name)
+    const a = item.locator('a')
+    await expect(a).toHaveAttribute('href', href)
+    await expect(a).toHaveAttribute('target', '_blank')
+    await expect(a).toHaveAttribute('rel', /(^|\s)noopener(\s|$)/)
+  }
+  // None of them is quoted as a source anywhere.
+  for (const p of bundle.programs) for (const s of p.sources) expect(s.url).not.toMatch(/bdc\.ca|futurpreneur\.ca|ulnooweg/)
+})
