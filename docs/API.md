@@ -61,7 +61,8 @@ meaning). Numbers in bands are **intervals** used by the matcher (§5).
 
 `parseProfile(input, { communities, industries }) → { profile, errors }` — `input` is a `URLSearchParams` or a plain
 object of strings; `communities`/`industries` may be the arrays or the whole reference files. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
-Unknown ids are errors. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
+Unknown ids are errors; so are `owners=none,women` and a name over 80 characters (`owners=` empty = not answered).
+Option intervals are `{ min, max, min_inclusive, max_inclusive }` with `max: null` for no upper limit; `unsaid`/`unsure` have none. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
 name }, structure, employees, years, revenue, owners: null | [] | ['women', …], purposes: [...], cost }`.
 `profileToQuery(profile) → string` round-trips (`parseProfile(profileToQuery(p))` equals `p`).
 
@@ -217,7 +218,8 @@ Funding type labels: Non-repayable, Repayable, Loan, Tax credit, Wage subsidy.
 - `communities.json`: `{ source: { url, title, publisher, fetched_at, file }, communities: [{ id, name, type,
   csd_code, census_division, population_2021 }] }` — every census subdivision in NL from Statistics Canada's 2021
   Census (towns, cities, Indigenous communities, and one "Somewhere else in Division No. N" entry per census
-  division for unincorporated places, `type: "other"`). `id` = slug of the name, unique. Sorted by name.
+  division for unincorporated places, `type: "other"`). That table has no subdivision-type column, so every named
+  subdivision is `type: "subdivision"`; the "Somewhere else" entries fold in the unorganized "Division No. N, Subd. X" rows. `id` = slug of the name, unique. Sorted by name.
 - `industries.json`: `{ source: {…}, industries: [{ id: "44-45", name: "Retail trade", plain: "Stores and retail" }] }`
   — the 20 NAICS Canada 2022 sectors; `name` verbatim from Statistics Canada, `plain` a short everyday label.
 - Raw reference sources are saved as `data/sources/ref-<name>.<ext>`.
@@ -243,6 +245,9 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
   `User-Agent: APCO-Software-Tools-research/1.0 (+https://apcosoftwaretools.ca)`; GET only; 20 s timeout.
 - `originMap` (tests only): `{ "https://sample.invalid": "http://127.0.0.1:7403" }` rewrites origins before fetching.
 - `onRaw({ source_id, url, fetched_at, http_status, body })` is awaited after each fetch.
+- A page answering **404 or 410**: `ok: false`, every quote of that source in `missing` (a gone page can't vouch for
+  them). **Any other non-2xx, a network error, or robots.txt refusing/unreachable**: `ok: false`, `error` set,
+  `missing: []`; it says nothing about the page.
 
 ```jsonc
 { "started_at": "ISO", "finished_at": "ISO", "trigger": "node" | "cron" | "manual",
@@ -252,7 +257,7 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
 ```
 `sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes, page_gone } }`
 folds stored runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok`
-and `missing` empty; `missing_quotes` = the missing count of the newest check that actually read the page (`ok`),
+and `missing` empty; `missing_quotes` = the missing count of the newest check that read the page (`ok`) or found it gone (404/410),
 so a timeout, a 5xx or a robots refusal **keeps** the previous count instead of clearing it; `page_gone` = the newest
 check answered HTTP 404 or 410. In `evaluateProgram`, `needs_review` = any source with `missing_quotes > 0` **or**
 `page_gone`; the app's needs-review copy then reads "The page has changed or gone since we checked it. Check the
