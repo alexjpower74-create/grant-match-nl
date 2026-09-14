@@ -73,7 +73,7 @@ async function main() {
       <span class="badge badge-doesnt">${counts.doesnt} Doesn't fit</span>
       <span class="badge badge-closed">${counts.closed} Closed</span>
     </p>
-    <p class="muted small">Sorted by fit, then money you don't pay back first. Unknown is never counted as a match.</p>
+    <p class="muted small">Sorted by fit, then programs that match more than your location, then money you don't pay back first. Unknown is never counted as a match.</p>
     <div class="actions">
       <a class="btn" href="${esc(change)}" id="change-answers">${ICONS.back}Change answers</a>
       <a class="btn" href="${esc(link('print.html', {}, params))}" id="print-link">${ICONS.print}Print for the owner</a>

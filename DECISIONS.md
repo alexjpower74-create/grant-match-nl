@@ -240,3 +240,10 @@ when `<br>` stopped marking an edge). Remaining readability nit: a few quotes jo
   fact in the data or a collapsed quote in the app. Listed under "Where to pick this up" in README.
 - Both slices are finished. No new crew round: the remaining work is the lead's final QA, the real scan into the local
   Worker, README numbers, the private repo and the status file.
+
+## 28. The results page said the old sort order (04:50)
+Looking at the real-data screens: the results line said "Sorted by fit, then money you don't pay back first", but since
+#23 programs that match more than your location come first within a label, so the CBDC Innovation Loan (a loan) sat
+above two non-repayable programs and the sentence was false on screen. Lead fix-forward after the slices closed: the
+line now reads "Sorted by fit, then programs that match more than your location, then money you don't pay back first."
+QA'd in a pinned worktree before the push.
