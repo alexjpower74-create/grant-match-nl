@@ -228,3 +228,15 @@ invariant `blockText(html).replace(/\n/g, ' ') === pageText(html)` holds on all 
 when `<br>` stopped marking an edge). Remaining readability nit: a few quotes join two blocks into one run-on
 ("…at this time The application intake period…"); CanExport's intake and location quotes get shortened to one block each
 (same saved page, so no hash changes). The CBDC office quotes stay long because they carry the town the label needs (#25).
+
+## 27. Stopping point for the crew (04:42)
+- gm2's final round confirmed on real data: R1 fixed (each regional office shows only its own line, no neighbour's
+  number beside "Call this office"), R2 fixed (CanExport's closed quote has no breadcrumb, JSON or run-on; its August
+  31, 2026 end is now the intake deadline with its own quote). Office labels carry only what their quote says (#25).
+- **Left as is tonight, on purpose:** Business Growth at 390 is ~7,700 px tall (6% shorter than before), because long
+  quotes repeat (the eligibility paragraph quoted by two criteria, the amount sentence by amount and cost share), not
+  because of context. Three federal list quotes (REGI use of funds, Canada Summer Jobs cost share, NRC IRAP exclusions)
+  still join a lead-in with its items. Both are readability, not correctness; fixing them means one-block quotes per
+  fact in the data or a collapsed quote in the app. Listed under "Where to pick this up" in README.
+- Both slices are finished. No new crew round: the remaining work is the lead's final QA, the real scan into the local
+  Worker, README numbers, the private repo and the status file.
