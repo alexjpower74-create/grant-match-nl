@@ -1,0 +1,52 @@
+{
+  "slug": "nl-innovation-and-business-development-fund",
+  "sample": false,
+  "name": "Innovation and Business Development Fund",
+  "provider": "Government of Newfoundland and Labrador, Department of Energy and Mines",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/innovation-and-business-development-fund/",
+  "summary": {
+    "quote": "The Innovation and Business Development Fund is focused on investments to grow Newfoundland and Labrador’s oil and gas supply and service capabilities, including opportunities to diversify capacities in other energy sectors.",
+    "source": "nl-innovation-and-business-development-fund--main"
+  },
+  "sources": [
+    {
+      "id": "nl-innovation-and-business-development-fund--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/innovation-and-business-development-fund/",
+      "title": "Innovation and Business Development Fund - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:08.745Z",
+      "http_status": 200,
+      "sha256": "3a09d1a8ff6a68c2f0f69cd3f01e0797cd9638235b5de4624503d007cfe70373",
+      "text_sha256": "198b1c1248ef1b57a6198f0801f1bce442d908d768d24cc3397b1e6a9c59d324",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "energy-supply-and-service",
+      "text": "The project grows the province's oil and gas supply and service capabilities, or diversifies into other energy sectors",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "focused on investments to grow Newfoundland and Labrador’s oil and gas supply and service capabilities, including opportunities to diversify capacities in other energy sectors",
+      "source": "nl-innovation-and-business-development-fund--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "The page is listed under Jobs, Growth and Rural Development, but it says 'The Department of Energy and Mines administers the fund', so that is the provider. Everything else (funding type, amounts, cost share, who can apply, intake, contacts) is only in PDFs linked from the page: IBDF-Applicant-Guide-Nov.-23.pdf, IBDF-Program-Fact-Sheet-Nov-2023.pdf and two fillable application PDFs, one 'Commercial' and one 'Non-Commercial'. PDFs are not sources, so all of those are Unknown. The application titles suggest businesses can apply, but that isn't stated on the page, so no structure rule. With only a check-this-yourself item, it shows Might fit to everyone; kept because the brief lists it and the energy-sector focus is on the page."
+  }
+}
