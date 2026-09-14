@@ -61,7 +61,8 @@ meaning). Numbers in bands are **intervals** used by the matcher (§5).
 
 `parseProfile(input, { communities, industries }) → { profile, errors }` — `input` is a `URLSearchParams` or a plain
 object of strings; `communities`/`industries` may be the arrays or the whole reference files. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
-Unknown ids are errors. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
+Unknown ids are errors; so are `owners=none,women` and a name over 80 characters (`owners=` empty = not answered).
+Option intervals are `{ min, max, min_inclusive, max_inclusive }` with `max: null` for no upper limit; `unsaid`/`unsure` have none. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
 name }, structure, employees, years, revenue, owners: null | [] | ['women', …], purposes: [...], cost }`.
 `profileToQuery(profile) → string` round-trips (`parseProfile(profileToQuery(p))` equals `p`).
 
@@ -125,8 +126,8 @@ path and the reason):
 | `rule.kind` | Shape | Profile field |
 |---|---|---|
 | `location` | `{ province: "NL" }` or `{ census_divisions: [1…11] }` or `{ communities: [ids] }` | community |
-| `industry` | `{ in: [sector ids] }` or `{ not_in: [sector ids] }` | industry |
-| `structure` | `{ in: [structure ids] }` or `{ not_in: [...] }` | structure |
+| `industry` | `{ in: [sector ids] }` or `{ not_in: [sector ids] }`, optional `unclear: [ids]` | industry |
+| `structure` | `{ in: [structure ids] }` or `{ not_in: [...] }`, optional `unclear: [ids]` | structure |
 | `employees` | bounds | employees |
 | `years_operating` | bounds + `unit: "months" \| "years"` (years × 12 to compare) | years |
 | `revenue` | bounds | revenue |
@@ -144,10 +145,17 @@ and $100 million" → `{ gte: 300000, lte: 100000000 }` (inclusive unless the pa
 "commercially viable", "good standing" are **`self_check`**, never a guessed industry list. Age or newcomer
 definitions that differ from the profile's (§2) are `self_check` too.
 
+**`unclear`** (structure and industry only): answers the page's wording can't settle either way. "Private or
+not-for-profit employers that are incorporated or sole proprietorships" → `{ in: [corporation, sole_proprietor],
+unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be incorporated). An id may not be in both
+`unclear` and `in`/`not_in`. Prefer `unclear` over guessing in either direction.
+
 ## 5. Matching — `core/match.js`
 
 `evaluateCriterion(criterion, profile) → { status, unknown_reason, why }`
 - `self_check` → `unknown`, reason `self_check`.
+- A profile value listed in the rule's `unclear` → `unknown`, reason `unclear`, why "The page's wording doesn't settle
+  this for <label>."
 - Profile field not answered (`owners` absent, `revenue: unsaid`, `cost` absent/`unsure`) → `unknown`, reason `not_answered`.
 - Sets (`location`, `industry`, `structure`, `ownership`, `purpose`): `met` if the profile value is in (or, for `any`,
   overlaps) the rule's set; `not_in` inverts; otherwise `missed`. `location.province: "NL"` is met by every community.
@@ -198,9 +206,9 @@ definitions that differ from the profile's (§2) are `self_check` too.
   "contacts": [{ "label": "…", "phone": "…", "email": null, "census_divisions": [6], ...Quote }],
   "criteria": [{ "id": "…", "text": "…", "kind": "employees", "rule": {…},
                  "status": "met" | "missed" | "unknown" | null,          // null when no profile
-                 "unknown_reason": "not_answered" | "band_straddles" | "self_check" | null,
+                 "unknown_reason": "not_answered" | "band_straddles" | "unclear" | "self_check" | null,
                  "why": "…" | null, ...Quote }],
-  "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile
+  "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile; unknown INCLUDES self_check (self_check is a subset)
   "fit": null | { "label": "Looks like a fit" | "Might fit" | "Doesn't fit", "rank": 0, "why": ["…"] },
   "verification": { "last_verified": "2026-09-14", "age_days": 0, "stale": false, "needs_review": false,
                     "missing_quotes": 0, "last_checked_at": null },
@@ -217,7 +225,8 @@ Funding type labels: Non-repayable, Repayable, Loan, Tax credit, Wage subsidy.
 - `communities.json`: `{ source: { url, title, publisher, fetched_at, file }, communities: [{ id, name, type,
   csd_code, census_division, population_2021 }] }` — every census subdivision in NL from Statistics Canada's 2021
   Census (towns, cities, Indigenous communities, and one "Somewhere else in Division No. N" entry per census
-  division for unincorporated places, `type: "other"`). `id` = slug of the name, unique. Sorted by name.
+  division for unincorporated places, `type: "other"`). That table has no subdivision-type column, so every named
+  subdivision is `type: "subdivision"`; the "Somewhere else" entries fold in the unorganized "Division No. N, Subd. X" rows. `id` = slug of the name, unique. Sorted by name.
 - `industries.json`: `{ source: {…}, industries: [{ id: "44-45", name: "Retail trade", plain: "Stores and retail" }] }`
   — the 20 NAICS Canada 2022 sectors; `name` verbatim from Statistics Canada, `plain` a short everyday label.
 - Raw reference sources are saved as `data/sources/ref-<name>.<ext>`.
@@ -241,8 +250,13 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
   and `$`); a disallowed URL is not fetched and is reported `ok: false, error: "robots.txt disallows"`.
 - Politeness inside: ≥ 1 s between requests to one host, or the host's `Crawl-delay` seconds if larger;
   `User-Agent: APCO-Software-Tools-research/1.0 (+https://apcosoftwaretools.ca)`; GET only; 20 s timeout.
+- robots.txt answering 4xx = no rules (everything allowed); 5xx or a network error = don't fetch that host this run
+  (`ok: false`, error recorded, `missing: []`).
 - `originMap` (tests only): `{ "https://sample.invalid": "http://127.0.0.1:7403" }` rewrites origins before fetching.
 - `onRaw({ source_id, url, fetched_at, http_status, body })` is awaited after each fetch.
+- A page answering **404 or 410**: `ok: false`, every quote of that source in `missing` (a gone page can't vouch for
+  them). **Any other non-2xx, a network error, or robots.txt refusing/unreachable**: `ok: false`, `error` set,
+  `missing: []`; it says nothing about the page.
 
 ```jsonc
 { "started_at": "ISO", "finished_at": "ISO", "trigger": "node" | "cron" | "manual",
@@ -252,7 +266,7 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
 ```
 `sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes, page_gone } }`
 folds stored runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok`
-and `missing` empty; `missing_quotes` = the missing count of the newest check that actually read the page (`ok`),
+and `missing` empty; `missing_quotes` = the missing count of the newest check that read the page (`ok`) or found it gone (404/410),
 so a timeout, a 5xx or a robots refusal **keeps** the previous count instead of clearing it; `page_gone` = the newest
 check answered HTTP 404 or 410. In `evaluateProgram`, `needs_review` = any source with `missing_quotes > 0` **or**
 `page_gone`; the app's needs-review copy then reads "The page has changed or gone since we checked it. Check the
@@ -307,10 +321,17 @@ date and last live check, what "Unknown" means).
 Copy that must stay true:
 - Everywhere (footer): "Grant Match NL shows what each program's own page says. It never applies for you and can't
   promise you qualify."
-- Unknown reasons: `self_check` "Unknown: check this yourself" · `not_answered` "Unknown: you didn't answer this" ·
-  `band_straddles` "Unknown: your answer is close to the page's limit" · a program fact the pages don't state
+- Unknown reasons: `self_check` "Unknown: check this yourself" · `not_answered` "Unknown: you didn't answer this or weren't sure" ·
+  `band_straddles` "Unknown: your answer is close to the page's limit" · `unclear` "Unknown: the page's
+  wording doesn't settle it for your answer" · a program fact the pages don't state
   "Unknown: the page doesn't say".
 - Stale: "Last verified <date>, more than 60 days ago. Check the official page." · needs review: "The page has
   changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
+- Fit `why` lines are shown as core writes them. On the program page, when a profile is given the stale / needs-review
+  sentences come from `fit.why`, so the separate verification flag shows only when there is no profile (no double
+  wording). Results cards show the short flag.
+- About page: a "Programs we left out, and why" section (static): BDC loans and Futurpreneur (their terms forbid
+  copying or storing their pages), Ulnooweg Development Group (no terms published, "All rights reserved"), each with
+  a link to the terms page and "Grant Match only uses pages it is allowed to quote."

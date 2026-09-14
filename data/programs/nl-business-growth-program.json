@@ -1,0 +1,153 @@
+{
+  "slug": "nl-business-growth-program",
+  "sample": false,
+  "name": "Business Growth Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/business-growth-program/",
+  "summary": {
+    "quote": "The Business Growth Program provides non-repayable contributions for projects or initiatives to assist businesses start, innovate, scale and improve sales locally, nationally or internationally.",
+    "source": "nl-business-growth-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-business-growth-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/business-growth-program/",
+      "title": "Business Growth Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:39:26.493Z",
+      "http_status": 200,
+      "sha256": "df56c23aada90dd86450e36a0f86e29d677ecc7c51fa1b8ce69707e8218661a3",
+      "text_sha256": "83a2e54fe7cabf96ddb05298b074695cf8436462472df3b847fcb1696141d037",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The Business Growth Program provides non-repayable contributions for projects or initiatives",
+      "source": "nl-business-growth-program--main"
+    }
+  ],
+  "intake": { "status": "unknown", "quote": null, "source": null, "deadline": null },
+  "max_amount": {
+    "amount": 200000,
+    "text": "Normally up to $200,000 over 24 months ($100,000 per year) per project, per company",
+    "quote": "The Business Growth Program normally provides non-repayable contributions up to 50 per cent of eligible costs to a maximum of $200,000 over 24 months ($100,000 per year) per project, per company.",
+    "source": "nl-business-growth-program--main"
+  },
+  "cost_share": {
+    "percent": 50,
+    "text": "Normally up to 50% of eligible costs",
+    "quote": "The Business Growth Program normally provides non-repayable contributions up to 50 per cent of eligible costs to a maximum of $200,000 over 24 months ($100,000 per year) per project, per company.",
+    "source": "nl-business-growth-program--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business operates in Newfoundland and Labrador",
+      "rule": { "kind": "location", "province": "NL" },
+      "quote": "sole proprietors, partnerships or corporations operating within Newfoundland and Labrador",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "structure",
+      "text": "A sole proprietor, partnership, corporation, co-operative or non-profit organization",
+      "rule": { "kind": "structure", "in": ["sole_proprietor", "partnership", "corporation", "cooperative", "nonprofit"] },
+      "quote": "Growth-focused, innovative firms including sole proprietors, partnerships or corporations operating within Newfoundland and Labrador that demonstrate commercial viability; or Co-operatives or non-profit organizations operating within Newfoundland and Labrador",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "commercial-viability",
+      "text": "A growth-focused, innovative business that shows commercial viability (co-operatives and non-profits: able to earn commercial revenue, or pursuing international trade or economic development)",
+      "rule": { "kind": "self_check" },
+      "quote": "Growth-focused, innovative firms including sole proprietors, partnerships or corporations operating within Newfoundland and Labrador that demonstrate commercial viability; or Co-operatives or non-profit organizations operating within Newfoundland and Labrador that demonstrate an ability to generate commercial revenue or are pursuing international trade or economic development opportunities.",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "priorities",
+      "text": "The project fits one of the program's priorities: development and commercialization, productivity improvement and innovation, knowledge and technical assistance, or growth and internationalization",
+      "rule": { "kind": "self_check" },
+      "quote": "Investments under the Business Growth Program will be aligned with the following priorities (fact sheet): Development and Commercialization Productivity Improvement and Innovation Knowledge and Technical Assistance Growth and Internationalization",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "capacity",
+      "text": "Able to do the work in the project proposal",
+      "rule": { "kind": "self_check" },
+      "quote": "The ability to undertake the work identiﬁed in the project proposal;",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "capital",
+      "text": "Able to get the money needed to complete the project",
+      "rule": { "kind": "self_check" },
+      "quote": "The ability to access the ﬁnancial capital required to complete the project;",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with the Government of Newfoundland and Labrador",
+      "rule": { "kind": "self_check" },
+      "quote": "Good standing with the Government of Newfoundland and Labrador.",
+      "source": "nl-business-growth-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Economic development (email)",
+      "phone": null,
+      "email": "economicdevelopment@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "For more information please contact economicdevelopment@gov.nl.ca",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "label": "Central regional office",
+      "phone": "709.256.1480",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Central: 709.256.1480",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "label": "Western regional office",
+      "phone": "709.637.2628",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Western: 709.637.2628",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "label": "Eastern regional office",
+      "phone": "709.466.4170",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Eastern: 709.466.4170",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "label": "Avalon regional office",
+      "phone": "1 833 404 2283",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Avalon: 1 833 404 2283",
+      "source": "nl-business-growth-program--main"
+    },
+    {
+      "label": "Labrador regional office",
+      "phone": "709.896.2400",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Labrador: 709.896.2400",
+      "source": "nl-business-growth-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Intake: the page never says when applications are taken (no deadline, no 'ongoing'), so unknown. Amount: $200,000 is the normal maximum; the page also says Development and Commercialization projects 'may be considered to a higher maximum normally up to $750,000 over multiple years' (left in notes, not max_amount). Structure: the page lists sole proprietors, partnerships, corporations, co-operatives and non-profit organizations, so 'Not registered yet' is missed; reviewers, check that reading. Co-operatives and non-profits have an extra condition (commercial revenue, or trade/economic development), kept as a check-this-yourself item with the commercial-viability condition. Priorities don't map mechanically to our purposes, so no purpose rule. Regional office phones are on this page, but the page doesn't say which census divisions each office serves, so census_divisions is null. The fact sheet, application forms and applicant guides are PDFs and were not read; anything only in them is Unknown. The page text writes 'identiﬁed' and 'ﬁnancial' with the ﬁ ligature character, and the quotes keep it."
+  }
+}

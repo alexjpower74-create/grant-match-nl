@@ -1,0 +1,108 @@
+{
+  "slug": "nl-jobsnl-wage-subsidy",
+  "sample": false,
+  "name": "JobsNL Wage Subsidy",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/empservices/jobsnl/",
+  "summary": {
+    "quote": "The JobsNL Wage Subsidy program helps connect employers with employees by providing funding to create long-term or seasonal/short-term jobs.",
+    "source": "nl-jobsnl-wage-subsidy--main"
+  },
+  "sources": [
+    {
+      "id": "nl-jobsnl-wage-subsidy--main",
+      "url": "https://www.gov.nl.ca/jgrd/empservices/jobsnl/",
+      "title": "JobsNL Wage Subsidy - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:39:32.247Z",
+      "http_status": 200,
+      "sha256": "9dcefb34820262c9616bb3a7c7c5cd4a16beaeef83edcafdb0ca38631f489952",
+      "text_sha256": "ce99fd07bdf118fab58e8affa9a2f0e90d62cea741bb880610b7eb894ce1bdcb",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "wage_subsidy",
+      "applies_to": null,
+      "quote": "JobsNL-42: Provides a wage subsidy for 28 weeks within a 42-week employment period.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    }
+  ],
+  "intake": { "status": "unknown", "quote": null, "source": null, "deadline": null },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 80,
+    "text": "60% to 80% of wages depending on the option and period, up to $12 an hour",
+    "quote": "First 14 weeks: 60% subsidy, up to $12/hour. Second 14 weeks: No subsidy. Third 14 weeks: 80% subsidy, up to $12/hour.",
+    "source": "nl-jobsnl-wage-subsidy--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The employer has an office in Newfoundland and Labrador",
+      "rule": { "kind": "location", "province": "NL" },
+      "quote": "Must have an office in Newfoundland and Labrador.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "structure",
+      "text": "A private or not-for-profit employer that is incorporated or a sole proprietorship",
+      "rule": { "kind": "structure", "in": ["sole_proprietor", "corporation", "cooperative", "nonprofit"] },
+      "quote": "Private or not-for-profit sector employers that are incorporated or sole proprietorships.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money helps create a new position",
+      "rule": { "kind": "purpose", "any": ["hire"] },
+      "quote": "It offsets salary costs to help create new positions, especially for individuals who lack work experience and skills.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "cra-good-standing",
+      "text": "Has a CRA business number and is in good standing with the Registry of Companies and Deeds",
+      "rule": { "kind": "self_check" },
+      "quote": "Must have a CRA business number and be in good standing with the Registry of Companies and Deeds.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "participant",
+      "text": "The person hired is unemployed or underemployed (and meets the page's other rules for participants)",
+      "rule": { "kind": "self_check" },
+      "quote": "Must be unemployed or underemployed (working less than 20 hours per week or in a field unrelated to their training).",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "not-hired-yet",
+      "text": "The person isn't hired before you apply",
+      "rule": { "kind": "self_check" },
+      "quote": "Individuals hired before the application date are not eligible.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    },
+    {
+      "id": "additional-criteria",
+      "text": "Other criteria may apply",
+      "rule": { "kind": "self_check" },
+      "quote": "Additional criteria may apply.",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Employment programs",
+      "phone": "1-800-563-6600",
+      "email": "EmploymentPrograms@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "Need more Information? Email: EmploymentPrograms@gov.nl.ca Call: 1-800-563-6600",
+      "source": "nl-jobsnl-wage-subsidy--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Intake: the page never says when applications are taken, so unknown. The subsidy is per hour ('up to $12/hour') with no total maximum on the page, so max_amount is null; cost_share uses the highest rate on the page (80%, the third 14 weeks of JobsNL-42; JobsNL-28 is 60%) and the text says so. Structure: 'Private or not-for-profit sector employers that are incorporated or sole proprietorships' gives corporation and sole_proprietor, plus co-operatives and non-profits because those are incorporated bodies. Reviewers, check that: an unincorporated non-profit would wrongly show as met. 'Partnership' and 'Not registered yet' are missed. Purpose 'hire' comes from 'help create new positions'. The page also excludes government departments, crown agencies, municipalities and political parties; that doesn't map to our profile and wasn't added. The participant rules (live in NL, citizen or permanent resident, not receiving pensions or other benefits, and more) are summarised in one check-this-yourself item quoting the unemployed/underemployed rule. The Program Guidelines are linked from the page but were not fetched (PDF). The LaMPSS password help line (1-844-252-6777) is technical support, not a program contact, so it's left out."
+  }
+}

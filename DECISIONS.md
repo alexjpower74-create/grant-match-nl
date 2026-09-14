@@ -99,3 +99,51 @@ count to 0, silently clearing "the page has changed"; and a page that now answer
 program "needs review" (so it can't show Looks like a fit). Lead's own negative control on the build gate at 1d0fc50:
 one character changed in a SAMPLE criterion quote → `build-data --check` exit 1 naming the file, path and where the
 quote stops matching; restored → exit 0.
+
+## 17. Answers to gm1's contract questions (03:25)
+Accepted as built: verifyProgram takes page texts or `{ text, sha256, text_sha256 }` from the caller (core has no file
+system); bundle reference lists are whole files; `counts.unknown` includes "check this yourself" items; community
+`type` is `subdivision`/`other` (the 2021 population table has no type column, and the file that does is too big to
+keep as evidence); interval shape; St. John's dates (a deadline passes the day after its date); the stricter schema
+(unknown keys are errors, source status must be 200, no deadline on continuous/unknown intake); profile edge cases.
+Changed: a live check of a page answering 404/410 lists every quote missing and marks the page gone; any other
+non-2xx or network failure says nothing about the page and changes no flags (API §9). gm1 wanted every non-200 to
+count as missing, which would flag programs for review on a passing server error. `.gitignore` gains gm1's two
+scratch folders.
+
+## 18. Lead review of the first three NL programs (03:35)
+Business Growth Program, Business Investment Program, JobsNL Wage Subsidy, read against their saved pages.
+- **Intake unknown stays unknown**, and so none of the three can show Looks like a fit. None of the pages says when
+  applications are taken; "Looks like a fit" should mean the page says you can apply. The card still shows the
+  program as Might fit with "The page doesn't say whether it is taking applications."
+- **New `unclear` list on structure and industry rules** (API §4–5): JobsNL's "incorporated or sole proprietorships"
+  can't settle a co-op or non-profit, and Business Growth's list can't settle "Not registered yet" for a program that
+  helps businesses "start". Those answers are Unknown with their own reason instead of a guessed met or missed.
+- Agreed as researched: regional office phones with no census divisions (the page doesn't name them, nothing
+  inferred); "less than $10 million in sales" read as yearly revenue; JobsNL's 60–80% shown as text with 80 as the
+  top rate; the $750,000 Development and Commercialization ceiling left in notes, since "normally up to $200,000"
+  is the program's stated maximum. Business Investment may quote the Business Growth page for the department's
+  regional office phones (same department, official page).
+
+## 19. gm2's second round: copy, terms, closed programs (03:45)
+- Core/copy (gm2 Q9–16): Q9–10 already fixed by gm1 (page_gone, "changed or gone"). Q11 the program page shows fit
+  `why` lines as core writes them and shows the separate stale/review flag only when there is no profile. Q12 core's
+  "Unknown, …" becomes "Unknown: …" (gm1). Q13 the not-answered copy reads "you didn't answer this or weren't sure".
+  Q14 `counts.unknown` includes check-it-yourself items (pinned in §6). Q15 robots.txt 4xx = no rules, 5xx = skip
+  the host (pinned in §9). Q16 no change.
+- **Not used, by their terms:** BDC ("You must get our authorization in writing before using any content from our
+  website for: … Copy … Storage"), Futurpreneur ("You may not: … Copy, modify, distribute … Use any automated system
+  or software to extract data"), Ulnooweg Development Group (no terms page at all, "All rights reserved" footer, so no
+  licence to copy). The About page lists them with the reason. This costs the youth (Futurpreneur) and Indigenous
+  (Ulnooweg) programs; asking them for permission is on Alexander's list.
+- **Closed right now, included as closed with the quote:** CanExport SMEs ("Applications are not being accepted at
+  this time"), Canada Summer Jobs 2026 ("The application period was from November 4, 2025, to December 11, 2025").
+  The weekly live check flags the page when either changes.
+- **CDAP:** closed, quoting the Government of Canada Question Period note on search.open.canada.ca (Open Government
+  Licence) that the Boost Your Business Technology grant "is not accepting new applications", with ISED's privacy
+  assessment (four-year life to 2024-25) as a second source, and the ISED site's redirect to its home page in the
+  research notes. BDC's page can't be the source (terms above).
+- **DECISIONS #12 sharpened:** canada.ca, nrc.canada.ca and ised-isde.canada.ca allow non-commercial reproduction with
+  attribution; "commercial redistribution" needs written permission. Tonight's use is private research. Before a public
+  deploy on a commercial site Alexander decides: quote as review/research, ask the publishers, or prefer Open
+  Government Licence pages where they exist.

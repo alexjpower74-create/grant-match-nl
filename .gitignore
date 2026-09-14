@@ -7,3 +7,5 @@ test-results/
 playwright-report/
 .rig/report-*.md
 data/scans/
+scripts/.state/
+core/tests/.tmp/

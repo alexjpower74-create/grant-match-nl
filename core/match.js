@@ -261,10 +261,8 @@ export function evaluateProgram(program, profile, { now, sourceStatus = {} } = {
     const st = sourceStatus[s.id];
     const verified = st?.last_verified_at ?? s.fetched_at;
     if (oldest === null || new Date(verified) < new Date(oldest)) oldest = verified;
-    if (st && st.missing_quotes > 0) {
-      needsReview = true;
-      missingQuotes += st.missing_quotes;
-    }
+    if (st && (st.missing_quotes > 0 || st.page_gone)) needsReview = true;
+    if (st && st.missing_quotes > 0) missingQuotes += st.missing_quotes;
     if (st?.last_checked_at && (lastChecked === null || new Date(st.last_checked_at) > new Date(lastChecked))) {
       lastChecked = st.last_checked_at;
     }
@@ -365,7 +363,7 @@ function fitFor({ criteria, intake, verification }) {
       : 'The page doesn\'t say whether it is taking applications.');
   }
   if (verification.stale) why.push(`Last verified ${verification.age_days} days ago, more than ${STALE_DAYS} days. Check the official page.`);
-  if (verification.needs_review) why.push('The page has changed since we checked it. Check the official page.');
+  if (verification.needs_review) why.push('The page has changed or gone since we checked it. Check the official page.');
 
   if (allMet && beyondLocation && intakeOk && !verification.stale && !verification.needs_review) {
     const looks = ['Everything your answers can check matches the page.'];
