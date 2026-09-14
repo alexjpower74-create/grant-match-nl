@@ -1,0 +1,106 @@
+{
+  "slug": "ca-canada-small-business-financing-program",
+  "sample": false,
+  "name": "Canada Small Business Financing Program (CSBFP)",
+  "provider": "Innovation, Science and Economic Development Canada",
+  "level": "federal",
+  "url": "https://ised-isde.canada.ca/site/canada-small-business-financing-program/en",
+  "summary": {
+    "quote": "The Canada Small Business Financing Program (CSBFP) makes it easier for small businesses to get loans from financial institutions by sharing the risk with lenders.",
+    "source": "ca-canada-small-business-financing-program--loans"
+  },
+  "sources": [
+    {
+      "id": "ca-canada-small-business-financing-program--loans",
+      "url": "https://ised-isde.canada.ca/site/canada-small-business-financing-program/en/canada-small-business-financing-program/find-loan-your-small-business/helping-small-businesses-get-loans",
+      "title": "Helping small businesses get loans - Canada Small Business Financing Program",
+      "publisher": "Innovation, Science and Economic Development Canada",
+      "fetched_at": "2026-09-14T06:08:54.919Z",
+      "http_status": 200,
+      "sha256": "449ff58e31858c101ef5d5b0c401cfc9b09779b4ed18d0597d65eed3165c2fc1",
+      "text_sha256": "ff7077374604a95bc5c7f0402423942b628f512c6d3c813fd36bff19e8be9250",
+      "robots": "allowed",
+      "terms_note": "ISED content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission from ISED.",
+      "terms_url": "https://ised-isde.canada.ca/site/ised/en/terms-and-conditions"
+    },
+    {
+      "id": "ca-canada-small-business-financing-program--faq",
+      "url": "https://ised-isde.canada.ca/site/canada-small-business-financing-program/en/frequently-asked-questions-small-businesses",
+      "title": "Frequently asked questions—For small businesses - Canada Small Business Financing Program",
+      "publisher": "Innovation, Science and Economic Development Canada",
+      "fetched_at": "2026-09-14T06:08:57.322Z",
+      "http_status": 200,
+      "sha256": "dec0f2317083950d72f6167cb52b1dab2137f36c104e99e83eab736dd0b99d59",
+      "text_sha256": "68c388a157d23aaa9bc8b4e6e6368a2616c83ae88a30a2ec6252ca547b604ac5",
+      "robots": "allowed",
+      "terms_note": "ISED content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission from ISED.",
+      "terms_url": "https://ised-isde.canada.ca/site/ised/en/terms-and-conditions"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": "Term loans and lines of credit from a bank, caisse populaire or credit union",
+      "quote": "makes it easier for small businesses to get loans from financial institutions by sharing the risk with lenders",
+      "source": "ca-canada-small-business-financing-program--loans"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 1150000,
+    "text": "Up to $1.15 million per borrower (up to $1,000,000 in term loans and $150,000 in lines of credit)",
+    "quote": "The maximum loan amount for a borrower is $1.15 million.",
+    "source": "ca-canada-small-business-financing-program--loans"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business operates in Canada",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Small businesses or start-ups operating in Canada, with gross annual revenues of $10 million or less.",
+      "source": "ca-canada-small-business-financing-program--loans"
+    },
+    {
+      "id": "revenue",
+      "text": "Gross yearly revenue of $10 million or less",
+      "rule": {
+        "kind": "revenue",
+        "lte": 10000000
+      },
+      "quote": "Small businesses or start-ups operating in Canada, with gross annual revenues of $10 million or less.",
+      "source": "ca-canada-small-business-financing-program--loans"
+    },
+    {
+      "id": "not-farming",
+      "text": "Not a farming business",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Not eligible under this program: farming businesses",
+      "source": "ca-canada-small-business-financing-program--loans"
+    },
+    {
+      "id": "lender-approval",
+      "text": "A bank, caisse populaire or credit union approves the loan",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Financial institutions deliver the program and are solely responsible for approving the loan.",
+      "source": "ca-canada-small-business-financing-program--loans"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm2",
+    "notes": "Type loan: the program shares risk on loans from financial institutions, which deliver it and approve the loan. Intake: no page says when to apply (you apply to a lender), so unknown rather than a guessed \"any time\". Structure: the FAQ says eligible \"for-profit, not-for-profit and charitable small businesses\" \"can be corporations, sole proprietors, partnerships or cooperatives\", and \"start-ups\" are eligible too, so no structure answer is ruled out and there is no structure rule (\"Not registered yet\" would be unclear, which core does not support yet). Farming: \"farming businesses\" is narrower than NAICS sector 11 (which also covers forestry, fishing and hunting), so it is a check-yourself item, not an industry rule. Maximum: $1.15 million per borrower; the $500,000 and $150,000 sub-limits for equipment, leaseholds, intangibles and working capital are in the amount text or left here. No program phone: lenders are the contact."
+  }
+}

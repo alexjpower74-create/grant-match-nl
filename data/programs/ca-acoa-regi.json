@@ -1,0 +1,117 @@
+{
+  "slug": "ca-acoa-regi",
+  "sample": false,
+  "name": "Regional Economic Growth through Innovation: Business Scale-up and Productivity",
+  "provider": "Atlantic Canada Opportunities Agency",
+  "level": "federal",
+  "url": "https://www.canada.ca/en/atlantic-canada-opportunities/services/regional-economic-growth-through-innovation.html",
+  "summary": {
+    "quote": "We help businesses speed up their growth so they can be more productive, compete on the world stage and reach new markets.",
+    "source": "ca-acoa-regi--main"
+  },
+  "sources": [
+    {
+      "id": "ca-acoa-regi--main",
+      "url": "https://www.canada.ca/en/atlantic-canada-opportunities/services/regional-economic-growth-through-innovation.html",
+      "title": "Regional Economic Growth through Innovation - Canada.ca",
+      "publisher": "Atlantic Canada Opportunities Agency",
+      "fetched_at": "2026-09-14T06:08:03.162Z",
+      "http_status": 200,
+      "sha256": "33ba320dae3d5e7c80f2035fa52b2542aeca35fb10b1449a3c00e2d48783318e",
+      "text_sha256": "73752af93ebfe70c40be97d7fbbe4564a230b5c1eb03cd614a6683dfb89d4f3e",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    },
+    {
+      "id": "ca-acoa-regi--contacts",
+      "url": "https://www.canada.ca/en/atlantic-canada-opportunities/corporate/contact-us.html",
+      "title": "Contact us - Canada.ca",
+      "publisher": "Atlantic Canada Opportunities Agency",
+      "fetched_at": "2026-09-14T06:08:08.424Z",
+      "http_status": 200,
+      "sha256": "a3fbb6f065e9c831f2fef6e9fa67dbbd2e9f66ae59f6f1d25c62debcf5458f4c",
+      "text_sha256": "2772baa8a1a1953369f1e2a59b3074e954e3d7e95b53abb34256138408b662f3",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "repayable",
+      "applies_to": "Business Scale-up and Productivity",
+      "quote": "Our repayment contributions are unsecured and interest-free.",
+      "source": "ca-acoa-regi--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Atlantic Canada",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "creates the right conditions to start and grow businesses in Atlantic Canada",
+      "source": "ca-acoa-regi--main"
+    },
+    {
+      "id": "use-of-funds",
+      "text": "The money is to scale up and expand, use new technologies, improve productivity, or create new products and find new markets",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "You can use this funding to: scale up and expand make the most of new technologies improve productivity create new products and find new markets",
+      "source": "ca-acoa-regi--main"
+    },
+    {
+      "id": "repayment",
+      "text": "You agree to repay on the schedule in your agreement",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Your agreement will explain all the details including the schedule and conditions for repayment.",
+      "source": "ca-acoa-regi--main"
+    },
+    {
+      "id": "talk-first",
+      "text": "Talk to your nearest ACOA office about the project before you apply",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Contact your nearest ACOA office to discuss your project and then complete and submit the Application for financial assistance.",
+      "source": "ca-acoa-regi--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "ACOA Business Information Services",
+      "phone": "1-888-576-4444",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Call 1-888-576-4444.",
+      "source": "ca-acoa-regi--main"
+    },
+    {
+      "label": "ACOA Newfoundland and Labrador",
+      "phone": "1-800-668-1010",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Newfoundland and Labrador: 1-800-668-1010",
+      "source": "ca-acoa-regi--contacts"
+    }
+  ],
+  "research": {
+    "by": "gm2",
+    "notes": "Only the Business Scale-up and Productivity stream is recorded; the Regional Innovation Ecosystems stream gives non-repayable contributions to non-profits such as accelerators and post-secondary institutions, not to a business for itself. Structure: the business option funds \"sole proprietorships partnerships social enterprises incorporated companies corporations or co-operatives Indigenous-owned businesses all other types of enterprises\", and \"It also funds non-profit organizations that offer services to businesses\", so no structure answer is excluded and there is no structure rule. Location: the page says the program \"creates the right conditions to start and grow businesses in Atlantic Canada\", so every NL community meets it. Intake, amount and cost share are not on the page. The page says Indigenous youth, women and community-owned Indigenous businesses \"could get extra support\"; that is not an eligibility rule and is not modelled. Purposes are listed as a check-yourself item because \"scale up and expand\" and \"find new markets\" do not map mechanically to one purpose."
+  }
+}

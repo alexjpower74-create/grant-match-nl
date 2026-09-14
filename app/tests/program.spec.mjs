@@ -1,10 +1,11 @@
 import { test, expect } from '@playwright/test'
-import { bundle, PROFILES, qs, coreMatch, coreProgram, quotesOf } from './helpers.mjs'
+import { bundle, PROFILES, STALE_NOW, qs, coreMatch, coreProgram, quotesOf } from './helpers.mjs'
 
 const REASON_COPY = {
   self_check: 'Unknown: check this yourself',
-  not_answered: "Unknown: you didn't answer this",
+  not_answered: "Unknown: you didn't answer this or weren't sure",
   band_straddles: "Unknown: your answer is close to the page's limit",
+  unclear: "Unknown: the page's wording doesn't settle it for your answer",
 }
 
 test('each rendered <mark> equals its API quote exactly and sits inside its context', async ({ page }) => {
@@ -34,9 +35,15 @@ test('each rendered <mark> equals its API quote exactly and sits inside its cont
   }
 })
 
-test('Unknown reason copy per reason', async ({ page }) => {
+test('Unknown reason copy per reason', async ({ page }, testInfo) => {
   const seen = new Set()
-  for (const profile of [PROFILES.auto, PROFILES.daycare, PROFILES.autoUnanswered, PROFILES.autoStraddle]) {
+  // The straddle and unanswered profiles, plus answers a set rule's `unclear` list would name (API §4).
+  const unclearTries = ['cooperative', 'nonprofit', 'not_registered'].map((v) => {
+    const q = new URLSearchParams(PROFILES.auto)
+    q.set('structure', v)
+    return q.toString()
+  })
+  for (const profile of [PROFILES.auto, PROFILES.daycare, PROFILES.autoUnanswered, PROFILES.autoStraddle, ...unclearTries]) {
     const want = coreMatch(profile)
     for (const r of [...want.open, ...want.closed]) {
       const unknown = r.criteria.filter((c) => c.status === 'unknown' && !seen.has(c.unknown_reason))
@@ -49,7 +56,17 @@ test('Unknown reason copy per reason', async ({ page }) => {
       }
     }
   }
-  expect([...seen].sort()).toEqual(Object.keys(REASON_COPY).sort())
+  // Every reason core produces today is rendered with its copy.
+  for (const r of ['self_check', 'not_answered', 'band_straddles']) expect(seen.has(r), `${r} was rendered`).toBe(true)
+  // `unclear` (API §4–5): checked on a rendered page as soon as core and the SAMPLE set produce it. Until then the
+  // copy itself is checked, and the gap is visible in the report.
+  if (!seen.has('unclear')) {
+    testInfo.annotations.push({ type: 'gap', description: 'core/SAMPLE data do not produce unknown_reason "unclear" yet' })
+    const { UNKNOWN_REASON } = await import('../render.js')
+    expect(UNKNOWN_REASON.unclear).toBe(REASON_COPY.unclear)
+    await page.goto('/about.html?mock=1')
+    await expect(page.getByText(REASON_COPY.unclear, { exact: true })).toBeVisible()
+  }
 
   // A program fact the pages don't state.
   const silent = bundle.programs.map((p) => coreProgram(p.slug, PROFILES.auto)).find((r) => r.unknown_facts.length)
@@ -96,4 +113,23 @@ test('criteria sit in the three groups the way core evaluated them', async ({ pa
     expect(shown, group).toEqual(ids)
   }
   await expect(page.locator('#fit-why li')).toHaveCount(r.fit.why.length)
+})
+
+test('with a profile the stale wording comes from fit.why only; with no profile the flag shows', async ({ page }) => {
+  const slug = coreMatch(PROFILES.auto, STALE_NOW).open[0].slug
+  const want = coreProgram(slug, PROFILES.auto, STALE_NOW)
+  expect(want.verification.stale).toBe(true)
+  const staleWhy = want.fit.why.filter((w) => /Last verified/.test(w))
+  expect(staleWhy.length, 'core writes a stale why line').toBeGreaterThan(0)
+
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug, now: STALE_NOW })}`)
+  await expect(page.locator('h1')).toHaveText(want.name)
+  await expect(page.locator('#fit-why li')).toHaveText(want.fit.why)
+  await expect(page.locator('[data-flag]')).toHaveCount(0)
+
+  await page.goto(`/program.html?slug=${slug}&mock=1&now=${encodeURIComponent(STALE_NOW)}`)
+  await expect(page.locator('h1')).toHaveText(want.name)
+  await expect(page.locator('#fit-why')).toHaveCount(0)
+  await expect(page.locator('[data-flag="stale"]')).toHaveCount(1)
+  await expect(page.locator('[data-flag="stale"]')).toContainText('more than 60 days ago. Check the official page.')
 })

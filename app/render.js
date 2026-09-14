@@ -5,8 +5,9 @@ export const FOOTER_LINE =
 
 export const UNKNOWN_REASON = {
   self_check: 'Unknown: check this yourself',
-  not_answered: "Unknown: you didn't answer this",
+  not_answered: "Unknown: you didn't answer this or weren't sure",
   band_straddles: "Unknown: your answer is close to the page's limit",
+  unclear: "Unknown: the page's wording doesn't settle it for your answer",
   page_silent: "Unknown: the page doesn't say",
 }
 

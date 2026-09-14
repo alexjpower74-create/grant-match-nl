@@ -1,0 +1,151 @@
+{
+  "slug": "ca-canexport-smes",
+  "sample": false,
+  "name": "CanExport SMEs",
+  "provider": "Trade Commissioner Service, Global Affairs Canada",
+  "level": "federal",
+  "url": "https://www.tradecommissioner.gc.ca/en/our-solutions/funding-financing-international-business/canexport-smes.html",
+  "summary": {
+    "quote": "The CanExport SMEs (small and medium-sized enterprises) program offers competitive funding to help eligible Canadian small and medium-sized enterprises expand into new international markets.",
+    "source": "ca-canexport-smes--main"
+  },
+  "sources": [
+    {
+      "id": "ca-canexport-smes--main",
+      "url": "https://www.tradecommissioner.gc.ca/en/our-solutions/funding-financing-international-business/canexport-smes.html",
+      "title": "CanExport SMEs - Tradecommissioner.gc.ca",
+      "publisher": "Trade Commissioner Service, Global Affairs Canada",
+      "fetched_at": "2026-09-14T06:08:38.209Z",
+      "http_status": 200,
+      "sha256": "6a4162c53e0828e4c76c29e2f9ae363c44ba63e6b7f3bddca62bf16f3296b501",
+      "text_sha256": "a8481624d6e58d37f73da5bc68d272430a522930641b120bf94b5d551df5e87b",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    },
+    {
+      "id": "ca-canexport-smes--guide",
+      "url": "https://www.tradecommissioner.gc.ca/en/our-solutions/funding-financing-international-business/canexport-smes/applicants-guide-2026-27.html",
+      "title": "CanExport SMEs 2026-2027: complete applicant’s guide - Tradecommissioner.gc.ca",
+      "publisher": "Trade Commissioner Service, Global Affairs Canada",
+      "fetched_at": "2026-09-14T06:08:44.949Z",
+      "http_status": 200,
+      "sha256": "d002a762a32a7591a282a516f243c448e4c2852a4c26a90947d1bc120251aede",
+      "text_sha256": "cf81173e082f26b4730a4153ff1ff6d4f284443c13d81715b950df5a05902d40",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    }
+  ],
+  "funding_types": [],
+  "intake": {
+    "status": "closed",
+    "quote": "Applications are not being accepted at this time The application intake period ended at 12:00 p.m. (ET) on August 31, 2026.",
+    "source": "ca-canexport-smes--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 50000,
+    "text": "Up to $50,000 per project",
+    "quote": "Successful projects may receive up to $50,000 in funding for international business development activities.",
+    "source": "ca-canexport-smes--main"
+  },
+  "cost_share": {
+    "percent": 50,
+    "text": "Up to 50% of eligible costs; total project value $20,000 to $100,000",
+    "quote": "Because the program funds up to 50% of eligible costs, the total project value must fall between $20,000 and $100,000 CAD.",
+    "source": "ca-canexport-smes--guide"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is established in Canada",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "To be eligible, your small or medium-sized enterprise must: be established in Canada be for-profit",
+      "source": "ca-canexport-smes--guide"
+    },
+    {
+      "id": "structure",
+      "text": "A for-profit incorporated company, limited liability partnership (LLP) or co-operative (not a sole proprietorship or non-profit)",
+      "rule": {
+        "kind": "structure",
+        "not_in": [
+          "sole_proprietor",
+          "nonprofit",
+          "not_registered"
+        ]
+      },
+      "quote": "be for-profit be an incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada",
+      "source": "ca-canexport-smes--guide"
+    },
+    {
+      "id": "llp-only",
+      "text": "If the business is a partnership, it must be a limited liability partnership (LLP)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "be for-profit be an incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada",
+      "source": "ca-canexport-smes--guide"
+    },
+    {
+      "id": "employees",
+      "text": "Between 3 and 500 full-time employees",
+      "rule": {
+        "kind": "employees",
+        "gte": 3,
+        "lte": 500
+      },
+      "quote": "have between 3 and 500 full-time employees",
+      "source": "ca-canexport-smes--guide"
+    },
+    {
+      "id": "revenue",
+      "text": "Between $300,000 and $100 million in yearly revenue declared in Canada",
+      "rule": {
+        "kind": "revenue",
+        "gte": 300000,
+        "lte": 100000000
+      },
+      "quote": "have between $300,000 and $100 million in annual revenue declared in Canada during its last complete tax reporting year",
+      "source": "ca-canexport-smes--guide"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for international business development (export or new markets)",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "export"
+        ]
+      },
+      "quote": "Successful projects may receive up to $50,000 in funding for international business development activities.",
+      "source": "ca-canexport-smes--main"
+    },
+    {
+      "id": "cra-business-number",
+      "text": "Has an active CRA business number",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "have an active Canada Revenue Agency (CRA) business number",
+      "source": "ca-canexport-smes--guide"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CanExport SMEs general questions",
+      "phone": null,
+      "email": "canexportsmes@international.gc.ca",
+      "census_divisions": null,
+      "quote": "For general program questions: Please contact canexportsmes@international.gc.ca.",
+      "source": "ca-canexport-smes--guide"
+    }
+  ],
+  "research": {
+    "by": "gm2",
+    "notes": "Closed right now: the program page says \"Applications are not being accepted at this time\" and that the intake ended August 31, 2026 (DECISIONS #19); the weekly live check flags the page when it changes. Rules are from the 2026-27 applicant's guide, section 1.1 (3 to 500 full-time employees, $300,000 to $100 million revenue: the 2026-27 minimums the brief asked to check). Structure: the guide accepts \"an incorporated legal entity, limited liability partnership (LLP), or cooperative\" and lists sole proprietorships and limited partnerships as ineligible; a non-profit is not for-profit. The profile has one \"Partnership\" answer covering general, limited and LLP, so partnership is not excluded by the rule and the LLP condition is a check-yourself item (this should become `unclear: [partnership]` once core supports it). Type: the page and guide say \"funding\" and the guide has a \"Grants vs. contributions\" section whose wording I did not settle, so funding_types is empty (Unknown). Page text note: the guide's HTML carries a JSON copy of each text block, so pageText has most sentences twice, once with literal \\r\\n and &nbsp;. Quotes here are chosen from sentences whose first occurrence is the clean copy, so their context reads normally. Contacts are email only; no phone is on either page."
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "slug": "ca-nrc-irap",
+  "sample": false,
+  "name": "NRC Industrial Research Assistance Program (NRC IRAP)",
+  "provider": "National Research Council Canada",
+  "level": "federal",
+  "url": "https://nrc.canada.ca/en/support-technology-innovation/financial-support-technology-innovation",
+  "summary": {
+    "quote": "NRC IRAP provides funding to support the research and development of innovative, technology-driven products and services, and other innovation activities to help your business grow, create jobs, and compete globally.",
+    "source": "ca-nrc-irap--main"
+  },
+  "sources": [
+    {
+      "id": "ca-nrc-irap--main",
+      "url": "https://nrc.canada.ca/en/support-technology-innovation/financial-support-technology-innovation",
+      "title": "Financial support for technology innovation - National Research Council Canada",
+      "publisher": "National Research Council Canada",
+      "fetched_at": "2026-09-14T06:08:51.974Z",
+      "http_status": 200,
+      "sha256": "77ac8487686679c8313879aee7d3f2a7684d4a0ea17abb128cac186a2f2baf43",
+      "text_sha256": "9c6a67287d6cf5dd2ff1482c4d4948af874ae988568e98c398db439115ca0dc5",
+      "robots": "allowed",
+      "terms_note": "NRC content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://nrc.canada.ca/en/corporate/transparency/terms-conditions"
+    }
+  ],
+  "funding_types": [],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business operates in Canada",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "be incorporated, for-profit, and operating in Canada",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "structure",
+      "text": "An incorporated, for-profit business (not a sole proprietorship, partnership or co-operative)",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "corporation"
+        ]
+      },
+      "quote": "NRC IRAP does not support: unlimited or limited liability corporations (ULCs or LLCs) sole proprietorships or partnerships cooperatives",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "employees",
+      "text": "Up to 500 people (full-time equivalent)",
+      "rule": {
+        "kind": "employees",
+        "lte": 500
+      },
+      "quote": "employ up to 500 people (full-time equivalent)",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for research and development of innovative, technology-driven products or services",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "research"
+        ]
+      },
+      "quote": "NRC IRAP provides funding to support the research and development of innovative, technology-driven products and services",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "technology-driven",
+      "text": "You develop and commercialize innovative, technology-driven products or services",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "develop and commercialize innovative, technology-driven products or services",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "economic-benefits",
+      "text": "Ready to create economic benefits in Canada, such as new jobs or more innovation capacity",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "be ready to create economic benefits in Canada, such as new jobs or increased innovation capacity",
+      "source": "ca-nrc-irap--main"
+    },
+    {
+      "id": "not-ulc-llc",
+      "text": "Not an unlimited or limited liability corporation (ULC or LLC)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "unlimited or limited liability corporations (ULCs or LLCs)",
+      "source": "ca-nrc-irap--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "NRC IRAP contact centre",
+      "phone": "1-877-994-4727",
+      "email": null,
+      "census_divisions": null,
+      "quote": "a senior executive from your business can call 1-877-994-4727",
+      "source": "ca-nrc-irap--main"
+    }
+  ],
+  "research": {
+    "by": "gm2",
+    "notes": "Type: the page says IRAP provides \"funding\" and \"project funding\" but never says whether it is repayable or not, so funding_types is empty (Unknown), as the lead asked. No amount, cost share or intake on the page; funding comes after advice and referrals (\"This relationship typically starts with advice and referrals before any funding is provided\"). Structure: \"be incorporated, for-profit\" plus the explicit exclusion list gives corporation only; a non-profit is not for-profit and a co-op is excluded by name. ULCs and LLCs are corporations the profile cannot tell apart, so they are a check-yourself item. Purpose research: the funding sentence is about research and development of technology-driven products; \"Non-technical or purely commercial activities\" are not funded. Location: \"operating in Canada\", met by every NL community. The phone is on the page and is for \"a senior executive from your business\" once you meet the minimum requirements."
+  }
+}
