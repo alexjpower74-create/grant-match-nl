@@ -1,0 +1,156 @@
+{
+  "slug": "nl-job-accelerator-and-growth-program",
+  "sample": false,
+  "name": "Job Accelerator and Growth Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/job-accelerator-and-growth-program/",
+  "summary": {
+    "quote": "The program will promote economic growth and development by providing a payroll rebate on qualifying incremental job creation.",
+    "source": "nl-job-accelerator-and-growth-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-job-accelerator-and-growth-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/job-accelerator-and-growth-program/",
+      "title": "Job Accelerator and Growth Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:14.434Z",
+      "http_status": 200,
+      "sha256": "1fbd9576072bf8c7dca2445e8b32693e40e8b0a9ad22fedd30028df19c15d071",
+      "text_sha256": "702c15d53e71c59d2cf3f2c65a9ec9fce2695dbcc41ae991845043b0367a1c17",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "This non-repayable contribution will be provided to the company at a standard rate of 10 per cent of the yearly incremental gross salaries.",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 10,
+    "text": "A rebate of 10% of the yearly gross salaries of the new jobs",
+    "quote": "This non-repayable contribution will be provided to the company at a standard rate of 10 per cent of the yearly incremental gross salaries.",
+    "source": "nl-job-accelerator-and-growth-program--main"
+  },
+  "criteria": [
+    {
+      "id": "purpose",
+      "text": "The money is for creating new jobs",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "hire"
+        ]
+      },
+      "quote": "providing a payroll rebate on qualifying incremental job creation",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "sector",
+      "text": "Not wholesale or retail (residential and commercial real estate services and lower-growth services such as call centres are also left out)",
+      "rule": {
+        "kind": "industry",
+        "not_in": [
+          "41",
+          "44-45"
+        ],
+        "unclear": [
+          "53",
+          "56"
+        ]
+      },
+      "quote": "Companies that require an industrial benefits agreement with the Province and those in non-strategic sectors, such as residential and commercial real estate services, wholesale or retail, and lower-growth service operations, such as call centers, will not be eligible.",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "new-jobs",
+      "text": "Create at least 20 new jobs over three years",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Creating a minimum of 20 new jobs over a three-year period;",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "salary",
+      "text": "The new jobs have an average salary of $50,000",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Ensuring that the new jobs have an average salary of $50,000; and",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "commitment",
+      "text": "A long-term commitment to the province through capital or other investment",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Demonstrating a long-term commitment to the province through capital or other investment.",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "established",
+      "text": "An established company with solid management, a record of success and a clear path to growth",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The program aims to attract established companies that are ready to commit to the province long term, have solid management, a record of success, and a clear path to growth.",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "not-lower-growth",
+      "text": "Not a lower-growth service operation or other non-strategic sector",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "those in non-strategic sectors, such as residential and commercial real estate services, wholesale or retail, and lower-growth service operations, such as call centers, will not be eligible",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "benefits-agreement",
+      "text": "Not a company required to sign an industrial benefits agreement with the province (such as energy and mining companies)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Companies required to enter into industrial benefits agreements with the province, such as energy and mining companies, are ineligible for this program.",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    },
+    {
+      "id": "incremental",
+      "text": "The project wouldn't happen without this program",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Eligible projects shall only include those that would not have been undertaken were it not for the funding provided by the JAG Program",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Department of Jobs, Growth and Rural Development",
+      "phone": "1-833-404-2283",
+      "email": "economicdevelopment@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "For more information, please contact the department of Jobs, Growth and Rural Development by email at economicdevelopment@gov.nl.ca or phone 1-833-404-2283",
+      "source": "nl-job-accelerator-and-growth-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Intake: 'Applications will be assessed on a rolling basis' describes how applications are assessed, not that they are accepted any time, so intake is unknown (prefer unknown over guessing continuous). Type: the page calls the payroll rebate a 'non-repayable contribution', so non_repayable (not wage_subsidy). cost_share is the 10% standard rate; the page adds 5% for recent graduates or newcomers with priority skills (not in the percent). No maximum amount. Sector: 'wholesale or retail' gives industry not_in 41 and 44-45; 'residential and commercial real estate services' is only part of sector 53 and 'call centers' only part of 56, so those are unclear; 'lower-growth service operations' is too vague to map, so it is a check-this-yourself item as well. The benefits-agreement exclusion ('such as energy and mining companies') is not a sector rule because not every energy or mining company needs one. No location rule: the page invites companies from outside the province. The 20-job, $50,000-salary and commitment conditions are about the project, not today's business, so they are check-this-yourself. The Program Fact Sheet was not read."
+  }
+}
