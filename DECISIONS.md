@@ -199,3 +199,15 @@ no change (it renders `before` + `<mark>quote</mark>` + `after`).
 - Agreed as researched: the Job Grant's suspension beating its older "Continuous intake" line, Job Accelerator's
   `unclear` on real estate and call centres, the harvester loan's industry mapping, the youth loan's 18–34 as
   check-it-yourself.
+
+## 24. Real content on screen: gm2's round 5 (04:12)
+- gm2 audited all 54 real program pages at 390 with and without a profile: no overflow, no small targets, no errors,
+  every printout one page. Three real-content bugs fixed with tests: a phone number split across lines on the
+  printout, cards saying "The page doesn't say" with no subject, no line for a program with no stated funding type.
+- **R1, the serious one:** a regional office's quote context ran into the next office's phone number, right beside
+  "Call this office". **R2:** CanExport's breadcrumb still sat in front of its closed quote. Both are lists with no
+  sentence boundary. Decision (API §1): core also builds `blockText` (page text with block edges as newlines, provably
+  identical to `pageText` otherwise, so no quote or hash changes) and context stops at block edges too. Contact quotes
+  get no context at all.
+- **R4:** a check-it-yourself item shows its reason copy only, not the identical `why` line (API §12).
+- **R5 (long pages at 390):** left as is; block-bounded context should shorten them a lot. Revisit after the change.
