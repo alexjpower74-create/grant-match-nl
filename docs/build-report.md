@@ -39,6 +39,8 @@ runs in chromium only, and `live.spec.mjs` is run separately with `GM_API` (the 
 | 04:30 | `119c393` data fixes from both cross-reviews, SAMPLE `unclear`/`normally` fixtures, sort tier, self_check copy | `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright | exit 0, 27 real + 10 SAMPLE · 66/0/0 · 15/0/1 · 1/1 · 96 pass / 0 fail / 16 skip. gm1's live dry scan on the same data (CanExport re-hashed in a throwaway copy): 53 sources, 36 unique URLs, 287/287 quotes found |
 | 04:34 | `44a54f0` gm1 `blockText`, block-bounded context, no context on contacts | `build-data --check` · core tests · data diff vs main | exit 0 (27 real, 10 SAMPLE) · 73/0/0 · no program or source file changed |
 | 04:40 | `44d19fc` main (before blockText) | the lead's `final-qa.sh`: `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright · `live.spec.mjs` against a real `wrangler dev --local` on SAMPLE **and on real data** | exit 0, 27 real + 10 SAMPLE · 66/0/0 · 15/0/1 · 1/1 · 96 pass / 0 fail / 16 skip · live SAMPLE 4/4 · **live real 4/4** (Worker health: data_set real, 27 programs) |
+| 04:46 | `952c679` **final** | `final-qa.sh`: build · core · Worker SAMPLE · Worker real · Playwright · live SAMPLE · live real | exit 0, 27 real + 10 SAMPLE · 73/0/0 · 15/0/1 · 1/1 · 100 pass / 0 fail / 16 skip · 4/4 · 4/4 |
+| 04:43 | main checkout, **real scan** | `npm run scan` (Node, same `runChecks` as the Worker cron) into the local Worker on 7402 (DATA_SET=real) | 53 of 53 official pages fetched, 0 quotes missing, 0 pages changed since saved; stored as check run 1 in local D1 (finished 07:12:53Z). App on 7401 and Worker on 7402 left running |
 
 Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1), `2c4b783` (gm1 at d4b8a42), `7825c3b` (gm2 at 8c92764), then gm1 at dd4f9d4.
 
@@ -89,6 +91,9 @@ again for check-yourself items, multi-contact line shown for a single contact).
 - Lead on gm2's screens: quote context opened with navigation text → sentence-bounded context (DECISIONS #20).
 - gm2's own suites: community list under the next card (stacking context), WebKit taps never picking a community, and
   three specs that could hit-test an empty page.
+
+## Screenshots
+Lead, real data through the running Worker (APCO Software Tools profile): `docs/shots/lead-real-{form-390,results-390,results-1280,detail-1280,closed-390,print-1280,about-1280}.png`, looked at. gm2's SAMPLE and real-data shots: `docs/shots/gm2-*.png`.
 
 ## Known gaps
 - Most provincial pages don't say when applications are taken, so most real results are Might fit (by design, #18).
