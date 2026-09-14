@@ -113,6 +113,26 @@ test('the token can come from a .dev.vars file; a missing token stops before any
   assert.match(wrong.stderr, /the Worker answered HTTP 401/);
 });
 
+test('--sample scans even when the real data has a problem; scanning the real set is refused', async () => {
+  const dir = fs.mkdtempSync(path.join(TMP, 'data-'));
+  fs.cpSync(path.join(ROOT, 'data', 'reference'), path.join(dir, 'reference'), { recursive: true });
+  fs.mkdirSync(path.join(dir, 'sources'));
+  for (const f of fs.readdirSync(path.join(ROOT, 'data', 'sources')).filter((x) => x.startsWith('ref-'))) {
+    fs.copyFileSync(path.join(ROOT, 'data', 'sources', f), path.join(dir, 'sources', f));
+  }
+  fs.mkdirSync(path.join(dir, 'programs'));
+  fs.writeFileSync(path.join(dir, 'programs', 'nl-broken.json'), '{ not json');
+
+  const sample = await scan(['--sample', '--dry', '--only', 'nl-sample-community-fund', '--data', dir, '--scans', path.join(TMP, 'sample-ok')]);
+  assert.equal(sample.status, 0, sample.stderr);
+  assert.match(sample.stdout, /Checked 1 source page: 1 fetched fine, 0 not\./);
+
+  const real = await scan(['--dry', '--data', dir, '--scans', path.join(TMP, 'real-refused')]);
+  assert.equal(real.status, 1);
+  assert.match(real.stderr, /nl-broken\.json: \$: not valid JSON/);
+  assert.equal(fs.existsSync(path.join(TMP, 'real-refused')), false, 'nothing fetched or written');
+});
+
 test('--only with an unknown slug is refused', async () => {
   const r = await scan(['--sample', '--dry', '--only', 'nl-sample-nope', '--scans', path.join(TMP, 'nope')]);
   assert.equal(r.status, 1);
