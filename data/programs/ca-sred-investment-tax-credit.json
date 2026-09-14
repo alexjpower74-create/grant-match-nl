@@ -1,0 +1,85 @@
+{
+  "slug": "ca-sred-investment-tax-credit",
+  "sample": false,
+  "name": "Scientific Research and Experimental Development (SR&ED) investment tax credit",
+  "provider": "Canada Revenue Agency",
+  "level": "federal",
+  "url": "https://www.canada.ca/en/revenue-agency/services/scientific-research-experimental-development-tax-incentive-program/sred-claim/investment-tax-credit.html",
+  "summary": {
+    "quote": "Use your ITC to reduce income tax payable or get a refund",
+    "source": "ca-sred-investment-tax-credit--main"
+  },
+  "sources": [
+    {
+      "id": "ca-sred-investment-tax-credit--main",
+      "url": "https://www.canada.ca/en/revenue-agency/services/scientific-research-experimental-development-tax-incentive-program/sred-claim/investment-tax-credit.html",
+      "title": "Get an investment tax credit (ITC) - Scientific Research and Experimental Development (SR&ED) tax incentives - Canada.ca",
+      "publisher": "Canada Revenue Agency",
+      "fetched_at": "2026-09-14T06:08:31.511Z",
+      "http_status": 200,
+      "sha256": "a80c29ea90701f4358642e77c9e66084890ec9427d5b5cabbcb77eb9cceece4e",
+      "text_sha256": "073da268b03248c371aed5bdc481784a0347d999a3e246071481a549ad285809",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "tax_credit",
+      "applies_to": null,
+      "quote": "The basic ITC rate is 15% on qualified SR&ED expenditures for corporations, individuals, trusts, and partners in a partnership.",
+      "source": "ca-sred-investment-tax-credit--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 15,
+    "text": "15% of qualified SR&ED spending (35% for most Canadian-controlled private corporations, up to the expenditure limit)",
+    "quote": "The basic ITC rate is 15% on qualified SR&ED expenditures for corporations, individuals, trusts, and partners in a partnership.",
+    "source": "ca-sred-investment-tax-credit--main"
+  },
+  "criteria": [
+    {
+      "id": "purpose",
+      "text": "The money is for scientific research and experimental development",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "research"
+        ]
+      },
+      "quote": "The basic ITC rate is 15% on qualified SR&ED expenditures for corporations, individuals, trusts, and partners in a partnership.",
+      "source": "ca-sred-investment-tax-credit--main"
+    },
+    {
+      "id": "ccpc-enhanced-rate",
+      "text": "For the 35% refundable rate: a Canadian-controlled private corporation (CCPC)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Most Canadian-controlled private corporations (CCPCs), whether stand-alone or associated, may earn a refundable ITC at the enhanced rate of 35% on qualified SR&ED expenditures, up to the expenditure limit.",
+      "source": "ca-sred-investment-tax-credit--main"
+    },
+    {
+      "id": "qualified-expenditures",
+      "text": "The spending is qualified SR&ED expenditure",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "on qualified SR&ED expenditures for corporations, individuals, trusts, and partners in a partnership",
+      "source": "ca-sred-investment-tax-credit--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm2",
+    "notes": "Type tax_credit and purpose research are on the page. Rate: cost_share uses the basic 15% everyone gets; the 35% enhanced refundable rate needs a CCPC (or, for tax years after December 15, 2024, an eligible Canadian public corporation), which a profile cannot tell, so it is a check-yourself item and in the text. Structure: the basic rate covers \"corporations, individuals, trusts, and partners in a partnership\", so no structure answer is ruled out. Intake: a claim goes with a tax return; this page gives no application window, so unknown. What work qualifies is on a separate CRA page (sred-eligibility) not saved here; it stays a check-yourself item. No phone on this page (the contact page was not saved)."
+  }
+}
