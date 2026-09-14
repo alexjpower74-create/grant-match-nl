@@ -1,0 +1,122 @@
+{
+  "slug": "nl-green-transition-fund",
+  "sample": false,
+  "name": "Green Transition Fund Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/green-transition-fund-program/",
+  "summary": {
+    "quote": "The Green Transition Fund provides financial support to businesses, organizations, post-secondary institutions, and industry associations to assist with the province’s transition to a green economy.",
+    "source": "nl-green-transition-fund--main"
+  },
+  "sources": [
+    {
+      "id": "nl-green-transition-fund--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/green-transition-fund-program/",
+      "title": "Green Transition Fund Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:11.546Z",
+      "http_status": 200,
+      "sha256": "d0fb0ef55ef5a86fdd16d276c5e84e6c84488fef1b8526aaf3a7b1de205f20c5",
+      "text_sha256": "c6a2ab64a3e62a93c6a95823eb1cf61c055ad20dcf08b4cf429838a1fcdd1240",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The program will normally provide financial support in the form of non-repayable funding",
+      "source": "nl-green-transition-fund--main"
+    }
+  ],
+  "intake": {
+    "status": "continuous",
+    "quote": "As of March 1st, 2025, the Green Transition Fund will be accepting applications through a continual intake process.",
+    "source": "nl-green-transition-fund--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 3000000,
+    "text": "Requests of $75,000 to $3 million (Indigenous and rural projects have no minimum)",
+    "quote": "Commercial/Non-Commercial requests: $75,000 minimum to $3 million maximum (Indigenous and Rural projects have no minimum project size).",
+    "source": "nl-green-transition-fund--main"
+  },
+  "cost_share": {
+    "percent": 40,
+    "text": "Businesses: normally up to 40% of eligible project costs",
+    "quote": "Commercial funding will not normally exceed 40 per cent of eligible project costs.",
+    "source": "nl-green-transition-fund--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business has operations in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "primarily small-and medium sized enterprises with operations in Newfoundland and Labrador",
+      "source": "nl-green-transition-fund--main"
+    },
+    {
+      "id": "structure",
+      "text": "A registered incorporated business (or a non-commercial group such as an industry association or business development organization)",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "corporation"
+        ],
+        "unclear": [
+          "cooperative",
+          "nonprofit"
+        ]
+      },
+      "quote": "Non-commercial applicants: industry associations, Indigenous Governments/ Organizations, business development organizations, post-secondary institutions and other support organizations in Newfoundland and Labrador focusing on green economy projects. Commercial applicants: registered incorporated businesses, primarily small-and medium sized enterprises with operations in Newfoundland and Labrador.",
+      "source": "nl-green-transition-fund--main"
+    },
+    {
+      "id": "green-focus",
+      "text": "The project is about greening the business's operations or growing the green economy",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The Green Transition Fund targets the greening of commercial operations in traditional sectors and development of new opportunities related to the growth of a green economy.",
+      "source": "nl-green-transition-fund--main"
+    },
+    {
+      "id": "minimum-request",
+      "text": "You ask for at least $75,000 (Indigenous and rural projects have no minimum)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Commercial/Non-Commercial requests: $75,000 minimum to $3 million maximum (Indigenous and Rural projects have no minimum project size).",
+      "source": "nl-green-transition-fund--main"
+    },
+    {
+      "id": "size",
+      "text": "Mainly small and medium-sized businesses; larger businesses only case by case for higher-risk research and development",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Larger businesses with higher risk research and development projects may be eligible on a case-by-case basis.",
+      "source": "nl-green-transition-fund--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Green Transition Fund (email)",
+      "phone": null,
+      "email": "GTF@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "For more information please contact GTF@gov.nl.ca",
+      "source": "nl-green-transition-fund--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Intake: 'accepting applications through a continual intake process' as of March 1, 2025, so continuous. Amount: the $75,000 minimum and $3 million maximum are for the funding request, not the project cost, so the minimum is a check-this-yourself item, not a project_cost rule. Cost share: businesses (commercial) up to 40%, non-commercial projects up to 50%; the record shows the business rate. Structure: commercial applicants must be 'registered incorporated businesses', so sole proprietors, partnerships and not-registered businesses miss; co-operatives and non-profits are unclear because the page also accepts non-commercial groups (industry associations, business development organizations and other support organizations) that our structure options don't separate. Purpose: the page is about greening operations and the green economy, which doesn't map cleanly to our purposes (it covers equipment, research, market development and specialized labour when they are green), so no purpose rule; the green focus is a check-this-yourself item. That means a corporation in NL with any purpose can show Looks like a fit, with the green focus listed to check. Contract question for the lead: an 'unclear' list on purpose rules would let this say more. The Application Guidelines and Program Fact Sheet were not read (linked documents)."
+  }
+}
