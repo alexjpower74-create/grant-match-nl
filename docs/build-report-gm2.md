@@ -48,23 +48,70 @@ Where core and the contract (or the app's copy) disagree:
 16. **An unknown `rule.kind` evaluates to Unknown with reason `self_check`**, silently. `validateProgram` should
     already reject it at build time, so this only matters if a bundle skips the build; no change asked.
 
-## Phase 1 — status
-- WIP committed (`5e9c263`, `4cf4b5b`): Worker (`wrangler.toml`, migration, `src/index.js`, `tests/run.mjs`,
-  `tests/fixture-server.mjs`, `tests/api.test.mjs`, `tests/real.test.mjs`), app (5 pages, `app.css`, `print.css`,
-  `api.js`, `api.mock.js`, `profile-form.js`, `render.js`, `serve.mjs`), Playwright config and specs.
-- **Not run yet: core is not on main.** Waiting for it. Until then the pages were checked by eye in a temporary
-  `?mock=fixture` mode (hand-made SAMPLE ProgramResult JSON in `app/tests/fixtures/`, `app/api.fixture.js`, and a
-  one-regex exception in `serve.mjs`). All three are deleted when core lands.
-- `serve.mjs` smoke-checked by hand: `/`→index, `/../PLAN.md`, `/%2e%2e/PLAN.md`, `/core/..%2fPLAN.md`, `/core/`,
-  `/data/build/`, `/serve.mjs`, `/tests/…` → 404; POST → 405; `.css` → `text/css`.
-- Found by looking at fixture-mode screenshots and fixed: a stray space before the `<mark>` in every quote. core's
-  `contextFor` keeps the neighbouring whitespace, so the renderer now joins `before + quote + after` exactly. The
-  `<mark>` spec checks that the joined text equals the context exactly.
-- Removed `overflow-x: hidden` from `body`: it would have hidden the very horizontal scroll the 390 test measures.
+## Phase 1 — status: DONE
+Merged main at `b3c92af` (core from gm1 `1d0fc50`, contract `821774c`). `npm run build:data` from this worktree:
+0 real programs, 8 SAMPLE.
+- **Worker suite: 15 passed, 0 failed, 1 skipped** (`real.test.mjs`, needs `GM_REAL=1`). `npm --prefix worker test`:
+  fresh local D1 in `.wrangler/test-state`, SAMPLE fixture server on 7404, `wrangler dev --local --test-scheduled` on 7402.
+- **Playwright: 148 passed, 0 failed, 0 flaky** on chromium-390, chromium-1280, webkit-390 and webkit-1280, every
+  test run twice (`--repeat-each=2`). 28 skipped by design: 390-only tap-target and scroll tests on the 1280
+  projects, the PDF test off chromium-1280, and `live.spec.mjs` without `GM_API`.
+- Removed: the temporary `?mock=fixture` mode, `app/api.fixture.js`, the hand-made JSON in `app/tests/fixtures/`, and
+  the `serve.mjs` exception. `?mock=1` runs the real core in the browser on `data/build/sample.json`.
+- Needs-review copy changed to §12's "The page has changed or gone since we checked it. Check the official page."
+
+### Bugs the suites found, fixed
+- **The community list opened underneath the next question** (all four projects). Each `.glass` card is its own
+  stacking context (`backdrop-filter`), so the list's `z-index` couldn't lift it over the next card, and a tap landed
+  on the card. Fix: `.q:focus-within { position: relative; z-index: 20 }`.
+- **In WebKit a tap never picked a community.** Probed with real taps and logged events: WebKit fires
+  pointerdown, touchstart, pointerup and touchend on the option but **no mousedown, mouseup or click**, because
+  pointerdown was cancelled (which keeps focus in the input). Chromium sends the click. Fix: pick on `pointerup` when
+  it lands on the same option as the pointerdown and the finger moved under 10 px (a drag scrolls the list). `click`
+  stays as a fallback for assistive tech. An earlier guess (blur closing the list first) was wrong and was removed.
+- **Tests that could measure nothing**, fixed: three specs read the DOM straight after `goto`, before the page had
+  fetched and rendered. On a fast run the tap-target test could hit-test a results page with no cards and pass.
+  Each page now waits for a selector that only exists once its data has rendered (`#open-list a.card`,
+  `#official-link`, `.program`, `tr[data-source]`, `.chip`).
+- **Test gaps against the real SAMPLE set**, fixed: no test profile produced `band_straddles` (added one in the
+  $2M–$10M revenue band, which straddles a SAMPLE loan's $5,000,000 limit). The about page has no buttons or cards,
+  so the header links (`.wordmark`, `.site-nav a`, both ≥ 44 px) are now tap targets too.
+
+### Screenshots (pwshot, chromium, `?mock=1&now=2026-09-14T12:00:00Z`), looked at
+`docs/shots/gm2-{form,results,detail,print,about}-{390,1280}.png`. Detail uses `nl-sample-growth-grant` (Looks like a
+fit, with a contact) and shows two columns at 1280. The results page shows 3 Looks like a fit, 1 Might fit, 3
+Doesn't fit and the closed program with its quote. The print page is a white single sheet with 4 programs. About
+lists all 9 SAMPLE sources as "Not checked live yet" (mock mode has no check runs).
 
 ## Negative controls
-To do once the suites can run: Worker (a) sourceStatus not passed, (b) auth removed, (c) closed reversed /
-field dropped; app (a) `<mark>` shifted, (b) contact always shown, (c) chip 30 px, (d) print CSS removed.
+Each one broke a committed file, ran the suite, and was restored with `git checkout`; the restored file was
+confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scratch/worker-controls.sh`,
+`.scratch/app-controls.sh` (untracked).
+
+**Worker** (full `tests/api.test.mjs` run each time, SAMPLE data set):
+- (a) `sourceStatus` not passed to `matchPrograms` → **red**: exactly 1 failure, "a stored run with one missing
+  quote makes that program needs_review, not Looks like a fit". Restored → 15/15.
+- (b) both `requireAdmin` calls removed → **red**: exactly 1 failure, "401 with no token or a wrong token".
+  Restored → 15/15.
+- (c) the Worker swaps `open` and `closed` in `/api/match` → **red**: 4 failures, both deep-equal tests plus "the
+  closed SAMPLE program is in closed" and the needs-review test (which looks its program up in `open`). Restored → 15/15.
+
+**App** (the one targeted test, one project each; restored file re-run green, then the full suite twice):
+- (a) `<mark>` shifted one character right (first letter moved outside the mark) → **red**: "each rendered <mark>
+  equals its API quote exactly", failing on `ca-sample-digital-adoption-grant` ("<mark>he grant gave small
+  businesses…</mark> is an API quote with its context"). Restored → passes.
+- (b) "Call this office" rendered for a program with no contacts → **red**: "shows only on a program with a
+  contact", `a[href^="tel:"]` expected 0, received 1. Restored → passes.
+- (c) the first purpose chip shrunk to 30 px → **red** at chromium-390: "form #12 Hire or pay wages height, Expected
+  >= 44, Received 30". Restored → passes.
+- (d) `print.css` link removed from `print.html`. **First run was VOID for the page count:** the SAMPLE Auto
+  Service printout has only 4 programs and fits one Letter page even unstyled. The test went red only on
+  "Print button hidden", and it asserted that *before* counting pages. Fixed: page count asserted first, and the
+  one-page test also runs on the fullest printout the SAMPLE set can make. I found it by searching answer
+  combinations with core: `years=lt1`, `revenue=unsaid`, five purposes, no owners and no cost gives 7 could-fit
+  programs, so the sheet prints 6 plus "and 1 more on the results page". Measured directly: 1 page with
+  `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
+  2" (the short printout: red on the hidden button). Restored → both pass.
 
 ## Phase 2 groundwork (2026-09-14, reading only: no sources saved, no program JSON)
 Read by hand with our User-Agent, one host at a time, ≥ 1.5 s between requests (11 s on futurpreneur.ca, 61 s on
@@ -199,6 +246,11 @@ so no rule was broken). No host was asked for more than one page after that.
 | ulnooweg.ca, ulnoowegdevelopmentgroup.ca | none published | "All rights reserved" footer only | Ask the lead |
 
 ## Needs from other slices
-- gm1: core on main (`match.js`, `checks.js`, `profile.js`, `text.js`) and `data/build/sample.json`. The Worker and
-  specs assume the SAMPLE fixtures have a program with a phone contact, one without contacts, a closed one, and a
-  Looks like a fit program for SAMPLE Auto Service. All four are in PLAN's gm1 list.
+- **gm1:** `sourceStatusFrom` per the new API §9 (`page_gone`, failed checks keep `missing_quotes`), and the fit
+  `why` sentence for needs review ("changed or gone"). The Worker needs no change for either: it folds stored runs with
+  core's `sourceStatusFrom` and passes the result through.
+- **Lead:** answers on Contract questions 9–16 (core wording vs §12 copy, "Not sure" structure reason, whether
+  `counts.unknown` includes self_check), and on the phase-2 stop-and-decide items (BDC and Futurpreneur terms, the CDAP
+  closure source, Ulnooweg with no terms page, CanExport and Canada Summer Jobs currently closed).
+- **Lead QA:** `worker/tests/real.test.mjs` (`GM_REAL=1`, `DATA_SET=real`) and `app/tests/live.spec.mjs` (`GM_API`) are
+  written but only skip here: there are no real programs yet and no running Worker for the app suite to point at.

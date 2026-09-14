@@ -18,6 +18,9 @@ export const PROFILES = {
   autoUnanswered: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&purposes=equipment,digital',
   // SAMPLE Auto Service in the $2M–$10M revenue band, which sits on both sides of a SAMPLE loan's $5,000,000 limit.
   autoStraddle: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=2m_10m&owners=none&purposes=equipment,digital&cost=25k_50k',
+  // The printout's worst case on the SAMPLE set: 7 programs could fit, so it prints 6 and "and 1 more". Found by
+  // searching answer combinations with core; unstyled, this printout runs to 2 pages.
+  printWorst: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=lt1&revenue=unsaid&purposes=hire,equipment,digital,startup,training',
 }
 
 export const qs = (profile, extra = {}) => {
