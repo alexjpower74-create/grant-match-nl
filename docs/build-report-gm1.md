@@ -182,4 +182,62 @@ Programs 4–15 in the brief (Research and Innovation, Innovation and Business D
 Fund, Job Accelerator and Growth, Harvester Enterprise Loan, the rest of /jgrd/funding/, Apprenticeship Wage
 Subsidy, JGRD wage-subsidy programs and the Job Grant, CBDCs, NLOWE, takeCHARGE, RDÉE TNL): not started.
 
-## Phase 3 — `scripts/scan.mjs` · not started
+## Contract changes applied (main 821774c, 632c206, 1ee9aa9) · DONE
+Merged main into `rig/gm1` (11bca50). The lead accepted questions 1–5 and 7–12 as built. Question 6 changed (API §9,
+DECISIONS #16–17), and I applied it:
+- `runChecks`: a page answering **404 or 410** → `ok: false`, every quote of that source in `missing`, error "the page
+  is gone (HTTP 404)". **Any other non-2xx** or network failure → `ok: false`, `error` set, `missing: []`.
+- `sourceStatusFrom` adds **`page_gone`**. `missing_quotes` and `page_gone` change only on a check that read the page
+  (`ok`) or found it gone (404/410); a timeout, 5xx or robots refusal **keeps** the previous values.
+  My reading of "page_gone = the newest check answered 404/410": `page_gone` also survives a later failed check.
+  Otherwise a timeout after a 404 would clear it, which is exactly what #16 set out to stop. Tell me if you want the
+  literal version.
+- `evaluateProgram`: `needs_review` = any source with `missing_quotes > 0` **or** `page_gone`; the why line reads
+  "The page has changed or gone since we checked it. Check the official page." `docs/RULES.md` updated to match.
+
+| # | Break | Test that went red |
+|---|---|---|
+| g | a failed check resets the missing count | sourceStatusFrom … a failed check keeps the missing count and page_gone |
+| h | `page_gone` ignored by needs_review | sourceStatus with missing quotes → needs_review, not Looks like a fit |
+| i | 404/410 treated like any other failure | 404/410 count every quote missing and mark the page gone… ("HTTP 404") |
+
+## Phase 3 — `scripts/scan.mjs` · DONE
+Built while phase 2 waits for cross-review. It doesn't depend on how programs are interpreted.
+
+- `npm run scan` builds the real bundle in memory, using `scripts/data-load.mjs`, now shared with
+  `build-data.mjs`, so the scan re-checks exactly what the build verified. A data problem stops it before any fetch.
+- Runs `runChecks` with Node's `fetch` and real sleeps (same politeness code as the Worker's cron). Caches each
+  raw body in `data/scans/<UTC stamp>/<source-id>.html` (gitignored), then POSTs the ChecksResult to
+  `http://127.0.0.1:${GM_WORKER_PORT||7402}/api/admin/checks` with `Authorization: Bearer <token>`. The token comes
+  from `GM_ADMIN_TOKEN` or `ADMIN_TOKEN` in `worker/.dev.vars`; it's resolved before any fetch and never printed.
+  Exit 1 on no token, an unreachable Worker or a non-2xx answer. Either way the result is kept in
+  `data/scans/latest.json`.
+- `--dry`: no POST. `--only slug,slug`: unknown slugs are refused.
+- For tests only: `--sample`, `--scans <dir>`, `--worker <origin>`, `--dev-vars <file>`, `GM_SCAN_ORIGIN_MAP`.
+- `core/tests/scan.test.mjs` (4 tests) runs the script against a local server on a random port that plays both the
+  SAMPLE site and the Worker. It checks the dry-run summary naming the missing quote and the changed page, that
+  `latest.json` is written, that raw bytes are cached exactly as served, that nothing is POSTed on `--dry`, the POST
+  with its Bearer token and stored id, a token read from a `.dev.vars` file, that a missing token stops before any
+  fetch, a 401 exiting 1, and an unknown `--only`.
+- Control (j): removed the Authorization header → "POSTed with the Bearer token" red; restored.
+- `worker/.dev.vars` doesn't exist in the gm1 worktree (gm2's is in theirs), so the non-dry run against a live
+  Worker is for the lead's QA: `GM_ADMIN_TOKEN=… npm run scan`.
+
+**Real `--dry` run** (2026-09-14T05:48:39Z → 05:48:44Z, 5.3 s including robots.txt and ≥ 1 s between requests):
+
+```
+scan: nl-business-growth-program--main: 17/17 quotes found
+scan: nl-business-investment-program--main: 12/12 quotes found
+scan: nl-jobsnl-wage-subsidy--main: 11/11 quotes found
+Checked 3 source pages: 3 fetched fine, 0 not.
+Quotes missing: none.
+Page text changed since it was saved: none.
+Raw pages: data/scans/2026-09-14T05-48-39-634Z · result: data/scans/latest.json
+Dry run: nothing sent to the Worker.
+```
+
+Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real programs, 8 SAMPLE).
+
+## Waiting on
+- **gm2's cross-review** of the three NL programs (questions above) before programs 4–15.
+- Nothing needed from gm2's files. Nothing outside gm1's slice was edited.
