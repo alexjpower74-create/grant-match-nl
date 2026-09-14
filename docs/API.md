@@ -250,9 +250,13 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
                 "fetched_at": "ISO", "sha256": "…", "text_sha256": "…", "changed": false,   // text_sha256 differs from the saved snapshot
                 "quotes_total": 9, "quotes_found": 9, "missing": [{ "path": "criteria[2].quote", "quote": "…" }] }] }
 ```
-`sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes } }` folds stored
-runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok` and
-`missing` empty.
+`sourceStatusFrom(runs) → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes, page_gone } }`
+folds stored runs (newest last) into the map `evaluateProgram` takes: `last_verified_at` = newest `fetched_at` with `ok`
+and `missing` empty; `missing_quotes` = the missing count of the newest check that actually read the page (`ok`),
+so a timeout, a 5xx or a robots refusal **keeps** the previous count instead of clearing it; `page_gone` = the newest
+check answered HTTP 404 or 410. In `evaluateProgram`, `needs_review` = any source with `missing_quotes > 0` **or**
+`page_gone`; the app's needs-review copy then reads "The page has changed or gone since we checked it. Check the
+official page."
 
 ## 10. Core modules (gm1 owns; Worker, scripts and the app's mock import them)
 
@@ -307,6 +311,6 @@ Copy that must stay true:
   `band_straddles` "Unknown: your answer is close to the page's limit" · a program fact the pages don't state
   "Unknown: the page doesn't say".
 - Stale: "Last verified <date>, more than 60 days ago. Check the official page." · needs review: "The page has
-  changed since we checked it. Check the official page."
+  changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
