@@ -191,24 +191,29 @@ unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be in
 - **Verification:** per source, `last_verified` = `sourceStatus[id].last_verified_at` if present, else the source's
   `fetched_at`; `needs_review` = the latest live check of any source found fewer quotes than the record has;
   program `last_verified` = the oldest of its sources'; `age_days` = whole days from it to `now`; `stale` = `age_days > 60`.
-- **Fit** (only when a profile is given):
+- **Fit** (only when a profile is given; round 2, DECISIONS #29):
   1. intake `closed` → **Doesn't fit**, `why` starts "Not taking applications right now."
   2. any criterion `missed` → **Doesn't fit**.
-  3. every non-`self_check` criterion is `met`, at least one of them is not `location`, intake is `open` or
-     `continuous`, and not `stale` and not `needs_review` → **Looks like a fit**.
-  4. otherwise → **Might fit**.
-  `self_check` items never make a program Doesn't fit and don't stop Looks like a fit, but they are always listed as
-  Unknown ("Check this yourself"). `why` lists every reason the label isn't better, in plain English.
-- `rank`: Looks like a fit 0, Might fit 1, Doesn't fit 2.
+  3. no criterion `met` at all → **Not enough to go on**, `why` starts "Nothing the page asks for could be checked against
+     your answers."
+  4. every non-`self_check` criterion is `met`, at least one met criterion is not `location`, and not `stale` and not
+     `needs_review` → **Looks like a fit**.
+  5. otherwise → **Might fit** (when location is the only match, `why` starts "Only your location matches. …").
+  **When a program takes applications never changes the label**: `open`, `continuous`, `upcoming` and `unknown` intake
+  are shown on their own line (§12); only `closed` (rule 1) does. `self_check` items never make a program Doesn't fit
+  and don't stop Looks like a fit, but they are always listed as Unknown. `why` lists every reason the label isn't better.
+- `rank`: Looks like a fit 0, Might fit 1, Not enough to go on 2, Doesn't fit 3.
+- **`top_match`** (round 2): the card's single strongest short quoted match, or null. Among `met` criteria that are not
+  `location` (self_check is never met): a quote of at most 160 characters first, then kind `purpose` > `ownership` >
+  `industry` > `employees` > `revenue` > `years_operating` > `project_cost` > `structure`, then the shorter quote, then id.
 
 `matchPrograms(programs, profile, { now, sourceStatus }) → { open: ProgramResult[], closed: ProgramResult[], counts }`
 - `closed` = computed intake `closed`; everything else is `open`.
-- Sort `open` by: fit rank ↑, **evidence** ↑ (0 when at least one met criterion is a checkable kind other than
-  `location`, else 1: a program only your location can be checked against sorts after real matches with the same label),
-  best funding type ↑ (`non_repayable` 0, `wage_subsidy` 1, `tax_credit` 2, `repayable` 3,
-  `loan` 4, none 5; a program's best type is its lowest), missed count ↑, unknown count ↑, name (`localeCompare 'en'`).
-  Sort `closed` by name.
-- `counts = { looks, might, doesnt, closed }` (a closed program counts only in `closed`).
+- Sort `open` by (round 2, DECISIONS #29): fit rank ↑, best funding type ↑ (`non_repayable` 0, `repayable` 1,
+  `wage_subsidy` and `tax_credit` 2, `loan` 3, none 4; a program's best type is its lowest), met count ↓ (more matches
+  first), missed count ↑, unknown count ↑, name (`localeCompare 'en'`). A loan with more matches sits below a
+  non-repayable program with the same label. Sort `closed` by name.
+- `counts = { looks, might, not_enough, doesnt, closed }` (a closed program counts only in `closed`).
 
 ## 6. Output shapes (core builds them; the Worker returns them unchanged)
 
@@ -230,8 +235,12 @@ unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be in
                  "status": "met" | "missed" | "unknown" | null,          // null when no profile
                  "unknown_reason": "not_answered" | "band_straddles" | "unclear" | "self_check" | null,
                  "why": "…" | null, ...Quote }],
-  "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile; unknown INCLUDES self_check (self_check is a subset)
-  "fit": null | { "label": "Looks like a fit" | "Might fit" | "Doesn't fit", "rank": 0, "why": ["…"] },
+  "counts": { "met": 3, "missed": 0, "unknown": 2, "unknown_page": 1, "unknown_ask": 1, "self_check": 1 },
+            // zeros when no profile. unknown = unknown_page + unknown_ask. unknown_page: reason unclear (the page's own
+            // wording can't settle the answer). unknown_ask: self_check, not_answered, band_straddles (the owner can
+            // answer these). self_check is a subset of unknown_ask.
+  "fit": null | { "label": "Looks like a fit" | "Might fit" | "Not enough to go on" | "Doesn't fit", "rank": 0, "why": ["…"] },
+  "top_match": null | { "id": "…", "text": "…", "kind": "purpose", ...Quote },   // §5; null when no profile
   "verification": { "last_verified": "2026-09-14", "age_days": 0, "stale": false, "needs_review": false,
                     "missing_quotes": 0, "last_checked_at": null },
   "unknown_facts": ["intake", "max_amount", "cost_share", "funding_types"],   // which program facts the pages don't state
@@ -350,6 +359,15 @@ Copy that must stay true:
 - Stale: "Last verified <date>, more than 60 days ago. Check the official page." · needs review: "The page has
   changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
+- **Round 2 (DECISIONS #29).** Results: the sort line "Sorted by fit, then money you don't pay back first, then the most
+  matches. Unknown is never counted as a match."; count badges Looks like a fit, Might fit, Not enough to go on,
+  Doesn't fit, Closed. Each card: its `top_match` (criterion text, then the exact quote, clamped to three lines on
+  screen), the facts, "{met} match · {missed} doesn't · {unknown_page} the page doesn't say · {unknown_ask} we didn't ask
+  you". Intake line on cards, the program page and the printout: unknown → "When it takes applications: the page doesn't
+  say — call the office to confirm" ("— check the official page to confirm" when there are no contacts); otherwise
+  "Taking applications until <date>", "Takes applications any time", "Not open yet". Program page: Unknown in two
+  groups, "The page doesn't say" (`unclear`) and "We didn't ask you" (the rest). Printout: Looks like a fit and Might
+  fit only.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
 - When a program has more than one contact, one line above them: "The program's pages list these offices. Call the one
   nearest you." Contact labels name the office and its town only; they carry no fact that isn't in the contact's quote.

@@ -115,33 +115,39 @@ People working is an exact number, so it's always met or missed.
 
 ## The fit label for a whole program
 
-Decided in this order. The first one that applies wins.
+Decided in this order. The first one that applies wins. (Round 2, 2026-09-14: DECISIONS #29.)
 
 1. **Doesn't fit, closed.** The page says it's closed, or its deadline has passed. A deadline counts as passed from
    the day after, in Newfoundland time. Closed programs are listed separately.
 2. **Doesn't fit.** Any condition is missed.
-3. **Looks like a fit.** All of these must be true:
+3. **Not enough to go on.** Nothing matched at all: none of the page's conditions could be checked as met against your
+   answers. It sorts below Might fit.
+4. **Looks like a fit.** All of these must be true:
    - every condition your answers can check is met (*check this yourself* items don't block this, but they are
      always listed as Unknown);
    - at least one met condition is something other than location;
-   - the page says it's taking applications (open, or any time);
    - it was verified in the last 60 days;
    - the live re-check hasn't found the page changed.
-4. **Might fit.** Everything else: an Unknown you didn't answer or a straddling band, only a location to go on,
-   intake the page doesn't state or not open yet, a stale check (more than 60 days), or a changed page.
+5. **Might fit.** Everything else: something beyond location matched but an Unknown remains, only your location matched,
+   a stale check (more than 60 days), or a changed page.
+
+**When a program takes applications is not a condition.** Open, any time, not open yet, or not stated: it's shown on its
+own line ("When it takes applications: the page doesn't say — call the office to confirm") and never moves a program
+between labels. Only closed does.
 
 Every label comes with a list of reasons it isn't better.
 
 > **Worked example: SAMPLE Growth Grant for SAMPLE Auto Service.** The business is in Grand Falls-Windsor, is
 > incorporated, has 6 people and a $25,000–$50,000 project for equipment and software. Conditions: location (met),
 > structure (met), fewer than 100 employees (met), equipment or digital (met), project at least $10,000 (met),
-> business plan (*check this yourself*). Applications are accepted on an ongoing basis. Last verified 13 days ago.
-> Label: **Looks like a fit**, with "Check 1 thing yourself."
+> business plan (*check this yourself*). Last verified 13 days ago. Label: **Looks like a fit**, with "Check 1 thing
+> yourself." The card's strongest match is the purpose condition, with its quote.
 >
 > The same program for SAMPLE Daycare (hiring and training): the purpose condition is missed, so **Doesn't fit**.
 >
-> **SAMPLE Community Fund** has only a location (Census Divisions 6, 7 and 8) and a *check this yourself* item, and
-> doesn't say when it takes applications. Whatever you answer, it can't be better than **Might fit**.
+> **SAMPLE Community Fund** has only a location (Census Divisions 6, 7 and 8) and a *check this yourself* item: your
+> location matches, nothing else can, so **Might fit** with "Only your location matches." A program whose only condition
+> is a *check this yourself* item matches nothing, so **Not enough to go on**.
 
 ## Freshness
 
@@ -156,13 +162,14 @@ Every label comes with a list of reasons it isn't better.
 
 ## Sort order
 
-Open programs: Looks like a fit, then Might fit, then Doesn't fit. Within a label, programs with a real match beyond your location come first: at
-least one condition other than location is met. A program only your location can be checked against comes after them,
-even if it's non-repayable. After that, the best funding type first
-(non-repayable, wage subsidy, tax credit, repayable, loan, then not stated), then fewer missed, then fewer Unknown,
-then by name. Closed programs come last, by name.
+Open programs: Looks like a fit, then Might fit, then Not enough to go on, then Doesn't fit. Within a label, money you
+don't pay back first (non-repayable, then repayable, then wage subsidy and tax credit, then loan, then not stated), then
+the most matches, then fewer missed, then fewer Unknown, then by name. So a loan with more matches still sits below a
+non-repayable program with the same label. Closed programs come last, by name.
 
 ## Counts
 
-`counts.unknown` includes *check this yourself* items; `counts.self_check` says how many of those there are. So
-"5 match · 0 doesn't · 1 unknown" for the Growth Grant example above.
+`counts.unknown` splits into `unknown_page` (the page's own wording can't settle your answer: reason *unclear*) and
+`unknown_ask` (things you can answer: *check this yourself*, a question you skipped or weren't sure about, a band on both
+sides of a limit). The card reads "5 match · 0 doesn't · 0 the page doesn't say · 1 we didn't ask you" for the Growth
+Grant example above. `counts.self_check` says how many of `unknown_ask` are *check this yourself* items.

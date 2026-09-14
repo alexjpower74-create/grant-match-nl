@@ -77,7 +77,7 @@ test('an unclear answer is never Looks like a fit', async () => {
   assert.equal(r.criteria[1].unknown_reason, 'unclear');
   assert.equal(r.fit.label, 'Might fit');
   assert.ok(r.fit.why.includes('Unknown: the page\'s wording doesn\'t settle it for your answer. Sole proprietors, partnerships or corporations.'));
-  assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, self_check: 1 });
+  assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, unknown_page: 1, unknown_ask: 1, self_check: 1 });
 });
 
 test('normally:true on bounds: inside is met, outside is unknown (unclear), a straddle stays band_straddles', () => {
@@ -259,8 +259,9 @@ test('an all-unknown program is never Looks like a fit', async () => {
     }
   }
   const r = evaluateProgram(onlySelfChecks, AUTO(), { now: NOW });
-  assert.deepEqual(r.counts, { met: 0, missed: 0, unknown: 1, self_check: 1 });
+  assert.deepEqual(r.counts, { met: 0, missed: 0, unknown: 1, unknown_page: 0, unknown_ask: 1, self_check: 1 });
   assert.equal(r.criteria[0].unknown_reason, 'self_check');
+  assert.equal(r.fit.label, 'Not enough to go on', 'nothing matched: not enough to go on (round 2)');
 });
 
 test('closed and deadline-passed programs go to closed as Doesn\'t fit', async () => {
@@ -333,38 +334,116 @@ test('sourceStatus with missing quotes → needs_review, not Looks like a fit', 
   assert.equal(g.fit.label, 'Might fit');
 });
 
-test('sort order: fit, then non-repayable before loan, then fewer missed and unknown, then name', async () => {
+test('sort order: fit, then funding type (non-repayable, repayable, wage subsidy and tax credit, loan), then more matches, then name', async () => {
   const { open, closed, counts } = matchPrograms(await sampleBundlePrograms(), AUTO(), { now: NOW });
   assert.deepEqual(open.map((r) => r.slug), [
     'nl-sample-growth-grant', // Looks, non-repayable
-    'nl-sample-equipment-loan', // Looks, loan, 0 unknown, name "Equipment"
-    'nl-sample-expansion-loan', // Looks, loan, 0 unknown, name "Expansion"
-    'ca-sample-small-lender-loan', // Looks, loan, 1 unknown (self_check)
-    'nl-sample-green-upgrade-grant', // Might, structure met beyond location (evidence), non-repayable
-    'nl-sample-community-fund', // Might, only location can be checked
-    'nl-sample-wage-subsidy', // Doesn't, employees met (evidence), wage subsidy
+    'nl-sample-equipment-loan', // Looks, loan, 3 matches, 0 unknown, name "Equipment"
+    'nl-sample-expansion-loan', // Looks, loan, 3 matches, 0 unknown, name "Expansion"
+    'ca-sample-small-lender-loan', // Looks, loan, 3 matches, 1 unknown (self_check)
+    'nl-sample-green-upgrade-grant', // Might, non-repayable, 2 matches
+    'nl-sample-community-fund', // Might, non-repayable, 1 match (location only)
     'nl-sample-startup-support', // Doesn't, repayable
+    'nl-sample-wage-subsidy', // Doesn't, wage subsidy
     'nl-sample-women-entrepreneur-loan', // Doesn't, loan
   ]);
   assert.deepEqual(closed.map((r) => r.slug), ['ca-sample-digital-adoption-grant']);
-  assert.deepEqual(counts, { looks: 4, might: 2, doesnt: 3, closed: 1 });
+  assert.deepEqual(counts, { looks: 4, might: 2, not_enough: 0, doesnt: 3, closed: 1 });
 });
 
-test('evidence tier: a location-only program sorts after a checked match with the same label, before funding type', async () => {
+test('funding type outranks matches: a loan with more matches sits below a non-repayable program with the same label (round 2)', async () => {
   const programs = await sampleBundlePrograms();
-  const community = programs.find((p) => p.slug === 'nl-sample-community-fund'); // non-repayable; only location is checkable
-  const lender = clone(programs.find((p) => p.slug === 'ca-sample-small-lender-loan')); // a loan; revenue and industry are checkable
-  lender.intake = { status: 'unknown', quote: null, source: null, deadline: null };
+  const equipment = programs.find((p) => p.slug === 'nl-sample-equipment-loan'); // a loan with 3 matches for SAMPLE Auto Service
+  const fewer = clone(programs.find((p) => p.slug === 'nl-sample-growth-grant')); // non-repayable
+  fewer.criteria = fewer.criteria.filter((c) => ['location', 'purpose'].includes(c.rule.kind)); // 2 matches
+  const { open } = matchPrograms([equipment, fewer], AUTO(), { now: NOW });
+  assert.deepEqual(open.map((r) => [r.slug, r.fit.label, r.best_type, r.counts.met]), [
+    ['nl-sample-growth-grant', 'Looks like a fit', 'non_repayable', 2],
+    ['nl-sample-equipment-loan', 'Looks like a fit', 'loan', 3],
+  ], 'the non-repayable program with fewer matches comes first');
 
-  const { open } = matchPrograms([community, lender], AUTO(), { now: NOW });
-  assert.deepEqual(open.map((r) => [r.slug, r.fit.label]), [
-    ['ca-sample-small-lender-loan', 'Might fit'],
-    ['nl-sample-community-fund', 'Might fit'],
-  ], 'same label: the checked loan outranks the location-only non-repayable program');
+  // Within one funding type and label, more matches come first, even against the alphabet.
+  const twoMatches = clone(equipment);
+  Object.assign(twoMatches, { slug: 'nl-sample-a-loan', name: 'A SAMPLE Loan' });
+  twoMatches.criteria = twoMatches.criteria.filter((c) => c.rule.kind !== 'revenue');
+  const same = matchPrograms([twoMatches, equipment], AUTO(), { now: NOW });
+  assert.deepEqual(same.open.map((r) => [r.slug, r.counts.met]), [['nl-sample-equipment-loan', 3], ['nl-sample-a-loan', 2]]);
+});
 
-  // With no profile nothing is met, so the tier doesn't reorder and funding type decides.
-  const bare = matchPrograms([lender, community], null, { now: NOW });
-  assert.deepEqual(bare.open.map((r) => r.slug), ['nl-sample-community-fund', 'ca-sample-small-lender-loan']);
+test('when a program takes applications never changes its label (round 2); only closed does', async () => {
+  const growth = (await sampleBundlePrograms()).find((p) => p.slug === 'nl-sample-growth-grant');
+  for (const status of ['continuous', 'open', 'upcoming', 'unknown']) {
+    const g = clone(growth);
+    g.intake = status === 'unknown' ? { status, quote: null, source: null, deadline: null } : { ...g.intake, status, deadline: null };
+    const r = evaluateProgram(g, AUTO(), { now: NOW });
+    assert.equal(r.fit.label, 'Looks like a fit', `intake ${status}: ${r.fit.why.join(' | ')}`);
+    assert.ok(!r.fit.why.some((w) => /applications/i.test(w)), `intake ${status}: nothing about applications in why`);
+  }
+  const closed = clone(growth);
+  closed.intake = { ...closed.intake, status: 'closed' };
+  assert.equal(evaluateProgram(closed, AUTO(), { now: NOW }).fit.label, "Doesn't fit");
+});
+
+test('Not enough to go on: 0 matches is never Might fit, and sorts below Might fit and above Doesn\'t fit (round 2)', async () => {
+  const programs = await sampleBundlePrograms();
+  const community = programs.find((p) => p.slug === 'nl-sample-community-fund'); // location + self_check: 1 match
+  const nothing = clone(community);
+  Object.assign(nothing, { slug: 'nl-sample-nothing-to-check', name: 'SAMPLE Fund With Nothing To Check' });
+  nothing.criteria = nothing.criteria.filter((c) => c.rule.kind === 'self_check'); // 0 matches
+  const startup = programs.find((p) => p.slug === 'nl-sample-startup-support'); // Doesn't fit for SAMPLE Auto Service
+
+  const r = evaluateProgram(nothing, AUTO(), { now: NOW });
+  assert.equal(r.counts.met, 0);
+  assert.deepEqual([r.fit.label, r.fit.rank], ['Not enough to go on', 2]);
+  assert.equal(r.fit.why[0], 'Nothing the page asks for could be checked against your answers.');
+  const loc = evaluateProgram(community, AUTO(), { now: NOW });
+  assert.equal(loc.fit.label, 'Might fit', 'a location match is still a match');
+  assert.equal(loc.fit.why[0], 'Only your location matches. Nothing else the page asks for could be checked against your answers.');
+
+  const { open, counts } = matchPrograms([startup, nothing, community], AUTO(), { now: NOW });
+  assert.deepEqual(open.map((x) => x.fit.label), ['Might fit', 'Not enough to go on', "Doesn't fit"]);
+  assert.deepEqual(counts, { looks: 0, might: 1, not_enough: 1, doesnt: 1, closed: 0 });
+});
+
+test('Unknown splits into what the page doesn\'t say and what we didn\'t ask you (round 2)', async () => {
+  const programs = await sampleBundlePrograms();
+  const green = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-green-upgrade-grant'), AUTO(), { now: NOW });
+  assert.deepEqual([green.counts.unknown, green.counts.unknown_page, green.counts.unknown_ask], [2, 1, 1], 'unclear purpose + a self_check');
+  const loan = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-expansion-loan'), DAYCARE(), { now: NOW });
+  assert.deepEqual([loan.counts.unknown_page, loan.counts.unknown_ask], [1, 0], 'a "normally" limit is the page\'s wording');
+  const lender = evaluateProgram(programs.find((p) => p.slug === 'ca-sample-small-lender-loan'), profileFrom(AUTO_QUERY, { revenue: '2m_10m' }), { now: NOW });
+  assert.ok(lender.criteria.some((c) => c.unknown_reason === 'band_straddles'));
+  assert.deepEqual([lender.counts.unknown_page, lender.counts.unknown_ask], [0, 2], 'a straddling band and a self_check are answerable');
+  const unanswered = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-women-entrepreneur-loan'), profileFrom(AUTO_QUERY, { owners: null }), { now: NOW });
+  assert.ok(unanswered.criteria.some((c) => c.unknown_reason === 'not_answered'));
+  assert.equal(unanswered.counts.unknown_page, 0, 'a question you skipped is yours to answer');
+  for (const x of [green, loan, lender, unanswered]) assert.equal(x.counts.unknown, x.counts.unknown_page + x.counts.unknown_ask);
+});
+
+test('top_match: the strongest short quoted match beyond location, never a miss or an Unknown (round 2)', async () => {
+  const programs = await sampleBundlePrograms();
+  const growthRecord = programs.find((p) => p.slug === 'nl-sample-growth-grant');
+  const growth = evaluateProgram(growthRecord, AUTO(), { now: NOW });
+  const c = growth.criteria.find((x) => x.id === growth.top_match.id);
+  assert.equal(growth.top_match.kind, 'purpose', 'what the money is for says most');
+  assert.deepEqual([c.status, growth.top_match.quote, growth.top_match.text, growth.top_match.source_url], ['met', c.quote, c.text, c.source_url]);
+  assert.ok(growth.top_match.quote.length <= 160);
+  assert.equal(evaluateProgram(programs.find((p) => p.slug === 'nl-sample-community-fund'), AUTO(), { now: NOW }).top_match, null, 'location only: no top match');
+  assert.equal(evaluateProgram(growthRecord, null, { now: NOW }).top_match, null, 'no profile: no top match');
+  for (const profile of [AUTO(), DAYCARE()]) {
+    for (const p of programs) {
+      const r = evaluateProgram(p, profile, { now: NOW });
+      const beyond = r.criteria.filter((x) => x.status === 'met' && x.kind !== 'location');
+      if (!r.top_match) { assert.equal(beyond.length, 0, `${p.slug}: a match beyond location but no top match`); continue; }
+      const m = r.criteria.find((x) => x.id === r.top_match.id);
+      assert.equal(m.status, 'met', `${p.slug}`);
+      assert.notEqual(m.kind, 'location', `${p.slug}`);
+    }
+  }
+  // A short quote beats a more telling kind whose quote is long.
+  const longPurpose = clone(growthRecord);
+  longPurpose.criteria.find((x) => x.rule.kind === 'purpose').quote = 'x'.repeat(161);
+  assert.notEqual(evaluateProgram(longPurpose, AUTO(), { now: NOW }).top_match.kind, 'purpose');
 });
 
 test('ProgramResult shape: quotes carry source_url and context; no profile → nulls and zeros', async () => {
@@ -372,7 +451,7 @@ test('ProgramResult shape: quotes carry source_url and context; no profile → n
   const growth = programs.find((p) => p.slug === 'nl-sample-growth-grant');
   const r = evaluateProgram(growth, AUTO(), { now: NOW });
   assert.deepEqual(Object.keys(r), ['slug', 'sample', 'name', 'provider', 'level', 'url', 'summary', 'funding_types', 'best_type', 'intake',
-    'max_amount', 'cost_share', 'contacts', 'criteria', 'counts', 'fit', 'verification', 'unknown_facts', 'sources']);
+    'max_amount', 'cost_share', 'contacts', 'criteria', 'counts', 'fit', 'top_match', 'verification', 'unknown_facts', 'sources']);
   assert.equal(r.best_type, 'non_repayable');
   assert.equal(r.funding_types[0].label, 'Non-repayable');
   assert.equal(r.intake.label, 'Takes applications any time');
@@ -382,14 +461,14 @@ test('ProgramResult shape: quotes carry source_url and context; no profile → n
   assert.deepEqual(r.max_amount.context, { before: '', after: '' }, 'no boundary within 160 characters before; the quote ends its own sentence');
   assert.equal(r.contacts[0].phone, '709-555-0101');
   assert.equal(r.contacts[0].source_url, 'https://sample.invalid/contact/');
-  assert.deepEqual(r.counts, { met: 5, missed: 0, unknown: 1, self_check: 1 });
+  assert.deepEqual(r.counts, { met: 5, missed: 0, unknown: 1, unknown_page: 0, unknown_ask: 1, self_check: 1 });
   assert.deepEqual(r.verification, { last_verified: '2026-09-01', age_days: 13, stale: false, needs_review: false, missing_quotes: 0, last_checked_at: null });
   assert.deepEqual(r.unknown_facts, []);
 
   const bare = evaluateProgram(growth, null, { now: NOW });
   assert.equal(bare.fit, null);
   assert.ok(bare.criteria.every((c) => c.status === null && c.why === null && c.unknown_reason === null));
-  assert.deepEqual(bare.counts, { met: 0, missed: 0, unknown: 0, self_check: 0 });
+  assert.deepEqual(bare.counts, { met: 0, missed: 0, unknown: 0, unknown_page: 0, unknown_ask: 0, self_check: 0 });
 
   const community = evaluateProgram(programs.find((p) => p.slug === 'nl-sample-community-fund'), null, { now: NOW });
   assert.deepEqual(community.unknown_facts, ['intake', 'max_amount', 'cost_share']);

@@ -247,3 +247,24 @@ Looking at the real-data screens: the results line said "Sorted by fit, then mon
 above two non-repayable programs and the sentence was false on screen. Lead fix-forward after the slices closed: the
 line now reads "Sorted by fit, then programs that match more than your location, then money you don't pay back first."
 QA'd in a pinned worktree before the push.
+
+## 29. Round 2: Onyx's review of the real APCO results (lead only, no slices)
+Onyx reviewed the real APCO Software Tools results and asked for five changes; all made in core, app, tests and docs.
+1. **Sort as stated.** The page said "then money you don't pay back first" while loans sat above non-repayable programs
+   (#23's evidence tier). Now: fit, then funding type (non-repayable, repayable, wage subsidy / tax credit, loan, not
+   stated), then more matches. #23's evidence tier and #28's sentence are replaced. Negative control: a loan with more
+   matches must sit below a non-repayable program with the same label.
+2. **Intake timing is not eligibility.** An unstated intake kept every provincial program out of Looks like a fit (0 for
+   APCO). Intake no longer counts toward the label (closed still means Doesn't fit); it is its own line: "When it takes
+   applications: the page doesn't say — call the office to confirm" ("check the official page" when no office is
+   listed). #18's intake rule is replaced. Unknown is still never counted as met for real criteria.
+3. **Unknown split** into "the page doesn't say" (unclear wording) and "we didn't ask you" (check-yourself items,
+   skipped or unsure answers, bands on both sides of a limit), on cards and program pages, so an owner sees which ones
+   they can answer.
+4. **Not enough to go on**: a program with 0 matches (the Innovation and Business Development Fund) is no longer Might
+   fit; it sorts below Might fit. The lead first also put location-only programs there; on the real APCO profile that
+   made 12 of 22 open programs "Not enough to go on", mostly because the profile left structure and revenue unanswered,
+   so it was narrowed to Onyx's rule (0 matches). A location-only match stays Might fit with "Only your location
+   matches." and still can't be Looks like a fit.
+5. **Each card shows its strongest quoted match** (`top_match`): a met condition beyond location, short quote first,
+   then what the money is for, ownership, industry, size, revenue, years, project cost, structure.

@@ -5,7 +5,8 @@ import { STRUCTURES, YEARS, REVENUE, COST, OWNERS, PURPOSES, FUNDING_TYPES } fro
 export const FIT = {
   looks: { label: 'Looks like a fit', rank: 0 },
   might: { label: 'Might fit', rank: 1 },
-  doesnt: { label: 'Doesn\'t fit', rank: 2 },
+  notEnough: { label: 'Not enough to go on', rank: 2 },
+  doesnt: { label: 'Doesn\'t fit', rank: 3 },
 };
 
 export const INTAKE_LABELS = {
@@ -16,7 +17,14 @@ export const INTAKE_LABELS = {
   unknown: 'The page doesn\'t say',
 };
 
-export const TYPE_RANK = { non_repayable: 0, wage_subsidy: 1, tax_credit: 2, repayable: 3, loan: 4 };
+// Round 2 (DECISIONS #29): money you don't pay back first, then repayable, then wage subsidy and tax credit, then loans.
+export const TYPE_RANK = { non_repayable: 0, repayable: 1, wage_subsidy: 2, tax_credit: 2, loan: 3 };
+export const NO_TYPE_RANK = 4;
+// Which Unknowns an owner can settle (round 2, API §6): the page's own wording, or something the form didn't ask them.
+export const UNKNOWN_GROUP = { unclear: 'page', self_check: 'ask', not_answered: 'ask', band_straddles: 'ask' };
+// A card's strongest match (round 2): what the money is for says most about why a program fits; structure says least.
+const TOP_MATCH_KIND = { purpose: 0, ownership: 1, industry: 2, employees: 3, revenue: 4, years_operating: 5, project_cost: 6, structure: 7 };
+export const SHORT_QUOTE = 160;
 export const STALE_DAYS = 60;
 const DAY_MS = 86400000;
 const TIME_ZONE = 'America/St_Johns';
@@ -287,17 +295,19 @@ export function evaluateProgram(program, profile, { now, sourceStatus = {} } = {
   };
 
   // Criteria.
-  const counts = { met: 0, missed: 0, unknown: 0, self_check: 0 };
+  const counts = { met: 0, missed: 0, unknown: 0, unknown_page: 0, unknown_ask: 0, self_check: 0 };
   const criteria = program.criteria.map((c) => {
     const ev = profile ? evaluateCriterion(c, profile) : { status: null, unknown_reason: null, why: null };
     if (profile) {
       counts[ev.status] += 1;
+      if (ev.status === 'unknown') counts[UNKNOWN_GROUP[ev.unknown_reason] === 'page' ? 'unknown_page' : 'unknown_ask'] += 1;
       if (ev.unknown_reason === 'self_check') counts.self_check += 1;
     }
     return { id: c.id, text: c.text, kind: c.rule.kind, rule: c.rule, ...ev, ...q(c) };
   });
 
   const fit = profile ? fitFor({ criteria, intake, verification }) : null;
+  const topMatch = profile ? topMatchOf(criteria) : null;
 
   const fundingTypes = program.funding_types.map((f) => ({
     type: f.type, label: labelOf(FUNDING_TYPES, f.type), applies_to: f.applies_to ?? null, ...q(f),
@@ -330,6 +340,7 @@ export function evaluateProgram(program, profile, { now, sourceStatus = {} } = {
     criteria,
     counts,
     fit,
+    top_match: topMatch,
     verification,
     unknown_facts: unknownFacts,
     sources: program.sources.map((s) => ({ id: s.id, url: s.url, title: s.title, publisher: s.publisher, fetched_at: s.fetched_at })),
@@ -341,6 +352,7 @@ function fitFor({ criteria, intake, verification }) {
   const checkable = criteria.filter((c) => c.unknown_reason !== 'self_check');
   const unknown = checkable.filter((c) => c.status === 'unknown');
   const selfChecks = criteria.filter((c) => c.unknown_reason === 'self_check');
+  const selfCheckLine = () => `Check ${selfChecks.length === 1 ? '1 thing' : `${selfChecks.length} things`} yourself.`;
   const why = [];
 
   if (intake.status === 'closed') {
@@ -353,36 +365,48 @@ function fitFor({ criteria, intake, verification }) {
     return { ...FIT.doesnt, why };
   }
 
+  // When a program takes applications is not an eligibility condition (round 2, DECISIONS #29). It is shown as its own
+  // line and never moves a program between labels; only a closed program (above) is Doesn't fit.
   for (const c of unknown) {
     if (c.unknown_reason === 'band_straddles') why.push(`Unknown: your answer is close to the page's limit. ${c.text}.`);
     else if (c.unknown_reason === 'unclear') why.push(`Unknown: the page's wording doesn't settle it for your answer. ${c.text}.`);
     else why.push(`Unknown: you didn't answer this or weren't sure. ${c.text}.`);
   }
-  const allMet = unknown.length === 0;
-  const beyondLocation = checkable.some((c) => c.kind !== 'location');
-  if (!beyondLocation) {
-    why.push(checkable.length
-      ? 'Only your location can be checked against the page.'
-      : 'None of the page\'s conditions can be checked from your answers.');
-  }
-  const intakeOk = intake.status === 'open' || intake.status === 'continuous';
-  if (!intakeOk) {
-    why.push(intake.status === 'upcoming'
-      ? 'Not open for applications yet.'
-      : 'The page doesn\'t say whether it is taking applications.');
-  }
   if (verification.stale) why.push(`Last verified ${verification.age_days} days ago, more than ${STALE_DAYS} days. Check the official page.`);
   if (verification.needs_review) why.push('The page has changed or gone since we checked it. Check the official page.');
 
-  if (allMet && beyondLocation && intakeOk && !verification.stale && !verification.needs_review) {
+  // Not enough to go on (round 2, DECISIONS #29): nothing matched at all, so there is nothing to go on.
+  if (!criteria.some((c) => c.status === 'met')) {
+    why.unshift('Nothing the page asks for could be checked against your answers.');
+    if (selfChecks.length) why.push(selfCheckLine());
+    return { ...FIT.notEnough, why };
+  }
+  // A location match is real but true of every business in the province, so on its own it can't make Looks like a fit.
+  const beyondLocation = criteria.some((c) => c.status === 'met' && c.kind !== 'location');
+  if (!beyondLocation) why.unshift('Only your location matches. Nothing else the page asks for could be checked against your answers.');
+
+  if (unknown.length === 0 && beyondLocation && !verification.stale && !verification.needs_review) {
     const looks = ['Everything your answers can check matches the page.'];
-    if (selfChecks.length) {
-      looks.push(`Check ${selfChecks.length === 1 ? '1 thing' : `${selfChecks.length} things`} yourself.`);
-    }
+    if (selfChecks.length) looks.push(selfCheckLine());
     return { ...FIT.looks, why: looks };
   }
-  if (selfChecks.length) why.push(`Check ${selfChecks.length === 1 ? '1 thing' : `${selfChecks.length} things`} yourself.`);
+  if (selfChecks.length) why.push(selfCheckLine());
   return { ...FIT.might, why };
+}
+
+/**
+ * topMatchOf(criteria) → the single strongest short quoted match for a results card (round 2), or null.
+ * A met criterion beyond location: a quote of at most SHORT_QUOTE characters first, then the most telling kind
+ * (TOP_MATCH_KIND), then the shorter quote, then id. Never a missed or Unknown criterion, never location.
+ */
+export function topMatchOf(criteria) {
+  const met = criteria.filter((c) => c.status === 'met' && Object.hasOwn(TOP_MATCH_KIND, c.kind));
+  if (!met.length) return null;
+  const best = [...met].sort((a, b) => (a.quote.length > SHORT_QUOTE) - (b.quote.length > SHORT_QUOTE)
+    || TOP_MATCH_KIND[a.kind] - TOP_MATCH_KIND[b.kind]
+    || a.quote.length - b.quote.length
+    || a.id.localeCompare(b.id))[0];
+  return { id: best.id, text: best.text, kind: best.kind, quote: best.quote, source: best.source, source_url: best.source_url, context: best.context };
 }
 
 // ---- many programs -------------------------------------------------------------------------------------------
@@ -392,24 +416,19 @@ export function matchPrograms(programs, profile, opts = {}) {
   const results = programs.map((p) => evaluateProgram(p, profile, opts));
   const open = results.filter((r) => r.intake.status !== 'closed');
   const closed = results.filter((r) => r.intake.status === 'closed');
-  const typeRank = (r) => (r.best_type === null ? 5 : TYPE_RANK[r.best_type]);
+  const typeRank = (r) => (r.best_type === null ? NO_TYPE_RANK : TYPE_RANK[r.best_type]);
   const fitRank = (r) => (r.fit ? r.fit.rank : 0);
-  // Evidence tier (API §5, DECISIONS #23): 0 when at least one met criterion is a checkable kind other than location,
-  // so a program only your location can be checked against sorts after real matches with the same label.
-  const evidence = (r) => (r.criteria.some((c) => c.status === 'met' && c.kind !== 'location' && c.kind !== 'self_check') ? 0 : 1);
+  // Round 2 (DECISIONS #29, API §5): fit, then funding type, then more matches. A loan with more matches still sits below
+  // a non-repayable program with the same label. Replaces #23's evidence tier: "Not enough to go on" now carries that.
   open.sort((a, b) => fitRank(a) - fitRank(b)
-    || evidence(a) - evidence(b)
     || typeRank(a) - typeRank(b)
+    || b.counts.met - a.counts.met
     || a.counts.missed - b.counts.missed
     || a.counts.unknown - b.counts.unknown
     || a.name.localeCompare(b.name, 'en'));
   closed.sort((a, b) => a.name.localeCompare(b.name, 'en'));
-  const counts = { looks: 0, might: 0, doesnt: 0, closed: closed.length };
-  for (const r of open) {
-    if (!r.fit) continue;
-    if (r.fit.rank === 0) counts.looks += 1;
-    else if (r.fit.rank === 1) counts.might += 1;
-    else counts.doesnt += 1;
-  }
+  const counts = { looks: 0, might: 0, not_enough: 0, doesnt: 0, closed: closed.length };
+  const byRank = ['looks', 'might', 'not_enough', 'doesnt'];
+  for (const r of open) if (r.fit) counts[byRank[r.fit.rank]] += 1;
   return { open, closed, counts };
 }
