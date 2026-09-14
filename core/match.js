@@ -348,9 +348,9 @@ function fitFor({ criteria, intake, verification }) {
   }
 
   for (const c of unknown) {
-    if (c.unknown_reason === 'band_straddles') why.push(`Unknown, your answer is close to the page's limit: ${c.text}.`);
-    else if (c.unknown_reason === 'unclear') why.push(`Unknown, the page's wording doesn't settle it for your answer: ${c.text}.`);
-    else why.push(`Unknown, you didn't answer this: ${c.text}.`);
+    if (c.unknown_reason === 'band_straddles') why.push(`Unknown: your answer is close to the page's limit. ${c.text}.`);
+    else if (c.unknown_reason === 'unclear') why.push(`Unknown: the page's wording doesn't settle it for your answer. ${c.text}.`);
+    else why.push(`Unknown: you didn't answer this or weren't sure. ${c.text}.`);
   }
   const allMet = unknown.length === 0;
   const beyondLocation = checkable.some((c) => c.kind !== 'location');
