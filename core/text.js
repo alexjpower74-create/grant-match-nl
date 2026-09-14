@@ -18,12 +18,15 @@ const NAMED_ENTITIES = {
   Ccedil: 'Ç', euml: 'ë', iuml: 'ï', ouml: 'ö', uuml: 'ü',
 };
 
-const ELEMENT_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])[^>]*>[\\s\\S]*?<\\/\\1\\s*>`, 'gi');
+// The inside of a tag: anything up to the first `>` that is outside a quoted attribute value (API §1). Pages put `>`
+// and whole escaped HTML inside data-* attributes, and that must never become page text.
+const ATTRS = `(?:"[^"]*"|'[^']*'|[^'">])*`;
+const ELEMENT_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])${ATTRS}>[\\s\\S]*?<\\/\\1\\s*>`, 'gi');
 // An unclosed removed element (e.g. a truncated page) swallows to the end, as a browser would.
-const UNCLOSED_ELEMENT_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])[^>]*>[\\s\\S]*$`, 'gi');
-const SELF_CLOSED_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])[^>]*\\/>`, 'gi');
-const INLINE_RE = new RegExp(`<\\/?(?:${INLINE_TAGS.join('|')})(?=[\\s/>])[^>]*>`, 'gi');
-const OTHER_TAG_RE = /<\/?[a-zA-Z][^>]*>|<![^>]*>|<\?[^>]*>/g;
+const UNCLOSED_ELEMENT_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])${ATTRS}>[\\s\\S]*$`, 'gi');
+const SELF_CLOSED_RE = new RegExp(`<(${REMOVED_ELEMENTS.join('|')})(?=[\\s/>])${ATTRS}\\/>`, 'gi');
+const INLINE_RE = new RegExp(`<\\/?(?:${INLINE_TAGS.join('|')})(?=[\\s/>])${ATTRS}>`, 'gi');
+const OTHER_TAG_RE = new RegExp(`<\\/?[a-zA-Z]${ATTRS}>|<![^>]*>|<\\?[^>]*>`, 'g');
 const ENTITY_RE = /&(?:#(\d+)|#[xX]([0-9a-fA-F]+)|([a-zA-Z][a-zA-Z0-9]*));/g;
 
 function decodeEntities(s) {
