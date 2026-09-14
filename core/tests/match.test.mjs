@@ -326,6 +326,23 @@ test('sort order: fit, then non-repayable before loan, then fewer missed and unk
   assert.deepEqual(counts, { looks: 3, might: 1, doesnt: 3, closed: 1 });
 });
 
+test('evidence tier: a location-only program sorts after a checked match with the same label, before funding type', async () => {
+  const programs = await sampleBundlePrograms();
+  const community = programs.find((p) => p.slug === 'nl-sample-community-fund'); // non-repayable; only location is checkable
+  const lender = clone(programs.find((p) => p.slug === 'ca-sample-small-lender-loan')); // a loan; revenue and industry are checkable
+  lender.intake = { status: 'unknown', quote: null, source: null, deadline: null };
+
+  const { open } = matchPrograms([community, lender], AUTO(), { now: NOW });
+  assert.deepEqual(open.map((r) => [r.slug, r.fit.label]), [
+    ['ca-sample-small-lender-loan', 'Might fit'],
+    ['nl-sample-community-fund', 'Might fit'],
+  ], 'same label: the checked loan outranks the location-only non-repayable program');
+
+  // With no profile nothing is met, so the tier doesn't reorder and funding type decides.
+  const bare = matchPrograms([lender, community], null, { now: NOW });
+  assert.deepEqual(bare.open.map((r) => r.slug), ['nl-sample-community-fund', 'ca-sample-small-lender-loan']);
+});
+
 test('ProgramResult shape: quotes carry source_url and context; no profile → nulls and zeros', async () => {
   const programs = await sampleBundlePrograms();
   const growth = programs.find((p) => p.slug === 'nl-sample-growth-grant');
