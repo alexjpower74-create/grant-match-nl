@@ -54,6 +54,48 @@ export function pageText(html) {
   return s.replace(/\s+/g, ' ').trim();
 }
 
+const BLOCK_TAGS = new Set([
+  'p', 'li', 'ul', 'ol', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'section', 'article', 'aside',
+  'nav', 'header', 'footer', 'main', 'table', 'tr', 'td', 'th', 'br', 'hr', 'blockquote', 'pre', 'form', 'fieldset',
+  'figure', 'figcaption', 'address',
+]);
+const TAG_NAME_RE = /^<\/?([a-zA-Z][a-zA-Z0-9]*)/;
+
+/**
+ * Page text with block edges as "\n" (docs/API.md §1). Exactly the pageText steps, except that a block tag becomes
+ * a marker instead of a space; a whitespace run containing a marker collapses to "\n", any other run to one space.
+ * The marker is a private-use character absent from the page (and not produced by its entities), so source newlines
+ * never become block edges and blockText(html).replace(/\n/g, ' ') === pageText(html) with identical indexes.
+ */
+export function blockText(html) {
+  const src = String(html ?? '');
+  for (let cp = 0xe000; cp <= 0xf8ff; cp++) {
+    const mark = String.fromCodePoint(cp);
+    if (src.includes(mark)) continue;
+    let inserted = 0;
+    let s = src;
+    s = s.replace(/<!--[\s\S]*?-->/g, '');
+    s = s.replace(SELF_CLOSED_RE, '');
+    s = s.replace(ELEMENT_RE, '');
+    s = s.replace(UNCLOSED_ELEMENT_RE, '');
+    s = s.replace(INLINE_RE, '');
+    s = s.replace(OTHER_TAG_RE, (tag) => {
+      const name = tag.match(TAG_NAME_RE)?.[1];
+      if (name && BLOCK_TAGS.has(name.toLowerCase())) {
+        inserted += 1;
+        return mark;
+      }
+      return ' ';
+    });
+    s = decodeEntities(s);
+    if (s.split(mark).length - 1 !== inserted) continue; // an entity produced the marker: pick another
+    s = s.replace(/[   ]/g, ' ').replace(/[​﻿]/g, '');
+    s = s.replace(new RegExp(`[\\s${mark}]+`, 'g'), (run) => (run.includes(mark) ? '\n' : ' '));
+    return s.replace(/^[ \n]+|[ \n]+$/g, '');
+  }
+  throw new Error('blockText: no free marker character');
+}
+
 const MULTIPLIERS = { thousand: 1e3, million: 1e6, billion: 1e9 };
 const NUMBER_RE = /(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)(?:\s*(thousand|million|billion)\b)?/gi;
 

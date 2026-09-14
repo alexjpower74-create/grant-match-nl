@@ -1,8 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { pageText, numbersIn, contextFor } from '../text.js';
+import fs from 'node:fs';
+import path from 'node:path';
+import { pageText, blockText, numbersIn, contextFor } from '../text.js';
 import { sha256Hex } from '../hash.js';
-import { sampleHtml } from './helpers.mjs';
+import { sampleHtml, ROOT } from './helpers.mjs';
 
 test('pageText: inline tags join, block tags become one space', () => {
   assert.equal(pageText('<p>Sm<b>all</b> <span>bus</span>iness</p><div>a</div><div>b</div>'), 'Small business a b');
@@ -20,6 +22,40 @@ test('pageText: a tag ends at the first > outside a quoted attribute value', () 
   const escaped = '<div class="cmp" data-cmp-data-layer="{&quot;h&quot;:&quot;&lt;p&gt;Duplicate sentence.&lt;/p&gt;&quot;, &quot;x&quot;: &quot;&gt;&quot;}">Real sentence.</div>';
   assert.equal(pageText(escaped), 'Real sentence.', 'escaped HTML in a data attribute never leaks');
   assert.equal(pageText('<p class="a" id=b>Text</p>'), 'Text', 'unquoted attributes still end at >');
+});
+
+test('blockText: block edges become one \\n, everything else as pageText', () => {
+  assert.equal(blockText('<p>One</p><p>Two</p>'), 'One\nTwo');
+  assert.equal(blockText('<ul>\n  <li>Central: 1</li>\n  <li>Eastern: 2</li>\n</ul>'), 'Central: 1\nEastern: 2', 'a run with an edge is one \\n');
+  assert.equal(blockText('<p>Sm<b>all</b> <span>bus</span>iness</p>'), 'Small business', 'inline tags still join');
+  assert.equal(blockText('<p>line one\nline two</p>'), 'line one line two', 'a newline in the source is not a block edge');
+  assert.equal(blockText('Call us<br>709-555-0101'), 'Call us\n709-555-0101');
+  assert.equal(blockText('<p>a <x-card>b</x-card> c</p>'), 'a b c', 'unknown tags stay a space');
+  assert.equal(blockText('<td>a</td><td>b</td><x-card>c</x-card>'), 'a\nb\nc', 'a run touching an edge is one \\n even with other tags in it');
+  assert.equal(blockText('<div data-x="a > b">Hello</div><div>world</div>'), 'Hello\nworld');
+  assert.equal(blockText('\n<main>\n<h1>T</h1>\n</main>\n'), 'T', 'trimmed both ends');
+  assert.equal(blockText('<p>&#xE000;</p><p>x</p>'), '\nx', 'an entity that makes the marker character is kept as text');
+  for (const html of [
+    '<p>One</p><p>Two</p>', '<p>a&nbsp;  b</p><div>​c﻿</div>', '<nav><a>Home</a> &gt; <a>Funding</a>:</nav><p>Closed.</p>',
+    '<!-- x --><head><title>t</title></head><body>\n<p>x</p>\n\n<p>y</p></body>', '<p>&#xE000; and </p><br/><hr>z',
+  ]) {
+    assert.equal(blockText(html).replace(/\n/g, ' '), pageText(html), html);
+  }
+});
+
+test('blockText invariant over every saved page: blockText(html) with \\n as spaces === pageText(html)', () => {
+  const dirs = [path.join(ROOT, 'data', 'sources'), path.join(ROOT, 'core', 'tests', 'fixtures', 'sources')];
+  let n = 0;
+  for (const dir of dirs) {
+    for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.html')).sort()) {
+      const html = fs.readFileSync(path.join(dir, f), 'utf8');
+      const block = blockText(html);
+      assert.equal(block.replace(/\n/g, ' '), pageText(html), `${f}: blockText and pageText differ`);
+      assert.ok(!/\n\n| \n|\n /.test(block), `${f}: a whitespace run with an edge must be exactly one \\n`);
+      n += 1;
+    }
+  }
+  assert.ok(n >= 65, `checked ${n} pages (54 saved .html in data/sources, the census source is a zip, plus 11 SAMPLE)`);
 });
 
 test('pageText: entities, &nbsp; and invisible characters', () => {
