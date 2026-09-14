@@ -1,8 +1,25 @@
 # Build report — Grant Match NL (overnight, 2026-09-14)
 
-**DRAFT, in progress.** Lead: Onyx (Opus 5, xhigh). Slices: gm1 engine + NL programs, gm2 Worker + app + federal
+Lead: Onyx (Opus 5, xhigh). Slices: gm1 engine + NL programs, gm2 Worker + app + federal
 programs (Opus 5, medium), each in its own worktree on its own ports. Every number here comes from a QA worktree
 pinned to a sha (`rig qa`), never from a shared tree. Per-slice detail: `docs/build-report-gm1.md`, `-gm2.md`.
+
+## Final QA
+
+Pinned QA worktree at **`952c679`** (main after the last merge), QA ports 7406–7409, run by the lead's `final-qa.sh`:
+
+| Suite | Tests | Pass | Fail | Skipped |
+|---|---|---|---|---|
+| `build-data` (every quote on its saved page) | 27 real + 10 SAMPLE programs | all verified | 0 | — |
+| Core (`node --test core/tests`) | 73 | 73 | 0 | 0 |
+| Worker on SAMPLE data (own `wrangler dev --local`, fixture server, `--test-scheduled`) | 16 | 15 | 0 | 1 (real-data test) |
+| Worker on real data (`GM_REAL=1`) | 1 | 1 | 0 | 0 |
+| App, Playwright: chromium-390, chromium-1280, webkit-390, webkit-1280 | 116 | 100 | 0 | 16 by design |
+| App against a real local Worker, SAMPLE data | 4 | 4 | 0 | 0 |
+| App against a real local Worker, real data (27 programs) | 4 | 4 | 0 | 0 |
+
+**Why 16 skips:** 390-only tap-target and horizontal-scroll checks don't run in the 1280 projects, the one-page PDF check
+runs in chromium only, and `live.spec.mjs` is run separately with `GM_API` (the two live rows). None hides a failure.
 
 ## QA history (each merge QA'd first)
 
@@ -27,6 +44,8 @@ Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee
 
 ## Negative controls
 
+Every row below was made red on purpose, restored byte for byte, and re-run green. Full tables: the slice reports.
+
 **Lead**, on the brief's own gate, QA worktree at `1d0fc50`: one character changed in a SAMPLE criterion quote
 (`nl-sample-growth-grant.json` criteria[1], "partnerships" → "partnxrships") → `node scripts/build-data.mjs --check`
 exit 1: "criteria[1].quote: this quote is not in the page text of nl-sample-growth-grant--main (it matches up to
@@ -44,6 +63,20 @@ test red, (c) open/closed swapped → both deep-equal tests red. App (a) `<mark>
 → first VOID (the short printout fit one page unstyled), test fixed to count pages first on the fullest SAMPLE printout,
 then red "printed pages, Expected 1, Received 2".
 
+**gm1, later rounds:** (k) `unclear` treated as met → "an unclear answer is never Looks like a fit"; (l) a `Crawl-delay` placed
+before any `User-agent` ignored → the cbdc.ca-shaped robots test; (m) no URL de-dup → "a URL shared by several sources is
+fetched once per run"; (n) context falling back to a raw window → "never menu text"; (o) a tag ending at any `>` → the
+attribute test; (p) scan refusing on another set's problems → "--sample scans even when the real data has a problem";
+(q) `normally` ignored → "a program whose only miss is a normally limit is Might fit"; (r) purpose `unclear` treated as
+missed; (s) evidence tier removed → the sort test; (t) a fixture without `normally` → the SAMPLE `unclear` test;
+(u) context allowed across block edges → CanExport's breadcrumb came back; (v) contacts keeping context → red at
+`ca-nrc-irap`; (w) `<br>` not marking an edge → the page-wide `blockText` invariant failed on a real saved page.
+
+**gm2, later rounds:** (e) verification flag shown with a profile; (f) BDC terms link removed from "left out"; (g) unknown
+intake back to a bare "The page doesn't say"; (h) the no-type line removed; (i) a phone number allowed to wrap on the
+printout (red at chromium-390, "Received: 2" lines); plus the round 7–8 controls in `docs/build-report-gm2.md` (why shown
+again for check-yourself items, multi-contact line shown for a single contact).
+
 ## Cross-reviews that found real defects
 - Lead on gm1's engine: a failed live check cleared "the page has changed", and a 404 flagged nothing → `page_gone`,
   failed checks keep the count (DECISIONS #16–17).
@@ -57,7 +90,13 @@ then red "printed pages, Expected 1, Received 2".
 - gm2's own suites: community list under the next card (stacking context), WebKit taps never picking a community, and
   three specs that could hit-test an empty page.
 
-## Still to do
-Programs 4–15 (gm1) and the federal programs (gm2) · gm2's cross-review of gm1's programs and gm1's of gm2's · final QA
-on main (core, Worker incl. `GM_REAL=1`, app incl. `live.spec.mjs` against a real local Worker) · real `npm run scan`
-into the local Worker · README, private repo, status file.
+## Known gaps
+- Most provincial pages don't say when applications are taken, so most real results are Might fit (by design, #18).
+- Facts that exist only in PDFs (fact sheets, guidelines, application guides) weren't read and show as Unknown.
+- CBDC contacts list the Central Newfoundland offices the research covered (Grand Falls-Windsor, Gander, Baie Verte,
+  Springdale); other regions' CBDCs aren't listed.
+- Readability leftovers (#27): long pages at 390 where long quotes repeat; three federal list quotes join a lead-in with
+  its items.
+- Left out by their terms: BDC, Futurpreneur, Ulnooweg, takeCHARGE. NLOWE unreachable from this machine.
+- Deploy-time items (docs/DEPLOY.md): the admin scan runs inside the request (move to `waitUntil`), D1 status folds the
+  newest 50 runs, and #12 (Government of Canada reproduction terms) must be decided before a public deploy.

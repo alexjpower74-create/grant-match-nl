@@ -28,7 +28,7 @@ writing anything; `npm run scan -- --dry` re-reads the pages without touching th
   cost share, each eligibility rule, each phone number) carries a quote that must be an exact substring of that
   saved page's text; `npm run check:data` fails the build otherwise. Numbers in a rule must also be written inside
   its own quote. Anything a page doesn't say is **Unknown**, and Unknown is never counted as met.
-- **SAMPLE:** 8 made-up programs in `core/tests/fixtures/` (names start `SAMPLE `, pages on `sample.invalid`) for
+- **SAMPLE:** 10 made-up programs in `core/tests/fixtures/` (names start `SAMPLE `, pages on `sample.invalid`) for
   tests and `?mock=1`, and the test profiles "SAMPLE Auto Service" and "SAMPLE Daycare". A banner says so on screen.
 - **The one real profile:** APCO Software Tools (DECISIONS.md #14), used for real-data screenshots; its structure,
   purpose and community are the lead's reading, not Alexander's answers.
@@ -37,6 +37,7 @@ writing anything; `npm run scan -- --dry` re-reads the pages without touching th
 
 Checked against their live pages on 2026-09-14. The weekly live check (Worker cron, or `npm run scan`) flags a
 program when its page changes or disappears, and anything verified more than 60 days ago is flagged on screen.
+27 programs, 154 eligibility criteria, 53 saved official pages, 288 quotes.
 
 **Newfoundland and Labrador (19)**
 
@@ -71,7 +72,7 @@ program when its page changes or disappears, and anything verified more than 60 
 | Canada Digital Adoption Program (CDAP) | Innovation, Science and Economic Development Canada | Page doesn't say | Closed | — | `ca-canada-digital-adoption-program` |
 | Canada Small Business Financing Program (CSBFP) | Innovation, Science and Economic Development Canada | Loan | Page doesn't say | Up to $1.15 million per borrower (up to $1,000,000 in term loans and $150,000 in lines of credit) | `ca-canada-small-business-financing-program` |
 | Canada Summer Jobs | Employment and Social Development Canada | Wage subsidy | Closed | — | `ca-canada-summer-jobs` |
-| CanExport SMEs | Trade Commissioner Service, Global Affairs Canada | Page doesn't say | Closed | Up to $50,000 per project | `ca-canexport-smes` |
+| CanExport SMEs | Trade Commissioner Service, Global Affairs Canada | Page doesn't say | Closed (deadline 2026-08-31) | Up to $50,000 per project | `ca-canexport-smes` |
 | NRC Industrial Research Assistance Program (NRC IRAP) | National Research Council Canada | Page doesn't say | Page doesn't say | — | `ca-nrc-irap` |
 | Scientific Research and Experimental Development (SR&ED) investment tax credit | Canada Revenue Agency | Tax credit | Page doesn't say | — | `ca-sred-investment-tax-credit` |
 
@@ -96,7 +97,21 @@ say when applications are taken, so most real results are Might fit: that's the 
 
 ## Tests
 
-FINAL QA NUMBERS PENDING (lead fills these from the pinned QA worktree before the repo is pushed).
+Final QA in a worktree pinned to **`952c679`** (main after the last merge), QA ports 7406–7409:
+
+| Suite | Command | Result |
+|---|---|---|
+| Every quote on its saved page | `npm run check:data` | 27 real + 10 SAMPLE programs, every quote verified |
+| Core: page text, quote checks, profile, matching, live checks, scan | `npm run test:core` | 73 pass, 0 fail |
+| Worker API on SAMPLE data (own `wrangler dev --local`, fixture server, cron trigger) | `npm run test:worker` | 15 pass, 0 fail, 1 skipped (the real-data test, run next) |
+| Worker API on the real data | `npm run build:data && GM_REAL=1 npm --prefix worker test` | 1 / 1 (27 programs answer, every criterion quoted, CDAP closed) |
+| App, Playwright: chromium + webkit, phone 390 + desktop 1280, real taps and typing | `npm run test:app` | 100 pass, 0 fail, 16 skipped by design |
+| App against a real local Worker | `GM_API=http://127.0.0.1:7402 npx playwright test -c app/playwright.config.mjs live` | 4 / 4 on SAMPLE data, 4 / 4 on real data |
+
+The skips are by design: 390-only tap-target and scroll checks don't run at 1280, the one-page PDF check runs in
+chromium only, and the live spec needs `GM_API`. Every important check was made to fail once on purpose (a planted
+quote turns the build red, Unknown counted as met turns the fit test red, a 30 px chip turns the tap-target test red,
+and about forty more); `docs/build-report.md` lists them.
 
 ## What deploying needs
 
@@ -107,14 +122,17 @@ canada.ca, nrc.canada.ca and ised-isde.canada.ca allow non-commercial reproducti
 
 ## Where to pick this up
 
-1. **Decide #12** (quoting Government of Canada pages on a commercial site): quote as review, ask the publishers, or
-   prefer Open Government Licence pages.
+1. **Decide DECISIONS.md #12** (quoting Government of Canada pages on a commercial site): quote as review, ask the
+   publishers, or prefer Open Government Licence pages.
 2. **Permissions** that would add programs: BDC, Futurpreneur (youth), Ulnooweg (Indigenous), takeCHARGE (energy);
    check NLOWE (women) from another network.
-3. **Re-research** a program when the live check flags it, and every two months regardless: `PLAN.md`, "How to
-   research a program". The Summer Employment Program for Students and Canada Summer Jobs need new records when their
-   2027 intakes are posted.
-4. **Deploy** with `docs/DEPLOY.md` when you say so.
+3. **Readability** (DECISIONS #27): some program pages are long at phone width because long quotes repeat; three
+   federal list quotes still join a lead-in with its items. One quote per fact in the data, or a collapsed quote in the
+   app, fixes both.
+4. **Re-research** a program when the live check flags it, and every two months regardless: `PLAN.md`, "How to research
+   a program". Canada Summer Jobs, the Summer Employment Program for Students and CanExport SMEs need new records when
+   their next intakes are posted.
+5. **Deploy** with `docs/DEPLOY.md` when you say so.
 
 ## Map
 
