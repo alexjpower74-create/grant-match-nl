@@ -52,14 +52,13 @@ body {
   color: var(--text);
   background: var(--bg);
   font-variant-numeric: tabular-nums;
-  overflow-x: hidden;
 }
 
-/* Faint aurora, fixed behind everything. */
+/* Faint aurora, fixed behind everything, kept inside the viewport so it can never widen the page. */
 body::before {
   content: '';
   position: fixed;
-  inset: -20vh -20vw auto -20vw;
+  inset: 0 0 auto 0;
   height: 80vh;
   pointer-events: none;
   z-index: -1;
