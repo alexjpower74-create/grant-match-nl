@@ -113,6 +113,45 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Phase 2 research: 8 federal programs, DONE
+Researched with gm1's tools (`fetch-source.mjs` per host with its own state file, one page at a time per host; `show-text.mjs`;
+`check:data` green before every commit: "every quote verified (11 real programs, 8 SAMPLE)"). 16 official pages saved.
+No BDC, Futurpreneur or Ulnooweg page is used anywhere. No Crawl-delay 20 host was needed: search.open.canada.ca has
+no robots.txt (404), and open.canada.ca and www.ic.gc.ca were not fetched.
+- **`ca-acoa-business-development-program`** (`bfe0bd1`): sources `main`, `contacts`; type repayable; intake **unknown**; criteria 3 (1 checkable / 2 check-yourself); contacts 2. Left out: the 75% "interest-free contribution" (page doesn't say if repaid), the non-profit stream, any dollar maximum (none stated).
+- **`ca-acoa-regi`** (`717fcf1`): sources `main`, `contacts`; type repayable; intake **unknown**; criteria 4 (1 checkable / 3 check-yourself); contacts 2. Left out: the Regional Innovation Ecosystems stream (non-profits only), the Indigenous "extra support" line (not a rule).
+- **`ca-nrc-irap`** (`643ef9c`): sources `main`; type Unknown; intake **unknown**; criteria 7 (4 checkable / 3 check-yourself); contacts 1. Left out: funding type (the page says "funding", never repayable or not), amount, intake.
+- **`ca-canexport-smes`** (`32feb57`): sources `main`, `guide`; type Unknown; intake **closed**; criteria 7 (5 checkable / 2 check-yourself); contacts 1. Left out: funding type (guide never says non-repayable), a partnership rule (profile can't tell an LLP from other partnerships: check-yourself until `unclear`).
+- **`ca-canada-summer-jobs`** (`2f999db`): sources `who-can-apply`, `apply`, `about`; type wage_subsidy; intake **closed**; criteria 3 (1 checkable / 2 check-yourself); contacts 0. Left out: an employees rule (the 50 limit is private-sector only: check-yourself), not-for-profits' 100% rate (notes), location (national).
+- **`ca-canada-digital-adoption-program`** (`f8e02f4`): sources `qp-note`, `pia`; type Unknown; intake **closed**; criteria 2 (1 checkable / 1 check-yourself); contacts 0. Left out: funding type (the note says "grants" but not non-repayable), BDC's closure page (terms), Grow Your Business Online "remains open" as of Jun 20, 2024 (notes).
+- **`ca-canada-small-business-financing-program`** (`e6e6bca`): sources `loans`, `faq`; type loan; intake **unknown**; criteria 4 (2 checkable / 2 check-yourself); contacts 0. Left out: a structure rule (every structure and start-ups eligible), a NAICS 11 rule (farming is narrower: check-yourself), sub-limits (amount text).
+- **`ca-sred-investment-tax-credit`** (`7b916f8`): sources `main`; type tax_credit; intake **unknown**; criteria 3 (1 checkable / 2 check-yourself); contacts 0. Left out: the 35% rate as a rule (needs a CCPC: check-yourself), what work qualifies (separate CRA page, not saved), intake.
+
+Choices made the same way throughout: intake `unknown` unless a page states it; funding type empty unless a page names
+it; a rule only when the page's wording maps mechanically to a profile answer; otherwise a check-yourself item with its
+own quote. Where `unclear` would be the right answer (CanExport partnerships, CSBFP "Not registered yet"), I used
+check-yourself or no rule, because schema and core don't accept `unclear` yet; each file's notes say so.
+
+### Contract question 17 — `pageText` leaks quoted attribute values (found researching CanExport)
+The CanExport guide wraps each text block in `<div data-cmp-data-layer="{…&quot;xdm:text&quot;:&quot;<p>To be eligible…</p>…">`:
+HTML-escaped JSON whose string still contains raw `<p>`, `<ul>`, `<li>` (26 `>` before that div's `id`). `core/text.js` ends a tag
+at the first `>`, even inside a quoted attribute. The rest of the attribute becomes page text, so sentences appear twice,
+once with literal `\r\n` and `&nbsp;`, and fragments like `"}}" id="text-060c0434fa" class="cmp-text">` sit in the text.
+Minimal cases through `pageText`: `<div data-x="a > b">Hello world</div>` → `"b\">Hello world"`, and
+`<div data-cmp="{&quot;text&quot;:&quot;<p>Hi</p>&quot;}" id="t">Clean text</div>` → `"Hi \"}\" id=\"t\">Clean text"`.
+- **Effect today:** every CanExport quote verifies and every fact is right, but a scan of the built bundle finds **6 of 61
+  ca-* quotes with garbled context**, all CanExport (summary, intake, 3 criteria, the contact). The program page would show
+  that junk as the muted text around the quote. No other ca-* program is affected.
+- **Ask:** API §1 step 2 should skip quoted attribute values when finding a tag's end (gm1 in `core/text.js`, with a
+  fixture test). That changes `text_sha256` for any saved page with `>` inside an attribute, so the build would ask for
+  those sources to be re-hashed (`scripts/hash-source.mjs` exists). I did not work around it in the data.
+
+### Still needed
+- **gm1:** `unclear` in schema, matcher and one SAMPLE program (the reason test records the gap); the `pageText` fix above;
+  cross-review findings G1–G5, I1–I5, J1–J5.
+- **Lead:** decide question 17; QA with `GM_REAL=1` (`worker/tests/real.test.mjs` checks every program answers and CDAP is
+  closed, now that it exists) and `live.spec.mjs`.
+
 ## Cross-review of gm1 programs
 Read each program file on main (merge `d117d59`) against `node scripts/show-text.mjs <source-id>` for its saved page.
 Every quote I spot-checked is in the page text. All three keep intake `unknown` (no page says when applications are
