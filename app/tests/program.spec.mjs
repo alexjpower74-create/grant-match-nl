@@ -193,8 +193,13 @@ test('round 2: Unknown groups match core\'s split on a program with both kinds, 
   expect(r, 'a SAMPLE Auto Service program with both kinds of Unknown').toBeTruthy()
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
   await expect(page.locator('h1')).toHaveText(r.name)
-  await expect(page.locator('[data-group="unknown-page"] [data-criterion]')).toHaveCount(r.counts.unknown_page)
-  await expect(page.locator('[data-group="unknown-ask"] [data-criterion]')).toHaveCount(r.counts.unknown_ask)
+  // The same criteria core put in each group, not just the same number: a swap with equal counts must go red (N7).
+  for (const [group, pick] of [['unknown-page', (c) => c.unknown_reason === 'unclear'], ['unknown-ask', (c) => c.unknown_reason !== 'unclear']]) {
+    const ids = r.criteria.filter((c) => c.status === 'unknown' && pick(c)).map((c) => c.id)
+    const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
+    expect(shown, `${group}: the criteria core put there`).toEqual(ids)
+  }
+  expect(r.criteria.filter((c) => c.status === 'unknown' && c.unknown_reason === 'unclear').length).toBe(r.counts.unknown_page)
   await expect(page.locator('#unknown-page')).toContainText("The page doesn't say")
   await expect(page.locator('#unknown-ask')).toContainText("We didn't ask you")
   await expect(page.locator('#fit-why li', { hasText: /applications/i })).toHaveCount(0)
