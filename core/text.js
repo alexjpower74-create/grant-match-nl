@@ -124,25 +124,37 @@ const BOUNDARY_CHARS = '.?!;:';
  */
 export function contextFor(text, quote, n = 160) {
   if (!quote) return null;
-  const idx = text.indexOf(quote);
+  // Quotes are page text (block edges read as spaces), so find them there; blockText has identical indexes.
+  const flat = text.includes('\n') ? text.replace(/\n/g, ' ') : text;
+  const idx = flat.indexOf(quote);
   if (idx < 0) return null;
   const end = idx + quote.length;
 
+  // before: after the nearest block edge ("\n") or sentence boundary within n characters before the quote.
   let before = '';
   const beforeWindow = text.slice(Math.max(0, idx - n), idx);
-  for (let i = beforeWindow.length - 2; i >= 0; i--) {
-    if (BOUNDARY_CHARS.includes(beforeWindow[i]) && beforeWindow[i + 1] === ' ') {
+  for (let i = beforeWindow.length - 1; i >= 0; i--) {
+    if (beforeWindow[i] === '\n') {
+      before = beforeWindow.slice(i + 1);
+      break;
+    }
+    if (i <= beforeWindow.length - 2 && BOUNDARY_CHARS.includes(beforeWindow[i]) && beforeWindow[i + 1] === ' ') {
       before = beforeWindow.slice(i + 2);
       break;
     }
   }
 
+  // after: up to a block edge (not included), or up to and including the first boundary character.
   let after = '';
   if (!BOUNDARY_CHARS.includes(quote[quote.length - 1])) {
     const afterWindow = text.slice(end, end + n);
     for (let i = 0; i < afterWindow.length; i++) {
+      if (afterWindow[i] === '\n') {
+        after = afterWindow.slice(0, i);
+        break;
+      }
       const next = end + i + 1 < text.length ? text[end + i + 1] : ' ';
-      if (BOUNDARY_CHARS.includes(afterWindow[i]) && next === ' ') {
+      if (BOUNDARY_CHARS.includes(afterWindow[i]) && (next === ' ' || next === '\n')) {
         after = afterWindow.slice(0, i + 1);
         break;
       }

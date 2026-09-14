@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pageText, blockText, numbersIn, contextFor } from '../text.js';
 import { sha256Hex } from '../hash.js';
+import { quotesOf } from '../verify.js';
 import { sampleHtml, ROOT } from './helpers.mjs';
 
 test('pageText: inline tags join, block tags become one space', () => {
@@ -119,6 +120,70 @@ test('contextFor gives the rest of the sentence, never menu text', () => {
     assert.ok(!`${ctx.before}${ctx.after}`.includes('Home Funding'), `${quote}: menu text in context`);
     assert.ok(!`${ctx.before}${ctx.after}`.includes('…'));
   }
+});
+
+test('contextFor on blockText stops at block edges too; \\n never in the output', () => {
+  // SAMPLE office list: on page text the context runs into the other offices' numbers.
+  const offices = '<ul><li>Central: 709-555-0101</li><li>Eastern: 709-555-0102</li><li>Western: 709-555-0103</li></ul>';
+  assert.deepEqual(contextFor(pageText(offices), 'Eastern: 709-555-0102'), { before: '709-555-0101 ', after: ' Western:' }, 'the old leak');
+  assert.deepEqual(contextFor(blockText(offices), 'Eastern: 709-555-0102'), { before: '', after: '' });
+
+  // SAMPLE breadcrumb with a colon in it, in front of a closed notice.
+  const crumb = '<nav><a href="/">Home</a> &gt; <a href="/funding/">Funding: SAMPLE grants</a></nav><div class="alert"><p>The SAMPLE Grant is not accepting applications.</p></div>';
+  assert.deepEqual(contextFor(pageText(crumb), 'The SAMPLE Grant is not accepting applications.'), { before: 'SAMPLE grants ', after: '' }, 'the old leak');
+  assert.deepEqual(contextFor(blockText(crumb), 'The SAMPLE Grant is not accepting applications.'), { before: '', after: '' });
+
+  // Sentences still bound context inside a block; an edge ends it before any boundary.
+  const para = '<p>Owners must live here. The business must operate in NL; it can be seasonal.</p><p>Apply by phone</p><p>Next line.</p>';
+  const b = blockText(para);
+  assert.deepEqual(contextFor(b, 'The business must operate in NL'), { before: '', after: ';' });
+  assert.deepEqual(contextFor(b, 'must operate'), { before: 'The business ', after: ' in NL;' });
+  assert.deepEqual(contextFor(b, 'Apply by'), { before: '', after: ' phone' }, 'after stops at the edge, edge not included');
+  assert.deepEqual(contextFor(b, 'it can be seasonal'), { before: '', after: '.' }, 'a boundary right before an edge still counts');
+
+  // A quote that spans block edges (table cells) is still found, by page-text index.
+  const cells = '<table><tr><td>SAMPLE Central Office</td><td>709-555-0101</td></tr><tr><td>Eastern</td></tr></table>';
+  assert.deepEqual(contextFor(blockText(cells), 'SAMPLE Central Office 709-555-0101'), { before: '', after: '' });
+  assert.equal(contextFor(blockText(cells), 'not there'), null);
+});
+
+test('real pages: CanExport\'s closed intake has no breadcrumb before it; no context of any real quote holds \\n', () => {
+  const page = (id) => blockText(fs.readFileSync(path.join(ROOT, 'data', 'sources', `${id}.html`), 'utf8'));
+  const canexport = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'programs', 'ca-canexport-smes.json'), 'utf8'));
+  const intake = contextFor(page(canexport.intake.source), canexport.intake.quote);
+  assert.ok(intake, 'intake quote found');
+  assert.ok(!/Trade Commissioner Service|Our solutions|CanExport SMEs $/.test(intake.before), `breadcrumb in before: ${JSON.stringify(intake.before)}`);
+
+  // Business Growth regional offices: no office's context runs into another office's number.
+  const growth = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'programs', 'nl-business-growth-program.json'), 'utf8'));
+  const phones = growth.contacts.filter((c) => c.phone).map((c) => c.phone.replace(/\D/g, ''));
+  assert.equal(phones.length, 5);
+  for (const c of growth.contacts) {
+    const ctx = contextFor(page(c.source), c.quote);
+    const around = `${ctx.before}${ctx.after}`.replace(/\D/g, '');
+    for (const other of phones) {
+      if (c.phone && other === c.phone.replace(/\D/g, '')) continue;
+      assert.ok(!around.includes(other), `${c.label}: context holds another office's number ${other}: ${JSON.stringify(ctx)}`);
+    }
+  }
+
+  let quotes = 0;
+  let total = 0;
+  for (const f of fs.readdirSync(path.join(ROOT, 'data', 'programs')).filter((x) => x.endsWith('.json'))) {
+    const r = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'programs', f), 'utf8'));
+    const texts = {};
+    const all = quotesOf(r); // every quote, the way the build and the live check count them
+    total += all.length;
+    for (const q of all) {
+      texts[q.source] ??= page(q.source);
+      const ctx = contextFor(texts[q.source], q.quote);
+      assert.ok(ctx, `${f} ${q.path}: quote not found in blockText: ${q.quote.slice(0, 60)}`);
+      assert.ok(!ctx.before.includes('\n') && !ctx.after.includes('\n'), `${f} ${q.path}: \\n in context`);
+      quotes += 1;
+    }
+  }
+  assert.equal(quotes, total, 'every real quote checked');
+  assert.ok(total > 250, `only ${total} real quotes found`);
 });
 
 test('sha256Hex of a string and of bytes agree', async () => {
