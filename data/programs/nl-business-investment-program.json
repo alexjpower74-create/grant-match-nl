@@ -1,0 +1,118 @@
+{
+  "slug": "nl-business-investment-program",
+  "sample": false,
+  "name": "Business Investment Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/business-investment-program/",
+  "summary": {
+    "quote": "The Business Investment Program provides term loans to small and medium-sized enterprises (SMEs) in strategic growth sectors as identified by Jobs, Growth and Rural Development.",
+    "source": "nl-business-investment-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-business-investment-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/business-investment-program/",
+      "title": "Business Investment Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:39:29.320Z",
+      "http_status": 200,
+      "sha256": "54ed226385e362e88bec2b977b10773a774efb21abf28fe8251af3c96d12e36c",
+      "text_sha256": "16a1eef7c85b6881a4ff63988f4fa9ef7c45985eee61a45f704059a4ec4ff71d",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "The Business Investment Program is in the form of repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%.",
+      "source": "nl-business-investment-program--main"
+    }
+  ],
+  "intake": { "status": "unknown", "quote": null, "source": null, "deadline": null },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is based and operating in Newfoundland and Labrador",
+      "rule": { "kind": "location", "province": "NL" },
+      "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "employees",
+      "text": "Fewer than 100 employees",
+      "rule": { "kind": "employees", "lt": 100 },
+      "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "revenue",
+      "text": "Less than $10 million in sales",
+      "rule": { "kind": "revenue", "lt": 10000000 },
+      "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "strategic-sector",
+      "text": "Operates in a strategic sector as defined by the Department of Jobs, Growth and Rural Development",
+      "rule": { "kind": "self_check" },
+      "quote": "Operate in a strategic sector as defined by JGRD.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "demonstrated-need",
+      "text": "Needs this loan on top of funding from conventional sources",
+      "rule": { "kind": "self_check" },
+      "quote": "Funds are provided to complement funding from conventional sources, where a need has been demonstrated",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "capacity",
+      "text": "Able to do the work in the project proposal",
+      "rule": { "kind": "self_check" },
+      "quote": "Demonstrate its ability to undertake the work identified in the project proposal.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "capital",
+      "text": "Able to get the money needed to complete the project",
+      "rule": { "kind": "self_check" },
+      "quote": "Demonstrate its ability to access the financial capital required to complete the project.",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with the Government of Newfoundland and Labrador",
+      "rule": { "kind": "self_check" },
+      "quote": "Be in good standing with the Government of Newfoundland and Labrador.",
+      "source": "nl-business-investment-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Economic development (email)",
+      "phone": null,
+      "email": "economicdevelopment@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "For program details or assistance with your application, contact economicdevelopment@gov.nl.ca",
+      "source": "nl-business-investment-program--main"
+    },
+    {
+      "label": "Department of Jobs, Growth and Rural Development (St. John’s)",
+      "phone": "1.709.729.2480",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Contact Jobs, Growth and Rural Development P.O. Box 8700 St. John’s, NL A1B 4J6 Tel: 1.709.729.2480",
+      "source": "nl-business-investment-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Intake: not stated on the page, so unknown. The loan is 'repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%'; no maximum or cost share is stated. The eligibility list says applicants 'must normally' meet it; the page's 'fewer than 100 employees and less than $10 million in sales' gives employees lt 100 and revenue lt 10000000 ('sales' read as yearly revenue; reviewers, check that reading). 'Strategic sector as defined by JGRD' is not a list on the page, so it's a check-this-yourself item, not an industry rule. The summary also says 'The fund is also available to businesses which have export potential'; I did not turn that into a rule or an exception to the strategic-sector item. The page says 'Please consult with the JGRD office near you' but lists no regional numbers; the Business Growth Program page does, and could be added as a second source for contacts after review. The application form is a PDF and was not read."
+  }
+}

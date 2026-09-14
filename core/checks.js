@@ -179,10 +179,16 @@ export async function runChecks({
       entry.sha256 = await sha256Hex(bytes);
       if (onRaw) await onRaw({ source_id: source.id, url: source.url, fetched_at: entry.fetched_at, http_status: res.status, body: bytes });
 
-      if (res.status !== 200) {
-        // The page answered but is not there: none of its quotes can be confirmed.
-        entry.error = `the page answered HTTP ${res.status}`;
+      if (res.status === 404 || res.status === 410) {
+        // The page is gone: none of its quotes can be confirmed.
+        entry.error = `the page is gone (HTTP ${res.status})`;
         entry.missing = own.map((q) => ({ path: q.path, quote: q.quote }));
+        log(`${source.id}: ${entry.error}`);
+        continue;
+      }
+      if (res.status < 200 || res.status > 299) {
+        // Any other failure (a server error, a redirect we can't follow) says nothing about the page.
+        entry.error = `the page answered HTTP ${res.status}`;
         log(`${source.id}: ${entry.error}`);
         continue;
       }
@@ -199,17 +205,31 @@ export async function runChecks({
   return { started_at, finished_at: now().toISOString(), trigger, sources: out };
 }
 
-/** sourceStatusFrom(runs) — runs oldest first → { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes } } */
+/**
+ * sourceStatusFrom(runs) — runs oldest first →
+ * { [source_id]: { last_checked_at, last_ok, last_verified_at, missing_quotes, page_gone } }
+ * Only a check that read the page, or found it gone (404/410), updates missing_quotes and page_gone; a timeout, a
+ * server error or a robots refusal keeps the previous values instead of clearing them (docs/API.md §9).
+ */
 export function sourceStatusFrom(runs) {
   const status = {};
   for (const run of runs ?? []) {
     for (const s of run.sources ?? []) {
-      const prev = status[s.source_id] ?? { last_checked_at: null, last_ok: null, last_verified_at: null, missing_quotes: 0 };
+      const prev = status[s.source_id]
+        ?? { last_checked_at: null, last_ok: null, last_verified_at: null, missing_quotes: 0, page_gone: false };
       const checkedAt = s.fetched_at ?? run.finished_at ?? null;
       const missing = Array.isArray(s.missing) ? s.missing.length : 0;
+      const gone = s.http_status === 404 || s.http_status === 410;
+      const saysSomething = Boolean(s.ok) || gone;
       let lastVerified = prev.last_verified_at;
       if (s.ok && missing === 0 && s.fetched_at && (lastVerified === null || s.fetched_at > lastVerified)) lastVerified = s.fetched_at;
-      status[s.source_id] = { last_checked_at: checkedAt, last_ok: Boolean(s.ok), last_verified_at: lastVerified, missing_quotes: missing };
+      status[s.source_id] = {
+        last_checked_at: checkedAt,
+        last_ok: Boolean(s.ok),
+        last_verified_at: lastVerified,
+        missing_quotes: saysSomething ? missing : prev.missing_quotes,
+        page_gone: saysSomething ? gone : prev.page_gone,
+      };
     }
   }
   return status;

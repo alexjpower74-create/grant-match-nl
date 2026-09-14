@@ -127,6 +127,117 @@ and the NAICS page, and both waited the host's Crawl-delay and saved raw bytes w
 - `runChecks({ ..., trigger: 'cron' | 'manual' })` sets `trigger`; the default is `'node'`.
 - The option lists for `/api/options` are exported from `core/profile.js`.
 
-## Phase 2 — NL programs · not started
+## Phase 2 — NL programs · first three DONE, **stopped for cross-review** (per the brief)
 
-## Phase 3 — `scripts/scan.mjs` · not started
+gov.nl.ca terms, read once at https://www.gov.nl.ca/disclaimer/: the province owns the copyright and "grants
+permission for the information of this web site to be used by the public and non-government organizations". It says
+nothing against automated reading. Reproducing third-party multimedia is not permitted; we quote text only.
+robots.txt allowed all three URLs. Requests to the host were spaced at least 1 s apart.
+
+`npm run check:data` → every quote verified (3 real programs, 8 SAMPLE). Core tests 52/52 green, with the planted-quote
+build test now planting into a real program.
+
+| Slug | Sources | Type | Intake | Criteria (met-able / self_check) | Contacts |
+|---|---|---|---|---|---|
+| nl-business-growth-program | `--main` | non-repayable, max $200,000, 50% | unknown | 2 / 5 | email + 5 regional office phones incl. Central 709.256.1480 |
+| nl-business-investment-program | `--main` | loan (term loan, Bank of Canada rate + 0.5%) | unknown | 3 / 5 | email + department line 1.709.729.2480 |
+| nl-jobsnl-wage-subsidy | `--main` | wage subsidy, 60–80% up to $12/hour | unknown | 3 / 4 | Employment programs 1-800-563-6600 + email |
+
+### Questions for gm2's cross-review (interpretation, against the saved page text)
+1. **Intake unknown on all three.** None of the pages says when applications are taken, so none can show Looks like a
+   fit. Is that the reading we want, or should an application form linked "Use either of the forms below to apply"
+   count as open? I think not: the contract says `continuous` only when the page says so.
+2. **Business Growth, structure.** The page lists sole proprietors, partnerships, corporations, co-operatives and
+   non-profit organizations, so "Not registered yet" is **missed**. Too strict for a business that is just
+   starting ("assist businesses start")?
+3. **Business Growth, contacts.** The page itself shows the five regional office numbers, so they're quoted from the
+   program page. `census_divisions` is null because the page doesn't say which divisions each office serves. The
+   brief suggests JGRD's contact page as a second source for Central = Divisions 6, 7, 8. I haven't added it: I didn't
+   find a gov.nl.ca page that names the divisions, and I won't infer them.
+4. **Business Investment, revenue.** "less than $10 million in sales" is read as yearly revenue `lt 10000000`, and
+   "fewer than 100 employees" as `lt 100`. The page says applicants "must normally" meet the list.
+5. **Business Investment, export potential.** The page says the fund "is also available to businesses which have
+   export potential", but the eligibility list requires "Operate in a strategic sector as defined by JGRD". Both
+   kept only as a self_check on the strategic-sector line, plus a note; no rule.
+6. **JobsNL, structure.** "Private or not-for-profit sector employers that are incorporated or sole proprietorships"
+   is mapped to sole proprietor, corporation, co-operative and non-profit. The last two are there because they are
+   incorporated bodies, so an unincorporated non-profit would wrongly show met. Partnership and "Not registered yet"
+   are missed. Alternative: drop co-operative and non-profit from `in` (then an incorporated non-profit wrongly
+   misses). I chose the reading that never wrongly says Doesn't fit.
+7. **JobsNL, cost share.** `percent: 80` (the highest rate, third 14 weeks of JobsNL-42), with text "60% to 80% of
+   wages depending on the option and period, up to $12 an hour". No `max_amount`: the page gives an hourly cap, not
+   a total.
+
+### Dry evaluation (now 2026-09-14T12:00Z, core `matchPrograms` on the three records)
+- SAMPLE Auto Service: Business Growth **Might fit** (location + structure met; intake not stated; 5 to check);
+  Business Investment **Might fit** (location, 6 < 100 employees, revenue band $500K–$1M under $10M all met);
+  JobsNL **Doesn't fit** (purpose: equipment/software, not hiring).
+- SAMPLE Daycare: all three **Might fit**, with JobsNL's purpose met (hire).
+- APCO Software Tools (lead's profile, DECISIONS #14): Business Growth and Business Investment **Might fit**, with
+  structure "Not sure" and revenue "Prefer not to say" shown as *Unknown, you didn't answer this*. JobsNL
+  **Doesn't fit** (purpose).
+
+### Remaining phase 2 list, waiting on the review
+Programs 4–15 in the brief (Research and Innovation, Innovation and Business Development Fund, Green Transition
+Fund, Job Accelerator and Growth, Harvester Enterprise Loan, the rest of /jgrd/funding/, Apprenticeship Wage
+Subsidy, JGRD wage-subsidy programs and the Job Grant, CBDCs, NLOWE, takeCHARGE, RDÉE TNL): not started.
+
+## Contract changes applied (main 821774c, 632c206, 1ee9aa9) · DONE
+Merged main into `rig/gm1` (11bca50). The lead accepted questions 1–5 and 7–12 as built. Question 6 changed (API §9,
+DECISIONS #16–17), and I applied it:
+- `runChecks`: a page answering **404 or 410** → `ok: false`, every quote of that source in `missing`, error "the page
+  is gone (HTTP 404)". **Any other non-2xx** or network failure → `ok: false`, `error` set, `missing: []`.
+- `sourceStatusFrom` adds **`page_gone`**. `missing_quotes` and `page_gone` change only on a check that read the page
+  (`ok`) or found it gone (404/410); a timeout, 5xx or robots refusal **keeps** the previous values.
+  My reading of "page_gone = the newest check answered 404/410": `page_gone` also survives a later failed check.
+  Otherwise a timeout after a 404 would clear it, which is exactly what #16 set out to stop. Tell me if you want the
+  literal version.
+- `evaluateProgram`: `needs_review` = any source with `missing_quotes > 0` **or** `page_gone`; the why line reads
+  "The page has changed or gone since we checked it. Check the official page." `docs/RULES.md` updated to match.
+
+| # | Break | Test that went red |
+|---|---|---|
+| g | a failed check resets the missing count | sourceStatusFrom … a failed check keeps the missing count and page_gone |
+| h | `page_gone` ignored by needs_review | sourceStatus with missing quotes → needs_review, not Looks like a fit |
+| i | 404/410 treated like any other failure | 404/410 count every quote missing and mark the page gone… ("HTTP 404") |
+
+## Phase 3 — `scripts/scan.mjs` · DONE
+Built while phase 2 waits for cross-review. It doesn't depend on how programs are interpreted.
+
+- `npm run scan` builds the real bundle in memory, using `scripts/data-load.mjs`, now shared with
+  `build-data.mjs`, so the scan re-checks exactly what the build verified. A data problem stops it before any fetch.
+- Runs `runChecks` with Node's `fetch` and real sleeps (same politeness code as the Worker's cron). Caches each
+  raw body in `data/scans/<UTC stamp>/<source-id>.html` (gitignored), then POSTs the ChecksResult to
+  `http://127.0.0.1:${GM_WORKER_PORT||7402}/api/admin/checks` with `Authorization: Bearer <token>`. The token comes
+  from `GM_ADMIN_TOKEN` or `ADMIN_TOKEN` in `worker/.dev.vars`; it's resolved before any fetch and never printed.
+  Exit 1 on no token, an unreachable Worker or a non-2xx answer. Either way the result is kept in
+  `data/scans/latest.json`.
+- `--dry`: no POST. `--only slug,slug`: unknown slugs are refused.
+- For tests only: `--sample`, `--scans <dir>`, `--worker <origin>`, `--dev-vars <file>`, `GM_SCAN_ORIGIN_MAP`.
+- `core/tests/scan.test.mjs` (4 tests) runs the script against a local server on a random port that plays both the
+  SAMPLE site and the Worker. It checks the dry-run summary naming the missing quote and the changed page, that
+  `latest.json` is written, that raw bytes are cached exactly as served, that nothing is POSTed on `--dry`, the POST
+  with its Bearer token and stored id, a token read from a `.dev.vars` file, that a missing token stops before any
+  fetch, a 401 exiting 1, and an unknown `--only`.
+- Control (j): removed the Authorization header → "POSTed with the Bearer token" red; restored.
+- `worker/.dev.vars` doesn't exist in the gm1 worktree (gm2's is in theirs), so the non-dry run against a live
+  Worker is for the lead's QA: `GM_ADMIN_TOKEN=… npm run scan`.
+
+**Real `--dry` run** (2026-09-14T05:48:39Z → 05:48:44Z, 5.3 s including robots.txt and ≥ 1 s between requests):
+
+```
+scan: nl-business-growth-program--main: 17/17 quotes found
+scan: nl-business-investment-program--main: 12/12 quotes found
+scan: nl-jobsnl-wage-subsidy--main: 11/11 quotes found
+Checked 3 source pages: 3 fetched fine, 0 not.
+Quotes missing: none.
+Page text changed since it was saved: none.
+Raw pages: data/scans/2026-09-14T05-48-39-634Z · result: data/scans/latest.json
+Dry run: nothing sent to the Worker.
+```
+
+Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real programs, 8 SAMPLE).
+
+## Waiting on
+- **gm2's cross-review** of the three NL programs (questions above) before programs 4–15.
+- Nothing needed from gm2's files. Nothing outside gm1's slice was edited.

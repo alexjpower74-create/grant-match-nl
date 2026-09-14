@@ -145,14 +145,30 @@ test('a page with one quote removed → missing names it and changed is true', a
   assert.notEqual(r.fit.label, 'Looks like a fit');
 });
 
-test('a page that answers 404 counts every quote as missing; robots.txt that errors stops the host', async () => {
-  resetSite('User-agent: *\nDisallow:\n');
-  site.overrides.set('/start/startup-support/', { status: 404, body: 'gone' });
-  const result = await runChecks(options({ only: ['nl-sample-startup-support'] }));
-  const s = result.sources[0];
-  assert.equal(s.ok, false);
-  assert.equal(s.http_status, 404);
-  assert.equal(s.missing.length, s.quotes_total);
+test('404/410 count every quote missing and mark the page gone; other failures say nothing; robots.txt that errors stops the host', async () => {
+  for (const code of [404, 410]) {
+    resetSite('User-agent: *\nDisallow:\n');
+    site.overrides.set('/start/startup-support/', { status: code, body: 'gone' });
+    const result = await runChecks(options({ only: ['nl-sample-startup-support'] }));
+    const s = result.sources[0];
+    assert.equal(s.ok, false);
+    assert.equal(s.http_status, code);
+    assert.equal(s.missing.length, s.quotes_total, `HTTP ${code}`);
+    assert.equal(sourceStatusFrom([result])['nl-sample-startup-support--main'].page_gone, true);
+  }
+  for (const code of [500, 503]) {
+    resetSite('User-agent: *\nDisallow:\n');
+    site.overrides.set('/start/startup-support/', { status: code, body: 'busy' });
+    const result = await runChecks(options({ only: ['nl-sample-startup-support'] }));
+    const s = result.sources[0];
+    assert.equal(s.ok, false);
+    assert.equal(s.http_status, code);
+    assert.deepEqual(s.missing, [], `HTTP ${code} says nothing about the page`);
+    assert.match(s.error, new RegExp(`HTTP ${code}`));
+    const st = sourceStatusFrom([result])['nl-sample-startup-support--main'];
+    assert.equal(st.page_gone, false);
+    assert.equal(st.missing_quotes, 0);
+  }
 
   resetSite('');
   site.status = 503;
@@ -162,14 +178,37 @@ test('a page that answers 404 counts every quote as missing; robots.txt that err
   assert.match(down.sources[0].error, /robots\.txt answered HTTP 503/);
 });
 
-test('sourceStatusFrom folds runs oldest first', () => {
-  const run = (fetched_at, ok, missing) => ({ started_at: fetched_at, finished_at: fetched_at, trigger: 'cron', sources: [{ source_id: 'a--main', ok, fetched_at, missing }] });
-  const status = sourceStatusFrom([
-    run('2026-09-07T10:15:00.000Z', true, []),
-    run('2026-09-14T10:15:00.000Z', true, [{ path: 'summary.quote', quote: 'x' }]),
-    run('2026-09-21T10:15:00.000Z', false, []),
+test('sourceStatusFrom folds runs oldest first; a failed check keeps the missing count and page_gone', () => {
+  const missingOne = [{ path: 'summary.quote', quote: 'x' }];
+  const run = (fetched_at, ok, missing, http_status) => ({
+    started_at: fetched_at, finished_at: fetched_at, trigger: 'cron',
+    sources: [{ source_id: 'a--main', ok, fetched_at, http_status, missing }],
+  });
+
+  const afterTimeout = sourceStatusFrom([
+    run('2026-09-07T10:15:00.000Z', true, [], 200),
+    run('2026-09-14T10:15:00.000Z', true, missingOne, 200),
+    run('2026-09-21T10:15:00.000Z', false, [], null), // timeout
   ]);
-  assert.deepEqual(status['a--main'], {
-    last_checked_at: '2026-09-21T10:15:00.000Z', last_ok: false, last_verified_at: '2026-09-07T10:15:00.000Z', missing_quotes: 0,
+  assert.deepEqual(afterTimeout['a--main'], {
+    last_checked_at: '2026-09-21T10:15:00.000Z', last_ok: false, last_verified_at: '2026-09-07T10:15:00.000Z',
+    missing_quotes: 1, page_gone: false,
+  });
+
+  const goneThen503 = sourceStatusFrom([
+    run('2026-09-07T10:15:00.000Z', true, [], 200),
+    run('2026-09-14T10:15:00.000Z', false, [...missingOne, ...missingOne], 404),
+    run('2026-09-21T10:15:00.000Z', false, [], 503),
+  ]);
+  assert.equal(goneThen503['a--main'].page_gone, true);
+  assert.equal(goneThen503['a--main'].missing_quotes, 2);
+
+  const backAgain = sourceStatusFrom([
+    run('2026-09-14T10:15:00.000Z', false, missingOne, 410),
+    run('2026-09-21T10:15:00.000Z', true, [], 200),
+  ]);
+  assert.deepEqual(backAgain['a--main'], {
+    last_checked_at: '2026-09-21T10:15:00.000Z', last_ok: true, last_verified_at: '2026-09-21T10:15:00.000Z',
+    missing_quotes: 0, page_gone: false,
   });
 });

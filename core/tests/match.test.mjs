@@ -234,8 +234,15 @@ test('sourceStatus with missing quotes → needs_review, not Looks like a fit', 
   assert.equal(r.verification.needs_review, true);
   assert.equal(r.verification.missing_quotes, 1);
   assert.equal(r.fit.label, 'Might fit');
-  assert.ok(r.fit.why.includes('The page has changed since we checked it. Check the official page.'));
+  assert.ok(r.fit.why.includes('The page has changed or gone since we checked it. Check the official page.'));
   assert.equal(evaluateProgram(growth, AUTO(), { now: NOW }).fit.label, 'Looks like a fit');
+
+  // A page that is gone puts the program under review even with no count.
+  const gone = { 'nl-sample-growth-grant--main': { last_checked_at: '2026-09-10T10:15:00.000Z', last_ok: false, last_verified_at: null, missing_quotes: 0, page_gone: true } };
+  const g = evaluateProgram(growth, AUTO(), { now: NOW, sourceStatus: gone });
+  assert.equal(g.verification.needs_review, true);
+  assert.equal(g.verification.missing_quotes, 0);
+  assert.equal(g.fit.label, 'Might fit');
 });
 
 test('sort order: fit, then non-repayable before loan, then fewer missed and unknown, then name', async () => {
