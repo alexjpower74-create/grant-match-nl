@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pageText } from '../text.js';
+import { pageText, blockText } from '../text.js';
 import { sha256Hex } from '../hash.js';
 import { parseProfile } from '../profile.js';
 import { buildBundle } from '../bundle.js';
@@ -58,8 +58,9 @@ export async function samplePageTexts() {
   const out = {};
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.html')).sort()) {
     const bytes = fs.readFileSync(path.join(dir, f));
-    const text = pageText(bytes.toString('utf8'));
-    out[f.replace(/\.html$/, '')] = { text, sha256: await sha256Hex(new Uint8Array(bytes)), text_sha256: await sha256Hex(text) };
+    const html = bytes.toString('utf8');
+    const text = pageText(html);
+    out[f.replace(/\.html$/, '')] = { text, block: blockText(html), sha256: await sha256Hex(new Uint8Array(bytes)), text_sha256: await sha256Hex(text) };
   }
   return out;
 }

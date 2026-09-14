@@ -397,6 +397,38 @@ test('ProgramResult shape: quotes carry source_url and context; no profile → n
   assert.equal(community.intake.label, 'The page doesn\'t say');
 });
 
+test('bundle: a contact quote gets no context, even mid-sentence (API §1)', async () => {
+  const { communities, industries } = reference();
+  const women = clone(samplePrograms().find((p) => p.slug === 'nl-sample-women-entrepreneur-loan'));
+  // The page says "Call our loans officer at 709‑555‑0199 or email loans@sample.invalid." Cut the quote mid-sentence,
+  // so ordinary context would be " or email loans@sample.invalid.".
+  Object.assign(women.contacts[0], { quote: 'Call our loans officer at 709‑555‑0199', email: null });
+  const { bundle, problems } = buildBundle({ programs: [women], pageTexts: await samplePageTexts(), communities, industries, data_set: 'sample' });
+  assert.deepEqual(problems, []);
+  const contact = bundle.programs[0].contacts[0];
+  assert.deepEqual(contact.context, { before: '', after: '' });
+  assert.equal(contact.source_url, 'https://sample.invalid/members/women-entrepreneur-loan/');
+  // The same words as a criterion quote would get context: only contacts are cut.
+  women.criteria.push({ id: 'phone-check', text: 'x', rule: { kind: 'self_check' }, quote: 'Call our loans officer at 709‑555‑0199', source: women.sources[0].id });
+  const again = buildBundle({ programs: [women], pageTexts: await samplePageTexts(), communities, industries, data_set: 'sample' }).bundle;
+  assert.deepEqual(again.programs[0].criteria.at(-1).context, { before: '', after: ' or email loans@sample.invalid.' });
+});
+
+test('bundle: SAMPLE context is bounded by block edges (a list item gets none, a sentence keeps its sentence)', async () => {
+  const programs = await sampleBundlePrograms();
+  const growth = programs.find((p) => p.slug === 'nl-sample-growth-grant');
+  assert.deepEqual(growth.criteria.find((c) => c.id === 'employees').context, { before: '', after: '' }, '<li> item');
+  assert.deepEqual(growth.contacts[0].context, { before: '', after: '' });
+  const wage = programs.find((p) => p.slug === 'nl-sample-wage-subsidy');
+  assert.deepEqual(wage.criteria.find((c) => c.id === 'purpose').context, { before: 'The SAMPLE Wage Subsidy is a wage subsidy that ', after: '.' });
+  for (const p of programs) {
+    for (const q of [p.summary, ...p.funding_types, p.intake, p.intake.deadline, p.max_amount, p.cost_share, ...p.criteria, ...p.contacts]) {
+      if (!q || typeof q.quote !== 'string') continue;
+      assert.ok(q.context && !q.context.before.includes('\n') && !q.context.after.includes('\n'), `${p.slug}: ${q.quote.slice(0, 40)}`);
+    }
+  }
+});
+
 test('buildBundle is byte-identical across two runs', async () => {
   const { communities, industries } = reference();
   const build = async () => JSON.stringify(buildBundle({ programs: samplePrograms(), pageTexts: await samplePageTexts(), communities, industries }).bundle);

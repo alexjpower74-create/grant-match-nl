@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ROOT, readJson, rel } from './lib.mjs';
 import { buildBundle } from '../core/bundle.js';
-import { pageText } from '../core/text.js';
+import { pageText, blockText } from '../core/text.js';
 import { sha256Hex } from '../core/hash.js';
 
 /**
@@ -63,8 +63,10 @@ export async function loadData({ dataDir = path.join(ROOT, 'data'), fixturesDir 
         const src = path.join(sourcesDir, `${path.basename(s.id)}.html`);
         if (!fs.existsSync(src)) continue; // verifyProgram reports the missing file
         const bytes = fs.readFileSync(src);
-        const text = pageText(bytes.toString('utf8'));
-        pageTexts[s.id] = { text, sha256: await sha256Hex(new Uint8Array(bytes)), text_sha256: await sha256Hex(text) };
+        const html = bytes.toString('utf8');
+        const text = pageText(html);
+        // block: the same text with block edges as \n, used only for quote context (API §1, DECISIONS #24).
+        pageTexts[s.id] = { text, block: blockText(html), sha256: await sha256Hex(new Uint8Array(bytes)), text_sha256: await sha256Hex(text) };
       }
     }
     return { programs, pageTexts, fileOf };
