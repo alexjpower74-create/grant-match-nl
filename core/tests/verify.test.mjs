@@ -97,6 +97,8 @@ test('schema: SAMPLE naming, enums, unique criterion ids, rule shapes', () => {
   const withUnclear = clone(p);
   withUnclear.criteria[1].rule = { kind: 'structure', in: ['corporation', 'sole_proprietor'], unclear: ['cooperative', 'nonprofit'] };
   assert.deepEqual(validateProgram(withUnclear), []);
+  withUnclear.criteria[3].rule = { kind: 'purpose', any: ['equipment'], unclear: ['digital', 'research'] };
+  assert.deepEqual(validateProgram(withUnclear), [], 'unclear is allowed on purpose rules (API §4, DECISIONS #22)');
 
   const cases = [
     [(r) => { r.name = 'Growth Grant'; }, 'name:'],
@@ -111,7 +113,11 @@ test('schema: SAMPLE naming, enums, unique criterion ids, rule shapes', () => {
     [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: ['llc'] }; }, 'criteria[1].rule.unclear[0]:'],
     [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: [] }; }, 'criteria[1].rule.unclear:'],
     [(r) => { r.criteria[2].rule = { kind: 'employees', lt: 100, unclear: ['x'] }; }, 'criteria[2].rule.unclear:'],
-    [(r) => { r.criteria[3].rule = { kind: 'purpose', any: ['digital'], unclear: ['hire'] }; }, 'criteria[3].rule.unclear:'],
+    [(r) => { r.criteria[2].rule = { kind: 'employees', lt: 100, normally: false }; }, 'criteria[2].rule.normally:'],
+    [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], normally: true }; }, 'criteria[1].rule.normally:'],
+    [(r) => { r.criteria[3].rule = { kind: 'purpose', any: ['digital'], unclear: ['digital'] }; }, 'criteria[3].rule.unclear:'],
+    [(r) => { r.criteria[3].rule = { kind: 'purpose', any: ['digital'], unclear: ['gardening'] }; }, 'criteria[3].rule.unclear[0]:'],
+    [(r) => { r.criteria[0].rule = { kind: 'location', province: 'NL', unclear: ['gander'] }; }, 'criteria[0].rule.unclear:'],
     [(r) => { r.criteria[5].rule = { kind: 'self_check', note: 'x' }; }, 'criteria[5].rule.note:'],
     [(r) => { r.criteria[0].quote = ' short'; }, 'criteria[0].quote:'],
     [(r) => { r.extra = 1; }, 'extra:'],

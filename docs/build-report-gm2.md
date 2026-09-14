@@ -113,6 +113,36 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 6 — re-hash after gm1's attribute-safe pageText: DONE
+1. **Merged `rig/gm1` at its tip `c1c1d5b`** (merge `b344865`). That is newer than the `637bb44` / `380dee7` / `dd09fb3` named in the
+   brief and contains them, plus gm1's purpose `unclear`.
+2. **`node scripts/build-data.mjs --check` named exactly two sources, both mine:** `ca-canexport-smes` `sources[0]` (`--main`) and
+   `sources[1]` (`--guide`), "text_sha256: does not match the saved file's page text". No `nl-*`, no `ref-*`, no other `ca-*`.
+   Nothing else was reported, so every quote still verified before the re-hash.
+3. **Re-hashed with `node scripts/hash-source.mjs --update data/programs/ca-canexport-smes.json`.** `git diff` shows exactly 4
+   changed lines, the two `text_sha256` values: `--main` `a8481624…` → `61848cf7…`, `--guide` `cf81173e…` → `62dde999…`.
+   The `sha256` values are unchanged (same saved bytes), no quote was touched, and no other program file changed. `check:data` after:
+   "every quote verified (27 real programs, 8 SAMPLE)". **No quote stopped verifying**, so there is no before/after text to report.
+4. **CanExport contexts, printed from the rebuilt `data/build/programs.json`** (and through `evaluateProgram` for the intake, as
+   the app gets it). **Attribute/JSON junk (`\r\n`, `&nbsp;`, `"}}" id="text-…" class="cmp-text">`) is in 0 of 10 CanExport
+   quotes**, down from 6 in round 3 and 2 just before this re-hash. But not every one is a clean sentence:
+   - **summary:** before `\n"}}" id="text-33addbb30a" class="cmp-text"> `, now empty context. **Clean.**
+   - **contact:** before `\r\n Please contact nrc.canexport-help-aide-canexport.cnrc@nrc-cnrc.gc.ca \r\n"}}" id="text-f28600fe40"
+     class="cmp-text"> `, now `Contact us ` (the section heading). No junk; a heading, not a sentence.
+   - **location:** now `Who can apply 1.1 Eligible companies ` (section headings).
+   - **structure:** now `be established in Canada `; **CRA business number:** now `be established in Canada be for-profit be an
+     incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada `. Earlier items of the same
+     eligibility list: real page text, and relevant, but no sentence boundary.
+   - **intake:** now `Canada.ca Trade Commissioner Service Our solutions Funding and financing for international business CanExport
+     SMEs `. **Still the breadcrumb menu** (round 5's R2): no junk, but menu text in front of the closed quote.
+   - max_amount, cost_share, employees, revenue, purpose: empty context. Clean.
+   So the attribute fix did what it should. What's left is `contextFor`: headings, list items and breadcrumbs have no
+   sentence punctuation, so the "sentence" reaches back into them. That is R1/R2 from round 5 (gm1 / lead), not the re-hash.
+5. **Suites on the merged, re-hashed tree:**
+   - Worker, SAMPLE: **15 passed, 0 failed, 1 skipped**.
+   - Worker, `GM_REAL=1`: **1 passed, 0 failed** on 27 programs, 147 criteria, 53 sources.
+   - Playwright: **184 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped by design.
+
 ## Round 5 — real-data pass over the app: DONE
 Merged main at `1f6bc41` (gm1's sentence-bounded context and "Unknown:" wording, evidence tier in the sort, DECISIONS
 #23). `build:data`: 27 real programs, 8 SAMPLE. Run on `?mock=1&data=real&now=2026-09-14T12:00:00Z` for APCO Software Tools

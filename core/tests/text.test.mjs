@@ -12,6 +12,16 @@ test('pageText: inline tags join, block tags become one space', () => {
   assert.equal(pageText('x<section>y</section>z'), 'x y z');
 });
 
+test('pageText: a tag ends at the first > outside a quoted attribute value', () => {
+  assert.equal(pageText('<div data-x="a > b">Hello world</div>'), 'Hello world');
+  assert.equal(pageText("<p title='x > y'>One</p><p>Two</p>"), 'One Two');
+  assert.equal(pageText('Go <a href="/x" data-note="1 > 0">here</a> now'), 'Go here now', 'inline tag joins');
+  assert.equal(pageText('<script data-cfg="a>b">var s = "<p>no</p>";</script><p>kept</p>'), 'kept', 'removed element');
+  const escaped = '<div class="cmp" data-cmp-data-layer="{&quot;h&quot;:&quot;&lt;p&gt;Duplicate sentence.&lt;/p&gt;&quot;, &quot;x&quot;: &quot;&gt;&quot;}">Real sentence.</div>';
+  assert.equal(pageText(escaped), 'Real sentence.', 'escaped HTML in a data attribute never leaks');
+  assert.equal(pageText('<p class="a" id=b>Text</p>'), 'Text', 'unquoted attributes still end at >');
+});
+
 test('pageText: entities, &nbsp; and invisible characters', () => {
   assert.equal(pageText('It&rsquo;s &#8217;&#x2019; &amp; &lt;b&gt; &unknown; x&shy;y &eacute;'), 'It’s ’’ & <b> &unknown; xy é');
   assert.equal(pageText('50&nbsp;per cent now ok'), '50 per cent now ok');
