@@ -35,15 +35,15 @@ for byte, confirm git-clean, re-run green; a run with no tests counts as a failu
 
 ## Final QA
 
-Pinned QA worktree at **`952c679`** (main after the last merge), QA ports 7406–7409, run by the lead's `final-qa.sh`:
+Pinned QA worktree at **`549414b`** (round 2 final), QA ports 7406–7409, run by the lead's `final-qa.sh`:
 
 | Suite | Tests | Pass | Fail | Skipped |
 |---|---|---|---|---|
 | `build-data` (every quote on its saved page) | 27 real + 10 SAMPLE programs | all verified | 0 | — |
-| Core (`node --test core/tests`) | 73 | 73 | 0 | 0 |
+| Core (`node --test core/tests`) | 77 | 77 | 0 | 0 |
 | Worker on SAMPLE data (own `wrangler dev --local`, fixture server, `--test-scheduled`) | 16 | 15 | 0 | 1 (real-data test) |
 | Worker on real data (`GM_REAL=1`) | 1 | 1 | 0 | 0 |
-| App, Playwright: chromium-390, chromium-1280, webkit-390, webkit-1280 | 116 | 100 | 0 | 16 by design |
+| App, Playwright: chromium-390, chromium-1280, webkit-390, webkit-1280 | 132 | 116 | 0 | 16 by design |
 | App against a real local Worker, SAMPLE data | 4 | 4 | 0 | 0 |
 | App against a real local Worker, real data (27 programs) | 4 | 4 | 0 | 0 |
 
@@ -70,6 +70,8 @@ runs in chromium only, and `live.spec.mjs` is run separately with `GM_API` (the 
 | 04:40 | `44d19fc` main (before blockText) | the lead's `final-qa.sh`: `build-data` · core · Worker SAMPLE · Worker `GM_REAL=1` · Playwright · `live.spec.mjs` against a real `wrangler dev --local` on SAMPLE **and on real data** | exit 0, 27 real + 10 SAMPLE · 66/0/0 · 15/0/1 · 1/1 · 96 pass / 0 fail / 16 skip · live SAMPLE 4/4 · **live real 4/4** (Worker health: data_set real, 27 programs) |
 | 04:46 | `952c679` **final** | `final-qa.sh`: build · core · Worker SAMPLE · Worker real · Playwright · live SAMPLE · live real | exit 0, 27 real + 10 SAMPLE · 73/0/0 · 15/0/1 · 1/1 · 100 pass / 0 fail / 16 skip · 4/4 · 4/4 |
 | 04:43 | main checkout, **real scan** | `npm run scan` (Node, same `runChecks` as the Worker cron) into the local Worker on 7402 (DATA_SET=real) | 53 of 53 official pages fetched, 0 quotes missing, 0 pages changed since saved; stored as check run 1 in local D1 (finished 07:12:53Z). App on 7401 and Worker on 7402 left running |
+| 05:32 | `621c726` round 2 engine + app | `final-qa.sh` | exit 0, 27 real + 10 SAMPLE · core 77/0/0 · Worker 15/0/1 · real 1/1 · Playwright 116 pass / 0 fail / 16 skip · live 4/4 SAMPLE, 4/4 real |
+| 05:48 | `549414b` **round 2 final** (N7 test fix, shots, docs) | `final-qa.sh` | exit 0, 27 real + 10 SAMPLE · core 77/0/0 · Worker 15/0/1 · real 1/1 · Playwright 116 pass / 0 fail / 16 skip · live 4/4 SAMPLE, 4/4 real |
 | 04:51 | `995aa02` lead copy fix (results line states the real sort order, DECISIONS #28) | Playwright `results` specs, chromium + webkit, 390 + 1280, pinned worktree | 24 pass / 0 fail |
 
 Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1), `2c4b783` (gm1 at d4b8a42), `7825c3b` (gm2 at 8c92764), then gm1 at dd4f9d4.

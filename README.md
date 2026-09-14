@@ -104,21 +104,21 @@ strongest quoted match. Worked examples: `docs/RULES.md`; every judgement call: 
 
 ## Tests
 
-Final QA in a worktree pinned to **`952c679`** (main after the last merge), QA ports 7406–7409:
+Final QA in a worktree pinned to **`549414b`** (round 2, after Onyx's review), QA ports 7406–7409:
 
 | Suite | Command | Result |
 |---|---|---|
 | Every quote on its saved page | `npm run check:data` | 27 real + 10 SAMPLE programs, every quote verified |
-| Core: page text, quote checks, profile, matching, live checks, scan | `npm run test:core` | 73 pass, 0 fail |
+| Core: page text, quote checks, profile, matching, live checks, scan | `npm run test:core` | 77 pass, 0 fail |
 | Worker API on SAMPLE data (own `wrangler dev --local`, fixture server, cron trigger) | `npm run test:worker` | 15 pass, 0 fail, 1 skipped (the real-data test, run next) |
 | Worker API on the real data | `npm run build:data && GM_REAL=1 npm --prefix worker test` | 1 / 1 (27 programs answer, every criterion quoted, CDAP closed) |
-| App, Playwright: chromium + webkit, phone 390 + desktop 1280, real taps and typing | `npm run test:app` | 100 pass, 0 fail, 16 skipped by design |
+| App, Playwright: chromium + webkit, phone 390 + desktop 1280, real taps and typing | `npm run test:app` | 116 pass, 0 fail, 16 skipped by design |
 | App against a real local Worker | `GM_API=http://127.0.0.1:7402 npx playwright test -c app/playwright.config.mjs live` | 4 / 4 on SAMPLE data, 4 / 4 on real data |
 
 The skips are by design: 390-only tap-target and scroll checks don't run at 1280, the one-page PDF check runs in
 chromium only, and the live spec needs `GM_API`. Every important check was made to fail once on purpose (a planted
 quote turns the build red, Unknown counted as met turns the fit test red, a 30 px chip turns the tap-target test red,
-and about forty more); `docs/build-report.md` lists them.
+and about fifty more, including round 2's eight); `docs/build-report.md` lists them.
 
 ## What deploying needs
 
