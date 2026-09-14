@@ -60,7 +60,7 @@ meaning). Numbers in bands are **intervals** used by the matcher (§5).
 | Project cost | `cost` | no | `lt10k` Under $10,000 (0,10000) · `10k_25k` [10000,25000) · `25k_50k` [25000,50000) · `50k_100k` [50000,100000) · `100k_250k` [100000,250000) · `250k_1m` [250000,1000000) · `1m_plus` [1000000,∞) · `unsure` Not sure (→ unknown). Absent = unknown. |
 
 `parseProfile(input, { communities, industries }) → { profile, errors }` — `input` is a `URLSearchParams` or a plain
-object of strings. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
+object of strings; `communities`/`industries` may be the arrays or the whole reference files. `errors` is `[{ field, message }]` in plain English ("Pick your community.") — empty = valid.
 Unknown ids are errors. `profile` is normalised: `{ name, community: { id, name, census_division }, industry: { id,
 name }, structure, employees, years, revenue, owners: null | [] | ['women', …], purposes: [...], cost }`.
 `profileToQuery(profile) → string` round-trips (`parseProfile(profileToQuery(p))` equals `p`).
@@ -226,7 +226,8 @@ Funding type labels: Non-repayable, Repayable, Loan, Tax credit, Wage subsidy.
 
 `buildBundle({ programs, pageTexts, communities, industries }) → { bundle, problems }` in `core/bundle.js`.
 `bundle = { data_set: "real" | "sample", built_from: "<newest source fetched_at>", programs: [ProgramRecord with every
-quote expanded to Quote], communities, industries }`. No wall-clock values, so the same inputs give the same bytes.
+quote expanded to Quote], communities, industries }`, where `communities` and `industries` are the **whole reference files** as
+loaded (`bundle.communities.communities`, `bundle.communities.source`; same for industries). No wall-clock values, so the same inputs give the same bytes.
 - `node scripts/build-data.mjs` → verifies, writes `data/build/programs.json` (real, from `data/`) and
   `data/build/sample.json` (from `core/tests/fixtures/programs/` + `core/tests/fixtures/sources/`, with the real
   reference lists). Exit 1 and write nothing if there is any problem.
