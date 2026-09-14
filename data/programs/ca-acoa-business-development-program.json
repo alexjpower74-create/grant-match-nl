@@ -1,0 +1,113 @@
+{
+  "slug": "ca-acoa-business-development-program",
+  "sample": false,
+  "name": "Business Development Program",
+  "provider": "Atlantic Canada Opportunities Agency",
+  "level": "federal",
+  "url": "https://www.canada.ca/en/atlantic-canada-opportunities/services/business-development-program.html",
+  "summary": {
+    "quote": "The Business Development Program (BDP) helps entrepreneurs launch, modernize and grow their business in Atlantic Canada.",
+    "source": "ca-acoa-business-development-program--main"
+  },
+  "sources": [
+    {
+      "id": "ca-acoa-business-development-program--main",
+      "url": "https://www.canada.ca/en/atlantic-canada-opportunities/services/business-development-program.html",
+      "title": "Business Development Program - Canada.ca",
+      "publisher": "Atlantic Canada Opportunities Agency",
+      "fetched_at": "2026-09-14T06:07:51.608Z",
+      "http_status": 200,
+      "sha256": "7a53be83a93dc3c1e5d23ffe5633e7f4a775d20586f643dc117cc2e4b124b0a5",
+      "text_sha256": "d06b13178f763e9088f99fac965afdf8bfbf403899f4e1063c952476a3edd32a",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    },
+    {
+      "id": "ca-acoa-business-development-program--contacts",
+      "url": "https://www.canada.ca/en/atlantic-canada-opportunities/corporate/contact-us.html",
+      "title": "Contact us - Canada.ca",
+      "publisher": "Atlantic Canada Opportunities Agency",
+      "fetched_at": "2026-09-14T06:07:55.877Z",
+      "http_status": 200,
+      "sha256": "3578664897fd9e27ccac8dedc68df90e5a4ea93c67a9084ba623cfacb8e82a03",
+      "text_sha256": "2772baa8a1a1953369f1e2a59b3074e954e3d7e95b53abb34256138408b662f3",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "repayable",
+      "applies_to": "Financing an expansion or a new business",
+      "quote": "Our repayable funding is interest-free and unsecured.",
+      "source": "ca-acoa-business-development-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 50,
+    "text": "Up to 50% of the capital you need to grow or launch the business",
+    "quote": "You could get up to 50% of the capital you need to grow your business or launch a new one.",
+    "source": "ca-acoa-business-development-program--main"
+  },
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Atlantic Canada",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "helps entrepreneurs launch, modernize and grow their business in Atlantic Canada",
+      "source": "ca-acoa-business-development-program--main"
+    },
+    {
+      "id": "project",
+      "text": "The money is for an expansion, a new business, or one of the growth activities the page lists (staff training, efficiency studies, marketing and trade, productivity, quality assurance, environmental management)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "If you're looking to finance your next expansion or start a new business, we can help!",
+      "source": "ca-acoa-business-development-program--main"
+    },
+    {
+      "id": "talk-first",
+      "text": "Talk to your nearest ACOA office about the project before you apply",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Contact your nearest ACOA office to discuss your project and then complete and submit the Application for financial assistance.",
+      "source": "ca-acoa-business-development-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "ACOA Business Information Services",
+      "phone": "1-888-576-4444",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Call us at 1-888-576-4444 and get started today!",
+      "source": "ca-acoa-business-development-program--main"
+    },
+    {
+      "label": "ACOA Newfoundland and Labrador",
+      "phone": "1-800-668-1010",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Newfoundland and Labrador: 1-800-668-1010",
+      "source": "ca-acoa-business-development-program--contacts"
+    }
+  ],
+  "research": {
+    "by": "gm2",
+    "notes": "Intake: the page never says when applications are taken, so unknown. Funding: \"Our repayable funding is interest-free and unsecured\" for expansions and new businesses; the separate \"interest-free contribution to cover up to 75% of the costs\" for training, marketing and similar activities does not say whether it is repaid, so it is not listed as a type and its 75% is left out of cost_share (the 50% is the capital share the page gives for repayable funding). No dollar maximum is stated. Location: the program is for businesses in Atlantic Canada, so every NL community meets it. No structure, size or purpose rule: the page states none that a profile can check, and \"expansion\" does not map to our purposes. The non-profit stream is for organizations that support SMEs, not for a business applying for itself, and is left out. Contacts: the Business Information Services line is on the program page; the NL line is from ACOA's own contact page (second source). The Application for financial assistance is a form and was not read."
+  }
+}
