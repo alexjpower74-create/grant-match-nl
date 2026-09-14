@@ -124,3 +124,25 @@ test('with a profile the stale wording comes from fit.why only; with no profile 
   await expect(page.locator('[data-flag="stale"]')).toHaveCount(1)
   await expect(page.locator('[data-flag="stale"]')).toContainText('more than 60 days ago. Check the official page.')
 })
+
+test('a check-yourself criterion shows its reason copy only, not its why line (API §12, DECISIONS #24)', async ({ page }) => {
+  // The SAMPLE Auto Service program with the most check-yourself items, and at least one other criterion with a why.
+  const want = coreMatch(PROFILES.auto)
+  const all = [...want.open, ...want.closed]
+  const r = all
+    .filter((x) => x.criteria.some((c) => c.unknown_reason === 'self_check') && x.criteria.some((c) => c.why && c.unknown_reason !== 'self_check'))
+    .sort((a, b) => b.counts.self_check - a.counts.self_check)[0]
+  expect(r, 'a SAMPLE program with both kinds of criteria').toBeTruthy()
+  await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
+  await expect(page.locator('h1')).toHaveText(r.name)
+  for (const c of r.criteria) {
+    const item = page.locator(`[data-criterion="${c.id}"]`)
+    if (c.unknown_reason === 'self_check') {
+      await expect(item.locator('.reason')).toHaveText('Unknown: check this yourself')
+      await expect(item.locator('.criterion-why'), `${c.id}: no why line`).toHaveCount(0)
+      await expect(item).not.toContainText(c.why)
+    } else if (c.why) {
+      await expect(item.locator('.criterion-why'), `${c.id}: why still shown`).toHaveText(c.why)
+    }
+  }
+})
