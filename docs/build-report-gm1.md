@@ -238,6 +238,75 @@ Dry run: nothing sent to the Worker.
 
 Core tests after all of this: **56/56**; `npm run check:data` exit 0 (3 real programs, 8 SAMPLE).
 
+## Lead review answers applied (DECISIONS #18) · DONE
+- **`unclear` on structure and industry rules**, in core. `schema.js` accepts optional `unclear` ids (known, non-empty,
+  not also in `in`/`not_in`). `match.js` returns `unknown`, reason `unclear`, why "The page's wording doesn't settle
+  this for <label>.", and the fit why line "Unknown, the page's wording doesn't settle it for your answer: …".
+  RULES.md has a section with a worked example. Tests: structure and industry unclear, "an unclear answer is never
+  Looks like a fit", and schema cases. **Control (k):** unclear treated as met → that test red; restored.
+- JobsNL structure: in [corporation, sole_proprietor], unclear [cooperative, nonprofit]. Business Growth: unclear
+  [not_registered]. Business Investment: the Business Growth page saved again as a second source
+  (`--regional-offices`), with the five JGRD regional office phones labelled "(listed on the Business Growth Program
+  page)".
+- Q1 intake unknown kept; Q3 no divisions inferred; Q4, Q5, Q7 as researched; page_gone reading confirmed.
+
+## Phase 2 — programs 4–15 (in progress)
+
+### Committed programs (one commit each; `check:data` green after every one)
+| Slug | Sources | Type | Intake | Criteria (met-able / self_check) | Notes |
+|---|---|---|---|---|---|
+| nl-research-and-innovation-program | `--main` | non-repayable, 50% | unknown | 2 / 2 | For non-commercial applicants only: structure in [nonprofit], unclear [cooperative]; businesses miss. Purpose research. |
+| nl-green-transition-fund | `--main` | non-repayable, $75K–$3M, businesses 40% | **continuous** ("continual intake process") | 2 / 3 | Structure in [corporation], unclear [cooperative, nonprofit]. The green focus is self_check, so a corporation with any purpose can show Looks like a fit (see contract question A). |
+| nl-job-accelerator-and-growth-program | `--main` | non-repayable payroll rebate, 10% | unknown ("assessed on a rolling basis" isn't intake) | 2 / 7 | Industry not_in [41, 44-45], unclear [53, 56]; purpose hire; 20 jobs / $50K salary / commitment are self_check; no location rule (companies from outside the province may apply). |
+| nl-harvester-enterprise-loan-program | `--main` | loan (down payment), max $450,000 | unknown | 2 / 3 | Industry in [11] plus self_check "independent fish harvester". Guarantee and interest rebates in notes only. No contact on the page. |
+| nl-investment-attraction-fund | `--main` | loan (loans and advances) | unknown | 1 / 7 | Inward investment only (self_check). "Registered company or commit to become one" settles no structure answer, so self_check. |
+| nl-innovation-and-business-development-fund | `--main` | Unknown (only in PDFs) | unknown | 0 / 1 | Administered by Energy and Mines; everything beyond the summary is in PDFs, so Unknown. |
+| nl-apprenticeship-wage-subsidy | `--main` | wage subsidy, 75% up to $14/h | unknown | 3 / 4 | Structure in [corporation, sole_proprietor], unclear [cooperative, nonprofit]; contact is the department's general line (the page has no program officer number). |
+| nl-canada-nl-job-grant | `--main` | Unknown (not stated), max $15,000 | **closed** ("suspended… not being accepted") | 3 / 5 | The lower part of the page still says "Continuous intake"; the suspension notice wins. |
+| nl-employment-enhancement-program | `--main` | wage subsidy, 75% up to $15/h | unknown | 4 / 4 | Industry in [11, 31-33] plus self_check value-added secondary processing; purpose hire or training. |
+| nl-summer-employment-program-for-students | `--main` | wage subsidy, max $4,032 per FTE (private sector) | open, deadline 2026-02-19 → **closed by core** | 3 / 3 | Fetched at its final URL (the old one redirects on the same host). |
+
+Updated earlier programs: nl-jobsnl-wage-subsidy, nl-business-growth-program, nl-business-investment-program
+(above).
+
+### Checked, not added
+- **Regional Development Fund:** only non-profit organizations may apply ("Eligible applicants are non-profit
+  organizations"; co-operatives included, must be incorporated). Not for businesses.
+- **Community Capacity Building Program:** "not-for-profit economic development organizations". Not for businesses.
+- **takeCHARGE Business Efficiency Program (takechargenl.ca): REJECTED on terms.** The site's Terms of Use give a
+  licence for "personal, non-commercial transitory viewing only" and say you may not "copy the information on the
+  website" or "transfer, publish or disseminate the information". PLAN says not to use such a site. The three pages
+  I fetched were deleted, not committed. The lead or Alexander could ask Newfoundland Power / NL Hydro for
+  permission.
+- **RDÉE TNL, now Horizon TNL (horizontnl.ca):** advice and help preparing applications; it "can orient you to a
+  start-up loan of up to $75,000, offered in partnership with Futurpreneur Canada". It is not a funder itself, so not
+  added. Futurpreneur is gm2's `ca-futurpreneur-startup`.
+- **NLOWE (nlowe.org): BLOCKED.** The host resolves (35.208.104.81) but refuses connections on port 443 from this
+  machine (three tries, 06:03–06:15Z). Nothing fetched; no NLOWE record. Search results say NLOWE is a loan fund partner
+  for the WEOC National Loan Program, but that can't be used without reading the official page.
+
+### Things I got wrong, and fixed
+- **cbdc.ca politeness.** cbdc.ca's robots.txt puts `Crawl-delay: 10` before any `User-agent` line. My parser ignored
+  directives outside a group, so my first three cbdc.ca requests (two sitemaps and the Gander Area page,
+  06:00–06:01Z) were about 1 s apart instead of 10 s. Fixed in `core/checks.js` (a Crawl-delay before any group
+  applies to every agent). There is a test with cbdc.ca's exact shape, and **control (l)** ignoring it → red. Every
+  cbdc.ca request since waited 10 s. The same code is in the Worker's cron, so the fix matters there too.
+- **A test run I didn't gate.** One chain ran `npm run test:core | grep | head`, so 7 failing build and scan tests
+  didn't stop the commits after it (2a54ea1, 2cc52a0, 515558e). The cause: two new program files still had
+  placeholder hashes while the tests ran, which the build and scan tests correctly refused. Re-run with an explicit
+  exit-code gate at 74baa60: **58/58 pass**, `check:data` exit 0 (13 real programs). Later chains gate on the exit code.
+
+### Contract questions (new)
+A. **`unclear` on purpose rules?** The Green Transition Fund is for "greening" projects, which cut across our
+   purposes (equipment, research, market development). Without a way to say "unclear", it has no purpose rule, and a
+   corporation in NL with any purpose can show Looks like a fit, with the green focus as a check-this-yourself item.
+B. **Location from a list of place names.** CBDC office pages name the places they serve ("Gander Glenwood Appleton
+   Benton Gambo…"), not census divisions. About 40 of Gander Area's names aren't census subdivisions (Benton, Ladle
+   Cove, Herring Neck…), and name matching mistakes "Victoria Cove" for Victoria (Division 1). A `communities` rule
+   would wrongly miss people in unincorporated places. My reading: no location rule from those lists, and "your
+   local CBDC offers this" is a check-this-yourself item. Would `unclear` on location (for example, a division's
+   "Somewhere else" entry) be wanted?
+
 ## Waiting on
-- **gm2's cross-review** of the three NL programs (questions above) before programs 4–15.
-- Nothing needed from gm2's files. Nothing outside gm1's slice was edited.
+- Nothing blocking except NLOWE (unreachable). gm2's later cross-review will come through the lead.
+- Nothing outside gm1's slice was edited.

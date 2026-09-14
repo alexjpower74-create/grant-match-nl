@@ -1,0 +1,109 @@
+{
+  "slug": "nl-research-and-innovation-program",
+  "sample": false,
+  "name": "Research and Innovation Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/research-and-innovation-program/",
+  "summary": {
+    "quote": "The Research and Innovation Fund Program provides non-repayable contributions to non-commercial entities for the development and implementation of research and development and innovation projects to support economic development in Newfoundland and Labrador.",
+    "source": "nl-research-and-innovation-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-research-and-innovation-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/research-and-innovation-program/",
+      "title": "Research and Innovation Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:05.923Z",
+      "http_status": 200,
+      "sha256": "ad30cbdf93ed04e009456cf763b83620f4080d340484baa4b0a8e556469000f7",
+      "text_sha256": "7ebc5fa2d7d72976b2d13ad5b8129917cb93822c6809c6e6884ef9508939c15e",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The Research and Innovation Fund Program provides non-repayable contributions to non-commercial entities",
+      "source": "nl-research-and-innovation-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 50,
+    "text": "Normally up to 50% of total eligible project costs",
+    "quote": "The program normally provides up to 50 percent of total eligible costs of a specific project.",
+    "source": "nl-research-and-innovation-program--main"
+  },
+  "criteria": [
+    {
+      "id": "structure",
+      "text": "A not-for-profit applicant: academic or research institution, industry association, municipality or other not-for-profit group. Not a business",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "nonprofit"
+        ],
+        "unclear": [
+          "cooperative"
+        ]
+      },
+      "quote": "Eligible applicants include: Public and not-for profit academic and research institutions Industry associations Municipalities Other not-for-profit groups including economic development organizations",
+      "source": "nl-research-and-innovation-program--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for a research and development or innovation project",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "research"
+        ]
+      },
+      "quote": "for the development and implementation of research and development and innovation projects",
+      "source": "nl-research-and-innovation-program--main"
+    },
+    {
+      "id": "incorporated",
+      "text": "The applicant is incorporated",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "NOTE: Applicants must be incorporated.",
+      "source": "nl-research-and-innovation-program--main"
+    },
+    {
+      "id": "priorities",
+      "text": "The project fits strategic priorities and industry needs and could have an economic impact in the province",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Projects must align with strategic priorities, industry needs, development opportunities, and demonstrates potential for economic impact in NL.",
+      "source": "nl-research-and-innovation-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Economic development (email)",
+      "phone": null,
+      "email": "economicdevelopment@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "For program details or assistance with your application, contact economicdevelopment@gov.nl.ca",
+      "source": "nl-research-and-innovation-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "The page names the program 'Research and Innovation Program' in its title and heading and 'Research and Innovation Fund Program' in its text; the name follows the heading. It is for non-commercial entities only, so a business misses the structure rule; kept in the data because the brief lists it and a non-profit owner may use the tool. 'Other not-for-profit groups' gives nonprofit; a co-operative may or may not be not-for-profit, so it is unclear. Municipalities and public institutions aren't profile options. Location: the page says the projects support economic development in NL but gives no rule on where the applicant is, so no location rule. Intake: not stated, so unknown. No maximum amount on the page. The factsheet and application are PDFs/forms and were not read. Research applicants with MUN and CNA have an extra rule (full-time for two or more years), not added: it applies to individual researchers, not the organization."
+  }
+}

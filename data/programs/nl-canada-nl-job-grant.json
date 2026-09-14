@@ -1,0 +1,141 @@
+{
+  "slug": "nl-canada-nl-job-grant",
+  "sample": false,
+  "name": "Canada-Newfoundland and Labrador Job Grant",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/empservices/foremployers/canada-nl-job-grant/",
+  "summary": {
+    "quote": "The Canada-Newfoundland and Labrador Job Grant (CNLJG) provides funding to eligible businesses and organizations to help offset the cost of training for their existing and future employees.",
+    "source": "nl-canada-nl-job-grant--main"
+  },
+  "sources": [
+    {
+      "id": "nl-canada-nl-job-grant--main",
+      "url": "https://www.gov.nl.ca/jgrd/empservices/foremployers/canada-nl-job-grant/",
+      "title": "Canada - Newfoundland and Labrador Job Grant - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T06:02:39.382Z",
+      "http_status": 200,
+      "sha256": "4ed4b10af4d0898de38c96117e3817d1527b623ed1b63c9425eccbeebb5aa7fb",
+      "text_sha256": "0a9c27befece041784b59a75d3bf43aec0bead90658cfa77581729e787b44e67",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [],
+  "intake": {
+    "status": "closed",
+    "quote": "The Canada NL Job Grant (CNLJG) is currently suspended until further notice, due to a reduction in federal funding. As a result, new applications for CNLJG are not being accepted at this time.",
+    "source": "nl-canada-nl-job-grant--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 15000,
+    "text": "Up to $10,000 a year to train an existing employee, or up to $15,000 to train an unemployed participant",
+    "quote": "The program provides up to a maximum of $10,000 per year towards training an existing employee and up to a maximum of $15,000 for training an unemployed participant.",
+    "source": "nl-canada-nl-job-grant--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The employer has an office or base in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Have an office location/base in Newfoundland and Labrador.",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "structure",
+      "text": "Incorporated or a sole proprietor",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "corporation",
+          "sole_proprietor"
+        ],
+        "unclear": [
+          "cooperative",
+          "nonprofit"
+        ]
+      },
+      "quote": "Be incorporated or a sole proprietor.)",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for training employees",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "training"
+        ]
+      },
+      "quote": "to help offset the cost of training for their existing and future employees",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "applicant-type",
+      "text": "A private sector employer, not-for-profit organization, industry association, employer consortium, union, or Indigenous government or organization",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Be a private sector employer, not-for-profit organization, industry association, employer consortia, unions, or an Indigenous government or organization.",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "cra-number",
+      "text": "Has a Canada Revenue Agency business number",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Have a Canada Revenue Agency business number.",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with the Registry of Companies and Deeds",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Be in good standing with Registry of Companies and Deeds.",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "job-after-training",
+      "text": "There is a job for every participant at the end of training",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The employer must have a job for all participants at the end of training.",
+      "source": "nl-canada-nl-job-grant--main"
+    },
+    {
+      "id": "employer-share",
+      "text": "The employer pays at least one-third of the training cost (except for an unemployed participant)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The employer contributes at least one-third to the cost of training, with the exception of an unemployed participant.",
+      "source": "nl-canada-nl-job-grant--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Employment programs",
+      "phone": "1-800-563-6600",
+      "email": "EmploymentPrograms@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "Contact Information E-mail EmploymentPrograms@gov.nl.ca Call: 1-800-563-6600",
+      "source": "nl-canada-nl-job-grant--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Closed: the top of the page says the grant 'is currently suspended until further notice, due to a reduction in federal funding' and 'new applications for CNLJG are not being accepted at this time'. Lower down the page still says 'Deadline to Apply Continuous intake throughout the year, pending budget availability'; the suspension notice is newer and specific, so the intake is closed. Funding type: the page doesn't say non-repayable or anything else, so Unknown. Cost share: the employer pays at least one-third (so the grant covers up to two-thirds), but 'two-thirds' isn't written, so no cost_share percent; the employer share is a check-this-yourself item. Structure: 'Be incorporated or a sole proprietor' gives corporation and sole_proprietor; co-operatives and non-profits (the page also lists not-for-profit organizations) may or may not be incorporated, so unclear; partnerships miss. The eligibility and LaMPSS detail pages linked from the page were not fetched."
+  }
+}

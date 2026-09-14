@@ -1,0 +1,132 @@
+{
+  "slug": "nl-investment-attraction-fund",
+  "sample": false,
+  "name": "Investment Attraction Fund",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/funding/investment-attraction-fund/",
+  "summary": {
+    "quote": "The Investment Attraction Fund (“Fund”) is designed to attract large-scale businesses and foreign direct investment (“FDI”) to the Province of Newfoundland and Labrador (“the province”).",
+    "source": "nl-investment-attraction-fund--main"
+  },
+  "sources": [
+    {
+      "id": "nl-investment-attraction-fund--main",
+      "url": "https://www.gov.nl.ca/jgrd/funding/investment-attraction-fund/",
+      "title": "Investment Attraction Fund - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:55:11.534Z",
+      "http_status": 200,
+      "sha256": "5185a43c3a4ca2844a845386f2d4752705005d0c21d3ce63e72ea5201d331e2d",
+      "text_sha256": "1bdd5cb36b0ffa8c54cad34a852c1b4e77a2a5c799b79f935ea10cf59f22d7ad",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": "Loans and advances",
+      "quote": "The Fund consists of an allocation for loans and advances towards strategic investments in infrastructure support costs, human resource costs or other costs, as determined by the Department of Jobs, Growth and Rural Development.",
+      "source": "nl-investment-attraction-fund--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business has, or will have, operations in the province",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Have or commit to have operations situated in the Province;",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "inward-investment",
+      "text": "The project comes from investors outside the province (start-up or expansion)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "For the purpose of this Fund, inward investment includes investments in start-up or expansion activated by investors external to the province.",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "investor-contribution",
+      "text": "The inward investor puts in their own money",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Inward investments require a direct contribution of funds by the inward investor in addition to any potential funding",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "registered-company",
+      "text": "A registered company, or committed to becoming one, and legally entitled to do business in the province",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Be a duly registered company or commit to taking the necessary steps to become a registered company under the Newfoundland and Labrador Corporations Act and/or the Canada Business Corporations Act and legally entitled to conduct business in the Province;",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with the province",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Be in good standing with the Province.",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "needs-funding",
+      "text": "The project wouldn't go ahead without this funding",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Would not proceed without the requested funding support;",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "creates-jobs",
+      "text": "The project will create employment",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Will create employment; and,",
+      "source": "nl-investment-attraction-fund--main"
+    },
+    {
+      "id": "business-plan",
+      "text": "A detailed business plan comes with the proposal",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Proposals for funding under the Investment Attraction Fund must be accompanied by a detailed business plan",
+      "source": "nl-investment-attraction-fund--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Invest NL (email)",
+      "phone": null,
+      "email": "InvestNL@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "To apply, please contact InvestNL@gov.nl.ca.",
+      "source": "nl-investment-attraction-fund--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Item 9 of the brief: included because a business can apply, but only as inward investment ('investors external to the province', large-scale businesses and foreign direct investment), which is a check-this-yourself item; a local small business will usually not qualify. Type: 'loans and advances', recorded as loan. Structure: 'a duly registered company or commit to taking the necessary steps to become a registered company' settles no structure answer (anyone may commit to incorporating), so no structure rule, only a check-this-yourself item. Location is the only rule a profile can check, so it can't be better than Might fit. Intake, maximum and cost share: not stated. No phone on the page."
+  }
+}

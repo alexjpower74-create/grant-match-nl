@@ -15,6 +15,7 @@ function parseRobots(txt) {
   const groups = [];
   let current = null;
   let lastWasAgent = false;
+  let globalCrawlDelay = null;
   for (const rawLine of String(txt ?? '').split(/\r?\n/)) {
     const line = rawLine.replace(/#.*$/, '').trim();
     const m = line.match(/^([A-Za-z-]+)\s*:\s*(.*)$/);
@@ -31,7 +32,14 @@ function parseRobots(txt) {
       continue;
     }
     lastWasAgent = false;
-    if (!current) continue;
+    if (!current) {
+      // A Crawl-delay before any User-agent line (cbdc.ca does this) is read as applying to every agent.
+      if (key === 'crawl-delay') {
+        const n = Number(value);
+        if (Number.isFinite(n) && n >= 0) globalCrawlDelay = Math.max(globalCrawlDelay ?? 0, n);
+      }
+      continue;
+    }
     if (key === 'allow' || key === 'disallow') {
       if (value !== '') current.rules.push({ allow: key === 'allow', pattern: value });
     } else if (key === 'crawl-delay') {
@@ -39,12 +47,12 @@ function parseRobots(txt) {
       if (Number.isFinite(n) && n >= 0) current.crawlDelay = Math.max(current.crawlDelay ?? 0, n);
     }
   }
-  return groups;
+  return { groups, globalCrawlDelay };
 }
 
 /** The groups that apply to a User-Agent: every group naming our product token, else every `*` group. */
 function groupsFor(txt, ua) {
-  const groups = parseRobots(txt);
+  const { groups } = parseRobots(txt);
   const token = String(ua).split('/')[0].trim().toLowerCase();
   const specific = groups.filter((g) => g.agents.some((a) => a !== '*' && (token === a || token.startsWith(a))));
   return specific.length ? specific : groups.filter((g) => g.agents.includes('*'));
@@ -74,7 +82,7 @@ export function robotsAllows(txt, ua, path) {
 
 /** Crawl-delay in seconds for our User-Agent, or null. */
 export function robotsCrawlDelay(txt, ua) {
-  let delay = null;
+  let delay = parseRobots(txt).globalCrawlDelay;
   for (const g of groupsFor(txt, ua)) if (g.crawlDelay !== null) delay = Math.max(delay ?? 0, g.crawlDelay);
   return delay;
 }

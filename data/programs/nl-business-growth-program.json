@@ -32,7 +32,12 @@
       "source": "nl-business-growth-program--main"
     }
   ],
-  "intake": { "status": "unknown", "quote": null, "source": null, "deadline": null },
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
   "max_amount": {
     "amount": 200000,
     "text": "Normally up to $200,000 over 24 months ($100,000 per year) per project, per company",
@@ -49,49 +54,74 @@
     {
       "id": "location",
       "text": "The business operates in Newfoundland and Labrador",
-      "rule": { "kind": "location", "province": "NL" },
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
       "quote": "sole proprietors, partnerships or corporations operating within Newfoundland and Labrador",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "structure",
       "text": "A sole proprietor, partnership, corporation, co-operative or non-profit organization",
-      "rule": { "kind": "structure", "in": ["sole_proprietor", "partnership", "corporation", "cooperative", "nonprofit"] },
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "sole_proprietor",
+          "partnership",
+          "corporation",
+          "cooperative",
+          "nonprofit"
+        ],
+        "unclear": [
+          "not_registered"
+        ]
+      },
       "quote": "Growth-focused, innovative firms including sole proprietors, partnerships or corporations operating within Newfoundland and Labrador that demonstrate commercial viability; or Co-operatives or non-profit organizations operating within Newfoundland and Labrador",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "commercial-viability",
       "text": "A growth-focused, innovative business that shows commercial viability (co-operatives and non-profits: able to earn commercial revenue, or pursuing international trade or economic development)",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Growth-focused, innovative firms including sole proprietors, partnerships or corporations operating within Newfoundland and Labrador that demonstrate commercial viability; or Co-operatives or non-profit organizations operating within Newfoundland and Labrador that demonstrate an ability to generate commercial revenue or are pursuing international trade or economic development opportunities.",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "priorities",
       "text": "The project fits one of the program's priorities: development and commercialization, productivity improvement and innovation, knowledge and technical assistance, or growth and internationalization",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Investments under the Business Growth Program will be aligned with the following priorities (fact sheet): Development and Commercialization Productivity Improvement and Innovation Knowledge and Technical Assistance Growth and Internationalization",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "capacity",
       "text": "Able to do the work in the project proposal",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "The ability to undertake the work identiﬁed in the project proposal;",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "capital",
       "text": "Able to get the money needed to complete the project",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "The ability to access the ﬁnancial capital required to complete the project;",
       "source": "nl-business-growth-program--main"
     },
     {
       "id": "good-standing",
       "text": "In good standing with the Government of Newfoundland and Labrador",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Good standing with the Government of Newfoundland and Labrador.",
       "source": "nl-business-growth-program--main"
     }
@@ -148,6 +178,6 @@
   ],
   "research": {
     "by": "gm1",
-    "notes": "Intake: the page never says when applications are taken (no deadline, no 'ongoing'), so unknown. Amount: $200,000 is the normal maximum; the page also says Development and Commercialization projects 'may be considered to a higher maximum normally up to $750,000 over multiple years' (left in notes, not max_amount). Structure: the page lists sole proprietors, partnerships, corporations, co-operatives and non-profit organizations, so 'Not registered yet' is missed; reviewers, check that reading. Co-operatives and non-profits have an extra condition (commercial revenue, or trade/economic development), kept as a check-this-yourself item with the commercial-viability condition. Priorities don't map mechanically to our purposes, so no purpose rule. Regional office phones are on this page, but the page doesn't say which census divisions each office serves, so census_divisions is null. The fact sheet, application forms and applicant guides are PDFs and were not read; anything only in them is Unknown. The page text writes 'identiﬁed' and 'ﬁnancial' with the ﬁ ligature character, and the quotes keep it."
+    "notes": "Intake: the page never says when applications are taken (no deadline, no 'ongoing'), so unknown. Amount: $200,000 is the normal maximum; the page also says Development and Commercialization projects 'may be considered to a higher maximum normally up to $750,000 over multiple years' (left in notes, not max_amount). Structure: the page lists sole proprietors, partnerships, corporations, co-operatives and non-profit organizations, and it helps businesses 'start', so 'Not registered yet' is unclear rather than missed (DECISIONS #18). Co-operatives and non-profits have an extra condition (commercial revenue, or trade/economic development), kept as a check-this-yourself item with the commercial-viability condition. Priorities don't map mechanically to our purposes, so no purpose rule. Regional office phones are on this page, but the page doesn't say which census divisions each office serves, so census_divisions is null. The fact sheet, application forms and applicant guides are PDFs and were not read; anything only in them is Unknown. The page text writes 'identiﬁed' and 'ﬁnancial' with the ﬁ ligature character, and the quotes keep it."
   }
 }

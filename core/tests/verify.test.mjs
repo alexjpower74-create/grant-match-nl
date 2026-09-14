@@ -94,6 +94,9 @@ test('a phone or email not in its contact quote is flagged', async () => {
 test('schema: SAMPLE naming, enums, unique criterion ids, rule shapes', () => {
   const p = sampleProgram('nl-sample-growth-grant');
   assert.deepEqual(validateProgram(p), []);
+  const withUnclear = clone(p);
+  withUnclear.criteria[1].rule = { kind: 'structure', in: ['corporation', 'sole_proprietor'], unclear: ['cooperative', 'nonprofit'] };
+  assert.deepEqual(validateProgram(withUnclear), []);
 
   const cases = [
     [(r) => { r.name = 'Growth Grant'; }, 'name:'],
@@ -104,6 +107,11 @@ test('schema: SAMPLE naming, enums, unique criterion ids, rule shapes', () => {
     [(r) => { r.criteria[1].id = 'location'; }, 'criteria[1].id:'],
     [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['llc'] }; }, 'criteria[1].rule.in[0]:'],
     [(r) => { r.criteria[2].rule = { kind: 'employees' }; }, 'criteria[2].rule:'],
+    [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: ['corporation'] }; }, 'criteria[1].rule.unclear:'],
+    [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: ['llc'] }; }, 'criteria[1].rule.unclear[0]:'],
+    [(r) => { r.criteria[1].rule = { kind: 'structure', in: ['corporation'], unclear: [] }; }, 'criteria[1].rule.unclear:'],
+    [(r) => { r.criteria[2].rule = { kind: 'employees', lt: 100, unclear: ['x'] }; }, 'criteria[2].rule.unclear:'],
+    [(r) => { r.criteria[3].rule = { kind: 'purpose', any: ['digital'], unclear: ['hire'] }; }, 'criteria[3].rule.unclear:'],
     [(r) => { r.criteria[5].rule = { kind: 'self_check', note: 'x' }; }, 'criteria[5].rule.note:'],
     [(r) => { r.criteria[0].quote = ' short'; }, 'criteria[0].quote:'],
     [(r) => { r.extra = 1; }, 'extra:'],

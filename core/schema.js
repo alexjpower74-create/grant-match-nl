@@ -214,9 +214,16 @@ export function validateProgram(record) {
       if (new Set(v).size !== v.length) bad(`${path}.${k}`, 'has duplicates');
     };
     const inOrNotIn = (list) => {
-      only(['in', 'not_in']);
+      only(['in', 'not_in', 'unclear']);
       if (('in' in rest) === ('not_in' in rest)) return bad(path, 'needs exactly one of in, not_in');
-      nonEmptyFrom('in' in rest ? 'in' : 'not_in', list);
+      const key = 'in' in rest ? 'in' : 'not_in';
+      nonEmptyFrom(key, list);
+      if ('unclear' in rest) {
+        nonEmptyFrom('unclear', list);
+        if (Array.isArray(rest.unclear) && Array.isArray(rest[key])) {
+          for (const id of rest.unclear) if (rest[key].includes(id)) bad(`${path}.unclear`, `"${id}" can’t be in both unclear and ${key}`);
+        }
+      }
     };
 
     switch (kind) {

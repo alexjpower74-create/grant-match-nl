@@ -88,6 +88,7 @@ function boundsWords(rule, fmt) {
 // ---- one criterion -------------------------------------------------------------------------------------------
 
 const result = (status, why, unknown_reason = null) => ({ status, unknown_reason, why });
+const unclearResult = (label) => result('unknown', `The page's wording doesn't settle this for ${label}.`, 'unclear');
 
 /** evaluateCriterion(criterion, profile) → { status, unknown_reason, why } */
 export function evaluateCriterion(criterion, profile) {
@@ -114,6 +115,7 @@ export function evaluateCriterion(criterion, profile) {
 
     case 'industry': {
       const name = profile.industry.name;
+      if (rule.unclear?.includes(profile.industry.id)) return unclearResult(name);
       if (rule.not_in) {
         return rule.not_in.includes(profile.industry.id)
           ? result('missed', `You picked ${name}. The page leaves out ${name}.`)
@@ -127,6 +129,7 @@ export function evaluateCriterion(criterion, profile) {
     case 'structure': {
       if (profile.structure === 'unsure') return result('unknown', 'You weren\'t sure how the business is set up.', 'not_answered');
       const mine = labelOf(STRUCTURES, profile.structure);
+      if (rule.unclear?.includes(profile.structure)) return unclearResult(mine);
       if (rule.not_in) {
         return rule.not_in.includes(profile.structure)
           ? result('missed', `You picked ${mine}. The page leaves that out.`)
@@ -345,9 +348,9 @@ function fitFor({ criteria, intake, verification }) {
   }
 
   for (const c of unknown) {
-    why.push(c.unknown_reason === 'band_straddles'
-      ? `Unknown, your answer is close to the page's limit: ${c.text}.`
-      : `Unknown, you didn't answer this: ${c.text}.`);
+    if (c.unknown_reason === 'band_straddles') why.push(`Unknown, your answer is close to the page's limit: ${c.text}.`);
+    else if (c.unknown_reason === 'unclear') why.push(`Unknown, the page's wording doesn't settle it for your answer: ${c.text}.`);
+    else why.push(`Unknown, you didn't answer this: ${c.text}.`);
   }
   const allMet = unknown.length === 0;
   const beyondLocation = checkable.some((c) => c.kind !== 'location');
