@@ -219,3 +219,12 @@ labels keep the office and town only. The point K3 was after, that Gander isn't 
 own neutral line above multiple contacts: "The program's pages list these offices. Call the one nearest you." (API §12).
 gm1's round 3 also confirmed the data end to end: a live dry scan on a copy with CanExport re-hashed read 53 sources
 (36 unique URLs) and found 287 of 287 quotes.
+
+## 26. Quote context after block edges (04:35)
+gm1's round 4 (QA 44a54f0: core 73/73, every quote verified, no program or saved page touched): across the real
+bundle, 249 of 286 quotes now have empty context, contacts have none by rule, no context contains a newline, the
+Business Growth offices no longer show each other's numbers, and CanExport's closed quote has no breadcrumb. The
+invariant `blockText(html).replace(/\n/g, ' ') === pageText(html)` holds on all 65 saved pages (a check that went red
+when `<br>` stopped marking an edge). Remaining readability nit: a few quotes join two blocks into one run-on
+("…at this time The application intake period…"); CanExport's intake and location quotes get shortened to one block each
+(same saved page, so no hash changes). The CBDC office quotes stay long because they carry the town the label needs (#25).
