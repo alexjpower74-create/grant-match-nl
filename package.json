@@ -1,0 +1,20 @@
+{
+  "name": "grant-match-nl",
+  "private": true,
+  "type": "module",
+  "description": "Public funding programs that could fit a Newfoundland and Labrador small business, every fact quoted from the program's own page.",
+  "scripts": {
+    "build:data": "node scripts/build-data.mjs",
+    "check:data": "node scripts/build-data.mjs --check",
+    "scan": "node scripts/scan.mjs",
+    "dev:worker": "npm run build:data && npm --prefix worker run dev",
+    "dev:app": "node app/serve.mjs --port 7401",
+    "test:core": "node --test 'core/tests/**/*.test.mjs'",
+    "test:worker": "npm run build:data && npm --prefix worker test",
+    "test:app": "npm run build:data && playwright test -c app/playwright.config.mjs",
+    "test": "npm run check:data && npm run test:core && npm run test:worker && npm run test:app"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
