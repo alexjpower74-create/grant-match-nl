@@ -256,8 +256,14 @@ export function validateProgram(record) {
         nonEmptyFrom('any', ids(OWNERS));
         break;
       case 'purpose':
-        only(['any']);
+        only(['any', 'unclear']);
         nonEmptyFrom('any', ids(PURPOSES));
+        if ('unclear' in rest) {
+          nonEmptyFrom('unclear', ids(PURPOSES));
+          if (Array.isArray(rest.unclear) && Array.isArray(rest.any)) {
+            for (const id of rest.unclear) if (rest.any.includes(id)) bad(`${path}.unclear`, `"${id}" can’t be in both unclear and any`);
+          }
+        }
         break;
       default: { // bounds
         only(kind === 'years_operating' ? ['gte', 'gt', 'lte', 'lt', 'unit', 'normally'] : ['gte', 'gt', 'lte', 'lt', 'normally']);

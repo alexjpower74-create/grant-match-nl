@@ -158,9 +158,11 @@ export function evaluateCriterion(criterion, profile) {
     case 'purpose': {
       const wanted = joinWords(rule.any.map((id) => labelOf(PURPOSES, id)), 'or');
       const mine = joinWords(profile.purposes.map((id) => labelOf(PURPOSES, id)));
-      return profile.purposes.some((p) => rule.any.includes(p))
-        ? result('met', `You picked ${mine}. The page covers ${wanted}.`)
-        : result('missed', `You picked ${mine}. The page covers only ${wanted}.`);
+      if (profile.purposes.some((p) => rule.any.includes(p))) return result('met', `You picked ${mine}. The page covers ${wanted}.`);
+      // Met beats unclear beats missed (API §4): an unsettled purpose makes it Unknown only when nothing matched.
+      const unsettled = profile.purposes.filter((p) => rule.unclear?.includes(p));
+      if (unsettled.length) return unclearResult(joinWords(unsettled.map((id) => labelOf(PURPOSES, id))));
+      return result('missed', `You picked ${mine}. The page covers only ${wanted}.`);
     }
 
     case 'employees': {

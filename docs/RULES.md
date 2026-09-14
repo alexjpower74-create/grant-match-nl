@@ -39,7 +39,16 @@ Unknown (you didn't answer).
 
 > Page: "Sole proprietors, partnerships or corporations". You said Incorporated company. **Met.**
 
-### unclear (on structure and industry rules)
+### unclear (on structure, industry and purpose rules)
+For **purpose**, a match wins: if any purpose you picked is one the page covers, the rule is **Met**. Otherwise, if any
+you picked is on the unclear list, it's **Unknown**. Only when neither holds is it **Missed**.
+
+> Green Transition Fund: "the greening of commercial operations". Rule: energy efficiency; unclear equipment, software,
+> research, export, hiring, training, starting a business (greening can involve any of them, and the page doesn't
+> say which count). Energy efficiency: **Met**. Equipment: **Unknown**, "The page's wording doesn't settle this for
+> Equipment."
+
+For structure and industry:
 Sometimes the page's wording settles some answers but not others. Those answers go on the rule's `unclear` list
 and come out as **Unknown: the page's wording doesn't settle it for your answer**. Never a guessed met or missed.
 An answer can't be both on the list and in the rule's own set.
