@@ -208,7 +208,7 @@ unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be in
                  "status": "met" | "missed" | "unknown" | null,          // null when no profile
                  "unknown_reason": "not_answered" | "band_straddles" | "unclear" | "self_check" | null,
                  "why": "…" | null, ...Quote }],
-  "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile
+  "counts": { "met": 3, "missed": 0, "unknown": 2, "self_check": 1 },   // zeros when no profile; unknown INCLUDES self_check (self_check is a subset)
   "fit": null | { "label": "Looks like a fit" | "Might fit" | "Doesn't fit", "rank": 0, "why": ["…"] },
   "verification": { "last_verified": "2026-09-14", "age_days": 0, "stale": false, "needs_review": false,
                     "missing_quotes": 0, "last_checked_at": null },
@@ -250,6 +250,8 @@ loaded (`bundle.communities.communities`, `bundle.communities.source`; same for 
   and `$`); a disallowed URL is not fetched and is reported `ok: false, error: "robots.txt disallows"`.
 - Politeness inside: ≥ 1 s between requests to one host, or the host's `Crawl-delay` seconds if larger;
   `User-Agent: APCO-Software-Tools-research/1.0 (+https://apcosoftwaretools.ca)`; GET only; 20 s timeout.
+- robots.txt answering 4xx = no rules (everything allowed); 5xx or a network error = don't fetch that host this run
+  (`ok: false`, error recorded, `missing: []`).
 - `originMap` (tests only): `{ "https://sample.invalid": "http://127.0.0.1:7403" }` rewrites origins before fetching.
 - `onRaw({ source_id, url, fetched_at, http_status, body })` is awaited after each fetch.
 - A page answering **404 or 410**: `ok: false`, every quote of that source in `missing` (a gone page can't vouch for
@@ -319,7 +321,7 @@ date and last live check, what "Unknown" means).
 Copy that must stay true:
 - Everywhere (footer): "Grant Match NL shows what each program's own page says. It never applies for you and can't
   promise you qualify."
-- Unknown reasons: `self_check` "Unknown: check this yourself" · `not_answered` "Unknown: you didn't answer this" ·
+- Unknown reasons: `self_check` "Unknown: check this yourself" · `not_answered` "Unknown: you didn't answer this or weren't sure" ·
   `band_straddles` "Unknown: your answer is close to the page's limit" · `unclear` "Unknown: the page's
   wording doesn't settle it for your answer" · a program fact the pages don't state
   "Unknown: the page doesn't say".
@@ -327,3 +329,9 @@ Copy that must stay true:
   changed or gone since we checked it. Check the official page."
 - Closed: "Closed. Not taking applications right now." with its quote.
 - "Call this office" only when `contacts` is non-empty (every contact came from an official page).
+- Fit `why` lines are shown as core writes them. On the program page, when a profile is given the stale / needs-review
+  sentences come from `fit.why`, so the separate verification flag shows only when there is no profile (no double
+  wording). Results cards show the short flag.
+- About page: a "Programs we left out, and why" section (static): BDC loans and Futurpreneur (their terms forbid
+  copying or storing their pages), Ulnooweg Development Group (no terms published, "All rights reserved"), each with
+  a link to the terms page and "Grant Match only uses pages it is allowed to quote."
