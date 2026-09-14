@@ -77,6 +77,11 @@ test('robotsAllows and robotsCrawlDelay', () => {
   assert.equal(robotsAllows(ours, USER_AGENT, '/nope/x'), false);
   assert.equal(robotsAllows('', USER_AGENT, '/anything'), true);
   assert.equal(robotsCrawlDelay('User-agent: *\nDisallow:\n', USER_AGENT), null);
+  // cbdc.ca's shape: a Crawl-delay before any User-agent line applies to every agent.
+  const cbdc = 'Crawl-delay: 10\n# START YOAST BLOCK\n# ---------------------------\nUser-agent: *\nDisallow:\n\nSitemap: https://cbdc.ca/sitemap_index.xml\n';
+  assert.equal(robotsCrawlDelay(cbdc, USER_AGENT), 10);
+  assert.equal(robotsAllows(cbdc, USER_AGENT, '/locations/cbdc-gander-area/'), true);
+  assert.equal(robotsCrawlDelay('Crawl-delay: 2\nUser-agent: *\nCrawl-delay: 5\n', USER_AGENT), 5);
 });
 
 test('every request carries our User-Agent; robots.txt disallow is respected; ≥ 1 s between requests', async () => {
