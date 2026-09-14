@@ -127,6 +127,59 @@ and the NAICS page, and both waited the host's Crawl-delay and saved raw bytes w
 - `runChecks({ ..., trigger: 'cron' | 'manual' })` sets `trigger`; the default is `'node'`.
 - The option lists for `/api/options` are exported from `core/profile.js`.
 
-## Phase 2 — NL programs · not started
+## Phase 2 — NL programs · first three DONE, **stopped for cross-review** (per the brief)
+
+gov.nl.ca terms, read once at https://www.gov.nl.ca/disclaimer/: the province owns the copyright and "grants
+permission for the information of this web site to be used by the public and non-government organizations". It says
+nothing against automated reading. Reproducing third-party multimedia is not permitted; we quote text only.
+robots.txt allowed all three URLs. Requests to the host were spaced at least 1 s apart.
+
+`npm run check:data` → every quote verified (3 real programs, 8 SAMPLE). Core tests 52/52 green, with the planted-quote
+build test now planting into a real program.
+
+| Slug | Sources | Type | Intake | Criteria (met-able / self_check) | Contacts |
+|---|---|---|---|---|---|
+| nl-business-growth-program | `--main` | non-repayable, max $200,000, 50% | unknown | 2 / 5 | email + 5 regional office phones incl. Central 709.256.1480 |
+| nl-business-investment-program | `--main` | loan (term loan, Bank of Canada rate + 0.5%) | unknown | 3 / 5 | email + department line 1.709.729.2480 |
+| nl-jobsnl-wage-subsidy | `--main` | wage subsidy, 60–80% up to $12/hour | unknown | 3 / 4 | Employment programs 1-800-563-6600 + email |
+
+### Questions for gm2's cross-review (interpretation, against the saved page text)
+1. **Intake unknown on all three.** None of the pages says when applications are taken, so none can show Looks like a
+   fit. Is that the reading we want, or should an application form linked "Use either of the forms below to apply"
+   count as open? I think not: the contract says `continuous` only when the page says so.
+2. **Business Growth, structure.** The page lists sole proprietors, partnerships, corporations, co-operatives and
+   non-profit organizations, so "Not registered yet" is **missed**. Too strict for a business that is just
+   starting ("assist businesses start")?
+3. **Business Growth, contacts.** The page itself shows the five regional office numbers, so they're quoted from the
+   program page. `census_divisions` is null because the page doesn't say which divisions each office serves. The
+   brief suggests JGRD's contact page as a second source for Central = Divisions 6, 7, 8. I haven't added it: I didn't
+   find a gov.nl.ca page that names the divisions, and I won't infer them.
+4. **Business Investment, revenue.** "less than $10 million in sales" is read as yearly revenue `lt 10000000`, and
+   "fewer than 100 employees" as `lt 100`. The page says applicants "must normally" meet the list.
+5. **Business Investment, export potential.** The page says the fund "is also available to businesses which have
+   export potential", but the eligibility list requires "Operate in a strategic sector as defined by JGRD". Both
+   kept only as a self_check on the strategic-sector line, plus a note; no rule.
+6. **JobsNL, structure.** "Private or not-for-profit sector employers that are incorporated or sole proprietorships"
+   is mapped to sole proprietor, corporation, co-operative and non-profit. The last two are there because they are
+   incorporated bodies, so an unincorporated non-profit would wrongly show met. Partnership and "Not registered yet"
+   are missed. Alternative: drop co-operative and non-profit from `in` (then an incorporated non-profit wrongly
+   misses). I chose the reading that never wrongly says Doesn't fit.
+7. **JobsNL, cost share.** `percent: 80` (the highest rate, third 14 weeks of JobsNL-42), with text "60% to 80% of
+   wages depending on the option and period, up to $12 an hour". No `max_amount`: the page gives an hourly cap, not
+   a total.
+
+### Dry evaluation (now 2026-09-14T12:00Z, core `matchPrograms` on the three records)
+- SAMPLE Auto Service: Business Growth **Might fit** (location + structure met; intake not stated; 5 to check);
+  Business Investment **Might fit** (location, 6 < 100 employees, revenue band $500K–$1M under $10M all met);
+  JobsNL **Doesn't fit** (purpose: equipment/software, not hiring).
+- SAMPLE Daycare: all three **Might fit**, with JobsNL's purpose met (hire).
+- APCO Software Tools (lead's profile, DECISIONS #14): Business Growth and Business Investment **Might fit**, with
+  structure "Not sure" and revenue "Prefer not to say" shown as *Unknown, you didn't answer this*. JobsNL
+  **Doesn't fit** (purpose).
+
+### Remaining phase 2 list, waiting on the review
+Programs 4–15 in the brief (Research and Innovation, Innovation and Business Development Fund, Green Transition
+Fund, Job Accelerator and Growth, Harvester Enterprise Loan, the rest of /jgrd/funding/, Apprenticeship Wage
+Subsidy, JGRD wage-subsidy programs and the Job Grant, CBDCs, NLOWE, takeCHARGE, RDÉE TNL): not started.
 
 ## Phase 3 — `scripts/scan.mjs` · not started
