@@ -1,0 +1,187 @@
+{
+  "slug": "nl-cbdc-innovation-loan",
+  "sample": false,
+  "name": "CBDC Innovation Loan",
+  "provider": "Community Business Development Corporations (CBDCs), Newfoundland and Labrador offices",
+  "level": "nonprofit",
+  "url": "https://cbdc.ca/loan-programs/innovation-loan/",
+  "summary": {
+    "quote": "The Innovation Loan is designed to encourage business productivity and effectiveness in the communities of rural Atlantic Canada.",
+    "source": "nl-cbdc-innovation-loan--main"
+  },
+  "sources": [
+    {
+      "id": "nl-cbdc-innovation-loan--main",
+      "url": "https://cbdc.ca/loan-programs/innovation-loan/",
+      "title": "Innovation Loans for Small Business & Startups in NB, NL, NS & PEI - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:08:28.491Z",
+      "http_status": 200,
+      "sha256": "528ba6cb025ce4a94aebca28365f6631075cf6c58c60a5063f67e6fedf0f91fd",
+      "text_sha256": "253b26ce9c43ea83a9902824653d1d4be54bb10a41ade21ced0a00f4b43fdec5",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-innovation-loan--office-central",
+      "url": "https://cbdc.ca/locations/cbdc-central-newfoundland/",
+      "title": "CBDC Central - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:11:33.779Z",
+      "http_status": 200,
+      "sha256": "e89ce7943d9a4e1f0b87e688cf1e784bafa648b82fe19cf81c13e831bec02816",
+      "text_sha256": "857fb363508c397d50f133fa76ba1666a57d0dee44c97f4d26c519702694b076",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-innovation-loan--office-gander-area",
+      "url": "https://cbdc.ca/locations/cbdc-gander-area/",
+      "title": "Help & Financing for Small Business & Startups, Gander Region, NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:01:27.631Z",
+      "http_status": 200,
+      "sha256": "e3cdb047963f4b37c6d04f07e213dc3b22d6bb6f11b8b330d4ffdc72da22298d",
+      "text_sha256": "1664a503c022b9c7b9b1b93cd040da0fa9ed335f04acace5a41ba1839e7d96d7",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    },
+    {
+      "id": "nl-cbdc-innovation-loan--office-emerald",
+      "url": "https://cbdc.ca/locations/cbdc-emerald/",
+      "title": "Help & Financing for Small Business & Startups, Baie Verte, N. Central NL - CBDC",
+      "publisher": "Atlantic Association of Community Business Development Corporations",
+      "fetched_at": "2026-09-14T06:12:01.490Z",
+      "http_status": 200,
+      "sha256": "f9782f1a55eee1bf93c5c2876e3202bb224c9348be99f97bfc8555901346facf",
+      "text_sha256": "6baf88d92aeebb008379a6fd42da30f63583a3b90d72773fca0fd0855c3e13c9",
+      "robots": "allowed",
+      "terms_note": "The Atlantic Association of CBDCs’ Terms of Use cover content that users post and liability; they don’t restrict reading or quoting the site’s own information.",
+      "terms_url": "https://cbdc.ca/terms-of-use/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "loan",
+      "applies_to": null,
+      "quote": "All loans are repayable and have competitive interest rates and repayment terms.",
+      "source": "nl-cbdc-innovation-loan--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 150000,
+    "text": "Up to $150,000 per borrower (more in some cases)",
+    "quote": "CBDC offers up to $150,000* per qualified borrower.",
+    "source": "nl-cbdc-innovation-loan--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "A rural business in Atlantic Canada (which includes Newfoundland and Labrador)",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Rural based businesses across Atlantic Canada meeting the following criteria may qualify for CBDC’s Innovation Loan:",
+      "source": "nl-cbdc-innovation-loan--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money buys equipment, software or other new technology",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "equipment",
+          "digital",
+          "research"
+        ]
+      },
+      "quote": "CBDC Innovation Loans can be used to finance any costs of the purchase of equipment, software, processes, licenses, and other items that are clearly identifiable as “new” technology that will enhance the business.",
+      "source": "nl-cbdc-innovation-loan--main"
+    },
+    {
+      "id": "new-technology",
+      "text": "What you buy is clearly new technology that will improve the business",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "CBDC Innovation Loans can be used to finance any costs of the purchase of equipment, software, processes, licenses, and other items that are clearly identifiable as “new” technology that will enhance the business.",
+      "source": "nl-cbdc-innovation-loan--main"
+    },
+    {
+      "id": "rural",
+      "text": "Both the business and the borrower are in rural areas",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Both the business and the borrower must be located in rural areas;",
+      "source": "nl-cbdc-innovation-loan--main"
+    },
+    {
+      "id": "viability",
+      "text": "The business has realistic prospects of economic viability",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "The business should have a realistic prospects of economic viability.",
+      "source": "nl-cbdc-innovation-loan--main"
+    },
+    {
+      "id": "local-cbdc",
+      "text": "Your local CBDC offers this loan (programs vary by region)",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Programs and services delivered by CBDCs may vary by region.",
+      "source": "nl-cbdc-innovation-loan--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "CBDC Central (10 Pinsent Drive, Grand Falls-Windsor)",
+      "phone": "(709) 489-4496",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Central Address 10 Pinsent Drive Grand Falls-Windsor, NL A2A 2R6 View on Google Maps Contact Tel: (709) 489-4496",
+      "source": "nl-cbdc-innovation-loan--office-central"
+    },
+    {
+      "label": "CBDC Gander Area (51A Dickins Street, Gander)",
+      "phone": "(709) 651-4738",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Gander Area Address 51A Dickins Street Gander, NL A1V1W8 View on Google Maps Contact Tel: (709) 651-4738",
+      "source": "nl-cbdc-innovation-loan--office-gander-area"
+    },
+    {
+      "label": "CBDC Emerald (Baie Verte)",
+      "phone": "(709) 532-8312",
+      "email": null,
+      "census_divisions": null,
+      "quote": "CBDC Emerald Address 325 NL-410 Barker Building Baie Verte, NL A0K 1B0 View on Google Maps Contact Tel: (709) 532-8312",
+      "source": "nl-cbdc-innovation-loan--office-emerald"
+    },
+    {
+      "label": "CBDC Emerald satellite office (Springdale)",
+      "phone": "(709) 673-5702",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Emerald’s Satellite office Address 83 Little Bay Road Springdale NL A0J 1T0 Contact Tel: (709) 673-5702",
+      "source": "nl-cbdc-innovation-loan--office-emerald"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Purpose: the page names equipment, software, processes and licences that are new technology, so equipment, digital and research; the \"clearly new technology\" condition is check-this-yourself because ordinary equipment would also show met. Training for staff using the new technology is also covered but only with the technology, so training is not in the purpose rule. The page says CBDCs may offer financing above $150,000 in certain situations. Intake: not stated. Contacts: the offices of CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte, with a Springdale satellite office), each quoted from its own cbdc.ca office page saved as a source of this record; all three pages list this loan. Only the Gander Area page names the places it serves (a list of place names, not census divisions), so census_divisions is null for every office and there is no location rule beyond the province (contract question B). Other CBDCs in the province are not listed as contacts."
+  }
+}
