@@ -89,6 +89,9 @@ function boundsWords(rule, fmt) {
 
 const result = (status, why, unknown_reason = null) => ({ status, unknown_reason, why });
 const unclearResult = (label) => result('unknown', `The page's wording doesn't settle this for ${label}.`, 'unclear');
+// A limit the page softens ("must normally"): outside it is Unknown, not missed (API §4, DECISIONS #21).
+export const NORMALLY_WHY = 'The page says this limit applies normally, so ask the office.';
+const normallyResult = () => result('unknown', NORMALLY_WHY, 'unclear');
 
 /** evaluateCriterion(criterion, profile) → { status, unknown_reason, why } */
 export function evaluateCriterion(criterion, profile) {
@@ -155,9 +158,11 @@ export function evaluateCriterion(criterion, profile) {
     case 'purpose': {
       const wanted = joinWords(rule.any.map((id) => labelOf(PURPOSES, id)), 'or');
       const mine = joinWords(profile.purposes.map((id) => labelOf(PURPOSES, id)));
-      return profile.purposes.some((p) => rule.any.includes(p))
-        ? result('met', `You picked ${mine}. The page covers ${wanted}.`)
-        : result('missed', `You picked ${mine}. The page covers only ${wanted}.`);
+      if (profile.purposes.some((p) => rule.any.includes(p))) return result('met', `You picked ${mine}. The page covers ${wanted}.`);
+      // Met beats unclear beats missed (API §4): an unsettled purpose makes it Unknown only when nothing matched.
+      const unsettled = profile.purposes.filter((p) => rule.unclear?.includes(p));
+      if (unsettled.length) return unclearResult(joinWords(unsettled.map((id) => labelOf(PURPOSES, id))));
+      return result('missed', `You picked ${mine}. The page covers only ${wanted}.`);
     }
 
     case 'employees': {
@@ -165,7 +170,8 @@ export function evaluateCriterion(criterion, profile) {
       const iv = { min: n, max: n, min_inclusive: true, max_inclusive: true };
       const said = `You said ${commas(n)} ${n === 1 ? 'person' : 'people'}. The page says ${boundsWords(rule, commas)}.`;
       const cmp = compareInterval(iv, rule);
-      return cmp === 'met' ? result('met', said) : result('missed', said);
+      if (cmp === 'met') return result('met', said);
+      return rule.normally ? normallyResult() : result('missed', said);
     }
 
     case 'years_operating': {
@@ -199,7 +205,7 @@ function bandResult(interval, rule, scale, subject, fmt) {
   const limit = boundsWords(rule, fmt);
   const cmp = compareInterval(interval, rule, scale);
   if (cmp === 'met') return result('met', `${subject} fits. The page says ${limit}.`);
-  if (cmp === 'missed') return result('missed', `${subject} is outside the page's limit. The page says ${limit}.`);
+  if (cmp === 'missed') return rule.normally ? normallyResult() : result('missed', `${subject} is outside the page's limit. The page says ${limit}.`);
   return result('unknown', `${subject} is on both sides of the page's limit. The page says ${limit}.`, 'band_straddles');
 }
 

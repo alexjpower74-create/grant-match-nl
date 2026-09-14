@@ -256,12 +256,19 @@ export function validateProgram(record) {
         nonEmptyFrom('any', ids(OWNERS));
         break;
       case 'purpose':
-        only(['any']);
+        only(['any', 'unclear']);
         nonEmptyFrom('any', ids(PURPOSES));
+        if ('unclear' in rest) {
+          nonEmptyFrom('unclear', ids(PURPOSES));
+          if (Array.isArray(rest.unclear) && Array.isArray(rest.any)) {
+            for (const id of rest.unclear) if (rest.any.includes(id)) bad(`${path}.unclear`, `"${id}" can’t be in both unclear and any`);
+          }
+        }
         break;
       default: { // bounds
-        only(kind === 'years_operating' ? ['gte', 'gt', 'lte', 'lt', 'unit'] : ['gte', 'gt', 'lte', 'lt']);
+        only(kind === 'years_operating' ? ['gte', 'gt', 'lte', 'lt', 'unit', 'normally'] : ['gte', 'gt', 'lte', 'lt', 'normally']);
         if (kind === 'years_operating' && !['months', 'years'].includes(rest.unit)) bad(`${path}.unit`, 'must be "months" or "years"');
+        if ('normally' in rest && rest.normally !== true) bad(`${path}.normally`, 'must be true when present (leave it out otherwise)');
         const bounds = ['gte', 'gt', 'lte', 'lt'].filter((k) => k in rest);
         if (bounds.length === 0) return bad(path, 'needs at least one of gte, gt, lte, lt');
         if ('gte' in rest && 'gt' in rest) bad(path, 'can’t have both gte and gt');

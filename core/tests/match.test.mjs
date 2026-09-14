@@ -60,6 +60,16 @@ test('unclear on structure and industry: unknown with reason unclear, never met 
   assert.equal(status({ kind: 'industry', in: ['54'], unclear: ['51'] }, profileFrom(AUTO_QUERY, { industry: '51' })), 'unknown:unclear');
 });
 
+test('unclear on purpose: met beats unclear beats missed', () => {
+  const rule = { kind: 'purpose', any: ['energy'], unclear: ['equipment', 'research'] };
+  assert.equal(status(rule, profileFrom(AUTO_QUERY, { purposes: 'energy,digital' })), 'met');
+  assert.equal(status(rule, profileFrom(AUTO_QUERY, { purposes: 'energy,equipment' })), 'met', 'a matching purpose wins over an unclear one');
+  assert.deepEqual(ev(rule, AUTO()), { status: 'unknown', unknown_reason: 'unclear', why: 'The page\'s wording doesn\'t settle this for Equipment.' }, 'equipment,digital: equipment is unclear');
+  assert.equal(ev(rule, profileFrom(AUTO_QUERY, { purposes: 'research,equipment' })).why, 'The page\'s wording doesn\'t settle this for Equipment and Research or innovation.');
+  assert.equal(status(rule, profileFrom(AUTO_QUERY, { purposes: 'hire,training' })), 'missed');
+  assert.equal(status({ kind: 'purpose', any: ['energy'] }, AUTO()), 'missed', 'without unclear it misses');
+});
+
 test('an unclear answer is never Looks like a fit', async () => {
   const growth = clone((await sampleBundlePrograms()).find((p) => p.slug === 'nl-sample-growth-grant'));
   growth.criteria[1].rule = { kind: 'structure', in: ['sole_proprietor', 'partnership'], unclear: ['corporation'] };
@@ -68,6 +78,34 @@ test('an unclear answer is never Looks like a fit', async () => {
   assert.equal(r.fit.label, 'Might fit');
   assert.ok(r.fit.why.includes('Unknown: the page\'s wording doesn\'t settle it for your answer. Sole proprietors, partnerships or corporations.'));
   assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, self_check: 1 });
+});
+
+test('normally:true on bounds: inside is met, outside is unknown (unclear), a straddle stays band_straddles', () => {
+  const why = 'The page says this limit applies normally, so ask the office.';
+  const employees = { kind: 'employees', lt: 100, normally: true };
+  assert.equal(status(employees, AUTO()), 'met');
+  assert.deepEqual(ev(employees, profileFrom(AUTO_QUERY, { employees: '120' })), { status: 'unknown', unknown_reason: 'unclear', why });
+  assert.equal(status({ kind: 'employees', lt: 100 }, profileFrom(AUTO_QUERY, { employees: '120' })), 'missed', 'without normally it misses');
+
+  const revenue = { kind: 'revenue', lt: 10000000, normally: true };
+  assert.equal(status(revenue, AUTO()), 'met');
+  assert.deepEqual(ev(revenue, profileFrom(AUTO_QUERY, { revenue: '10m_100m' })), { status: 'unknown', unknown_reason: 'unclear', why });
+  assert.equal(status({ kind: 'revenue', lte: 5000000, normally: true }, profileFrom(AUTO_QUERY, { revenue: '2m_10m' })), 'unknown:band_straddles');
+  assert.equal(status({ kind: 'revenue', lt: 10000000, normally: true }, profileFrom(AUTO_QUERY, { revenue: 'unsaid' })), 'unknown:not_answered');
+
+  assert.equal(status({ kind: 'years_operating', lte: 24, unit: 'months', normally: true }, AUTO()), 'unknown:unclear');
+  assert.equal(status({ kind: 'project_cost', gte: 10000, normally: true }, profileFrom(AUTO_QUERY, { cost: 'lt10k' })), 'unknown:unclear');
+});
+
+test('a program whose only miss is a "normally" limit is Might fit, not Doesn\'t fit', async () => {
+  const loan = clone((await sampleBundlePrograms()).find((p) => p.slug === 'nl-sample-equipment-loan'));
+  const big = profileFrom(AUTO_QUERY, { revenue: '10m_100m' });
+  assert.equal(evaluateProgram(loan, big, { now: NOW }).fit.label, 'Doesn\'t fit', 'hard limit: missed');
+  loan.criteria.find((c) => c.id === 'revenue').rule.normally = true;
+  const r = evaluateProgram(loan, big, { now: NOW });
+  assert.equal(r.criteria.find((c) => c.id === 'revenue').unknown_reason, 'unclear');
+  assert.equal(r.fit.label, 'Might fit');
+  assert.equal(evaluateProgram(loan, AUTO(), { now: NOW }).fit.label, 'Looks like a fit', 'inside the limit still met');
 });
 
 test('employees: an exact number against the page’s bounds', () => {

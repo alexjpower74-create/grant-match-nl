@@ -24,11 +24,14 @@ const { bundles, problems } = await loadData({
   dataDir: path.resolve(ROOT, flags.data ?? 'data'),
   fixturesDir: path.resolve(ROOT, flags.fixtures ?? 'core/tests/fixtures'),
 });
-if (problems.length) {
-  for (const p of problems) console.error(`${p.file}: ${p.path}: ${p.reason}`);
+// Only the set being scanned (and the reference lists) must verify.
+const setName = flags.sample ? 'sample' : 'real';
+const relevant = problems.filter((p) => p.set === setName || p.set === 'reference');
+if (relevant.length) {
+  for (const p of relevant) console.error(`${p.file}: ${p.path}: ${p.reason}`);
   fail('the data doesn’t verify, so there is nothing trustworthy to re-check (run npm run check:data)');
 }
-const bundle = flags.sample ? bundles.sample : bundles.real;
+const bundle = bundles[setName];
 
 const only = typeof flags.only === 'string' ? flags.only.split(',').map((s) => s.trim()).filter(Boolean) : null;
 if (only) {
