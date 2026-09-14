@@ -11,8 +11,11 @@ pinned to a sha (`rig qa`), never from a shared tree. Per-slice detail: `docs/bu
 | 03:10 | `1d0fc50` gm1 phase 1 | core tests · `build-data` | 52 pass / 0 fail / 0 skip · exit 0 (8 SAMPLE) |
 | 03:20 | `d0f2561` gm1 first 3 NL programs, page_gone, scan.mjs | core tests · `build-data` | 56 / 0 / 0 · exit 0 (3 real, 8 SAMPLE) |
 | 03:40 | `62f0578` gm2 phase 1 | Worker suite (own `wrangler dev --local`, ports 7409/7406) · Playwright chromium+webkit, 390+1280 (app 7408) | Worker 15 pass / 0 fail / 1 skip (real-data test needs `GM_REAL=1`) · app 74 pass / 0 fail / 14 skip by design |
+| 03:47 | `d4b8a42` gm1 `unclear`, NL programs 4–13 | core tests · `build-data` (second QA worktree `qa-gm1`) | 58 / 0 / 0 · exit 0 (13 real) |
+| 03:48 | `8c92764` gm2 round 2 + 8 federal programs | `build-data` · core · Worker · Playwright | 11 real · core 56/0/0 · Worker 15 pass / 0 fail / 1 skip · app 82 pass / 0 fail / 14 skip. Worker `GM_REAL=1`: 1 fail, `'sample' !== 'real'`: the runner always started `DATA_SET=sample`, so real mode was untestable (gm2 fixing) |
+| 03:50 | `dd4f9d4` gm1 six CBDC loans | core tests · `build-data` | 58 / 0 / 0 · 19 real on the branch |
 
-Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1).
+Merges on main: `1d3bc7c` (gm1 phase 1), `e94f4af` (gm1 programs 1–3), `dd42ee6` (gm2 phase 1), `2c4b783` (gm1 at d4b8a42), `7825c3b` (gm2 at 8c92764), then gm1 at dd4f9d4.
 
 ## Negative controls
 
