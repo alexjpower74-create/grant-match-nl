@@ -1,0 +1,67 @@
+{
+  "slug": "ca-sample-digital-adoption-grant",
+  "sample": true,
+  "name": "SAMPLE Digital Adoption Grant",
+  "provider": "SAMPLE Federal Department",
+  "level": "federal",
+  "url": "https://sample.invalid/grants/digital-adoption/",
+  "summary": {
+    "quote": "The grant gave small businesses non-repayable grants of up to $2,400 to adopt software or digital tools.",
+    "source": "ca-sample-digital-adoption-grant--main"
+  },
+  "sources": [
+    {
+      "id": "ca-sample-digital-adoption-grant--main",
+      "url": "https://sample.invalid/grants/digital-adoption/",
+      "title": "SAMPLE Digital Adoption Grant",
+      "publisher": "SAMPLE Federal Department",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "1bf28851dd05a218db5009e8a65f0492f37de8c54823909f6fd9e68a66100897",
+      "text_sha256": "f6e0b5e857cda9d2663cae8c15315a5a4b4fda4c1798465fd31a6c2f7f03dae3",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "non-repayable grants of up to $2,400",
+      "source": "ca-sample-digital-adoption-grant--main"
+    }
+  ],
+  "intake": {
+    "status": "closed",
+    "quote": "The SAMPLE Digital Adoption Grant is no longer accepting applications.",
+    "source": "ca-sample-digital-adoption-grant--main",
+    "deadline": null
+  },
+  "max_amount": {
+    "amount": 2400,
+    "text": "Up to $2,400",
+    "quote": "non-repayable grants of up to $2,400",
+    "source": "ca-sample-digital-adoption-grant--main"
+  },
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "purpose",
+      "text": "The money is for adopting software or digital tools",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "digital"
+        ]
+      },
+      "quote": "to adopt software or digital tools",
+      "source": "ca-sample-digital-adoption-grant--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: closed (\"no longer accepting applications\")."
+  }
+}

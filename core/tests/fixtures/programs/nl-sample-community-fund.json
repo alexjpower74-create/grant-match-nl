@@ -1,0 +1,73 @@
+{
+  "slug": "nl-sample-community-fund",
+  "sample": true,
+  "name": "SAMPLE Community Fund",
+  "provider": "SAMPLE Regional Development Board",
+  "level": "regional",
+  "url": "https://sample.invalid/grants/community-fund/",
+  "summary": {
+    "quote": "The SAMPLE Community Fund gives grants to businesses and community groups in Census Divisions 6, 7 and 8.",
+    "source": "nl-sample-community-fund--main"
+  },
+  "sources": [
+    {
+      "id": "nl-sample-community-fund--main",
+      "url": "https://sample.invalid/grants/community-fund/",
+      "title": "SAMPLE Community Fund",
+      "publisher": "SAMPLE Regional Development Board",
+      "fetched_at": "2026-09-01T12:00:00.000Z",
+      "http_status": 200,
+      "sha256": "b82b8cb9a4fd301f8b8940f25395bca8e851e7d1678184a11e06f3dbb8b5c39d",
+      "text_sha256": "61d36a7a16431bb2c55bc141541e26b81a064755a62d6ee170e69355db2354d7",
+      "robots": "allowed",
+      "terms_note": "SAMPLE page written for tests; not a real program.",
+      "terms_url": null
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "non_repayable",
+      "applies_to": null,
+      "quote": "The SAMPLE Community Fund gives grants to businesses and community groups",
+      "source": "nl-sample-community-fund--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": null,
+  "criteria": [
+    {
+      "id": "location",
+      "text": "The business is in Census Division 6, 7 or 8",
+      "rule": {
+        "kind": "location",
+        "census_divisions": [
+          6,
+          7,
+          8
+        ]
+      },
+      "quote": "The SAMPLE Community Fund gives grants to businesses and community groups in Census Divisions 6, 7 and 8.",
+      "source": "nl-sample-community-fund--main"
+    },
+    {
+      "id": "community-benefit",
+      "text": "The project shows a clear benefit to the local community",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Projects must show a clear benefit to the local community.",
+      "source": "nl-sample-community-fund--main"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm1",
+    "notes": "SAMPLE fixture: only location + self_check, intake unknown, so never better than Might fit."
+  }
+}
