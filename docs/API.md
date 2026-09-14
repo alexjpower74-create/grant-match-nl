@@ -38,8 +38,12 @@ Exactly these steps, in order:
 Curly quotes, dashes, case and punctuation are kept. `numbersIn(text) → number[]` (same file): every number
 written in the text — `$1,500,000` → 1500000, `50 per cent`/`50%` → 50, `24 months` → 24, `2.5` → 2.5, and
 `$1.5 million` → both 1.5 and 1500000 (`thousand`, `million`, `billion` multiply the number before them). Only
-comma thousands separators. `contextFor(text, quote, n = 160) → { before, after } | null`: up to `n` characters
-either side of the first occurrence, cut back to a word boundary, with `…` where it was cut.
+comma thousands separators. `contextFor(text, quote, n = 160) → { before, after } | null`: the rest of the **sentence** around the first
+occurrence, never menu text. `before` = the text after the last sentence boundary (`. ` `? ` `! ` `; ` `: `) that
+lies within `n` characters before the quote, or `""` if there is none (or the quote starts right after one);
+`after` = the text up to and including the first boundary character within `n` characters after the quote, or
+`""` if there is none. No `…` added. (Lead review 03:50: a nav menu has no sentence boundaries, so the old
+word-boundary window put "Home Funding Contact us …" in front of quotes.)
 
 ## 2. Profile — `core/profile.js`
 

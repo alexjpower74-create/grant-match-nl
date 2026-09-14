@@ -147,3 +147,10 @@ Business Growth Program, Business Investment Program, JobsNL Wage Subsidy, read 
   attribution; "commercial redistribution" needs written permission. Tonight's use is private research. Before a public
   deploy on a commercial site Alexander decides: quote as review/research, ask the publishers, or prefer Open
   Government Licence pages where they exist.
+
+## 20. Quote context is the sentence, not the menu (03:50)
+Looking at gm2's screens: a quote's grey context began "Home Funding Contact us SAMPLE Growth Grant…", because the
+context was a 160-character window and the saved page text includes navigation. Real gov.nl.ca pages carry long
+menus, so every provincial quote would have opened with a list of links. Contract §1 now cuts context at sentence
+boundaries and leaves it empty when there is none nearby. gm1 changes `contextFor` when it next stops; the app needs
+no change (it renders `before` + `<mark>quote</mark>` + `after`).
