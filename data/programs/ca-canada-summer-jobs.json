@@ -1,0 +1,111 @@
+{
+  "slug": "ca-canada-summer-jobs",
+  "sample": false,
+  "name": "Canada Summer Jobs",
+  "provider": "Employment and Social Development Canada",
+  "level": "federal",
+  "url": "https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs.html",
+  "summary": {
+    "quote": "It helps youth aged 15 to 30 gain paid summer work experience and develop skills for the job market.",
+    "source": "ca-canada-summer-jobs--about"
+  },
+  "sources": [
+    {
+      "id": "ca-canada-summer-jobs--who-can-apply",
+      "url": "https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs/applicant-guide/who-can-apply.html",
+      "title": "Canada Summer Jobs - Who can apply - Canada.ca",
+      "publisher": "Employment and Social Development Canada",
+      "fetched_at": "2026-09-14T06:08:13.644Z",
+      "http_status": 200,
+      "sha256": "1d2f781332c07aa4b339b7769fdabca475eba1a7477f9daeca85ee008bc724f3",
+      "text_sha256": "cf6068eec5ef43423ea92f89ad9e8684445624662d8f2ac94e23ae0a1e890012",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    },
+    {
+      "id": "ca-canada-summer-jobs--apply",
+      "url": "https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs/applicant-guide/apply.html",
+      "title": "Canada Summer Jobs - Apply now - Canada.ca",
+      "publisher": "Employment and Social Development Canada",
+      "fetched_at": "2026-09-14T06:08:19.968Z",
+      "http_status": 200,
+      "sha256": "ff835b61c48d57af448708a37f9f391ca3a763aa8b9bdcbfc28a8127fe6b9fdf",
+      "text_sha256": "5342813671f53a1c8900cc40cb2b03609a4caa2038603ec20b7c1e58387cb0f9",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    },
+    {
+      "id": "ca-canada-summer-jobs--about",
+      "url": "https://www.canada.ca/en/employment-social-development/services/funding/canada-summer-jobs/applicant-guide/about.html",
+      "title": "Canada Summer Jobs - What this program offers - Canada.ca",
+      "publisher": "Employment and Social Development Canada",
+      "fetched_at": "2026-09-14T06:08:25.256Z",
+      "http_status": 200,
+      "sha256": "b6c1c6a7b4eabf9bbb547992264f9ad746c2d75a7f5055460293c3445c9e526b",
+      "text_sha256": "be5f03061b7df6ef6c91fe47e25aca050010c8f544f30a2910c951f20fdec874",
+      "robots": "allowed",
+      "terms_note": "Government of Canada content may be reproduced for non-commercial purposes with attribution; commercial redistribution needs written permission.",
+      "terms_url": "https://www.canada.ca/en/transparency/terms.html"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "wage_subsidy",
+      "applies_to": null,
+      "quote": "The program offers wage subsidies to support employers to create quality summer jobs.",
+      "source": "ca-canada-summer-jobs--about"
+    }
+  ],
+  "intake": {
+    "status": "closed",
+    "quote": "The application period was from November 4, 2025, to December 11, 2025 at 11:59 p.m. Pacific Standard Time.",
+    "source": "ca-canada-summer-jobs--apply",
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 50,
+    "text": "Private and public sector employers: up to 50% of the provincial adult minimum hourly wage",
+    "quote": "Public and private sector employers are eligible to receive funding for: up to 50% of the provincial or territorial adult minimum hourly wage",
+    "source": "ca-canada-summer-jobs--about"
+  },
+  "criteria": [
+    {
+      "id": "purpose",
+      "text": "The money is to hire and pay wages for a summer job",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "hire"
+        ]
+      },
+      "quote": "The program offers wage subsidies to support employers to create quality summer jobs.",
+      "source": "ca-canada-summer-jobs--about"
+    },
+    {
+      "id": "private-sector-size",
+      "text": "A private sector employer has 50 or fewer full-time employees across Canada",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Private sector employers must have 50 or fewer full-time employees across Canada at the time of application to be eligible for CSJ funding.",
+      "source": "ca-canada-summer-jobs--who-can-apply"
+    },
+    {
+      "id": "cra-registered",
+      "text": "Registered with the CRA with a valid business number",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "To be eligible for funding, your organization must be registered with the Canada Revenue Agency (CRA) and have a valid business number.",
+      "source": "ca-canada-summer-jobs--who-can-apply"
+    }
+  ],
+  "contacts": [],
+  "research": {
+    "by": "gm2",
+    "notes": "Closed: the 2026 application period \"was from November 4, 2025, to December 11, 2025\" (DECISIONS #19); no 2027 dates are posted, and the live check flags the page when they are. Type wage_subsidy and purpose hire are on the page. Employees: the 50-or-fewer limit applies only to private sector employers; not-for-profit and public sector employers have no size limit on the page, and the profile's structure answer does not say private or public sector, so it is a check-yourself item rather than an employees rule that would wrongly rule out a large non-profit. Cost share: 50% is the rate for public and private sector employers; not-for-profits get \"up to 100%\" of the minimum wage plus mandatory employment costs, which is left in notes rather than chosen as the headline. No location rule (national program; nothing on these pages restricts it by province). No phone is on these three pages. The main Canada Summer Jobs page (the url) has no intake wording, so it is not a source."
+  }
+}
