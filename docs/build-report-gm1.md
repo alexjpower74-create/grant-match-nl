@@ -374,12 +374,110 @@ ac44e56, b53b327, 7e4fae1, 2697f03, d55aa0f (CBDC).
 Engine: 73d5531 (unclear), 2a54ea1 (Crawl-delay), 8809eb7 (URL de-dup), d4598c9 (sentence context, "Unknown:" wording).
 Merges of main: 11bca50, a fast-forward to 226777b (DECISIONS #18; main already held every gm1 commit, so no merge commit), dd4f9d4.
 
+## Round 3 — DECISIONS #21–23: engine, fixtures, data, scan · DONE
+
+### 1. Merge
+`git merge main` fast-forwarded `rig/gm1` to `4df7b11`. Main already held every gm1 commit, so there's no merge
+commit. Contract questions A and B are answered in DECISIONS #22: A, `unclear` is allowed on purpose rules; B, no
+location rules from place-name lists.
+
+### 2. Engine (one commit each; every gate on real exit codes)
+Gate for each step: the full core suite, with an explicit list of allowed failures. The only allowed failures are the
+**3 build tests that read real `data/`**: "exits 0 on the real data/", "planted quote", "writes both bundles". They
+fail only because `ca-canexport-smes.json` still has its pre-fix text hashes; they go green when gm2's re-hash lands.
+
+| Step | Commit | What | Control (break → red test, then restored byte for byte) |
+|---|---|---|---|
+| 2a | `637bb44` | A tag ends at the first `>` outside a quoted attribute value (API §1). gm2's case `<div data-x="a > b">Hello world</div>` → `Hello world`; escaped HTML in a `data-*` attribute never leaks. | (o) tag ends at any `>` → "a tag ends at the first > outside a quoted attribute value" |
+| 2a (extra) | `6f40c55` | `scan` needs only the set it scans (and the reference lists) to verify. `loadData` tags each problem as real, sample or reference. Without this, `scan --sample` refused because a real record (CanExport) was stale. `build-data` still stops on any problem. | (p) scan refuses on problems in any set → "--sample scans even when the real data has a problem" |
+| 2a re-hash | `380dee7` | The six CBDC records re-hashed (text hashes only) | — |
+| 2b | `dd09fb3` | `normally: true` on bounds rules. Inside is met; outside is `unknown`, reason `unclear`, with "The page says this limit applies normally, so ask the office."; a straddle stays `band_straddles`. Schema accepts it only as `true` on the four bounds kinds. RULES.md updated. | (q) normally ignored → "a program whose only miss is a normally limit is Might fit" |
+| 2c | `c1c1d5b` | `unclear` on purpose rules: met beats unclear beats missed. Schema: known ids, none also in `any`. RULES.md updated. | (r) purpose unclear treated as missed → "unclear on purpose: met beats unclear beats missed" |
+| 2d | `6f0d5fc` | Evidence tier in the sort (API §5): after fit rank, a program with a met criterion beyond location comes before a location-only one; then funding type. No profile → order unchanged. RULES.md updated. | (s) tier removed → "evidence tier: a location-only program sorts after a checked match" |
+| 2e | `28c8866` | SAMPLE fixtures. **SAMPLE Green Upgrade Grant:** purpose energy, unclear equipment, so SAMPLE Auto Service gets `unknown_reason: "unclear"` and Might fit. **SAMPLE Expansion Loan:** at least 3 years, normally, so SAMPLE Daycare gets `unclear` and Might fit. Label table (10 SAMPLE), counts and sort order updated. | (t) fixture without `normally` → "SAMPLE fixtures give unknown_reason unclear for a real reason" |
+
+Final core run: **66 tests, 63 pass, 3 fail** (exactly the 3 allowed build tests).
+
+**For gm2:** the app can now render the `unclear` copy from real SAMPLE data. Green Upgrade × Auto Service gives
+"The page's wording doesn't settle this for Equipment."; Expansion Loan × Daycare gives "The page says this limit
+applies normally, so ask the office." The SAMPLE count is now 10.
+
+### Every source whose `text_sha256` changed under the new tag rule (all 62 sources checked)
+20 changed. Everything else is unchanged: all gov.nl.ca pages, every CBDC loan page, every SAMPLE fixture, and
+`ref-naics-2022-sectors`. `ref-census-2021-population-csd` is a zip with no page text.
+- `ca-canexport-smes--main` a8481624d6e5… → 61848cf7cc59… **(gm2's, not committed by gm1)**
+- `ca-canexport-smes--guide` cf81173e082f… → 62dde9995a24… **(gm2's, not committed by gm1)**
+- In each of `nl-cbdc-first-time-entrepreneur-loan`, `nl-cbdc-general-business-loan`, `nl-cbdc-innovation-loan`,
+  `nl-cbdc-newcomer-loan-program`, `nl-cbdc-social-enterprise-loan` and `nl-cbdc-youth-loan-program` (18 ids):
+  - `--office-central` 857fb363508c… → 2d847131e806…
+  - `--office-gander-area` 1664a503c022… → 8fe658ef10db…
+  - `--office-emerald` 6baf88d92aee… → 0abe150973cf…
+
+  Re-hashed in `380dee7`.
+
+`npm run check:data` now: **exit 1**, and its only 2 problems are
+`data/programs/ca-canexport-smes.json: sources[0].text_sha256` and `sources[1].text_sha256`. The gate checked that
+after every commit this round.
+
+### 3. Data (one commit per program; `check:data` gated to "only the 2 CanExport lines" before each)
+| Commit | Program | Change |
+|---|---|---|
+| `4491753` | nl-business-investment-program | employees `lt 100` and revenue `lt 10000000` with `normally: true` (texts "Normally …"). New self_check `export-potential` quoting "The fund is also available to businesses which have export potential…", with the strategic-sector text pointing to it (I1). Footer phone labelled "Department switchboard, Jobs, Growth and Rural Development (St. John's)" and kept, next to the regional offices (I3). |
+| `91fb80b` | nl-jobsnl-wage-subsidy | The combined participant item becomes four quoted self_checks: resides in NL; unemployed or underemployed; citizen or permanent resident; not receiving pensions or benefits (J2). The temporary-resident and recent-graduate lines stay in notes. |
+| `12a2514` | nl-green-transition-fund | New purpose rule `any [energy]`, `unclear [equipment, digital, research, export, hire, training, startup]` (#22, K7). |
+| `69cd7b2` | nl-cbdc-innovation-loan | Purpose `any [equipment, digital]`, `unclear [training]`; research dropped because the page never says it (K1). Office labels (K3). |
+| `8177f33` | nl-employment-enhancement-program | Industry `not_in` the 18 other sectors, `unclear [11, 31-33]` (K2). |
+| `b156023` | nl-investment-attraction-fund | New self_check `large-scale-or-fdi` quoting "…designed to attract large-scale businesses and foreign direct investment…" (K4). |
+| `ee4e6b2` | nl-cbdc-newcomer-loan-program | Residency item quotes "Designed for non-permanent residents in Newfoundland & Labrador…" (K5). Office labels (K3). |
+| `8cd9a05`, `56d584e`, `a0be606`, `c551391` | nl-cbdc-general-business-loan, -first-time-entrepreneur-loan, -social-enterprise-loan, -youth-loan-program | Office labels (K3): "CBDC Central, Grand Falls-Windsor (one of 15 CBDCs in the province)"; "CBDC Gander Area, Gander (…)"; "CBDC Emerald, Baie Verte (…)"; "CBDC Emerald satellite office, Springdale (…)". |
+
+**Sanity run on the committed records** (SAMPLE Auto Service, now 2026-09-14T12:00Z):
+- 120 people and $10M–$100M revenue → Business Investment: employees and revenue both Unknown (unclear, "applies
+  normally"), label Might fit.
+- Green Transition Fund: purpose Unknown ("…for Equipment and Software or digital"), Might fit. With purpose energy:
+  met, Looks like a fit.
+- Employment Enhancement Program: Manufacturing is Unknown (unclear); Other services is missed.
+- CBDC Innovation Loan with purpose training: Unknown (unclear).
+
+**K3 note for the lead:** each contact's quote is its office's address and phone. "One of 15 CBDCs in the province"
+comes from "In rural Newfoundland and Labrador there are 15 Corporations…", which is on the same office page (a source
+of every CBDC record), but that sentence isn't inside the contact's own quote. The notes say where it's from. If every
+word of a label must sit in the contact quote, the labels have to drop that phrase.
+
+No change, as gm2 agreed: K6 (the harvester industry mapping) and K8 (`normally` isn't needed on programs 4–13).
+
+### 4. Real dry scan
+The literal `npm run scan -- --dry` **refuses**, correctly, because the real set doesn't verify until CanExport is
+re-hashed. So I ran it on a throwaway copy of `data/` in the gitignored `scripts/.state/`, re-hashed
+`ca-canexport-smes.json` **only in that copy** (`check:data --data <copy>`: every quote verified, 27 real programs,
+10 SAMPLE), and deleted the copy afterwards. Command: `npm run scan -- --dry --data scripts/.state/scan-data-copy`,
+2026-09-14T06:42:11Z → 06:44:51Z (160 s):
+```
+Checked 53 source pages: 53 fetched fine, 0 not.
+Quotes missing: none.
+Page text changed since it was saved: none.
+Raw pages: data/scans/2026-09-14T06-42-11-875Z · result: data/scans/latest.json
+Dry run: nothing sent to the Worker.
+```
+- **Coverage:** 27 programs, 53 sources, **287/287 quotes found**, including this round's new quotes (JobsNL
+  participants, Business Investment export potential, Investment Attraction, Newcomer).
+- **Unique URLs fetched (36):** www.gov.nl.ca 13, cbdc.ca 9, www.canada.ca 7, ised-isde.canada.ca 3,
+  www.tradecommissioner.gc.ca 2, nrc.canada.ca 1, search.open.canada.ca 1.
+
+### Slips this round
+- **zsh word-splitting, again.** The first re-hash loop used an unquoted `$NL`, so zsh passed six slugs as one
+  filename; `hash-source` failed and nothing was changed or committed. Every later loop uses arrays.
+- **A post-scan ugrep filter broke.** It used a backreference ugrep rejects, so its "none" line proves nothing. The
+  scan's own totals (287/287, "Quotes missing: none", "53 fetched fine") are the evidence.
+
 ## Left undone, and what I need
+- **gm2:** re-hash `ca-canexport-smes.json` (`node scripts/hash-source.mjs --update data/programs/ca-canexport-smes.json`
+  on gm1's core). Then the 3 real-data build tests and `check:data` go green, and plain `npm run scan -- --dry` runs.
 - **NLOWE:** nlowe.org is unreachable from this machine (connection refused on 443). Someone on another network should
   check it before researching the NLOWE loan (ownership `women`).
 - **takeCHARGE:** rejected on its terms. It needs written permission from Newfoundland Power / NL Hydro, which is
   Alexander's call.
-- **Contract questions A and B** (above): `unclear` on purpose, and location from place-name lists.
-- **Records to watch:** the Summer Employment Program for Students will need a new record when the page announces the
+- **Records to watch:** the Summer Employment Program for Students needs a new record when the page announces the
   2027 intake. The Job Grant stays closed until its suspension notice changes (the weekly check flags a change).
-- gm2's cross-review of the NL programs will come through the lead. Nothing outside gm1's slice was edited.
+- **Lead:** the K3 label wording question above.
+- Nothing outside gm1's slice was edited.
