@@ -22,6 +22,19 @@
       "robots": "allowed",
       "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
       "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    },
+    {
+      "id": "nl-business-investment-program--regional-offices",
+      "url": "https://www.gov.nl.ca/jgrd/funding/business-growth-program/",
+      "title": "Business Growth Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T05:54:03.153Z",
+      "http_status": 200,
+      "sha256": "a18c94b6cc89e451479d1133d05d955acc8c68fc3ec936059859dc501efbb3c8",
+      "text_sha256": "83a2e54fe7cabf96ddb05298b074695cf8436462472df3b847fcb1696141d037",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
     }
   ],
   "funding_types": [
@@ -32,63 +45,87 @@
       "source": "nl-business-investment-program--main"
     }
   ],
-  "intake": { "status": "unknown", "quote": null, "source": null, "deadline": null },
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
   "max_amount": null,
   "cost_share": null,
   "criteria": [
     {
       "id": "location",
       "text": "The business is based and operating in Newfoundland and Labrador",
-      "rule": { "kind": "location", "province": "NL" },
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
       "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "employees",
       "text": "Fewer than 100 employees",
-      "rule": { "kind": "employees", "lt": 100 },
+      "rule": {
+        "kind": "employees",
+        "lt": 100
+      },
       "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "revenue",
       "text": "Less than $10 million in sales",
-      "rule": { "kind": "revenue", "lt": 10000000 },
+      "rule": {
+        "kind": "revenue",
+        "lt": 10000000
+      },
       "quote": "Be a small and medium-sized enterprise (SME) based and operating in Newfoundland and Labrador having fewer than 100 employees and less than $10 million in sales.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "strategic-sector",
       "text": "Operates in a strategic sector as defined by the Department of Jobs, Growth and Rural Development",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Operate in a strategic sector as defined by JGRD.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "demonstrated-need",
       "text": "Needs this loan on top of funding from conventional sources",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Funds are provided to complement funding from conventional sources, where a need has been demonstrated",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "capacity",
       "text": "Able to do the work in the project proposal",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Demonstrate its ability to undertake the work identified in the project proposal.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "capital",
       "text": "Able to get the money needed to complete the project",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Demonstrate its ability to access the financial capital required to complete the project.",
       "source": "nl-business-investment-program--main"
     },
     {
       "id": "good-standing",
       "text": "In good standing with the Government of Newfoundland and Labrador",
-      "rule": { "kind": "self_check" },
+      "rule": {
+        "kind": "self_check"
+      },
       "quote": "Be in good standing with the Government of Newfoundland and Labrador.",
       "source": "nl-business-investment-program--main"
     }
@@ -109,10 +146,50 @@
       "census_divisions": null,
       "quote": "Contact Jobs, Growth and Rural Development P.O. Box 8700 St. John’s, NL A1B 4J6 Tel: 1.709.729.2480",
       "source": "nl-business-investment-program--main"
+    },
+    {
+      "label": "JGRD Central regional office (listed on the Business Growth Program page)",
+      "phone": "709.256.1480",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Central: 709.256.1480",
+      "source": "nl-business-investment-program--regional-offices"
+    },
+    {
+      "label": "JGRD Western regional office (listed on the Business Growth Program page)",
+      "phone": "709.637.2628",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Western: 709.637.2628",
+      "source": "nl-business-investment-program--regional-offices"
+    },
+    {
+      "label": "JGRD Eastern regional office (listed on the Business Growth Program page)",
+      "phone": "709.466.4170",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Eastern: 709.466.4170",
+      "source": "nl-business-investment-program--regional-offices"
+    },
+    {
+      "label": "JGRD Avalon regional office (listed on the Business Growth Program page)",
+      "phone": "1 833 404 2283",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Avalon: 1 833 404 2283",
+      "source": "nl-business-investment-program--regional-offices"
+    },
+    {
+      "label": "JGRD Labrador regional office (listed on the Business Growth Program page)",
+      "phone": "709.896.2400",
+      "email": null,
+      "census_divisions": null,
+      "quote": "Labrador: 709.896.2400",
+      "source": "nl-business-investment-program--regional-offices"
     }
   ],
   "research": {
     "by": "gm1",
-    "notes": "Intake: not stated on the page, so unknown. The loan is 'repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%'; no maximum or cost share is stated. The eligibility list says applicants 'must normally' meet it; the page's 'fewer than 100 employees and less than $10 million in sales' gives employees lt 100 and revenue lt 10000000 ('sales' read as yearly revenue; reviewers, check that reading). 'Strategic sector as defined by JGRD' is not a list on the page, so it's a check-this-yourself item, not an industry rule. The summary also says 'The fund is also available to businesses which have export potential'; I did not turn that into a rule or an exception to the strategic-sector item. The page says 'Please consult with the JGRD office near you' but lists no regional numbers; the Business Growth Program page does, and could be added as a second source for contacts after review. The application form is a PDF and was not read."
+    "notes": "Intake: not stated on the page, so unknown. The loan is 'repayable term loans at an interest rate equal to the Bank of Canada rate + 0.5%'; no maximum or cost share is stated. The eligibility list says applicants 'must normally' meet it; the page's 'fewer than 100 employees and less than $10 million in sales' gives employees lt 100 and revenue lt 10000000 ('sales' read as yearly revenue; reviewers, check that reading). 'Strategic sector as defined by JGRD' is not a list on the page, so it's a check-this-yourself item, not an industry rule. The summary also says 'The fund is also available to businesses which have export potential'; I did not turn that into a rule or an exception to the strategic-sector item. The page says 'Please consult with the JGRD office near you' but lists no regional numbers, so the department's regional office phones are quoted from the Business Growth Program page (same department, official page), saved as a second source and labelled as such (DECISIONS #18). The application form is a PDF and was not read."
   }
 }
