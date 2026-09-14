@@ -137,6 +137,83 @@ and the separate `llp-only` check-yourself item is gone (the criterion text says
 A "Partnership" answer is now Unknown with the unclear copy, instead of met with a check-yourself item. `check:data`: every
 quote verified (27 real programs, 8 SAMPLE). The research notes say why.
 
+### Step 4: cross-review of gm1's programs 4–13 and the six CBDC loans: DONE
+Read each program file on main (`2ec7790`) against `node scripts/show-text.mjs <source-id>` for the saved pages, checking the
+claims that decide a label. Every quote I spot-checked is in its page text. Findings, most important first.
+
+**Over-claims (a label better than the page supports)**
+- **K1 — CBDC Innovation Loan: `research` is in the purpose rule, but the page never mentions research.** Rule
+  `purpose any [equipment, digital, research]`. The page covers "the purchase of equipment, software, processes, licenses,
+  and other items that are clearly identifiable as “new” technology". "research" is not in the page text at all, so an R&D
+  project shows met. Suggest `any: [equipment, digital]`. Now that #22 allows it, `unclear: [training]`: the page says
+  "The loan could also be used for financing for new products or services and training" and "we can assist with the
+  costs of training staff who will be working directly with the new technology".
+- **K2 — Employment Enhancement Program: the industry rule shows met for businesses the page leaves out.** Rule
+  `industry in [11, 31-33]`. The page: "supports employers in the forestry, aquaculture, agriculture, and fishing sectors,
+  who are engaged in value-added secondary processing". Any manufacturer (a sign shop, a boat builder) and any farm or
+  fishing enterprise that doesn't process both get the industry item as met. Only the separate check-yourself item
+  holds it back. Neither sector answer settles it, so suggest `not_in: [every other sector]`, `unclear: [11, 31-33]`:
+  other sectors miss, and 11 and 31-33 are Unknown with the unclear copy instead of met.
+- **K3 — CBDC contacts: three Central Newfoundland offices are "Call this office" for every community in the province.**
+  All six CBDC programs list CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte and
+  Springdale) with `census_divisions: null`. None of the three office pages names a service area (no "area",
+  "serving" or community list in the Central or Emerald page text), and the Gander page says "In rural Newfoundland and
+  Labrador there are 15 Corporations". An owner in Corner Brook or St. Anthony is told to call Gander. Suggest labels that
+  say where the offices are ("CBDC Central, Grand Falls-Windsor: one of 15 CBDCs in the province"), which the office
+  pages support, or show them only with the "Your local CBDC" item. The Newcomer loan's Metro Business Opportunities line
+  for St. John's and Mount Pearl is right and should stay.
+- **K4 — two programs show "Might fit" to nearly everyone for reasons the page contradicts.**
+  - **Investment Attraction Fund:** the page says it "is designed to attract large-scale businesses and foreign direct
+    investment ("FDI") to the Province". Location is its only checkable rule, so a six-person auto shop or a daycare gets
+    Might fit. The `inward-investment` check-yourself item quotes the definition but not "large-scale businesses and
+    foreign direct investment". At the least, quote that sentence in the item's text.
+  - **Innovation and Business Development Fund:** its only criterion is a check-yourself item (energy supply and
+    service), so every profile gets Might fit.
+  - This is a product question for the lead: should a program with no checkable rule except location sort with real
+    Might fits, or sit lower or apart?
+
+**Text that claims more than its quote**
+- **K5 — CBDC Newcomer `residency` item.** Text: "A newcomer who can't get other support because of residency status (the
+  page says non-permanent residents)". Its quote ("…ineligible to receive support because of their residency status")
+  doesn't contain "non-permanent residents". That phrase is in the page's opening line ("Designed for non-permanent
+  residents in Newfoundland & Labrador"). Quote that line, or drop the parenthesis.
+- **K6 — Harvester Enterprise Loan `industry`.** Text: "In fishing (the Agriculture, forestry, fishing and hunting sector)".
+  The quote is "will expand supports for independent fish harvesters positioning the sector for future success", which
+  names no sector. The mapping (fish harvester → NAICS 11) is mechanical and fine; the separate "independent fish
+  harvester" check-yourself item keeps farms and forestry honest. No change asked; noting that the rule, not the quote,
+  carries "NAICS 11".
+
+**Waiting on core (DECISIONS #21, #22 are not in main's `core/` yet)**
+- **K7 — Green Transition Fund:** #22 says `purpose any [energy]` with the other purposes `unclear`. The file still has no purpose
+  rule, and `core/schema.js` rejects `unclear` on purpose. So today a corporation with any purpose gets the green-focus
+  item only as check-yourself.
+- **K8 — `normally: true`:** none of programs 4–13 needs it on a bounds rule. The "normally" wording on Green Transition
+  ("will not normally exceed 40 per cent") and Research and Innovation ("normally provides up to 50 percent") is on
+  cost share, not eligibility. Business Investment (I2) is still the only case.
+
+**Agreed as researched (checked, no change)**
+- **Canada-NL Job Grant:** closed on the newer suspension notice over the older "Continuous intake" line. `nonprofit` and
+  `cooperative` unclear is right: the list names not-for-profit organizations and then says "Be incorporated or a sole
+  proprietor.)", which applies to all.
+- **Summer Employment Program for Students:** open with the February 19, 2026 deadline, closed by core; private-sector
+  amount shown, not-for-profit amount in notes.
+- **Job Accelerator and Growth:** `not_in [41, 44-45]` with `unclear [53, 56]` for real estate and call centres is a careful
+  reading; non-repayable type from "non-repayable contribution"; no location rule because it invites outside companies.
+- **Apprenticeship Wage Subsidy, Research and Innovation:** structure and unclear lists match the pages. AWS's footer
+  phone is labelled as the department line.
+- **Harvester Enterprise Loan:** only the down payment loan recorded as a type; the guarantee and rebates are left in notes
+  so a loan program doesn't sort above grants.
+- **CBDC First Time Entrepreneur, Youth, Social Enterprise, General Business:**
+  - structure lists match "sole proprietors, limited companies and partnerships", and "non-profits, including charities,
+    cooperatives or societies";
+  - "rural" and "your local CBDC" are check-yourself per #22;
+  - the Youth Loan's $150,000 is quoted from CBDC Central's page ("The CBDC Youth Loan offers up to $150,000 in financing
+    for rural Atlantic Canadian entrepreneurs aged 18–34");
+  - age 18–34 is check-yourself because the profile's youth band is 18–39.
+
+**For gm1:** K1, K2, K3, K5 (data), K4's `inward-investment` wording, and K7 once core has purpose `unclear`.
+**For the lead:** K4 (programs with no checkable rule besides location or none at all) and K3's label choice.
+
 ## Phase 2 research: 8 federal programs, DONE
 Researched with gm1's tools (`fetch-source.mjs` per host with its own state file, one page at a time per host; `show-text.mjs`;
 `check:data` green before every commit: "every quote verified (11 real programs, 8 SAMPLE)"). 16 official pages saved.
