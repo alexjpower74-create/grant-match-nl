@@ -1,5 +1,5 @@
 import { api } from './api.js'
-import { esc, link, FOOTER_LINE, formatDate, intakeText, amountText } from './render.js'
+import { esc, link, FOOTER_LINE, formatDate, intakeText, amountText, TYPE_UNKNOWN_TEXT } from './render.js'
 
 const params = new URLSearchParams(location.search)
 const sheet = document.getElementById('sheet')
@@ -49,8 +49,8 @@ async function main() {
     ${picks.length ? `<ol class="programs">${picks.map((r) => `<li class="program" data-slug="${esc(r.slug)}">
       <h2>${esc(r.name)} <span class="fit">· ${esc(r.fit.label)}</span></h2>
       <p>${esc(r.provider)}</p>
-      <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || "Type: the page doesn't say")} · ${esc(amountText(r))} · ${esc(intakeText(r.intake))}</p>
-      <p class="url">${esc(r.url)}${r.contacts.find((c) => c.phone) ? ` · Phone ${esc(r.contacts.find((c) => c.phone).phone)}` : ''}</p>
+      <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || TYPE_UNKNOWN_TEXT)} · ${esc(amountText(r))} · ${esc(intakeText(r.intake))}</p>
+      <p class="where"><span class="url">${esc(r.url)}</span>${r.contacts.find((c) => c.phone) ? ` · <span class="phone" data-phone>Phone ${esc(r.contacts.find((c) => c.phone).phone)}</span>` : ''}</p>
     </li>`).join('')}</ol>` : '<p class="empty">No open programs could fit these answers right now.</p>'}
     ${more > 0 ? `<p class="meta">and ${more} more on the results page</p>` : ''}
     <p class="foot">${esc(FOOTER_LINE)} Check each official page before you apply.</p>`

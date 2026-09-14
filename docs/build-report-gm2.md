@@ -113,6 +113,209 @@ confirmed clean (`git diff --quiet`) and the suite re-run green. Scripts: `.scra
   `print.css`, 2 pages without. Re-run → **red** on the one-page check itself: "printed pages, Expected: 1, Received:
   2" (the short printout: red on the hidden button). Restored → both pass.
 
+## Round 6 — re-hash after gm1's attribute-safe pageText: DONE
+1. **Merged `rig/gm1` at its tip `c1c1d5b`** (merge `b344865`). That is newer than the `637bb44` / `380dee7` / `dd09fb3` named in the
+   brief and contains them, plus gm1's purpose `unclear`.
+2. **`node scripts/build-data.mjs --check` named exactly two sources, both mine:** `ca-canexport-smes` `sources[0]` (`--main`) and
+   `sources[1]` (`--guide`), "text_sha256: does not match the saved file's page text". No `nl-*`, no `ref-*`, no other `ca-*`.
+   Nothing else was reported, so every quote still verified before the re-hash.
+3. **Re-hashed with `node scripts/hash-source.mjs --update data/programs/ca-canexport-smes.json`.** `git diff` shows exactly 4
+   changed lines, the two `text_sha256` values: `--main` `a8481624…` → `61848cf7…`, `--guide` `cf81173e…` → `62dde999…`.
+   The `sha256` values are unchanged (same saved bytes), no quote was touched, and no other program file changed. `check:data` after:
+   "every quote verified (27 real programs, 8 SAMPLE)". **No quote stopped verifying**, so there is no before/after text to report.
+4. **CanExport contexts, printed from the rebuilt `data/build/programs.json`** (and through `evaluateProgram` for the intake, as
+   the app gets it). **Attribute/JSON junk (`\r\n`, `&nbsp;`, `"}}" id="text-…" class="cmp-text">`) is in 0 of 10 CanExport
+   quotes**, down from 6 in round 3 and 2 just before this re-hash. But not every one is a clean sentence:
+   - **summary:** before `\n"}}" id="text-33addbb30a" class="cmp-text"> `, now empty context. **Clean.**
+   - **contact:** before `\r\n Please contact nrc.canexport-help-aide-canexport.cnrc@nrc-cnrc.gc.ca \r\n"}}" id="text-f28600fe40"
+     class="cmp-text"> `, now `Contact us ` (the section heading). No junk; a heading, not a sentence.
+   - **location:** now `Who can apply 1.1 Eligible companies ` (section headings).
+   - **structure:** now `be established in Canada `; **CRA business number:** now `be established in Canada be for-profit be an
+     incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada `. Earlier items of the same
+     eligibility list: real page text, and relevant, but no sentence boundary.
+   - **intake:** now `Canada.ca Trade Commissioner Service Our solutions Funding and financing for international business CanExport
+     SMEs `. **Still the breadcrumb menu** (round 5's R2): no junk, but menu text in front of the closed quote.
+   - max_amount, cost_share, employees, revenue, purpose: empty context. Clean.
+   So the attribute fix did what it should. What's left is `contextFor`: headings, list items and breadcrumbs have no
+   sentence punctuation, so the "sentence" reaches back into them. That is R1/R2 from round 5 (gm1 / lead), not the re-hash.
+5. **Suites on the merged, re-hashed tree:**
+   - Worker, SAMPLE: **15 passed, 0 failed, 1 skipped**.
+   - Worker, `GM_REAL=1`: **1 passed, 0 failed** on 27 programs, 147 criteria, 53 sources.
+   - Playwright: **184 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280; 32 skipped by design.
+
+## Round 5 — real-data pass over the app: DONE
+Merged main at `1f6bc41` (gm1's sentence-bounded context and "Unknown:" wording, evidence tier in the sort, DECISIONS
+#23). `build:data`: 27 real programs, 8 SAMPLE. Run on `?mock=1&data=real&now=2026-09-14T12:00:00Z` for APCO Software Tools
+(DECISIONS #14), SAMPLE Auto Service and SAMPLE Daycare.
+
+### How I looked
+- **A measured audit (Playwright, chromium, observe only)** of every real program page at 390, with and without a profile
+  (54 pages), plus the three results pages and About. It checked: horizontal scroll; any element in `main` whose right edge
+  passes the viewport (outside the About table's scroll box); buttons, cards, chips, checkbox labels, selects and call
+  links under 44 px; page errors; each profile's printout as a Letter PDF.
+  **Result: clean.** No overflow, no small targets, no page errors, all three printouts one page with 6 programs and
+  "and 7/8 more on the results page". Real content doesn't break the layout; the problems are in what it *says*.
+- **Screenshots** (pwshot, chromium, 390 and 1280) of results for all three profiles, the Business Growth Program page
+  (six contacts), CanExport (closed, unclear partnership, long quotes), the CBDC General Business Loan (four offices), and
+  the APCO printout. I looked at each before fixing, and again after.
+
+### Broken by real content, fixed, with a test each
+- **The printout split a phone number across two lines.** "Phone 1-888-576-444 / 4" at 1280 and "Ph / one 1-888-576-4444"
+  at 390. The URL and phone shared one `<p class="url">` with `word-break: break-all`, and ACOA's URLs are long. Fix:
+  the URL and phone are separate spans; only the URL may break (`overflow-wrap: anywhere`, so it prefers hyphens), and the
+  phone is `white-space: nowrap`. **Test:** "real data: printout phone numbers never split across lines". For the real
+  APCO printout, screen and print media, every `[data-phone]` has exactly one client rect.
+- **Cards said "The page doesn't say" with no subject.** 22 of 27 real programs have intake unknown, so nearly every card
+  had a line that didn't say *what* the page doesn't say, under "Amount: the page doesn't say". Fix: `intakeText` returns
+  "When it takes applications: the page doesn't say" for unknown intake. The printout uses the same text. **Test:** "a card
+  says what the page leaves unsaid: intake and funding type have their subject". On SAMPLE's unknown-intake program the card
+  has the full sentence, and no card line is the bare phrase.
+- **Cards for programs with no stated funding type said nothing about type.** No pill, no line, for NRC IRAP, the
+  Innovation and Business Development Fund, the Job Grant, CanExport and CDAP. The printout already said so. Fix: those
+  cards get "Type of funding: the page doesn't say". **Test:** "real data: a card for a program with no stated funding
+  type says so", over every open real program with `funding_types: []` (read from `data/build/programs.json`, skipped if
+  there are none).
+
+**Suites:** Playwright **184 passed, 0 failed**, every test run twice on chromium and webkit at 390 and 1280 (32 skipped by
+design). Worker: 15 pass, 1 skip (SAMPLE); real mode 1 pass on 27 programs (round 4, no Worker change since).
+
+**Negative controls** (restored from byte copies, since the files carried uncommitted fixes; targeted test re-run green; no
+backups left):
+- (g) unknown intake back to the bare phrase → **red**: "Expected substring … When it takes applications: the page
+  doesn't say".
+- (h) the type line removed → **red**: "element(s) not found" for `[data-type-unknown]`.
+- (i) the phone allowed to wrap (`nowrap` removed, `break-all` back on the line) → **red** at chromium-390:
+  `screen: "Phone 1-888-576-4444" is on one line, Expected: 1, Received: 2`.
+
+**Screenshots committed:** `docs/shots/gm2-real-{results-apco,results-auto,results-daycare,detail-business-growth,detail-canexport,detail-cbdc-general-business-loan,print-apco}-{390,1280}.png`,
+taken after the fixes and looked at.
+
+### Found in real content, not app bugs: for the lead and gm1
+- **R1 — contact quote context shows another office's phone number (most important).** On the Business Growth page each
+  regional office's quote context runs into its neighbours: under "Call this office: 709.256.1480" the context reads
+  "709.637.2628 Central: 709.256.1480 Eastern:", under Western "709.896.2400 Western: 709.637.2628 Central:". The page lists
+  offices with no sentence boundaries, so sentence-bounded `contextFor` keeps up to 160 characters of the list. An owner can
+  read the wrong number next to a call button. Same shape on the CBDC pages: every office's context is the Atlantic
+  Association of CBDCs' footer address ("459 Murray Street PO Box 40 Mulgrave, Nova Scotia…"), next to a Grand
+  Falls-Windsor or Baie Verte office. Suggest, for gm1 or the contract: contact quotes get no context (the label and quote
+  say it all), or `contextFor` also stops at a phone number or a line of the saved page's list.
+- **R2 — breadcrumb menu in front of a closed quote.** CanExport's closed card and intake quote begin "Canada.ca Trade
+  Commissioner Service Our solutions Funding and financing for international business CanExport SMEs", the page's
+  breadcrumb, which has no sentence boundary before the heading. That is the menu problem DECISIONS #20 set out to stop,
+  in a case the sentence rule doesn't catch.
+- **R3 — CanExport's JSON context is still there** ("\n"}}" id="text-33addbb30a" class="cmp-text">" before the summary, and
+  in the contact quote), as expected until gm1's attribute-safe `pageText` lands and the `ca-*` sources are re-hashed
+  (step 3).
+- **R4 — each check-yourself item says the same thing twice.** Core's `why` ("Check this yourself. Your answers can't settle
+  it.") sits directly above the reason copy "Unknown: check this yourself"; Business Growth shows it on five items. The
+  brief asks for each criterion's `why`, so I left both. Suggest the app hides `why` when `unknown_reason` is `self_check`
+  (the reason copy says it), or core drops that `why`. The lead decides.
+- **R5 — real pages are long at 390.** Business Growth's program page is about 16,000 px tall at 390, because several of its
+  check-yourself quotes are 300–400 characters and share one long eligibility paragraph, repeated in each block. Nothing
+  breaks. If it matters, a collapsed context ("show the sentence around it") is an app change I can make once the lead
+  wants it.
+
+## Round 4 — real-data Worker run, CanExport unclear, cross-review of gm1's programs 4–13 and the CBDC loans
+Merged main at `2ec7790` (gm1's programs 4–13, the six CBDC loan programs, DECISIONS #20–22). The tree now has **27 real
+programs** (not 24): 3 original NL + 10 NL (4–13) + 6 CBDC + 8 federal. Main's `core/` does not have `normally` or
+`unclear` on purpose rules yet (DECISIONS #21, #22 are contract only so far).
+
+### Step 2: real-data mode for the Worker suite: DONE
+- **Bug (found by the lead):** `worker/tests/run.mjs` always started wrangler with `DATA_SET:sample`, so `GM_REAL=1` ran
+  `real.test.mjs` against the SAMPLE bundle and failed on `'sample' !== 'real'`. My phase-1 report listed `real.test.mjs`
+  as written but never ran it in real mode, so it had never been shown to pass or fail. That's the gap this fixes.
+- **Now:** `GM_REAL=1 npm --prefix worker test` starts wrangler with `DATA_SET:real`, skips the SAMPLE fixture server and
+  runs only `tests/real.test.mjs`; the runner prints `worker tests: DATA_SET=real, files tests/real.test.mjs`.
+- **Numbers:** bundle `data_set: real`, **27 programs, 147 criteria, 53 sources**; stated-closed programs: CDAP, Canada Summer
+  Jobs, CanExport SMEs, Canada-NL Job Grant. `real.test.mjs`: **1 test, 1 pass, 0 fail** (every program's detail answers 200,
+  none is SAMPLE, every criterion has a quote of ≥ 12 characters, context and source_url, and CDAP's intake is closed with
+  its quote). SAMPLE mode unchanged: **15 pass, 0 fail, 1 skipped**.
+- **How it could fail:** the first run, against the tree before main's CBDC merge, passed on 21 programs; that run doesn't
+  count. The numbers above are from the full merged tree. The test's own red was the lead's: `'sample' !== 'real'`.
+
+### Step 3: CanExport partnership is `unclear`: DONE
+`ca-canexport-smes` structure rule is now `{ not_in: [sole_proprietor, nonprofit, not_registered], unclear: [partnership] }`,
+and the separate `llp-only` check-yourself item is gone (the criterion text says a partnership counts only if it is an LLP).
+A "Partnership" answer is now Unknown with the unclear copy, instead of met with a check-yourself item. `check:data`: every
+quote verified (27 real programs, 8 SAMPLE). The research notes say why.
+
+### Step 4: cross-review of gm1's programs 4–13 and the six CBDC loans: DONE
+Read each program file on main (`2ec7790`) against `node scripts/show-text.mjs <source-id>` for the saved pages, checking the
+claims that decide a label. Every quote I spot-checked is in its page text. Findings, most important first.
+
+**Over-claims (a label better than the page supports)**
+- **K1 — CBDC Innovation Loan: `research` is in the purpose rule, but the page never mentions research.** Rule
+  `purpose any [equipment, digital, research]`. The page covers "the purchase of equipment, software, processes, licenses,
+  and other items that are clearly identifiable as “new” technology". "research" is not in the page text at all, so an R&D
+  project shows met. Suggest `any: [equipment, digital]`. Now that #22 allows it, `unclear: [training]`: the page says
+  "The loan could also be used for financing for new products or services and training" and "we can assist with the
+  costs of training staff who will be working directly with the new technology".
+- **K2 — Employment Enhancement Program: the industry rule shows met for businesses the page leaves out.** Rule
+  `industry in [11, 31-33]`. The page: "supports employers in the forestry, aquaculture, agriculture, and fishing sectors,
+  who are engaged in value-added secondary processing". Any manufacturer (a sign shop, a boat builder) and any farm or
+  fishing enterprise that doesn't process both get the industry item as met. Only the separate check-yourself item
+  holds it back. Neither sector answer settles it, so suggest `not_in: [every other sector]`, `unclear: [11, 31-33]`:
+  other sectors miss, and 11 and 31-33 are Unknown with the unclear copy instead of met.
+- **K3 — CBDC contacts: three Central Newfoundland offices are "Call this office" for every community in the province.**
+  All six CBDC programs list CBDC Central (Grand Falls-Windsor), CBDC Gander Area and CBDC Emerald (Baie Verte and
+  Springdale) with `census_divisions: null`. None of the three office pages names a service area (no "area",
+  "serving" or community list in the Central or Emerald page text), and the Gander page says "In rural Newfoundland and
+  Labrador there are 15 Corporations". An owner in Corner Brook or St. Anthony is told to call Gander. Suggest labels that
+  say where the offices are ("CBDC Central, Grand Falls-Windsor: one of 15 CBDCs in the province"), which the office
+  pages support, or show them only with the "Your local CBDC" item. The Newcomer loan's Metro Business Opportunities line
+  for St. John's and Mount Pearl is right and should stay.
+- **K4 — two programs show "Might fit" to nearly everyone for reasons the page contradicts.**
+  - **Investment Attraction Fund:** the page says it "is designed to attract large-scale businesses and foreign direct
+    investment ("FDI") to the Province". Location is its only checkable rule, so a six-person auto shop or a daycare gets
+    Might fit. The `inward-investment` check-yourself item quotes the definition but not "large-scale businesses and
+    foreign direct investment". At the least, quote that sentence in the item's text.
+  - **Innovation and Business Development Fund:** its only criterion is a check-yourself item (energy supply and
+    service), so every profile gets Might fit.
+  - This is a product question for the lead: should a program with no checkable rule except location sort with real
+    Might fits, or sit lower or apart?
+
+**Text that claims more than its quote**
+- **K5 — CBDC Newcomer `residency` item.** Text: "A newcomer who can't get other support because of residency status (the
+  page says non-permanent residents)". Its quote ("…ineligible to receive support because of their residency status")
+  doesn't contain "non-permanent residents". That phrase is in the page's opening line ("Designed for non-permanent
+  residents in Newfoundland & Labrador"). Quote that line, or drop the parenthesis.
+- **K6 — Harvester Enterprise Loan `industry`.** Text: "In fishing (the Agriculture, forestry, fishing and hunting sector)".
+  The quote is "will expand supports for independent fish harvesters positioning the sector for future success", which
+  names no sector. The mapping (fish harvester → NAICS 11) is mechanical and fine; the separate "independent fish
+  harvester" check-yourself item keeps farms and forestry honest. No change asked; noting that the rule, not the quote,
+  carries "NAICS 11".
+
+**Waiting on core (DECISIONS #21, #22 are not in main's `core/` yet)**
+- **K7 — Green Transition Fund:** #22 says `purpose any [energy]` with the other purposes `unclear`. The file still has no purpose
+  rule, and `core/schema.js` rejects `unclear` on purpose. So today a corporation with any purpose gets the green-focus
+  item only as check-yourself.
+- **K8 — `normally: true`:** none of programs 4–13 needs it on a bounds rule. The "normally" wording on Green Transition
+  ("will not normally exceed 40 per cent") and Research and Innovation ("normally provides up to 50 percent") is on
+  cost share, not eligibility. Business Investment (I2) is still the only case.
+
+**Agreed as researched (checked, no change)**
+- **Canada-NL Job Grant:** closed on the newer suspension notice over the older "Continuous intake" line. `nonprofit` and
+  `cooperative` unclear is right: the list names not-for-profit organizations and then says "Be incorporated or a sole
+  proprietor.)", which applies to all.
+- **Summer Employment Program for Students:** open with the February 19, 2026 deadline, closed by core; private-sector
+  amount shown, not-for-profit amount in notes.
+- **Job Accelerator and Growth:** `not_in [41, 44-45]` with `unclear [53, 56]` for real estate and call centres is a careful
+  reading; non-repayable type from "non-repayable contribution"; no location rule because it invites outside companies.
+- **Apprenticeship Wage Subsidy, Research and Innovation:** structure and unclear lists match the pages. AWS's footer
+  phone is labelled as the department line.
+- **Harvester Enterprise Loan:** only the down payment loan recorded as a type; the guarantee and rebates are left in notes
+  so a loan program doesn't sort above grants.
+- **CBDC First Time Entrepreneur, Youth, Social Enterprise, General Business:**
+  - structure lists match "sole proprietors, limited companies and partnerships", and "non-profits, including charities,
+    cooperatives or societies";
+  - "rural" and "your local CBDC" are check-yourself per #22;
+  - the Youth Loan's $150,000 is quoted from CBDC Central's page ("The CBDC Youth Loan offers up to $150,000 in financing
+    for rural Atlantic Canadian entrepreneurs aged 18–34");
+  - age 18–34 is check-yourself because the profile's youth band is 18–39.
+
+**For gm1:** K1, K2, K3, K5 (data), K4's `inward-investment` wording, and K7 once core has purpose `unclear`.
+**For the lead:** K4 (programs with no checkable rule besides location or none at all) and K3's label choice.
+
 ## Phase 2 research: 8 federal programs, DONE
 Researched with gm1's tools (`fetch-source.mjs` per host with its own state file, one page at a time per host; `show-text.mjs`;
 `check:data` green before every commit: "every quote verified (11 real programs, 8 SAMPLE)"). 16 official pages saved.
