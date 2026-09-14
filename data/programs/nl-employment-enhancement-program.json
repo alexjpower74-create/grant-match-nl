@@ -1,0 +1,153 @@
+{
+  "slug": "nl-employment-enhancement-program",
+  "sample": false,
+  "name": "Employment Enhancement Program",
+  "provider": "Government of Newfoundland and Labrador, Department of Jobs, Growth and Rural Development",
+  "level": "provincial",
+  "url": "https://www.gov.nl.ca/jgrd/empservices/foremployers/employment-enhancement-program/",
+  "summary": {
+    "quote": "The Employment Enhancement program supports employers in the forestry, aquaculture, agriculture, and fishing sectors, who are engaged in value-added secondary processing, by providing funding to create long-term or seasonal jobs and offering a training allowance for new employees.",
+    "source": "nl-employment-enhancement-program--main"
+  },
+  "sources": [
+    {
+      "id": "nl-employment-enhancement-program--main",
+      "url": "https://www.gov.nl.ca/jgrd/empservices/foremployers/employment-enhancement-program/",
+      "title": "Employment Enhancement Program - Jobs, Growth and Rural Development",
+      "publisher": "Government of Newfoundland and Labrador",
+      "fetched_at": "2026-09-14T06:02:45.764Z",
+      "http_status": 200,
+      "sha256": "d9496fd6fb274624fc28765395103b697df1fae456613424d02e49d7a46ae72f",
+      "text_sha256": "d687c77bc79c5c1479b17670a91aadff23b012fad16510877f48a4d6688d0f40",
+      "robots": "allowed",
+      "terms_note": "The province owns the copyright and grants the public permission to use the information on its website; third-party graphics, audio and video may not be reproduced.",
+      "terms_url": "https://www.gov.nl.ca/disclaimer/"
+    }
+  ],
+  "funding_types": [
+    {
+      "type": "wage_subsidy",
+      "applies_to": null,
+      "quote": "Wage Subsidy: 75% of wages, up to $15/hour, for 10-28 weeks.",
+      "source": "nl-employment-enhancement-program--main"
+    }
+  ],
+  "intake": {
+    "status": "unknown",
+    "quote": null,
+    "source": null,
+    "deadline": null
+  },
+  "max_amount": null,
+  "cost_share": {
+    "percent": 75,
+    "text": "75% of wages, up to $15 an hour, for 10 to 28 weeks",
+    "quote": "Wage Subsidy: 75% of wages, up to $15/hour, for 10-28 weeks.",
+    "source": "nl-employment-enhancement-program--main"
+  },
+  "criteria": [
+    {
+      "id": "industry",
+      "text": "In forestry, aquaculture, agriculture or fishing, or processing their products (value-added secondary processing)",
+      "rule": {
+        "kind": "industry",
+        "in": [
+          "11",
+          "31-33"
+        ]
+      },
+      "quote": "supports employers in the forestry, aquaculture, agriculture, and fishing sectors, who are engaged in value-added secondary processing",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "secondary-processing",
+      "text": "The business does value-added secondary processing in forestry, aquaculture, agriculture or fishing",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "who are engaged in value-added secondary processing",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "structure",
+      "text": "Incorporated or a sole proprietor",
+      "rule": {
+        "kind": "structure",
+        "in": [
+          "corporation",
+          "sole_proprietor"
+        ],
+        "unclear": [
+          "cooperative",
+          "nonprofit"
+        ]
+      },
+      "quote": "Must be incorporated or a sole proprietor.",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "location",
+      "text": "The employer has an office in Newfoundland and Labrador",
+      "rule": {
+        "kind": "location",
+        "province": "NL"
+      },
+      "quote": "Have an office in Newfoundland and Labrador.",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "purpose",
+      "text": "The money is for creating jobs or training new employees",
+      "rule": {
+        "kind": "purpose",
+        "any": [
+          "hire",
+          "training"
+        ]
+      },
+      "quote": "by providing funding to create long-term or seasonal jobs and offering a training allowance for new employees",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "cra-number",
+      "text": "Has a Canada Revenue Agency business number",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Have a Canada Revenue Agency business number.",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "good-standing",
+      "text": "In good standing with the Registry of Companies and Deeds",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Be in good standing with the Registry of Companies and Deeds.",
+      "source": "nl-employment-enhancement-program--main"
+    },
+    {
+      "id": "additional-criteria",
+      "text": "Other criteria may apply",
+      "rule": {
+        "kind": "self_check"
+      },
+      "quote": "Additional criteria may apply.",
+      "source": "nl-employment-enhancement-program--main"
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Employment programs",
+      "phone": "1-800-563-6600",
+      "email": "EmploymentPrograms@gov.nl.ca",
+      "census_divisions": null,
+      "quote": "Need more Information? Email: EmploymentPrograms@gov.nl.ca Call: 1-800-563-6600",
+      "source": "nl-employment-enhancement-program--main"
+    }
+  ],
+  "research": {
+    "by": "gm1",
+    "notes": "Found on JGRD's 'Wage Subsidy Programs' list for employers. Industry: forestry, aquaculture, agriculture and fishing are NAICS sector 11; value-added secondary processing of their products is manufacturing (31-33). So the rule is in 11 or 31-33, and 'value-added secondary processing' is also a check-this-yourself item, since a farm that doesn't process, or a manufacturer outside those sectors, would still show met. Purpose: jobs (hire) and a training allowance (training). The training allowance ('Up to $3,000 for the individual hired') is not a program maximum, so max_amount is null; cost_share is the 75% wage rate. Structure: 'Must be incorporated or a sole proprietor' gives corporation and sole_proprietor, with co-operatives and non-profits unclear. Intake: not stated. The Program Guidelines were not fetched."
+  }
+}
