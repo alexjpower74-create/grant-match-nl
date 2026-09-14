@@ -120,8 +120,11 @@ Every label comes with a list of reasons it isn't better.
 - **Last verified** is the last time the page was fetched and every quote was found on it: when we saved it, or a
   newer successful live re-check. A program with several pages uses the oldest.
 - **Stale** means more than 60 whole days before now. A stale program can't show Looks like a fit.
-- **Needs review** means the latest live re-check of any of its pages didn't find every quote. That includes a page
-  that now answers "not found". It can't show Looks like a fit until someone re-reads the page.
+- **Needs review** means the latest live re-check that could read one of its pages didn't find every quote, or the
+  page now answers "not found" (404) or "gone" (410). A check that fails for any other reason (a timeout, a server
+  error, robots.txt saying no) tells us nothing about the page, so it keeps whatever the last real check found
+  instead of clearing it. A program that needs review can't show Looks like a fit until someone re-reads the page.
+  The owner sees "The page has changed or gone since we checked it. Check the official page."
 
 ## Sort order
 
