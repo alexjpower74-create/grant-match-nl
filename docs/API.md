@@ -196,7 +196,9 @@ unclear: [cooperative, nonprofit] }` (a co-op or non-profit may or may not be in
 
 `matchPrograms(programs, profile, { now, sourceStatus }) → { open: ProgramResult[], closed: ProgramResult[], counts }`
 - `closed` = computed intake `closed`; everything else is `open`.
-- Sort `open` by: fit rank ↑, best funding type ↑ (`non_repayable` 0, `wage_subsidy` 1, `tax_credit` 2, `repayable` 3,
+- Sort `open` by: fit rank ↑, **evidence** ↑ (0 when at least one met criterion is a checkable kind other than
+  `location`, else 1: a program only your location can be checked against sorts after real matches with the same label),
+  best funding type ↑ (`non_repayable` 0, `wage_subsidy` 1, `tax_credit` 2, `repayable` 3,
   `loan` 4, none 5; a program's best type is its lowest), missed count ↑, unknown count ↑, name (`localeCompare 'en'`).
   Sort `closed` by name.
 - `counts = { looks, might, doesnt, closed }` (a closed program counts only in `closed`).

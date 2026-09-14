@@ -57,13 +57,22 @@ test('numbersIn', () => {
   assert.deepEqual(numbersIn('no numbers here'), []);
 });
 
-test('contextFor cuts at word boundaries with …', () => {
-  const text = 'one two three four five six seven eight nine ten QUOTE HERE eleven twelve thirteen fourteen';
-  assert.deepEqual(contextFor(text, 'QUOTE HERE', 12), { before: '…nine ten ', after: ' eleven…' });
-  assert.deepEqual(contextFor(text, 'one two', 500), { before: '', after: text.slice(7) });
+test('contextFor gives the rest of the sentence, never menu text', () => {
+  const text = 'Home Funding Contact us Programs Who can apply. Owners must live here and the business must operate in NL; it can be seasonal. Next sentence here.';
+  assert.deepEqual(contextFor(text, 'the business must operate in NL'), { before: 'Owners must live here and ', after: ';' });
+  assert.deepEqual(contextFor(text, 'it can be seasonal'), { before: '', after: '.' }, 'starts right after a boundary');
+  assert.deepEqual(contextFor(text, 'Who can apply'), { before: '', after: '.' }, 'a menu has no boundary, so no before');
+  assert.deepEqual(contextFor(text, 'Next sentence here.'), { before: '', after: '' }, 'a quote that ends its sentence');
+  assert.deepEqual(contextFor(text, 'and the business', 5), { before: '', after: '' }, 'no boundary within n');
+  assert.deepEqual(contextFor('Call us: 709-555-0101 today! Or write.', '709-555-0101'), { before: '', after: ' today!' });
   assert.equal(contextFor(text, 'not there'), null);
-  const ctx = contextFor(text, 'five six');
-  assert.equal(ctx.before, 'one two three four ');
+
+  const growth = pageText(sampleHtml('nl-sample-growth-grant--main'));
+  for (const quote of ['Businesses with fewer than 100 employees', 'Up to $50,000 per project', 'Applicants must have a business plan']) {
+    const ctx = contextFor(growth, quote);
+    assert.ok(!`${ctx.before}${ctx.after}`.includes('Home Funding'), `${quote}: menu text in context`);
+    assert.ok(!`${ctx.before}${ctx.after}`.includes('…'));
+  }
 });
 
 test('sha256Hex of a string and of bytes agree', async () => {

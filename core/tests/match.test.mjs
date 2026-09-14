@@ -66,7 +66,7 @@ test('an unclear answer is never Looks like a fit', async () => {
   const r = evaluateProgram(growth, AUTO(), { now: NOW });
   assert.equal(r.criteria[1].unknown_reason, 'unclear');
   assert.equal(r.fit.label, 'Might fit');
-  assert.ok(r.fit.why.includes('Unknown, the page\'s wording doesn\'t settle it for your answer: Sole proprietors, partnerships or corporations.'));
+  assert.ok(r.fit.why.includes('Unknown: the page\'s wording doesn\'t settle it for your answer. Sole proprietors, partnerships or corporations.'));
   assert.deepEqual(r.counts, { met: 4, missed: 0, unknown: 2, self_check: 1 });
 });
 
@@ -298,7 +298,9 @@ test('ProgramResult shape: quotes carry source_url and context; no profile → n
   assert.equal(r.funding_types[0].label, 'Non-repayable');
   assert.equal(r.intake.label, 'Takes applications any time');
   assert.equal(r.criteria[2].source_url, 'https://sample.invalid/funding/growth-grant/');
-  assert.equal(`${r.criteria[2].context.before}${r.criteria[2].quote}${r.criteria[2].context.after}`.includes('Sole proprietors, partnerships or corporations Businesses with fewer than 100 employees Projects'), true);
+  assert.deepEqual(Object.keys(r.criteria[2].context), ['before', 'after']);
+  assert.ok(!r.criteria[2].context.before.includes('Home Funding'), 'context never starts in the menu');
+  assert.deepEqual(r.max_amount.context, { before: '', after: '' }, 'no boundary within 160 characters before; the quote ends its own sentence');
   assert.equal(r.contacts[0].phone, '709-555-0101');
   assert.equal(r.contacts[0].source_url, 'https://sample.invalid/contact/');
   assert.deepEqual(r.counts, { met: 5, missed: 0, unknown: 1, self_check: 1 });

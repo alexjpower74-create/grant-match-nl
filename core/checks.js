@@ -106,6 +106,8 @@ export async function runChecks({
 }) {
   const started_at = now().toISOString();
   const hosts = new Map(); // origin → { robots: { status, txt } | null, lastAt: ms | null, delayMs }
+  // A page shared by several sources (e.g. one CBDC office page quoted by several loan records) is fetched once per run.
+  const fetched = new Map(); // target URL → { status, bytes, fetched_at, error }
   const wanted = only ? new Set(only) : null;
   const out = [];
 
@@ -171,18 +173,25 @@ export async function runChecks({
         continue;
       }
 
-      let res;
-      let bytes;
-      try {
-        res = await politeFetch(host, target);
-        bytes = new Uint8Array(await res.arrayBuffer());
-      } catch (e) {
-        entry.error = `could not fetch the page (${e?.name === 'TimeoutError' ? 'timed out' : e?.message ?? e})`;
-        entry.fetched_at = now().toISOString();
+      let got = fetched.get(target);
+      if (!got) {
+        try {
+          const response = await politeFetch(host, target);
+          const body = new Uint8Array(await response.arrayBuffer());
+          got = { status: response.status, bytes: body, fetched_at: now().toISOString(), error: null };
+        } catch (e) {
+          got = { error: `could not fetch the page (${e?.name === 'TimeoutError' ? 'timed out' : e?.message ?? e})`, fetched_at: now().toISOString() };
+        }
+        fetched.set(target, got);
+      }
+      entry.fetched_at = got.fetched_at;
+      if (got.error) {
+        entry.error = got.error;
         log(`${source.id}: ${entry.error}`);
         continue;
       }
-      entry.fetched_at = now().toISOString();
+      const res = { status: got.status };
+      const bytes = got.bytes;
       entry.http_status = res.status;
       entry.sha256 = await sha256Hex(bytes);
       if (onRaw) await onRaw({ source_id: source.id, url: source.url, fetched_at: entry.fetched_at, http_status: res.status, body: bytes });
