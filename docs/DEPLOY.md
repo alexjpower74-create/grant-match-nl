@@ -1,7 +1,13 @@
-# Deploying Grant Match NL (NOT done — waiting on Alexander's review)
+# Deploying Grant Match NL
 
-Nothing here has been run. Everything on 2026-09-14 ran locally with `wrangler dev --local`. These are the steps for
-when Alexander says "deploy". Read `DECISIONS.md` #12 (quoting official pages on a commercial site) first.
+**Done 2026-09-15** at Alexander's go, after he upgraded the account to Workers Paid (the free plan's ten D1
+databases were all in use). Live: app <https://grants.apcosoftwaretools.ca>, API
+`https://grant-match-nl.alexjpower74.workers.dev`, D1 id `748db97a-b94c-4c12-9803-ae96a5d8ad9c`, migration 0001 applied,
+`ADMIN_TOKEN` set (kept outside the repo). The app is a static-assets Worker (`deploy/app/wrangler.toml`,
+`scripts/deploy-app.sh`), not Pages: the Pages project name collided with the API Worker and Pages now deploys as a
+Worker anyway. `POST /api/admin/scan` still runs inside the request (27 pages, about a minute); fine on the paid plan.
+
+The original plan, kept for the record:
 
 ## 1. What it needs
 

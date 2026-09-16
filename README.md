@@ -4,7 +4,8 @@ A Newfoundland and Labrador small business answers one short profile and gets th
 fit, with every eligibility fact quoted word for word from the program's own page. It never applies for anyone and
 never promises eligibility: it says what the page says, and "Unknown" where the page doesn't settle it.
 
-Built overnight on 2026-09-14 for APCO Software Tools. **Local only: nothing is deployed, nothing is sent.**
+Built overnight on 2026-09-14 for APCO Software Tools. **Live at <https://grants.apcosoftwaretools.ca>** (since 2026-09-15).
+It never sends, submits or applies for anything; it only reads the program pages and quotes them.
 
 ## Run it locally
 
@@ -120,26 +121,25 @@ chromium only, and the live spec needs `GM_API`. Every important check was made 
 quote turns the build red, Unknown counted as met turns the fit test red, a 30 px chip turns the tap-target test red,
 and about fifty more, including round 2's eight); `docs/build-report.md` lists them.
 
-## What deploying needs
+## How it is deployed
 
-`docs/DEPLOY.md`: D1 database `grant-match-nl` (+ `worker/migrations`, applied remotely), secret `ADMIN_TOKEN`, Worker
-`grant-match-nl` with cron `15 10 * * 1` (Mondays 07:45 NDT), the static `app/` with `api-base` pointed at the
-Worker, a domain such as `grants.apcosoftwaretools.ca`. **Before any public deploy, decide DECISIONS.md #12**:
-canada.ca, nrc.canada.ca and ised-isde.canada.ca allow non-commercial reproduction only.
+`docs/DEPLOY.md`. API: Worker `grant-match-nl` + D1 `grant-match-nl` (Workers Paid plan), cron `15 10 * * 1` (Mondays
+07:45 NDT) re-checks every source page. App: static-assets Worker `grant-match-nl-app` on `grants.apcosoftwaretools.ca`,
+deployed by `scripts/deploy-app.sh`. Source pages: canada.ca, nrc.canada.ca and ised-isde.canada.ca allow
+non-commercial reproduction with attribution, which this free public tool is (DECISIONS.md #12, settled 2026-09-15). A
+paid version would need those sources reviewed first.
 
 ## Where to pick this up
 
-1. **Decide DECISIONS.md #12** (quoting Government of Canada pages on a commercial site): quote as review, ask the
-   publishers, or prefer Open Government Licence pages.
-2. **Permissions** that would add programs: BDC, Futurpreneur (youth), Ulnooweg (Indigenous), takeCHARGE (energy);
+1. **Permissions** that would add programs: BDC, Futurpreneur (youth), Ulnooweg (Indigenous), takeCHARGE (energy);
    check NLOWE (women) from another network.
-3. **Readability** (DECISIONS #27): some program pages are long at phone width because long quotes repeat; three
+2. **Readability** (DECISIONS #27): some program pages are long at phone width because long quotes repeat; three
    federal list quotes still join a lead-in with its items. One quote per fact in the data, or a collapsed quote in the
    app, fixes both.
-4. **Re-research** a program when the live check flags it, and every two months regardless: `PLAN.md`, "How to research
+3. **Re-research** a program when the live check flags it, and every two months regardless: `PLAN.md`, "How to research
    a program". Canada Summer Jobs, the Summer Employment Program for Students and CanExport SMEs need new records when
    their next intakes are posted.
-5. **Deploy** with `docs/DEPLOY.md` when you say so.
+4. **Redeploy**: `cd worker && npx wrangler deploy` for the API, `scripts/deploy-app.sh` for the app.
 
 ## Map
 

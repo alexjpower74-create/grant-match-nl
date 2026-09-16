@@ -1,0 +1,10 @@
+# The app as a static-assets Worker on grants.apcosoftwaretools.ca. Run scripts/deploy-app.sh, not wrangler by hand:
+# the script builds ../dist from app/ with the production api-base first. (Pages was tried and refused: the project
+# name collides with the API Worker, and Pages now deploys as a Worker anyway.)
+name = "grant-match-nl-app"
+compatibility_date = "2026-09-01"
+routes = [{ pattern = "grants.apcosoftwaretools.ca", custom_domain = true }]
+
+[assets]
+directory = "../dist"
+not_found_handling = "404-page"

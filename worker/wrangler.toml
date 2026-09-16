@@ -2,11 +2,11 @@ name = "grant-match-nl"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
 
-# Local only. Nothing here is ever deployed from this repo (see AGENTS.md).
+# Deployed 2026-09-15 at Alexander's go (Workers Paid). Local dev still uses --local.
 [[d1_databases]]
 binding = "DB"
 database_name = "grant-match-nl"
-database_id = "LOCAL-ONLY-set-at-deploy"
+database_id = "748db97a-b94c-4c12-9803-ae96a5d8ad9c"
 migrations_dir = "migrations"
 
 [triggers]

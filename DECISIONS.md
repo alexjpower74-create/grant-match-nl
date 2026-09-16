@@ -268,3 +268,8 @@ Onyx reviewed the real APCO Software Tools results and asked for five changes; a
    matches." and still can't be Looks like a fit.
 5. **Each card shows its strongest quoted match** (`top_match`): a met condition beyond location, short quote first,
    then what the money is for, ownership, industry, size, revenue, years, project cost, structure.
+
+## 12 — settled 2026-09-15
+Alexander: the canada.ca / NRC / ISED non-commercial terms are settled for a free public tool; not worth asking the
+left-out publishers (takeCHARGE stays out). Launched publicly, repo public, link on his GitHub profile. A paid version
+would need those sources reviewed again.

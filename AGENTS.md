@@ -13,7 +13,8 @@ Tools as an opener ("here's a program that could pay for part of it").
   page exactly as fetched (committed: it is the evidence). `data/reference/` — communities, industries.
 - `scripts/` — `build-data.mjs` (verify every quote, write `data/build/`), `fetch-source.mjs`, `show-text.mjs`,
   `scan.mjs` (re-check the live pages, same code as the Worker's cron).
-- `worker/` — Cloudflare Worker + D1 (`grant-match-nl`, binding `DB`). **Local only**: `wrangler dev --local`.
+- `worker/` — Cloudflare Worker + D1 (`grant-match-nl`, binding `DB`). Dev: `wrangler dev --local`. Live since
+  2026-09-15 (`docs/DEPLOY.md`); the app is a static-assets Worker on `grants.apcosoftwaretools.ca` (`scripts/deploy-app.sh`).
 - `app/` — static HTML/CSS/JS, no build step, served by `node app/serve.mjs`.
 - Contract: `docs/API.md`. Build plan: `PLAN.md`. Judgement calls: `DECISIONS.md`.
 
@@ -41,6 +42,7 @@ QA: app 7408, worker 7409, fixtures 7407 / 7406.
   `Crawl-delay`), User-Agent `APCO-Software-Tools-research/1.0 (+https://apcosoftwaretools.ca)`, no logins, no forms.
 - AI: none by default. A paid model call is allowed only to help draft rules during research, every quote still
   verified, logged in `docs/spend.md`; hard cap CA$2 for this project. Never echo or commit a key.
-- **No deploys** of any kind (no `wrangler deploy`, `secret put`, `d1 create`, nothing `--remote`). Nothing is
-  sent, submitted or applied for. Private repo only. Never touch another project's folder.
+- **Deploys only when Alexander says so** (he did on 2026-09-15; the build sprint before that was local-only). Nothing
+  is ever sent, submitted or applied for. Public repo: no secrets, no home paths, run `check-no-personal-data` before
+  pushing. Never touch another project's folder.
 - Plain English for Newfoundland and Labrador business owners. No emoji as icons. No devils or demons imagery.
