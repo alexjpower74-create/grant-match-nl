@@ -1,7 +1,24 @@
 import { api } from './api.js'
 import {
-  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, formatDate, verificationFlags,
-  quoteBlock, sourcesIndex, hasSample, sampleBanner, errorNotice, ICONS, UNKNOWN_REASON, UNKNOWN_GROUP, UNKNOWN_GROUP_TITLE, PROFILE_KEYS,
+  chrome,
+  esc,
+  link,
+  fitBadge,
+  closedBadge,
+  typePills,
+  intakeText,
+  formatDate,
+  verificationFlags,
+  quoteBlock,
+  sourcesIndex,
+  hasSample,
+  sampleBanner,
+  errorNotice,
+  ICONS,
+  UNKNOWN_REASON,
+  UNKNOWN_GROUP,
+  UNKNOWN_GROUP_TITLE,
+  PROFILE_KEYS,
 } from './render.js'
 
 chrome()
@@ -22,9 +39,10 @@ const pageSilent = `<p class="reason" data-reason="page_silent">${esc(UNKNOWN_RE
 
 function criterion(c, src) {
   const icon = c.status === 'met' ? ICONS.check : c.status === 'missed' ? ICONS.cross : ICONS.question
-  const reason = c.status === 'unknown' && c.unknown_reason
-    ? `<p class="reason" data-reason="${esc(c.unknown_reason)}">${esc(UNKNOWN_REASON[c.unknown_reason] || 'Unknown')}</p>`
-    : ''
+  const reason =
+    c.status === 'unknown' && c.unknown_reason
+      ? `<p class="reason" data-reason="${esc(c.unknown_reason)}">${esc(UNKNOWN_REASON[c.unknown_reason] || 'Unknown')}</p>`
+      : ''
   return `<li class="criterion glass criterion-${esc(c.status || 'none')}" data-criterion="${esc(c.id)}">
     <div class="criterion-head">${c.status ? icon : ''}
       <div>
@@ -63,7 +81,12 @@ function unknownGroup(items, src) {
 
 function facts(r, src) {
   const types = r.funding_types.length
-    ? r.funding_types.map((t) => `<p class="fact-value"><span class="pill pill-${esc(t.type)}">${esc(t.label)}</span>${t.applies_to ? ` <span class="muted">${esc(t.applies_to)}</span>` : ''}</p>${quoteBlock(t, src)}`).join('')
+    ? r.funding_types
+        .map(
+          (t) =>
+            `<p class="fact-value"><span class="pill pill-${esc(t.type)}">${esc(t.label)}</span>${t.applies_to ? ` <span class="muted">${esc(t.applies_to)}</span>` : ''}</p>${quoteBlock(t, src)}`,
+        )
+        .join('')
     : pageSilent
   const amount = r.max_amount ? `<p class="fact-value">${esc(r.max_amount.text)}</p>${quoteBlock(r.max_amount, src)}` : pageSilent
   const share = r.cost_share ? `<p class="fact-value">${esc(r.cost_share.text)}</p>${quoteBlock(r.cost_share, src)}` : pageSilent
@@ -93,12 +116,16 @@ function contacts(r, src) {
     <h2 id="contacts-heading">Talk to someone</h2>
     ${r.contacts.length > 1 ? `<p class="muted" data-contacts-note>${esc(MANY_CONTACTS_TEXT)}</p>` : ''}
     <div class="contacts">
-      ${r.contacts.map((c) => `<div>
+      ${r.contacts
+        .map(
+          (c) => `<div>
         <p class="fact-value">${esc(c.label)}</p>
         ${c.phone ? `<a class="btn" data-call href="tel:${esc(c.phone.replace(/[^\d+]/g, ''))}">${ICONS.phone}Call this office: ${esc(c.phone)}</a>` : ''}
         ${c.email ? `<p><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>` : ''}
         ${quoteBlock(c, src)}
-      </div>`).join('')}
+      </div>`,
+        )
+        .join('')}
     </div>
   </section>`
 }
@@ -125,11 +152,12 @@ async function main() {
   sampleBanner(hasSample([r]))
 
   const byStatus = (s) => r.criteria.filter((c) => c.status === s)
-  const criteriaHtml = r.fit || r.criteria.some((c) => c.status)
-    ? group('matches', 'What matches', byStatus('met'), src) +
-      group('doesnt-match', "What doesn't match", byStatus('missed'), src) +
-      unknownGroup(byStatus('unknown'), src)
-    : `<section aria-labelledby="asks"><h2 id="asks">What the page asks for</h2>
+  const criteriaHtml =
+    r.fit || r.criteria.some((c) => c.status)
+      ? group('matches', 'What matches', byStatus('met'), src) +
+        group('doesnt-match', "What doesn't match", byStatus('missed'), src) +
+        unknownGroup(byStatus('unknown'), src)
+      : `<section aria-labelledby="asks"><h2 id="asks">What the page asks for</h2>
         <p class="muted">Answer the questions to see which of these match your business.</p>
         <ul class="criteria">${r.criteria.map((c) => criterion(c, src)).join('')}</ul></section>`
 

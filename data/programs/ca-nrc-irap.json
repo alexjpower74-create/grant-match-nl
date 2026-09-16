@@ -49,9 +49,7 @@
       "text": "An incorporated, for-profit business (not a sole proprietorship, partnership or co-operative)",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation"
-        ]
+        "in": ["corporation"]
       },
       "quote": "NRC IRAP does not support: unlimited or limited liability corporations (ULCs or LLCs) sole proprietorships or partnerships cooperatives",
       "source": "ca-nrc-irap--main"
@@ -71,9 +69,7 @@
       "text": "The money is for research and development of innovative, technology-driven products or services",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "research"
-        ]
+        "any": ["research"]
       },
       "quote": "NRC IRAP provides funding to support the research and development of innovative, technology-driven products and services",
       "source": "ca-nrc-irap--main"

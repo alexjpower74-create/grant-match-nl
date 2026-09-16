@@ -51,14 +51,8 @@
       "text": "An incorporated business or a sole proprietorship, registered to do business in Newfoundland and Labrador",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation",
-          "sole_proprietor"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["corporation", "sole_proprietor"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "must be incorporated businesses or sole proprietorships, and registered to conduct business in Newfoundland and Labrador;",
       "source": "nl-apprenticeship-wage-subsidy--main"
@@ -78,9 +72,7 @@
       "text": "The money helps pay an apprentice you hire",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "The AWS is paid directly to employers who are approved to hire the apprentice",
       "source": "nl-apprenticeship-wage-subsidy--main"

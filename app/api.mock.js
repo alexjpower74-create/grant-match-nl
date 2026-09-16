@@ -35,7 +35,12 @@ export async function createMockApi(params) {
       return wire({
         communities: bundle.communities.communities,
         industries: bundle.industries.industries,
-        structures: STRUCTURES, years: YEARS, revenue: REVENUE, cost: COST, owners: OWNERS, purposes: PURPOSES,
+        structures: STRUCTURES,
+        years: YEARS,
+        revenue: REVENUE,
+        cost: COST,
+        owners: OWNERS,
+        purposes: PURPOSES,
         sources: { communities: bundle.communities.source, industries: bundle.industries.source },
       })
     },

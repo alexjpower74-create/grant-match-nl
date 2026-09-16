@@ -68,10 +68,7 @@
       "text": "The money is for equipment or new hires",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "equipment",
-          "hire"
-        ]
+        "any": ["equipment", "hire"]
       },
       "quote": "The loan can pay for equipment or new hires.",
       "source": "nl-sample-expansion-loan--main"

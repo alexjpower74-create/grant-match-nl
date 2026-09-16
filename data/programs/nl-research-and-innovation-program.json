@@ -51,12 +51,8 @@
       "text": "A not-for-profit applicant: academic or research institution, industry association, municipality or other not-for-profit group. Not a business",
       "rule": {
         "kind": "structure",
-        "in": [
-          "nonprofit"
-        ],
-        "unclear": [
-          "cooperative"
-        ]
+        "in": ["nonprofit"],
+        "unclear": ["cooperative"]
       },
       "quote": "Eligible applicants include: Public and not-for profit academic and research institutions Industry associations Municipalities Other not-for-profit groups including economic development organizations",
       "source": "nl-research-and-innovation-program--main"
@@ -66,9 +62,7 @@
       "text": "The money is for a research and development or innovation project",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "research"
-        ]
+        "any": ["research"]
       },
       "quote": "for the development and implementation of research and development and innovation projects",
       "source": "nl-research-and-innovation-program--main"

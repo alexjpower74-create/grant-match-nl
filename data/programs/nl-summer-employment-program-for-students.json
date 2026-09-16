@@ -55,14 +55,8 @@
       "text": "A private sector employer (incorporated or sole proprietorship) or a not-for-profit organization",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation",
-          "sole_proprietor",
-          "nonprofit"
-        ],
-        "unclear": [
-          "cooperative"
-        ]
+        "in": ["corporation", "sole_proprietor", "nonprofit"],
+        "unclear": ["cooperative"]
       },
       "quote": "Private Sector employers (incorporated or sole proprietorship). Not-for-profit organizations, school districts and municipalities.",
       "source": "nl-summer-employment-program-for-students--main"
@@ -82,9 +76,7 @@
       "text": "The money is for hiring students for the summer",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "create summer employment for students (post-secondary or high school)",
       "source": "nl-summer-employment-program-for-students--main"

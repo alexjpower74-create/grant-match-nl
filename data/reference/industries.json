@@ -18,14 +18,26 @@
     { "id": "51", "name": "Information and cultural industries", "plain": "Publishing, media, telecom and data" },
     { "id": "52", "name": "Finance and insurance", "plain": "Finance and insurance" },
     { "id": "53", "name": "Real estate and rental and leasing", "plain": "Real estate and rentals" },
-    { "id": "54", "name": "Professional, scientific and technical services", "plain": "Professional and technical services (IT, engineering, accounting, legal)" },
+    {
+      "id": "54",
+      "name": "Professional, scientific and technical services",
+      "plain": "Professional and technical services (IT, engineering, accounting, legal)"
+    },
     { "id": "55", "name": "Management of companies and enterprises", "plain": "Holding companies" },
-    { "id": "56", "name": "Administrative and support, waste management and remediation services", "plain": "Office support, cleaning, security and waste" },
+    {
+      "id": "56",
+      "name": "Administrative and support, waste management and remediation services",
+      "plain": "Office support, cleaning, security and waste"
+    },
     { "id": "61", "name": "Educational services", "plain": "Schools and training" },
     { "id": "62", "name": "Health care and social assistance", "plain": "Health care, child care and social services" },
     { "id": "71", "name": "Arts, entertainment and recreation", "plain": "Arts, entertainment and recreation" },
     { "id": "72", "name": "Accommodation and food services", "plain": "Hotels, restaurants and food service" },
-    { "id": "81", "name": "Other services (except public administration)", "plain": "Repair, personal care and other services (for example, auto repair)" },
+    {
+      "id": "81",
+      "name": "Other services (except public administration)",
+      "plain": "Repair, personal care and other services (for example, auto repair)"
+    },
     { "id": "91", "name": "Public administration", "plain": "Government" }
   ]
 }

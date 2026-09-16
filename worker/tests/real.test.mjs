@@ -9,7 +9,9 @@ const get = async (path) => {
   return { status: res.status, body: await res.json() }
 }
 
-test('real data: every program answers, every criterion has a quote with context, CDAP is closed', { skip: !REAL && 'set GM_REAL=1' }, async () => {
+test('real data: every program answers, every criterion has a quote with context, CDAP is closed', {
+  skip: !REAL && 'set GM_REAL=1',
+}, async () => {
   const health = await get('/api/health')
   assert.equal(health.body.data_set, 'real')
   const { body } = await get('/api/programs')

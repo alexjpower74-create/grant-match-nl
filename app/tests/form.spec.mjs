@@ -81,7 +81,9 @@ test('purpose chips toggle aria-pressed', async ({ page }, testInfo) => {
 })
 
 test('"Change answers" returns to the form pre-filled', async ({ page }, testInfo) => {
-  await page.goto(`/results.html?${new URLSearchParams({ ...Object.fromEntries(new URLSearchParams(PROFILES.auto)), mock: '1', now: NOW })}`)
+  await page.goto(
+    `/results.html?${new URLSearchParams({ ...Object.fromEntries(new URLSearchParams(PROFILES.auto)), mock: '1', now: NOW })}`,
+  )
   await press(page.locator('#change-answers'), testInfo)
   await page.waitForURL(/index\.html/)
   await expect(page.locator('#q-name')).toHaveValue('SAMPLE Auto Service')

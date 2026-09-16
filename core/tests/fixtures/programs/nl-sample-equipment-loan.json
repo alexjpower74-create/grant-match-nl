@@ -61,9 +61,7 @@
       "text": "The money buys equipment",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "equipment"
-        ]
+        "any": ["equipment"]
       },
       "quote": "Loans can be used to buy equipment for the business.",
       "source": "nl-sample-equipment-loan--main"

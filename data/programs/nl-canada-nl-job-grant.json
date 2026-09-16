@@ -54,14 +54,8 @@
       "text": "Incorporated or a sole proprietor",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation",
-          "sole_proprietor"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["corporation", "sole_proprietor"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "Be incorporated or a sole proprietor.)",
       "source": "nl-canada-nl-job-grant--main"
@@ -71,9 +65,7 @@
       "text": "The money is for training employees",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "training"
-        ]
+        "any": ["training"]
       },
       "quote": "to help offset the cost of training for their existing and future employees",
       "source": "nl-canada-nl-job-grant--main"

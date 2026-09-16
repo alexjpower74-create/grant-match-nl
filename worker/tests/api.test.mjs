@@ -17,7 +17,8 @@ const STALE_NOW = '2026-12-01T12:00:00Z' // +78 days
 
 const PROFILES = {
   auto: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&owners=none&purposes=equipment,digital&cost=25k_50k',
-  daycare: 'name=SAMPLE Daycare&community=gander&industry=62&structure=sole_proprietor&employees=4&years=1to2&revenue=100k_300k&owners=women&purposes=hire,training&cost=10k_25k',
+  daycare:
+    'name=SAMPLE Daycare&community=gander&industry=62&structure=sole_proprietor&employees=4&years=1to2&revenue=100k_300k&owners=women&purposes=hire,training&cost=10k_25k',
 }
 
 const bundle = loadSample()
@@ -41,7 +42,10 @@ async function post(path, body, token = TOKEN) {
 async function expected(profileQuery, now) {
   const { runs } = (await get('/api/checks?limit=50')).body
   const sourceStatus = sourceStatusFrom([...runs].reverse())
-  const { profile, errors } = parseProfile(new URLSearchParams(profileQuery), { communities: bundle.communities, industries: bundle.industries })
+  const { profile, errors } = parseProfile(new URLSearchParams(profileQuery), {
+    communities: bundle.communities,
+    industries: bundle.industries,
+  })
   assert.deepEqual(errors, [])
   return { profile, ...matchPrograms(bundle.programs, profile, { now: new Date(now), sourceStatus }) }
 }
@@ -74,7 +78,10 @@ test('400 with errors when community is missing', async () => {
   const { status, body } = await get(`/api/match?${params}&now=${NOW}`)
   assert.equal(status, 400)
   assert.equal(body.error, 'Some answers are missing.')
-  assert.ok(body.errors.some((e) => e.field === 'community'), 'names the community field')
+  assert.ok(
+    body.errors.some((e) => e.field === 'community'),
+    'names the community field',
+  )
 })
 
 for (const [name, profile] of Object.entries(PROFILES)) {
@@ -91,7 +98,7 @@ for (const [name, profile] of Object.entries(PROFILES)) {
   })
 }
 
-test('the closed SAMPLE program is in closed as Doesn\'t fit', async () => {
+test("the closed SAMPLE program is in closed as Doesn't fit", async () => {
   const { body } = await get(`/api/match?${q(PROFILES.auto)}&now=${NOW}`)
   const stated = bundle.programs.filter((p) => p.intake.status === 'closed').map((p) => p.slug)
   assert.ok(stated.length >= 1, 'the SAMPLE set has a closed program')
@@ -126,7 +133,10 @@ test('program detail 200 / 404 / 400, and no profile means no status or fit', as
   const list = await get(`/api/programs?now=${NOW}`)
   assert.equal(list.status, 200)
   const names = list.body.programs.map((p) => p.name)
-  assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b, 'en')))
+  assert.deepEqual(
+    names,
+    [...names].sort((a, b) => a.localeCompare(b, 'en')),
+  )
 })
 
 test('now +78 days: stale and no Looks like a fit', async () => {
@@ -159,11 +169,23 @@ test('a stored run with one missing quote makes that program needs_review, not L
     started_at: '2026-09-14T11:00:00.000Z',
     finished_at: '2026-09-14T11:00:05.000Z',
     trigger: 'node',
-    sources: [{
-      source_id: source.id, program_slug: record.slug, url: source.url, ok: true, error: null, http_status: 200,
-      fetched_at: '2026-09-14T11:00:01.000Z', sha256: 'x', text_sha256: 'y', changed: true,
-      quotes_total: 3, quotes_found: 2, missing: [{ path: 'criteria[0].quote', quote: quote.quote }],
-    }],
+    sources: [
+      {
+        source_id: source.id,
+        program_slug: record.slug,
+        url: source.url,
+        ok: true,
+        error: null,
+        http_status: 200,
+        fetched_at: '2026-09-14T11:00:01.000Z',
+        sha256: 'x',
+        text_sha256: 'y',
+        changed: true,
+        quotes_total: 3,
+        quotes_found: 2,
+        missing: [{ path: 'criteria[0].quote', quote: quote.quote }],
+      },
+    ],
   }
   const stored = await post('/api/admin/checks', run)
   assert.equal(stored.status, 200)
@@ -190,7 +212,10 @@ test('POST /api/admin/scan against the fixture server stores the missing quote a
   const removed = run.sources.find((s) => s.source_id === planted.removed.source_id)
   assert.ok(removed.ok)
   assert.equal(removed.changed, true)
-  assert.ok(removed.missing.some((m) => m.quote === planted.removed.quote), 'the removed quote is named')
+  assert.ok(
+    removed.missing.some((m) => m.quote === planted.removed.quote),
+    'the removed quote is named',
+  )
   const blocked = run.sources.find((s) => s.source_id === planted.blocked.source_id)
   assert.equal(blocked.ok, false)
   assert.equal(blocked.error, 'robots.txt disallows')
@@ -220,7 +245,10 @@ test('/__scheduled stores a run with trigger cron', { timeout: 180_000 }, async 
   }
   assert.ok(run && run.id > before, 'a new run was stored')
   assert.equal(run.trigger, 'cron')
-  assert.equal(run.sources_total, bundle.programs.reduce((n, p) => n + p.sources.length, 0))
+  assert.equal(
+    run.sources_total,
+    bundle.programs.reduce((n, p) => n + p.sources.length, 0),
+  )
 })
 
 test('CORS on a 404 and on OPTIONS', async () => {

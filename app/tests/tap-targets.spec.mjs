@@ -15,7 +15,9 @@ function pages() {
   ]
 }
 
-test('every button, card, chip, checkbox label and select is hit at its centre and at least 44 px tall at 390', async ({ page }, testInfo) => {
+test('every button, card, chip, checkbox label and select is hit at its centre and at least 44 px tall at 390', async ({
+  page,
+}, testInfo) => {
   test.skip(!testInfo.project.name.endsWith('-390'), 'phone width only')
   for (const [name, url, ready] of pages()) {
     await page.goto(url)
@@ -30,10 +32,13 @@ test('every button, card, chip, checkbox label and select is hit at its centre a
       const box = await el.boundingBox()
       const label = `${name} #${i} ${(await el.textContent())?.trim().slice(0, 40)}`
       expect(box.height, `${label} height`).toBeGreaterThanOrEqual(44)
-      const hit = await el.evaluate((node, [x, y]) => {
-        const top = document.elementFromPoint(x, y)
-        return !!top && (top === node || node.contains(top))
-      }, [box.x + box.width / 2, box.y + box.height / 2])
+      const hit = await el.evaluate(
+        (node, [x, y]) => {
+          const top = document.elementFromPoint(x, y)
+          return !!top && (top === node || node.contains(top))
+        },
+        [box.x + box.width / 2, box.y + box.height / 2],
+      )
       expect(hit, `${label} is what a finger at its centre hits`).toBe(true)
     }
   }
@@ -44,7 +49,10 @@ test('no horizontal scroll at 390', async ({ page }, testInfo) => {
   for (const [name, url, ready] of pages()) {
     await page.goto(url)
     await page.locator(ready).first().waitFor()
-    const { scroll, client } = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }))
+    const { scroll, client } = await page.evaluate(() => ({
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth,
+    }))
     expect(scroll, `${name} scrollWidth`).toBeLessThanOrEqual(client)
   }
 })

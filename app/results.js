@@ -1,7 +1,24 @@
 import { api } from './api.js'
 import {
-  chrome, esc, link, fitBadge, closedBadge, typePills, intakeText, amountText, countsText, topMatchLine, TYPE_UNKNOWN_TEXT,
-  verificationFlags, quoteBlock, sourcesIndex, hasSample, sampleBanner, errorNotice, ICONS, PROFILE_KEYS,
+  chrome,
+  esc,
+  link,
+  fitBadge,
+  closedBadge,
+  typePills,
+  intakeText,
+  amountText,
+  countsText,
+  topMatchLine,
+  TYPE_UNKNOWN_TEXT,
+  verificationFlags,
+  quoteBlock,
+  sourcesIndex,
+  hasSample,
+  sampleBanner,
+  errorNotice,
+  ICONS,
+  PROFILE_KEYS,
 } from './render.js'
 
 chrome()
@@ -58,7 +75,10 @@ async function main() {
   } catch (err) {
     const list = err.body?.errors?.length ? `<ul>${err.body.errors.map((e) => `<li>${esc(e.message)}</li>`).join('')}</ul>` : ''
     errorNotice(root, err.message)
-    root.insertAdjacentHTML('beforeend', `${list}<div class="actions"><a class="btn" href="${esc(change)}">${ICONS.back}Change answers</a></div>`)
+    root.insertAdjacentHTML(
+      'beforeend',
+      `${list}<div class="actions"><a class="btn" href="${esc(change)}">${ICONS.back}Change answers</a></div>`,
+    )
     return
   }
   const { open, closed, counts } = data
@@ -84,10 +104,14 @@ async function main() {
       <h2 id="open-heading">Open programs</h2>
       ${open.length ? `<ul class="cards" id="open-list">${open.map(card).join('')}</ul>` : '<p class="muted">No open programs to show.</p>'}
     </section>
-    ${closed.length ? `<section class="closed-section" aria-labelledby="closed-heading">
+    ${
+      closed.length
+        ? `<section class="closed-section" aria-labelledby="closed-heading">
       <h2 id="closed-heading">Closed programs</h2>
       <ul class="cards" id="closed-list">${closed.map(closedCard).join('')}</ul>
-    </section>` : ''}
+    </section>`
+        : ''
+    }
   `
 }
 

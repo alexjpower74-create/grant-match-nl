@@ -22,7 +22,9 @@ test('results order and labels equal what core returns for SAMPLE Auto Service',
   await expect(page.locator('#sample-banner')).toBeVisible()
   for (const r of want.open) {
     const card = page.locator(`#open-list a.card[data-slug="${r.slug}"]`)
-    await expect(card).toContainText(`${r.counts.met} match · ${r.counts.missed} doesn't · ${r.counts.unknown_page} the page doesn't say · ${r.counts.unknown_ask} we didn't ask you`)
+    await expect(card).toContainText(
+      `${r.counts.met} match · ${r.counts.missed} doesn't · ${r.counts.unknown_page} the page doesn't say · ${r.counts.unknown_ask} we didn't ask you`,
+    )
     await expect(card).toContainText(r.max_amount ? r.max_amount.text : "Amount: the page doesn't say")
   }
 })
@@ -67,7 +69,9 @@ test('now=2026-12-01: stale message and no Looks like a fit', async ({ page }) =
   const date = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' })
   const v = want.open[0].verification
   const [y, m, d] = v.last_verified.split('-').map(Number)
-  await expect(flags.first()).toHaveText(`Last verified ${date.format(Date.UTC(y, m - 1, d))}, more than 60 days ago. Check the official page.`)
+  await expect(flags.first()).toHaveText(
+    `Last verified ${date.format(Date.UTC(y, m - 1, d))}, more than 60 days ago. Check the official page.`,
+  )
 })
 
 test('a card says what the page leaves unsaid: intake and funding type have their subject', async ({ page }) => {
@@ -93,24 +97,34 @@ test('real data: a card for a program with no stated funding type says so', asyn
   await page.goto(`/results.html?${qs(PROFILES.auto, { data: 'real' })}`)
   await expect(page.locator('#summary-line')).toBeVisible()
   for (const p of untyped) {
-    await expect(page.locator(`#open-list a.card[data-slug="${p.slug}"] [data-type-unknown]`)).toHaveText("Type of funding: the page doesn't say")
+    await expect(page.locator(`#open-list a.card[data-slug="${p.slug}"] [data-type-unknown]`)).toHaveText(
+      "Type of funding: the page doesn't say",
+    )
   }
 })
 
 test('round 2: the sort line says what the order really is', async ({ page }) => {
   await page.goto(`/results.html?${qs(PROFILES.auto)}`)
-  await expect(page.locator('#sort-line')).toHaveText("Sorted by fit, then money you don't pay back first, then the most matches. Unknown is never counted as a match.")
+  await expect(page.locator('#sort-line')).toHaveText(
+    "Sorted by fit, then money you don't pay back first, then the most matches. Unknown is never counted as a match.",
+  )
 })
 
 test('round 2: each card shows its strongest quoted match, exactly as core picked it, and none when there is none', async ({ page }) => {
   for (const profile of [PROFILES.auto, PROFILES.daycare]) {
     const want = coreMatch(profile)
-    expect(want.open.some((r) => r.top_match), 'some card has a top match').toBe(true)
+    expect(
+      want.open.some((r) => r.top_match),
+      'some card has a top match',
+    ).toBe(true)
     await page.goto(`/results.html?${qs(profile)}`)
     await expect(page.locator('#open-list a.card')).toHaveCount(want.open.length)
     for (const r of want.open) {
       const line = page.locator(`#open-list a.card[data-slug="${r.slug}"] [data-top-match]`)
-      if (!r.top_match) { await expect(line, `${r.slug}: no top match`).toHaveCount(0); continue }
+      if (!r.top_match) {
+        await expect(line, `${r.slug}: no top match`).toHaveCount(0)
+        continue
+      }
       await expect(line).toHaveAttribute('data-top-match', r.top_match.id)
       await expect(line.locator('.card-match-text')).toHaveText(r.top_match.text)
       await expect(line.locator('.card-match-quote')).toHaveText(r.top_match.quote)
@@ -121,7 +135,7 @@ test('round 2: each card shows its strongest quoted match, exactly as core picke
   }
 })
 
-test('round 2: a program with nothing to go on gets its own label, below Might fit and above Doesn\'t fit (real data)', async ({ page }) => {
+test("round 2: a program with nothing to go on gets its own label, below Might fit and above Doesn't fit (real data)", async ({ page }) => {
   const real = JSON.parse(readFileSync(new URL('../../data/build/programs.json', import.meta.url), 'utf8'))
   const want = matchPrograms(real.programs, profileOf(PROFILES.auto), { now: new Date('2026-09-14T12:00:00Z'), sourceStatus: {} })
   const notEnough = want.open.filter((r) => r.fit.label === 'Not enough to go on')

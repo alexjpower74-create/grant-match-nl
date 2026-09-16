@@ -61,9 +61,7 @@
       "text": "In fishing (the Agriculture, forestry, fishing and hunting sector)",
       "rule": {
         "kind": "industry",
-        "in": [
-          "11"
-        ]
+        "in": ["11"]
       },
       "quote": "will expand supports for independent fish harvesters positioning the sector for future success",
       "source": "nl-harvester-enterprise-loan-program--main"

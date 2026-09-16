@@ -76,9 +76,7 @@
       "text": "A for-profit business (not a non-profit)",
       "rule": {
         "kind": "structure",
-        "not_in": [
-          "nonprofit"
-        ]
+        "not_in": ["nonprofit"]
       },
       "quote": "be for-profit",
       "source": "ca-canexport-smes--guide"
@@ -88,13 +86,8 @@
       "text": "An incorporated company, limited liability partnership (LLP) or co-operative (not a sole proprietorship); a partnership counts only if it is an LLP",
       "rule": {
         "kind": "structure",
-        "not_in": [
-          "sole_proprietor",
-          "not_registered"
-        ],
-        "unclear": [
-          "partnership"
-        ]
+        "not_in": ["sole_proprietor", "not_registered"],
+        "unclear": ["partnership"]
       },
       "quote": "be an incorporated legal entity, limited liability partnership (LLP), or cooperative in Canada",
       "source": "ca-canexport-smes--guide"
@@ -126,9 +119,7 @@
       "text": "The money is for international business development (export or new markets)",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "export"
-        ]
+        "any": ["export"]
       },
       "quote": "Successful projects may receive up to $50,000 in funding for international business development activities.",
       "source": "ca-canexport-smes--main"

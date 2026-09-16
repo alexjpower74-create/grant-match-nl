@@ -51,9 +51,7 @@
       "text": "The money is for creating new jobs",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "providing a payroll rebate on qualifying incremental job creation",
       "source": "nl-job-accelerator-and-growth-program--main"
@@ -63,14 +61,8 @@
       "text": "Not wholesale or retail (residential and commercial real estate services and lower-growth services such as call centres are also left out)",
       "rule": {
         "kind": "industry",
-        "not_in": [
-          "41",
-          "44-45"
-        ],
-        "unclear": [
-          "53",
-          "56"
-        ]
+        "not_in": ["41", "44-45"],
+        "unclear": ["53", "56"]
       },
       "quote": "Companies that require an industrial benefits agreement with the Province and those in non-strategic sectors, such as residential and commercial real estate services, wholesale or retail, and lower-growth service operations, such as call centers, will not be eligible.",
       "source": "nl-job-accelerator-and-growth-program--main"

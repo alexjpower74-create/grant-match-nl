@@ -61,14 +61,8 @@
       "text": "A private or not-for-profit employer that is incorporated or a sole proprietorship",
       "rule": {
         "kind": "structure",
-        "in": [
-          "sole_proprietor",
-          "corporation"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["sole_proprietor", "corporation"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "Private or not-for-profit sector employers that are incorporated or sole proprietorships.",
       "source": "nl-jobsnl-wage-subsidy--main"
@@ -78,9 +72,7 @@
       "text": "The money helps create a new position",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "It offsets salary costs to help create new positions, especially for individuals who lack work experience and skills.",
       "source": "nl-jobsnl-wage-subsidy--main"

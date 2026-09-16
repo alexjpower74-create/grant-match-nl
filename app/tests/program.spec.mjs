@@ -99,14 +99,20 @@ test('criteria sit in the three groups the way core evaluated them', async ({ pa
   const r = coreMatch(PROFILES.auto).open[0]
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
   await expect(page.locator('h1')).toHaveText(r.name)
-  for (const [group, status] of [['matches', 'met'], ['doesnt-match', 'missed']]) {
+  for (const [group, status] of [
+    ['matches', 'met'],
+    ['doesnt-match', 'missed'],
+  ]) {
     const ids = r.criteria.filter((c) => c.status === status).map((c) => c.id)
     const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
     expect(shown, group).toEqual(ids)
   }
   // Round 2: Unknown in two groups, the page's wording (unclear) and what we didn't ask you (everything else).
   const unknown = r.criteria.filter((c) => c.status === 'unknown')
-  for (const [group, pick] of [['unknown-page', (c) => c.unknown_reason === 'unclear'], ['unknown-ask', (c) => c.unknown_reason !== 'unclear']]) {
+  for (const [group, pick] of [
+    ['unknown-page', (c) => c.unknown_reason === 'unclear'],
+    ['unknown-ask', (c) => c.unknown_reason !== 'unclear'],
+  ]) {
     const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
     expect(shown, group).toEqual(unknown.filter(pick).map((c) => c.id))
   }
@@ -139,7 +145,10 @@ test('a check-yourself criterion shows its reason copy only, not its why line (A
   const want = coreMatch(PROFILES.auto)
   const all = [...want.open, ...want.closed]
   const r = all
-    .filter((x) => x.criteria.some((c) => c.unknown_reason === 'self_check') && x.criteria.some((c) => c.why && c.unknown_reason !== 'self_check'))
+    .filter(
+      (x) =>
+        x.criteria.some((c) => c.unknown_reason === 'self_check') && x.criteria.some((c) => c.why && c.unknown_reason !== 'self_check'),
+    )
     .sort((a, b) => b.counts.self_check - a.counts.self_check)[0]
   expect(r, 'a SAMPLE program with both kinds of criteria').toBeTruthy()
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
@@ -171,7 +180,12 @@ test('more than one contact gets the "call the one nearest you" line; one contac
   const inOrder = await page.evaluate(() => {
     const n = document.querySelector('[data-contacts-note]')
     const first = document.querySelector('.contacts')
-    return !!n && !!first && n.closest('section') === first.closest('section') && !!(n.compareDocumentPosition(first) & Node.DOCUMENT_POSITION_FOLLOWING)
+    return (
+      !!n &&
+      !!first &&
+      n.closest('section') === first.closest('section') &&
+      !!(n.compareDocumentPosition(first) & Node.DOCUMENT_POSITION_FOLLOWING)
+    )
   })
   expect(inOrder, 'the line sits above the contacts').toBe(true)
 
@@ -187,14 +201,17 @@ test('more than one contact gets the "call the one nearest you" line; one contac
   await expect(page.locator('#contacts-heading')).toHaveCount(0)
 })
 
-test('round 2: Unknown groups match core\'s split on a program with both kinds, and the intake line is its own line', async ({ page }) => {
+test("round 2: Unknown groups match core's split on a program with both kinds, and the intake line is its own line", async ({ page }) => {
   const want = coreMatch(PROFILES.auto)
   const r = want.open.find((x) => x.counts.unknown_page > 0 && x.counts.unknown_ask > 0)
   expect(r, 'a SAMPLE Auto Service program with both kinds of Unknown').toBeTruthy()
   await page.goto(`/program.html?${qs(PROFILES.auto, { slug: r.slug })}`)
   await expect(page.locator('h1')).toHaveText(r.name)
   // The same criteria core put in each group, not just the same number: a swap with equal counts must go red (N7).
-  for (const [group, pick] of [['unknown-page', (c) => c.unknown_reason === 'unclear'], ['unknown-ask', (c) => c.unknown_reason !== 'unclear']]) {
+  for (const [group, pick] of [
+    ['unknown-page', (c) => c.unknown_reason === 'unclear'],
+    ['unknown-ask', (c) => c.unknown_reason !== 'unclear'],
+  ]) {
     const ids = r.criteria.filter((c) => c.status === 'unknown' && pick(c)).map((c) => c.id)
     const shown = await page.locator(`[data-group="${group}"] [data-criterion]`).evaluateAll((els) => els.map((e) => e.dataset.criterion))
     expect(shown, `${group}: the criteria core put there`).toEqual(ids)

@@ -66,10 +66,7 @@
       "text": "Not a retail, accommodation or food services business",
       "rule": {
         "kind": "industry",
-        "not_in": [
-          "44-45",
-          "72"
-        ]
+        "not_in": ["44-45", "72"]
       },
       "quote": "Retail trade and Accommodation and food services businesses are not eligible.",
       "source": "ca-sample-small-lender-loan--main"

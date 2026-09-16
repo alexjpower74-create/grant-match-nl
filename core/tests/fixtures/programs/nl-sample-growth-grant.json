@@ -79,11 +79,7 @@
       "text": "Sole proprietors, partnerships or corporations",
       "rule": {
         "kind": "structure",
-        "in": [
-          "sole_proprietor",
-          "partnership",
-          "corporation"
-        ]
+        "in": ["sole_proprietor", "partnership", "corporation"]
       },
       "quote": "Sole proprietors, partnerships or corporations",
       "source": "nl-sample-growth-grant--main"
@@ -103,10 +99,7 @@
       "text": "The project buys equipment or adopts software or digital tools",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "equipment",
-          "digital"
-        ]
+        "any": ["equipment", "digital"]
       },
       "quote": "Projects to buy equipment or adopt software or digital tools",
       "source": "nl-sample-growth-grant--main"
@@ -136,11 +129,7 @@
       "label": "SAMPLE Central Regional Office",
       "phone": "709-555-0101",
       "email": null,
-      "census_divisions": [
-        6,
-        7,
-        8
-      ],
+      "census_divisions": [6, 7, 8],
       "quote": "SAMPLE Central Regional Office Census Divisions 6, 7 and 8 709-555-0101",
       "source": "nl-sample-growth-grant--contact"
     }

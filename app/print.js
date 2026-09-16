@@ -47,12 +47,25 @@ async function main() {
     <p class="meta">${esc(formatDate(data.evaluated_at))} · Prepared with Grant Match NL</p>
     ${sample ? '<p class="sample" id="sample-banner">SAMPLE data: these programs are made up for testing. They are not real.</p>' : ''}
     <p class="answers">${esc(answersLine(p, options))}</p>
-    ${picks.length ? `<ol class="programs">${picks.map((r) => `<li class="program" data-slug="${esc(r.slug)}">
+    ${
+      picks.length
+        ? `<ol class="programs">${picks
+            .map(
+              (r) => `<li class="program" data-slug="${esc(r.slug)}">
       <h2>${esc(r.name)} <span class="fit">· ${esc(r.fit.label)}</span></h2>
       <p>${esc(r.provider)}</p>
-      <p>${esc(r.funding_types.map((t) => t.label).filter((v, i, a) => a.indexOf(v) === i).join(', ') || TYPE_UNKNOWN_TEXT)} · ${esc(amountText(r))} · ${esc(intakeText(r.intake, r.contacts))}</p>
+      <p>${esc(
+        r.funding_types
+          .map((t) => t.label)
+          .filter((v, i, a) => a.indexOf(v) === i)
+          .join(', ') || TYPE_UNKNOWN_TEXT,
+      )} · ${esc(amountText(r))} · ${esc(intakeText(r.intake, r.contacts))}</p>
       <p class="where"><span class="url">${esc(r.url)}</span>${r.contacts.find((c) => c.phone) ? ` · <span class="phone" data-phone>Phone ${esc(r.contacts.find((c) => c.phone).phone)}</span>` : ''}</p>
-    </li>`).join('')}</ol>` : '<p class="empty">No open programs could fit these answers right now.</p>'}
+    </li>`,
+            )
+            .join('')}</ol>`
+        : '<p class="empty">No open programs could fit these answers right now.</p>'
+    }
     ${more > 0 ? `<p class="meta">and ${more} more on the results page</p>` : ''}
     <p class="foot">${esc(FOOTER_LINE)} Check each official page before you apply.</p>`
   document.title = `Funding programs that could fit ${p.name || 'your business'}`

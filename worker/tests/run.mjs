@@ -13,7 +13,14 @@ const FIXTURE_PORT = Number(process.env.GM_FIXTURE_PORT || 7404)
 const PERSIST = '.wrangler/test-state'
 // GM_REAL=1: the real data set (data/build/programs.json), and only tests/real.test.mjs. No SAMPLE fixture server.
 const REAL = process.env.GM_REAL === '1'
-const env = { ...process.env, CI: '1', WRANGLER_SEND_METRICS: 'false', GM_WORKER_PORT: String(WORKER_PORT), GM_FIXTURE_PORT: String(FIXTURE_PORT), GM_PERSIST: resolve(workerDir, PERSIST) }
+const env = {
+  ...process.env,
+  CI: '1',
+  WRANGLER_SEND_METRICS: 'false',
+  GM_WORKER_PORT: String(WORKER_PORT),
+  GM_FIXTURE_PORT: String(FIXTURE_PORT),
+  GM_PERSIST: resolve(workerDir, PERSIST),
+}
 
 let dev
 let fixture
@@ -54,7 +61,11 @@ async function waitForHealth(ms) {
 
 async function main() {
   rmSync(resolve(workerDir, PERSIST), { recursive: true, force: true })
-  const migrate = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'grant-match-nl', '--local', '--persist-to', PERSIST], { cwd: workerDir, env, stdio: 'inherit' })
+  const migrate = spawnSync('wrangler', ['d1', 'migrations', 'apply', 'grant-match-nl', '--local', '--persist-to', PERSIST], {
+    cwd: workerDir,
+    env,
+    stdio: 'inherit',
+  })
   if (migrate.status !== 0) throw new Error('Applying the D1 migrations failed.')
 
   if (!REAL) fixture = await startFixtureServer(FIXTURE_PORT)
@@ -62,9 +73,23 @@ async function main() {
   const originMap = JSON.stringify({ 'https://sample.invalid': `http://127.0.0.1:${FIXTURE_PORT}` })
   dev = spawn(
     'wrangler',
-    ['dev', '--local', '--port', String(WORKER_PORT), '--persist-to', PERSIST, '--test-scheduled',
-      '--var', `DATA_SET:${REAL ? 'real' : 'sample'}`, '--var', 'ALLOW_NOW:1', '--var', 'ADMIN_TOKEN:test-admin-token',
-      '--var', `SOURCE_ORIGIN_MAP:${originMap}`],
+    [
+      'dev',
+      '--local',
+      '--port',
+      String(WORKER_PORT),
+      '--persist-to',
+      PERSIST,
+      '--test-scheduled',
+      '--var',
+      `DATA_SET:${REAL ? 'real' : 'sample'}`,
+      '--var',
+      'ALLOW_NOW:1',
+      '--var',
+      'ADMIN_TOKEN:test-admin-token',
+      '--var',
+      `SOURCE_ORIGIN_MAP:${originMap}`,
+    ],
     { cwd: workerDir, env, stdio: ['ignore', 'pipe', 'pipe'], detached: true },
   )
   const log = []
@@ -78,7 +103,11 @@ async function main() {
     throw err
   }
 
-  const files = process.argv.slice(2).length ? process.argv.slice(2) : REAL ? ['tests/real.test.mjs'] : ['tests/api.test.mjs', 'tests/real.test.mjs']
+  const files = process.argv.slice(2).length
+    ? process.argv.slice(2)
+    : REAL
+      ? ['tests/real.test.mjs']
+      : ['tests/api.test.mjs', 'tests/real.test.mjs']
   console.log(`worker tests: DATA_SET=${REAL ? 'real' : 'sample'}, files ${files.join(', ')}`)
   const test = spawn(process.execPath, ['--test', '--test-concurrency=1', ...files], { cwd: workerDir, env, stdio: 'inherit' })
   const code = await new Promise((r) => test.on('exit', (c) => r(c ?? 1)))

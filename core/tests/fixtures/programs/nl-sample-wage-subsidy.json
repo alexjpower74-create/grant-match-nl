@@ -80,9 +80,7 @@
       "text": "The money is for hiring and paying wages",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "helps employers hire new workers and pay their wages",
       "source": "nl-sample-wage-subsidy--main"

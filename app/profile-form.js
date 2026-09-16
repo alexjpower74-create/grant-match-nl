@@ -143,7 +143,9 @@ function setupCommunity(communities) {
   }
 
   function syncActive() {
-    list.querySelectorAll('.combo-option').forEach((el, i) => el.setAttribute('aria-selected', String(i === active)))
+    list.querySelectorAll('.combo-option').forEach((el, i) => {
+      el.setAttribute('aria-selected', String(i === active))
+    })
     if (active >= 0) {
       input.setAttribute('aria-activedescendant', `community-opt-${active}`)
       list.querySelector(`#community-opt-${active}`)?.scrollIntoView({ block: 'nearest' })
@@ -233,36 +235,49 @@ function setupOwners() {
   form.addEventListener('change', (e) => {
     const box = e.target
     if (box.name !== 'owners') return
-    if (box === none && box.checked) boxes.forEach((b) => b !== none && (b.checked = false))
+    if (box === none && box.checked)
+      boxes.forEach((b) => {
+        b !== none && (b.checked = false)
+      })
     else if (box !== none && box.checked) none.checked = false
   })
   return {
     get value() {
       if (none.checked) return 'none'
-      return boxes.filter((b) => b.checked && b !== none).map((b) => b.value).join(',')
+      return boxes
+        .filter((b) => b.checked && b !== none)
+        .map((b) => b.value)
+        .join(',')
     },
     set(v) {
       const picked = (v || '').split(',')
-      boxes.forEach((b) => (b.checked = picked.includes(b.value)))
+      boxes.forEach((b) => {
+        b.checked = picked.includes(b.value)
+      })
     },
   }
 }
 
 function setupPurposes() {
   const chips = [...form.querySelectorAll('.chip')]
-  chips.forEach((chip) =>
+  chips.forEach((chip) => {
     chip.addEventListener('click', () => {
       chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'))
       if (chips.some((c) => c.getAttribute('aria-pressed') === 'true')) clearError('purposes')
-    }),
-  )
+    })
+  })
   return {
     get value() {
-      return chips.filter((c) => c.getAttribute('aria-pressed') === 'true').map((c) => c.dataset.purpose).join(',')
+      return chips
+        .filter((c) => c.getAttribute('aria-pressed') === 'true')
+        .map((c) => c.dataset.purpose)
+        .join(',')
     },
     set(v) {
       const picked = (v || '').split(',')
-      chips.forEach((c) => c.setAttribute('aria-pressed', String(picked.includes(c.dataset.purpose))))
+      chips.forEach((c) => {
+        c.setAttribute('aria-pressed', String(picked.includes(c.dataset.purpose)))
+      })
     },
     focus() {
       chips[0]?.focus()
@@ -354,7 +369,9 @@ async function main() {
       errors.push(['employees', 'Enter a number of people up to 100,000.'])
     }
     if (errors.length) {
-      errors.forEach(([k, m]) => showError(k, m))
+      errors.forEach(([k, m]) => {
+        showError(k, m)
+      })
       const [first] = errors[0]
       if (first === 'community') community.focus()
       else if (first === 'purposes') purposes.focus()

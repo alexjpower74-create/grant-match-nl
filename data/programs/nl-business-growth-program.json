@@ -66,16 +66,8 @@
       "text": "A sole proprietor, partnership, corporation, co-operative or non-profit organization",
       "rule": {
         "kind": "structure",
-        "in": [
-          "sole_proprietor",
-          "partnership",
-          "corporation",
-          "cooperative",
-          "nonprofit"
-        ],
-        "unclear": [
-          "not_registered"
-        ]
+        "in": ["sole_proprietor", "partnership", "corporation", "cooperative", "nonprofit"],
+        "unclear": ["not_registered"]
       },
       "quote": "Growth-focused, innovative firms including sole proprietors, partnerships or corporations operating within Newfoundland and Labrador that demonstrate commercial viability; or Co-operatives or non-profit organizations operating within Newfoundland and Labrador",
       "source": "nl-business-growth-program--main"

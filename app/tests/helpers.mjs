@@ -13,14 +13,18 @@ export const STALE_NOW = '2026-12-01T12:00:00Z'
 
 export const PROFILES = {
   auto: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&owners=none&purposes=equipment,digital&cost=25k_50k',
-  daycare: 'name=SAMPLE Daycare&community=gander&industry=62&structure=sole_proprietor&employees=4&years=1to2&revenue=100k_300k&owners=women&purposes=hire,training&cost=10k_25k',
+  daycare:
+    'name=SAMPLE Daycare&community=gander&industry=62&structure=sole_proprietor&employees=4&years=1to2&revenue=100k_300k&owners=women&purposes=hire,training&cost=10k_25k',
   // SAMPLE Auto Service with owners and cost left unanswered, so not_answered shows up.
-  autoUnanswered: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&purposes=equipment,digital',
+  autoUnanswered:
+    'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=500k_1m&purposes=equipment,digital',
   // SAMPLE Auto Service in the $2M–$10M revenue band, which sits on both sides of a SAMPLE loan's $5,000,000 limit.
-  autoStraddle: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=2m_10m&owners=none&purposes=equipment,digital&cost=25k_50k',
+  autoStraddle:
+    'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=10plus&revenue=2m_10m&owners=none&purposes=equipment,digital&cost=25k_50k',
   // The printout's worst case on the SAMPLE set: 7 programs could fit, so it prints 6 and "and 1 more". Found by
   // searching answer combinations with core; unstyled, this printout runs to 2 pages.
-  printWorst: 'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=lt1&revenue=unsaid&purposes=hire,equipment,digital,startup,training',
+  printWorst:
+    'name=SAMPLE Auto Service&community=grand-falls-windsor&industry=81&structure=corporation&employees=6&years=lt1&revenue=unsaid&purposes=hire,equipment,digital,startup,training',
 }
 
 export const qs = (profile, extra = {}) => {
@@ -39,7 +43,11 @@ export function profileOf(query) {
 
 export const coreMatch = (query, now = NOW) => matchPrograms(bundle.programs, profileOf(query), { now: new Date(now), sourceStatus: {} })
 export const coreProgram = (slug, query, now = NOW) =>
-  evaluateProgram(bundle.programs.find((p) => p.slug === slug), query ? profileOf(query) : null, { now: new Date(now), sourceStatus: {} })
+  evaluateProgram(
+    bundle.programs.find((p) => p.slug === slug),
+    query ? profileOf(query) : null,
+    { now: new Date(now), sourceStatus: {} },
+  )
 
 export const isPhone = (testInfo) => testInfo.project.name.endsWith('-390')
 

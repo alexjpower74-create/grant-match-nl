@@ -28,13 +28,15 @@ async function main() {
   }
   sampleBanner(hasSample(programs))
   const rows = programs.flatMap((p) =>
-    p.sources.map((s) => `<tr data-source="${esc(s.id)}">
+    p.sources.map(
+      (s) => `<tr data-source="${esc(s.id)}">
       <td>${esc(p.name)}</td>
       <td><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a></td>
       <td>${esc(s.publisher)}</td>
       <td>${esc(formatDate(s.fetched_at))}</td>
       <td>${esc(lastCheck(runs, s.id))}</td>
-    </tr>`),
+    </tr>`,
+    ),
   )
   root.innerHTML = `<p class="muted">${programs.length} programs, ${rows.length} official pages.</p>
     <div class="table-scroll glass"><table class="data">

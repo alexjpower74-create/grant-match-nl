@@ -51,30 +51,8 @@
       "text": "An employer in forestry, aquaculture, agriculture or fishing doing value-added secondary processing (no sector answer settles that on its own)",
       "rule": {
         "kind": "industry",
-        "not_in": [
-          "21",
-          "22",
-          "23",
-          "41",
-          "44-45",
-          "48-49",
-          "51",
-          "52",
-          "53",
-          "54",
-          "55",
-          "56",
-          "61",
-          "62",
-          "71",
-          "72",
-          "81",
-          "91"
-        ],
-        "unclear": [
-          "11",
-          "31-33"
-        ]
+        "not_in": ["21", "22", "23", "41", "44-45", "48-49", "51", "52", "53", "54", "55", "56", "61", "62", "71", "72", "81", "91"],
+        "unclear": ["11", "31-33"]
       },
       "quote": "supports employers in the forestry, aquaculture, agriculture, and fishing sectors, who are engaged in value-added secondary processing",
       "source": "nl-employment-enhancement-program--main"
@@ -93,14 +71,8 @@
       "text": "Incorporated or a sole proprietor",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation",
-          "sole_proprietor"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["corporation", "sole_proprietor"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "Must be incorporated or a sole proprietor.",
       "source": "nl-employment-enhancement-program--main"
@@ -120,10 +92,7 @@
       "text": "The money is for creating jobs or training new employees",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire",
-          "training"
-        ]
+        "any": ["hire", "training"]
       },
       "quote": "by providing funding to create long-term or seasonal jobs and offering a training allowance for new employees",
       "source": "nl-employment-enhancement-program--main"

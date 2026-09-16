@@ -52,9 +52,7 @@
       "text": "The money is to go digital or take up e-commerce",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "digital"
-        ]
+        "any": ["digital"]
       },
       "quote": "help small and medium-sized enterprises (SMEs) become more efficient, go digital, take advantage of e-commerce and become more competitive",
       "source": "ca-canada-digital-adoption-program--qp-note"

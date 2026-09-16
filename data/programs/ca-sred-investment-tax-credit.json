@@ -51,9 +51,7 @@
       "text": "The money is for scientific research and experimental development",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "research"
-        ]
+        "any": ["research"]
       },
       "quote": "The basic ITC rate is 15% on qualified SR&ED expenditures for corporations, individuals, trusts, and partners in a partnership.",
       "source": "ca-sred-investment-tax-credit--main"

@@ -46,11 +46,7 @@
       "text": "The business is in Census Division 6, 7 or 8",
       "rule": {
         "kind": "location",
-        "census_divisions": [
-          6,
-          7,
-          8
-        ]
+        "census_divisions": [6, 7, 8]
       },
       "quote": "The SAMPLE Community Fund gives grants to businesses and community groups in Census Divisions 6, 7 and 8.",
       "source": "nl-sample-community-fund--main"

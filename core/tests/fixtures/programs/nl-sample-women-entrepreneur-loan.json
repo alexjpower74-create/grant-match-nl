@@ -56,9 +56,7 @@
       "text": "The business is owned by women",
       "rule": {
         "kind": "ownership",
-        "any": [
-          "women"
-        ]
+        "any": ["women"]
       },
       "quote": "a loan open to businesses owned by women",
       "source": "nl-sample-women-entrepreneur-loan--main"

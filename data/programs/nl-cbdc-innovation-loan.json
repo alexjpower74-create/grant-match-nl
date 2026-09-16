@@ -100,13 +100,8 @@
       "text": "The money buys equipment or software that is new technology (training staff on it may also count)",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "equipment",
-          "digital"
-        ],
-        "unclear": [
-          "training"
-        ]
+        "any": ["equipment", "digital"],
+        "unclear": ["training"]
       },
       "quote": "CBDC Innovation Loans can be used to finance any costs of the purchase of equipment, software, processes, licenses, and other items that are clearly identifiable as “new” technology that will enhance the business.",
       "source": "nl-cbdc-innovation-loan--main"

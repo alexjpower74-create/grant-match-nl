@@ -77,9 +77,7 @@
       "text": "The money is to hire and pay wages for a summer job",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "hire"
-        ]
+        "any": ["hire"]
       },
       "quote": "The program offers wage subsidies to support employers to create quality summer jobs.",
       "source": "ca-canada-summer-jobs--about"

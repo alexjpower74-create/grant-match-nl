@@ -66,13 +66,8 @@
       "text": "A registered incorporated business (or a non-commercial group such as an industry association or business development organization)",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["corporation"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "Non-commercial applicants: industry associations, Indigenous Governments/ Organizations, business development organizations, post-secondary institutions and other support organizations in Newfoundland and Labrador focusing on green economy projects. Commercial applicants: registered incorporated businesses, primarily small-and medium sized enterprises with operations in Newfoundland and Labrador.",
       "source": "nl-green-transition-fund--main"
@@ -82,18 +77,8 @@
       "text": "The money greens the business’s operations: energy efficiency counts; other purposes depend on whether the project is green",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "energy"
-        ],
-        "unclear": [
-          "equipment",
-          "digital",
-          "research",
-          "export",
-          "hire",
-          "training",
-          "startup"
-        ]
+        "any": ["energy"],
+        "unclear": ["equipment", "digital", "research", "export", "hire", "training", "startup"]
       },
       "quote": "The Green Transition Fund targets the greening of commercial operations in traditional sectors and development of new opportunities related to the growth of a green economy.",
       "source": "nl-green-transition-fund--main"

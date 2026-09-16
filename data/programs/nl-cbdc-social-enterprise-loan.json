@@ -100,10 +100,7 @@
       "text": "A non-profit (including charities and societies) or a co-operative",
       "rule": {
         "kind": "structure",
-        "in": [
-          "nonprofit",
-          "cooperative"
-        ]
+        "in": ["nonprofit", "cooperative"]
       },
       "quote": "CBDC Social Enterprise Loans and financing is available to non-profits, including charities, cooperatives or societies in need of business support (in the form of a loan or loan guarantee).",
       "source": "nl-cbdc-social-enterprise-loan--main"

@@ -124,12 +124,18 @@ export function validateChecksResult(body) {
   if (!TRIGGERS.has(body.trigger)) problems.push('trigger must be node, cron or manual.')
   if (!Array.isArray(body.sources)) return [...problems, 'sources must be a list.']
   body.sources.forEach((s, i) => {
-    const at = `sources[${i}]`
-    if (!s || typeof s !== 'object') return problems.push(`${at} must be an object.`)
-    for (const k of ['source_id', 'program_slug', 'url']) if (typeof s[k] !== 'string' || !s[k]) problems.push(`${at}.${k} is required.`)
-    if (typeof s.ok !== 'boolean') problems.push(`${at}.ok must be true or false.`)
-    if (!Array.isArray(s.missing)) problems.push(`${at}.missing must be a list.`)
-    for (const k of ['quotes_total', 'quotes_found']) if (!Number.isInteger(s[k]) || s[k] < 0) problems.push(`${at}.${k} must be a whole number.`)
+    {
+      const at = `sources[${i}]`
+      if (!s || typeof s !== 'object') {
+        problems.push(`${at} must be an object.`)
+        return
+      }
+      for (const k of ['source_id', 'program_slug', 'url']) if (typeof s[k] !== 'string' || !s[k]) problems.push(`${at}.${k} is required.`)
+      if (typeof s.ok !== 'boolean') problems.push(`${at}.ok must be true or false.`)
+      if (!Array.isArray(s.missing)) problems.push(`${at}.missing must be a list.`)
+      for (const k of ['quotes_total', 'quotes_found'])
+        if (!Number.isInteger(s[k]) || s[k] < 0) problems.push(`${at}.${k} must be a whole number.`)
+    }
   })
   return problems
 }
@@ -151,9 +157,21 @@ export async function storeRun(db, result) {
   )
   const rows = sources.map((s, i) =>
     insert.bind(
-      run.id, i, s.source_id, s.program_slug, s.url, s.ok ? 1 : 0, s.error ?? null, s.http_status ?? null,
-      s.fetched_at ?? null, s.sha256 ?? null, s.text_sha256 ?? null, s.changed ? 1 : 0,
-      s.quotes_total, s.quotes_found, JSON.stringify(s.missing),
+      run.id,
+      i,
+      s.source_id,
+      s.program_slug,
+      s.url,
+      s.ok ? 1 : 0,
+      s.error ?? null,
+      s.http_status ?? null,
+      s.fetched_at ?? null,
+      s.sha256 ?? null,
+      s.text_sha256 ?? null,
+      s.changed ? 1 : 0,
+      s.quotes_total,
+      s.quotes_found,
+      JSON.stringify(s.missing),
     ),
   )
   if (rows.length) await db.batch(rows)
@@ -181,7 +199,9 @@ function sourceFromRow(r) {
 // Newest first, each with its sources in stored order.
 export async function loadRuns(db, limit) {
   const { results: runs } = await db
-    .prepare('SELECT id, trigger, started_at, finished_at, sources_total, sources_ok, quotes_missing FROM check_runs ORDER BY id DESC LIMIT ?')
+    .prepare(
+      'SELECT id, trigger, started_at, finished_at, sources_total, sources_ok, quotes_missing FROM check_runs ORDER BY id DESC LIMIT ?',
+    )
     .bind(limit)
     .all()
   if (!runs.length) return []
@@ -324,7 +344,7 @@ export default {
     }
   },
 
-  async scheduled(controller, env, ctx) {
+  async scheduled(_controller, env, ctx) {
     ctx.waitUntil(scanAndStore(env, 'cron'))
   },
 }

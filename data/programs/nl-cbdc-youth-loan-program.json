@@ -100,14 +100,8 @@
       "text": "A sole proprietorship, limited company or partnership, controlled by the new entrepreneur",
       "rule": {
         "kind": "structure",
-        "in": [
-          "sole_proprietor",
-          "corporation",
-          "partnership"
-        ],
-        "unclear": [
-          "not_registered"
-        ]
+        "in": ["sole_proprietor", "corporation", "partnership"],
+        "unclear": ["not_registered"]
       },
       "quote": "Eligible borrowers may be a sole proprietorship, a limited company or a partnership (majority of the care and control must reside with the new entrepreneur);",
       "source": "nl-cbdc-youth-loan-program--main"

@@ -56,14 +56,8 @@
       "text": "An incorporated business or a sole proprietorship",
       "rule": {
         "kind": "structure",
-        "in": [
-          "corporation",
-          "sole_proprietor"
-        ],
-        "unclear": [
-          "cooperative",
-          "nonprofit"
-        ]
+        "in": ["corporation", "sole_proprietor"],
+        "unclear": ["cooperative", "nonprofit"]
       },
       "quote": "It’s open to incorporated businesses or sole proprietorships.",
       "source": "nl-sample-green-upgrade-grant--main"
@@ -73,12 +67,8 @@
       "text": "The money is for energy efficiency upgrades (equipment may qualify when it reduces energy use)",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "energy"
-        ],
-        "unclear": [
-          "equipment"
-        ]
+        "any": ["energy"],
+        "unclear": ["equipment"]
       },
       "quote": "for energy efficiency upgrades",
       "source": "nl-sample-green-upgrade-grant--main"

@@ -3,8 +3,14 @@ import { bundle, PROFILES, qs, coreMatch } from './helpers.mjs'
 
 // SAMPLE Auto Service, and the fullest printout the SAMPLE set can produce (6 programs plus "and N more"): a
 // short printout fits one page even with no print stylesheet, so only the full one proves the one-page rule.
-for (const [label, profile] of [['SAMPLE Auto Service', PROFILES.auto], ['the fullest printout', PROFILES.printWorst]]) {
-  test(`print page is exactly one Letter page in print media and names SAMPLE Auto Service: ${label}`, async ({ page, browserName }, testInfo) => {
+for (const [label, profile] of [
+  ['SAMPLE Auto Service', PROFILES.auto],
+  ['the fullest printout', PROFILES.printWorst],
+]) {
+  test(`print page is exactly one Letter page in print media and names SAMPLE Auto Service: ${label}`, async ({
+    page,
+    browserName,
+  }, testInfo) => {
     test.skip(browserName !== 'chromium', 'page.pdf is chromium only')
     test.skip(testInfo.project.name !== 'chromium-1280', 'one PDF is enough')
     const want = coreMatch(profile)
@@ -78,7 +84,8 @@ test('about lists the programs we left out, each with its terms link and reason'
 test('real data: printout phone numbers never split across lines', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith('chromium'), 'print layout checked in chromium')
   // APCO Software Tools (DECISIONS #14): its printout lists ACOA programs with long URLs and a phone.
-  const apco = 'name=APCO Software Tools&community=grand-falls-windsor&industry=54&structure=unsure&employees=1&years=lt1&revenue=unsaid&purposes=digital&cost=unsure'
+  const apco =
+    'name=APCO Software Tools&community=grand-falls-windsor&industry=54&structure=unsure&employees=1&years=lt1&revenue=unsaid&purposes=digital&cost=unsure'
   for (const media of ['screen', 'print']) {
     await page.emulateMedia({ media })
     await page.goto(`/print.html?${qs(apco, { data: 'real' })}`)

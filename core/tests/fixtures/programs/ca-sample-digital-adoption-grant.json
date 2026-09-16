@@ -51,9 +51,7 @@
       "text": "The money is for adopting software or digital tools",
       "rule": {
         "kind": "purpose",
-        "any": [
-          "digital"
-        ]
+        "any": ["digital"]
       },
       "quote": "to adopt software or digital tools",
       "source": "ca-sample-digital-adoption-grant--main"
